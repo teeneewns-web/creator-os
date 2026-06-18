@@ -1,0 +1,902 @@
+[
+  {
+    "id": 1,
+    "hook": "90% ของคนเข้า Crypto ผิดวิธีตั้งแต่วันแรก",
+    "category": "crypto",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "หยุดทำสิ่งนี้ ถ้าไม่อยากพอร์ตแตก",
+    "category": "crypto",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "เคล็ดลับที่นักลงทุน Crypto มืออาชีพใช้",
+    "category": "crypto",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "ผมเปลี่ยนวิธีลงทุนแค่อย่างเดียว กำไรก็ดีขึ้น",
+    "category": "crypto",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "นี่คือเหตุผลที่คนส่วนใหญ่ขาดทุนใน Crypto",
+    "category": "crypto",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "วิธีลดความเสี่ยงโดยไม่ลดโอกาสกำไร",
+    "category": "crypto",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "คนส่วนใหญ่ไม่เคยรู้เรื่องนี้มาก่อน",
+    "category": "crypto",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "หลายคนเข้าใจ Bitcoin ผิดมาตลอด",
+    "category": "crypto",
+    "type": "myth",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ผมทดลองกลยุทธ์นี้ 30 วัน ผลคือ...",
+    "category": "crypto",
+    "type": "story",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "นี่คือสิ่งที่นักลงทุนกำไรสม่ำเสมอทำเหมือนกัน",
+    "category": "crypto",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+{
+  "id": 11,
+  "hook": "หลายคนพลาดโอกาสครั้งใหญ่ใน Crypto เพราะเรื่องนี้",
+  "category": "crypto",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 12,
+  "hook": "ผมไม่คิดว่ากฎข้อนี้จะช่วยกำไรได้มากขนาดนี้",
+  "category": "crypto",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 13,
+  "hook": "เคล็ดลับที่เทรดเดอร์ส่วนใหญ่ไม่เคยบอก",
+  "category": "crypto",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 14,
+  "hook": "90% ของนักลงทุนรายย่อยทำผิดเรื่องนี้",
+  "category": "crypto",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 15,
+  "hook": "ถ้ารู้เรื่องนี้เร็วกว่านี้ ผมคงไม่ขาดทุนหนัก",
+  "category": "crypto",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 16,
+  "hook": "นี่อาจเป็นข้อมูลสำคัญที่สุดสำหรับนักลงทุน Crypto",
+  "category": "crypto",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 17,
+  "hook": "หลายคนเข้าใจตลาดกระทิงผิดมาตลอด",
+  "category": "crypto",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 18,
+  "hook": "ผมลองทำแบบนี้ แล้วผลลัพธ์ดีขึ้นทันที",
+  "category": "crypto",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 19,
+  "hook": "นี่คือสิ่งที่ผมอยากรู้ตั้งแต่วันแรกที่ลงทุน",
+  "category": "crypto",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 20,
+  "hook": "อย่าเพิ่งซื้อเหรียญ จนกว่าจะรู้เรื่องนี้",
+  "category": "crypto",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 21,
+  "hook": "นี่คือเหตุผลที่คนส่วนใหญ่ซื้อแพงขายถูก",
+  "category": "crypto",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "ผมเปลี่ยนกฎข้อนี้ แล้วพอร์ตเริ่มเขียว",
+  "category": "crypto",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "ความลับที่วาฬ Crypto ไม่อยากให้คุณรู้",
+  "category": "crypto",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "หลายคนกำลังเสียเงินเพราะนิสัยนี้",
+  "category": "crypto",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "90% ของนักลงทุนใหม่พลาดจุดนี้",
+  "category": "crypto",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "วิธีเอาตัวรอดในตลาดแดงโดยไม่เครียด",
+  "category": "crypto",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "หลายคนเชื่อว่าเหรียญถูกคือของดี",
+  "category": "crypto",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "ผมทดลองกลยุทธ์นี้ 60 วัน ผลลัพธ์ต่างไปมาก",
+  "category": "crypto",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "นี่คือสิ่งที่นักลงทุนกำไรระยะยาวทำเหมือนกัน",
+  "category": "crypto",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับ Crypto ให้จำเรื่องนี้",
+  "category": "crypto",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 31,
+  "hook": "นี่คือข้อผิดพลาดที่ทำให้พอร์ตไม่โต",
+  "category": "crypto",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "ผมไม่คิดว่าการหยุดทำสิ่งนี้จะช่วยได้มาก",
+  "category": "crypto",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "ความลับที่คนกำไรสม่ำเสมอใช้กัน",
+  "category": "crypto",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "หยุดทำสิ่งนี้ ถ้าไม่อยากล้างพอร์ต",
+  "category": "crypto",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "สิ่งเล็ก ๆ นี้สร้างความแตกต่างมหาศาล",
+  "category": "crypto",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "นี่คือเหตุผลที่คุณยังไม่ทำกำไร",
+  "category": "crypto",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "วิธีลงทุนโดยไม่ต้องเฝ้ากราฟทั้งวัน",
+  "category": "crypto",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "หลายคนเข้าใจการ DCA ผิดมาตลอด",
+  "category": "crypto",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "ผมใช้วิธีนี้ทุกครั้งก่อนซื้อเหรียญ",
+  "category": "crypto",
+  "type": "story",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "นี่คือสิ่งที่เทรดเดอร์มืออาชีพทำต่างออกไป",
+  "category": "crypto",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "คนส่วนใหญ่แพ้ตลาด เพราะควบคุมอารมณ์ไม่ได้",
+  "category": "crypto",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "ผมเคยขาดทุนหนัก เพราะมองข้ามเรื่องนี้",
+  "category": "crypto",
+  "type": "story",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "นี่คือความลับที่นักลงทุนรายใหญ่เข้าใจ",
+  "category": "crypto",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "หลายคนกำลังซื้อเหรียญผิดตัว",
+  "category": "crypto",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "90% ของนักลงทุนไม่เคยวางแผนออกจากตลาด",
+  "category": "crypto",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "วิธีป้องกันพอร์ตจากการร่วงหนัก",
+  "category": "crypto",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "หลายคนคิดว่ากำไรเร็วคือกำไรดี",
+  "category": "crypto",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "ผมเปลี่ยนวิธีคิดนี้ แล้วผลลัพธ์ต่างไปมาก",
+  "category": "crypto",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "นี่คือสิ่งที่นักลงทุนระดับโลกทำเหมือนกัน",
+  "category": "crypto",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "อย่าลงทุนเพิ่ม จนกว่าจะเข้าใจเรื่องนี้",
+  "category": "crypto",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "นี่คือบทเรียนที่แพงที่สุดในการลงทุนของผม",
+  "category": "crypto",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "คุณไม่จำเป็นต้องจับจุดต่ำสุดให้ได้",
+  "category": "crypto",
+  "type": "mindset",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "หลายคนกำลังเสี่ยงเกินความจำเป็น",
+  "category": "crypto",
+  "type": "mindset",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนของพอร์ตคุณ",
+  "category": "crypto",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "ผมเกือบพลาดกำไรก้อนใหญ่เพราะเรื่องนี้",
+  "category": "crypto",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "นี่คือความแตกต่างระหว่างนักลงทุนกับนักพนัน",
+  "category": "crypto",
+  "type": "comparison",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "หลายคนคิดว่าการเทรดทุกวันคือทางรวย",
+  "category": "crypto",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "ผมเริ่มทำสิ่งนี้ แล้วความเครียดลดลงมาก",
+  "category": "crypto",
+  "type": "story",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "นี่คือทักษะที่สำคัญที่สุดของนักลงทุน",
+  "category": "crypto",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับ Crypto ให้จำเรื่องนี้",
+  "category": "crypto",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 61,
+  "hook": "นี่คือเหตุผลที่คนส่วนใหญ่ไม่เคยรวยจาก Crypto",
+  "category": "crypto",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 62,
+  "hook": "ผมไม่คิดว่ากฎข้อนี้จะเปลี่ยนผลลัพธ์ได้ขนาดนี้",
+  "category": "crypto",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 63,
+  "hook": "ความลับที่นักลงทุนระยะยาวเข้าใจ",
+  "category": "crypto",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 64,
+  "hook": "ถ้าคุณยังทำแบบนี้อยู่ คุณกำลังเสียเงิน",
+  "category": "crypto",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 65,
+  "hook": "90% ของคนขาดทุนเพราะอารมณ์ตัวเอง",
+  "category": "crypto",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 66,
+  "hook": "วิธีลงทุนให้รอดทุกสภาวะตลาด",
+  "category": "crypto",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 67,
+  "hook": "หลายคนเข้าใจเรื่องความเสี่ยงผิดมาตลอด",
+  "category": "crypto",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 68,
+  "hook": "ผมทดลองแนวคิดนี้ 1 ปีเต็ม ผลลัพธ์ต่างไปมาก",
+  "category": "crypto",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 69,
+  "hook": "นี่คือสิ่งที่นักลงทุนมืออาชีพทำเหมือนกัน",
+  "category": "crypto",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 70,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนของพอร์ตคุณ",
+  "category": "crypto",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 71,
+  "hook": "นี่คือเหตุผลที่คุณยังไม่เห็นกำไร",
+  "category": "crypto",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 72,
+  "hook": "วิธีสร้างกำไรโดยไม่ต้องเทรดทุกวัน",
+  "category": "crypto",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 73,
+  "hook": "คนส่วนใหญ่ไม่เคยรู้เรื่องนี้มาก่อน",
+  "category": "crypto",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 74,
+  "hook": "นี่คือบทเรียนที่แพงที่สุดจากตลาด Crypto",
+  "category": "crypto",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 75,
+  "hook": "ผลลัพธ์นี้ทำให้ผมตกใจจริง ๆ",
+  "category": "crypto",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 76,
+  "hook": "หลายคนกำลังโฟกัสผิดเรื่อง",
+  "category": "crypto",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 77,
+  "hook": "สิ่งเล็ก ๆ นี้สร้างความแตกต่างมหาศาล",
+  "category": "crypto",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 78,
+  "hook": "ผมใช้วิธีนี้ทุกครั้งก่อนตัดสินใจลงทุน",
+  "category": "crypto",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 79,
+  "hook": "นี่คือทางลัดที่ช่วยลดความผิดพลาดได้มาก",
+  "category": "crypto",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 80,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับการลงทุน ให้จำเรื่องนี้",
+  "category": "crypto",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "นี่คือเหตุผลที่คนส่วนใหญ่พลาดรอบใหญ่ของตลาด",
+  "category": "crypto",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "ผมไม่คิดว่าการเปลี่ยนสิ่งนี้จะทำให้กำไรดีขึ้น",
+  "category": "crypto",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "ความลับที่นักลงทุนรายใหญ่ใช้สะสมเหรียญ",
+  "category": "crypto",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "ถ้าคุณยังทำแบบนี้อยู่ คุณกำลังเล่นเกมที่เสียเปรียบ",
+  "category": "crypto",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "90% ของคนไม่เคยมีแผนก่อนเข้าตลาด",
+  "category": "crypto",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "วิธีอยู่รอดในตลาดผันผวนแบบมืออาชีพ",
+  "category": "crypto",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "หลายคนเข้าใจเรื่องกำไร 100% ผิดมาตลอด",
+  "category": "crypto",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "ผมทดลองกลยุทธ์นี้ทั้งตลาดกระทิงและตลาดหมี",
+  "category": "crypto",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "นี่คือสิ่งที่นักลงทุนระยะยาวทุกคนทำเหมือนกัน",
+  "category": "crypto",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "ถ้าคุณอยู่ใน Crypto ต้องรู้เรื่องนี้",
+  "category": "crypto",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "นี่คือสิ่งที่เปลี่ยนผลลัพธ์การลงทุนของผม",
+  "category": "crypto",
+  "type": "story",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "หลายคนมองข้ามสัญญาณสำคัญนี้",
+  "category": "crypto",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "นี่อาจเป็นโอกาสที่ดีที่สุดของรอบนี้",
+  "category": "crypto",
+  "type": "future",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "ผมเสียเงินไปมาก เพราะไม่เข้าใจเรื่องนี้",
+  "category": "crypto",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "นี่คือสิ่งที่นักลงทุนกำไรสม่ำเสมอมีเหมือนกัน",
+  "category": "crypto",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "ผลลัพธ์นี้ทำให้ผมเปลี่ยนวิธีลงทุนทั้งหมด",
+  "category": "crypto",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "หลายคนกำลังพลาดบทเรียนที่สำคัญที่สุด",
+  "category": "crypto",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "นี่คือวิธีลงทุนแบบที่นอนหลับสบาย",
+  "category": "crypto",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "ผมไม่เคยเล่าเรื่องนี้ให้ใครฟังมาก่อน",
+  "category": "crypto",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับ Crypto ให้บริหารความเสี่ยง",
+  "category": "crypto",
+  "type": "motivation",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+}
+]

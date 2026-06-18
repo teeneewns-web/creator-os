@@ -1,0 +1,722 @@
+[
+  {
+    "id": 1,
+    "hook": "90% ของคนกินอาหารแบบนี้โดยไม่รู้ตัว",
+    "category": "food",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "หยุดทำสิ่งนี้ ถ้าอยากกินให้อร่อยขึ้น",
+    "category": "food",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "ความลับที่เชฟมืออาชีพใช้ทุกวัน",
+    "category": "food",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "ผมลองเมนูนี้ครั้งแรก แล้วตกใจมาก",
+    "category": "food",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "นี่คือเหตุผลที่หลายคนทำอาหารไม่อร่อย",
+    "category": "food",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "วิธีทำอาหารให้อร่อยขึ้นโดยไม่ต้องเพิ่มงบ",
+    "category": "food",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "คนส่วนใหญ่ไม่เคยรู้เรื่องนี้เกี่ยวกับอาหาร",
+    "category": "food",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "หลายคนเข้าใจเรื่องการกินผิดมาตลอด",
+    "category": "food",
+    "type": "myth",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ผมทดลองกินแบบนี้ 30 วัน ผลลัพธ์น่าทึ่งมาก",
+    "category": "food",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "นี่คือสิ่งที่คนรักอาหารทำเหมือนกัน",
+    "category": "food",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+{
+  "id": 11,
+  "hook": "หลายคนกินอาหารแพง แต่ไม่ได้อร่อยกว่าจริง",
+  "category": "food",
+  "type": "warning",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 12,
+  "hook": "ผมไม่คิดว่าเมนูธรรมดาจานนี้จะอร่อยขนาดนี้",
+  "category": "food",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 13,
+  "hook": "เคล็ดลับที่ร้านอาหารดังไม่ค่อยบอกลูกค้า",
+  "category": "food",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 14,
+  "hook": "90% ของคนปรุงอาหารผิดวิธี",
+  "category": "food",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 15,
+  "hook": "ถ้ารู้เรื่องนี้เร็วกว่านี้ ผมคงทำอาหารอร่อยกว่านี้นานแล้ว",
+  "category": "food",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 16,
+  "hook": "นี่อาจเป็นเทคนิคทำอาหารที่สำคัญที่สุด",
+  "category": "food",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 17,
+  "hook": "หลายคนเข้าใจเรื่องอาหารสุขภาพผิดมาตลอด",
+  "category": "food",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 18,
+  "hook": "ผมลองเปลี่ยนวัตถุดิบแค่อย่างเดียว รสชาติต่างไปมาก",
+  "category": "food",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 19,
+  "hook": "นี่คือสิ่งที่ผมอยากรู้ก่อนเริ่มทำอาหารเอง",
+  "category": "food",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 20,
+  "hook": "อย่าเพิ่งสั่งเมนูนี้ จนกว่าจะรู้เรื่องนี้",
+  "category": "food",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 21,
+  "hook": "นี่คือเหตุผลที่บางร้านคนต่อคิวทุกวัน",
+  "category": "food",
+  "type": "problem",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "ผมเปลี่ยนวิธีกินแค่เรื่องเดียว สุขภาพดีขึ้นมาก",
+  "category": "food",
+  "type": "story",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "ความลับที่เชฟระดับโรงแรมเข้าใจกันดี",
+  "category": "food",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "หลายคนกำลังกินอาหารแพงเกินความจำเป็น",
+  "category": "food",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "90% ของคนไม่เคยสังเกตเรื่องนี้ในอาหาร",
+  "category": "food",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "วิธีทำให้อาหารธรรมดาอร่อยขึ้นทันที",
+  "category": "food",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "หลายคนคิดว่าอาหารแพงต้องอร่อยกว่าเสมอ",
+  "category": "food",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "ผมทดลองกินเมนูนี้ 60 วัน ผลลัพธ์เกินคาด",
+  "category": "food",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "นี่คือสิ่งที่คนทำอาหารเก่งมีเหมือนกัน",
+  "category": "food",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับอาหาร ให้จำเรื่องนี้",
+  "category": "food",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 31,
+  "hook": "นี่คือข้อผิดพลาดที่ทำให้อาหารอร่อยน้อยลงโดยไม่รู้ตัว",
+  "category": "food",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "ผมไม่คิดว่าวัตถุดิบธรรมดาจะสร้างความต่างได้ขนาดนี้",
+  "category": "food",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "ความลับที่ร้านอาหารขายดีใช้กัน",
+  "category": "food",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "หยุดทำสิ่งนี้ ถ้าไม่อยากให้อาหารเสียรสชาติ",
+  "category": "food",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "สิ่งเล็ก ๆ นี้ทำให้อาหารอร่อยขึ้นอย่างไม่น่าเชื่อ",
+  "category": "food",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "นี่คือเหตุผลที่หลายคนทำอาหารตามสูตรแล้วยังไม่อร่อย",
+  "category": "food",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "วิธีเพิ่มรสชาติอาหารโดยไม่ต้องเพิ่มเครื่องปรุง",
+  "category": "food",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "หลายคนเข้าใจเรื่องการลดน้ำหนักกับอาหารผิดมาตลอด",
+  "category": "food",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "ผมใช้เทคนิคนี้ทุกครั้ง และอาหารอร่อยขึ้นจริง",
+  "category": "food",
+  "type": "story",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "นี่คือสิ่งที่เชฟเก่ง ๆ ทำเหมือนกัน",
+  "category": "food",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "คนส่วนใหญ่เลือกอาหารจากเหตุผลผิด ๆ",
+  "category": "food",
+  "type": "problem",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "ผมเกือบพลาดเมนูที่อร่อยที่สุด เพราะไม่รู้เรื่องนี้",
+  "category": "food",
+  "type": "story",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "นี่คือความลับของร้านอาหารที่ลูกค้ากลับมาซ้ำ",
+  "category": "food",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "หลายคนกำลังกินอาหารที่ไม่คุ้มราคา",
+  "category": "food",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "90% ของคนไม่เคยรู้วิธีเลือกวัตถุดิบแบบนี้",
+  "category": "food",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "วิธีทำอาหารให้อร่อยเหมือนร้านดัง",
+  "category": "food",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "หลายคนคิดว่าอาหารสุขภาพต้องไม่อร่อย",
+  "category": "food",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "ผมเปลี่ยนวิธีปรุงแค่นิดเดียว รสชาติต่างไปมาก",
+  "category": "food",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "นี่คือสิ่งที่คนทำอาหารเก่งทุกคนมีเหมือนกัน",
+  "category": "food",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "อย่าสั่งเมนูนี้ จนกว่าจะรู้เรื่องนี้",
+  "category": "food",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "นี่คือบทเรียนเรื่องอาหารที่คุ้มค่าที่สุด",
+  "category": "food",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "คุณไม่จำเป็นต้องเป็นเชฟ ก็ทำอาหารอร่อยได้",
+  "category": "food",
+  "type": "mindset",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "หลายคนกำลังเสียเงินค่าอาหารโดยไม่จำเป็น",
+  "category": "food",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนของทุกมื้ออาหารคุณ",
+  "category": "food",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "ผมเกือบพลาดร้านเด็ด เพราะเรื่องนี้",
+  "category": "food",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "นี่คือความแตกต่างระหว่างคนทำอาหารเป็นกับไม่เป็น",
+  "category": "food",
+  "type": "comparison",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "หลายคนคิดว่าอาหารแพงแปลว่าอร่อยกว่า",
+  "category": "food",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "ผมเริ่มทำสิ่งนี้ แล้วทุกมื้ออร่อยขึ้นเรื่อย ๆ",
+  "category": "food",
+  "type": "story",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "นี่คือทักษะสำคัญที่สุดของคนรักอาหาร",
+  "category": "food",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับอาหาร ให้จำเรื่องนี้",
+  "category": "food",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "นี่คือเหตุผลที่หลายคนกินอาหารดี ๆ แต่ยังไม่มีความสุขกับการกิน",
+  "category": "food",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "ผมไม่คิดว่าอาหารจานนี้จะเปลี่ยนความคิดผมได้ขนาดนี้",
+  "category": "food",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "ความลับที่เชฟระดับโลกเข้าใจดี",
+  "category": "food",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "ถ้าคุณยังเลือกอาหารแบบนี้อยู่ คุณอาจพลาดของอร่อย",
+  "category": "food",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "90% ของคนไม่รู้ว่าควรชิมอาหารแบบนี้",
+  "category": "food",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "วิธีกินให้อร่อยขึ้นโดยไม่ต้องเปลี่ยนเมนู",
+  "category": "food",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "หลายคนเข้าใจเรื่องรสชาติผิดมาตลอด",
+  "category": "food",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "ผมทดลองเปลี่ยนวิธีกิน 6 เดือน ผลลัพธ์เหลือเชื่อ",
+  "category": "food",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "นี่คือสิ่งที่คนรักอาหารตัวจริงมีเหมือนกัน",
+  "category": "food",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "ถ้าคุณอยากกินให้อร่อยขึ้น ต้องรู้เรื่องนี้",
+  "category": "food",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "นี่คือสิ่งที่เปลี่ยนมุมมองเรื่องอาหารของผมไปตลอดกาล",
+  "category": "food",
+  "type": "story",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "หลายคนมองข้ามรายละเอียดนี้ก่อนสั่งอาหาร",
+  "category": "food",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "นี่อาจเป็นเคล็ดลับเรื่องอาหารที่ดีที่สุดที่คุณเคยได้ยิน",
+  "category": "food",
+  "type": "future",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "ผมเสียเงินไปมาก เพราะไม่เข้าใจเรื่องนี้",
+  "category": "food",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "นี่คือสิ่งที่ร้านอาหารดังทุกแห่งมีร่วมกัน",
+  "category": "food",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "ผลลัพธ์นี้ทำให้ผมเปลี่ยนวิธีกินทั้งหมด",
+  "category": "food",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "หลายคนกำลังพลาดเมนูที่ดีที่สุดเพราะเรื่องนี้",
+  "category": "food",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "นี่คือวิธีกินอย่างมีความสุขแบบยั่งยืน",
+  "category": "food",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "ผมไม่เคยเล่าเรื่องนี้เกี่ยวกับอาหารให้ใครฟังมาก่อน",
+  "category": "food",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับอาหาร ให้กินด้วยความสุข ไม่ใช่แค่ความเคยชิน",
+  "category": "food",
+  "type": "motivation",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+} 
+]

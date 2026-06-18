@@ -1,0 +1,722 @@
+[
+  {
+    "id": 1,
+    "hook": "90% ของคนซื้อบ้านพลาดเรื่องนี้",
+    "category": "realestate",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "หยุดทำสิ่งนี้ ก่อนตัดสินใจซื้ออสังหาฯ",
+    "category": "realestate",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "ความลับที่นายหน้าไม่ค่อยบอกลูกค้า",
+    "category": "realestate",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "ผมซื้อบ้านหลังแรก แล้วได้บทเรียนสำคัญนี้",
+    "category": "realestate",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "นี่คือเหตุผลที่หลายคนลงทุนอสังหาฯ แล้วขาดทุน",
+    "category": "realestate",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "วิธีเลือกทำเลที่มีโอกาสเติบโตสูง",
+    "category": "realestate",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "คนส่วนใหญ่ไม่เคยรู้เรื่องนี้เกี่ยวกับบ้าน",
+    "category": "realestate",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "หลายคนเข้าใจเรื่องอสังหาริมทรัพย์ผิดมาตลอด",
+    "category": "realestate",
+    "type": "myth",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ผมทดลองลงทุนแบบนี้ 1 ปี ผลลัพธ์น่าทึ่งมาก",
+    "category": "realestate",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "นี่คือสิ่งที่นักลงทุนอสังหาฯ มืออาชีพทำเหมือนกัน",
+    "category": "realestate",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+{
+  "id": 11,
+  "hook": "หลายคนเสียเงินหลักแสน เพราะมองข้ามเรื่องนี้",
+  "category": "realestate",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 12,
+  "hook": "ผมไม่คิดว่าทำเลจะสำคัญขนาดนี้ จนได้เห็นผลจริง",
+  "category": "realestate",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 13,
+  "hook": "เคล็ดลับเลือกบ้านที่คนซื้อส่วนใหญ่ไม่รู้",
+  "category": "realestate",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 14,
+  "hook": "90% ของคนดูบ้านผิดจุด",
+  "category": "realestate",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 15,
+  "hook": "ถ้ารู้เรื่องนี้เร็วกว่านี้ ผมคงไม่พลาดบ้านดี ๆ",
+  "category": "realestate",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 16,
+  "hook": "นี่อาจเป็นบทเรียนอสังหาฯ ที่สำคัญที่สุด",
+  "category": "realestate",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 17,
+  "hook": "หลายคนเข้าใจเรื่องการผ่อนบ้านผิดมาตลอด",
+  "category": "realestate",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 18,
+  "hook": "ผมลองใช้วิธีนี้ แล้วมูลค่าทรัพย์สินเพิ่มขึ้น",
+  "category": "realestate",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 19,
+  "hook": "นี่คือสิ่งที่ผมอยากรู้ก่อนซื้อคอนโด",
+  "category": "realestate",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 20,
+  "hook": "อย่าเพิ่งจองบ้าน จนกว่าจะรู้เรื่องนี้",
+  "category": "realestate",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 21,
+  "hook": "นี่คือเหตุผลที่บางโครงการขายดีมาก",
+  "category": "realestate",
+  "type": "problem",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "ผมเปลี่ยนวิธีลงทุนแค่เรื่องเดียว ผลตอบแทนต่างไปมาก",
+  "category": "realestate",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "ความลับที่นักลงทุนอสังหาฯ รายใหญ่เข้าใจกันดี",
+  "category": "realestate",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "หลายคนกำลังจ่ายแพงเกินจริงโดยไม่รู้ตัว",
+  "category": "realestate",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "90% ของผู้ซื้อไม่เคยตรวจสอบเรื่องนี้",
+  "category": "realestate",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "วิธีเลือกคอนโดที่ปล่อยเช่าได้ง่าย",
+  "category": "realestate",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "หลายคนคิดว่าซื้อบ้านคือหนี้เสมอไป",
+  "category": "realestate",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "ผมทดลองลงทุนอสังหาฯ 60 วัน ผลลัพธ์เกินคาด",
+  "category": "realestate",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "นี่คือสิ่งที่นักลงทุนมืออาชีพทำเหมือนกัน",
+  "category": "realestate",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับอสังหาฯ ให้จำเรื่องนี้",
+  "category": "realestate",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 31,
+  "hook": "นี่คือข้อผิดพลาดที่ทำให้นักลงทุนอสังหาฯ มือใหม่ขาดทุน",
+  "category": "realestate",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "ผมไม่คิดว่าการเลือกทำเลจะเปลี่ยนผลตอบแทนได้ขนาดนี้",
+  "category": "realestate",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "ความลับที่เจ้าของอสังหาฯ หลายคนไม่เคยบอก",
+  "category": "realestate",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "หยุดซื้อบ้านเพราะโปรโมชั่นอย่างเดียว",
+  "category": "realestate",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "สิ่งเล็ก ๆ นี้อาจเพิ่มมูลค่าทรัพย์สินได้มากกว่าที่คิด",
+  "category": "realestate",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "นี่คือเหตุผลที่บางคนรวยจากอสังหาฯ แต่บางคนไม่รอด",
+  "category": "realestate",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "วิธีเลือกอสังหาฯ ที่มีโอกาสเติบโตสูง",
+  "category": "realestate",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "หลายคนเข้าใจเรื่องทำเลทองผิดมาตลอด",
+  "category": "realestate",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "ผมใช้หลักการนี้ทุกครั้งก่อนซื้ออสังหาฯ",
+  "category": "realestate",
+  "type": "story",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "นี่คือสิ่งที่นักลงทุนอสังหาฯ ระดับมืออาชีพทำเหมือนกัน",
+  "category": "realestate",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "คนส่วนใหญ่ดูบ้านผิดจุดตั้งแต่ครั้งแรก",
+  "category": "realestate",
+  "type": "problem",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "ผมเกือบซื้อบ้านผิดหลัง เพราะไม่รู้เรื่องนี้",
+  "category": "realestate",
+  "type": "story",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "นี่คือความลับของคนที่สร้างรายได้จากค่าเช่า",
+  "category": "realestate",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "หลายคนกำลังซื้ออสังหาฯ แพงเกินจริง",
+  "category": "realestate",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "90% ของผู้ซื้อไม่เคยเช็กเรื่องนี้ก่อนโอน",
+  "category": "realestate",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "วิธีหาบ้านราคาดีในช่วงที่คนอื่นมองข้าม",
+  "category": "realestate",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "หลายคนคิดว่าอสังหาฯ ต้องใช้เงินเยอะเสมอ",
+  "category": "realestate",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "ผมเปลี่ยนวิธีลงทุนนี้ แล้วผลตอบแทนดีขึ้นมาก",
+  "category": "realestate",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "นี่คือสิ่งที่นักลงทุนที่ประสบความสำเร็จมีเหมือนกัน",
+  "category": "realestate",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "อย่าเซ็นสัญญาซื้อขาย จนกว่าจะรู้เรื่องนี้",
+  "category": "realestate",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "นี่คือบทเรียนอสังหาฯ ที่คุ้มค่าที่สุด",
+  "category": "realestate",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "คุณไม่จำเป็นต้องรวยก่อน ถึงจะเริ่มลงทุนอสังหาฯ ได้",
+  "category": "realestate",
+  "type": "mindset",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "หลายคนกำลังเสียโอกาสทองเพราะเรื่องนี้",
+  "category": "realestate",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนของพอร์ตอสังหาฯ คุณ",
+  "category": "realestate",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "ผมเกือบพลาดกำไรหลักแสน เพราะไม่รู้เรื่องนี้",
+  "category": "realestate",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "นี่คือความแตกต่างระหว่างนักลงทุนที่กำไรกับขาดทุน",
+  "category": "realestate",
+  "type": "comparison",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "หลายคนคิดว่าต้องรอให้พร้อมก่อนถึงจะลงทุนได้",
+  "category": "realestate",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "ผมเริ่มลงทุนแบบนี้ แล้วมูลค่าทรัพย์สินเพิ่มขึ้นทุกปี",
+  "category": "realestate",
+  "type": "story",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "นี่คือทักษะสำคัญที่สุดของนักลงทุนอสังหาฯ",
+  "category": "realestate",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับอสังหาฯ ให้จำเรื่องนี้",
+  "category": "realestate",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "นี่คือเหตุผลที่หลายคนลงทุนอสังหาฯ มาหลายปีแต่ยังไม่รวย",
+  "category": "realestate",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "ผมไม่คิดว่าการเลือกผู้เช่าจะสำคัญขนาดนี้",
+  "category": "realestate",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "ความลับที่นักลงทุนอสังหาฯ ระดับใหญ่เข้าใจดี",
+  "category": "realestate",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "ถ้าคุณยังซื้อทรัพย์แบบนี้อยู่ คุณอาจกำลังเสี่ยง",
+  "category": "realestate",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "90% ของนักลงทุนไม่เคยวิเคราะห์เรื่องนี้",
+  "category": "realestate",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "วิธีสร้างรายได้จากอสังหาฯ โดยไม่ต้องมีหลายหลัง",
+  "category": "realestate",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "หลายคนเข้าใจเรื่องกระแสเงินสดผิดมาตลอด",
+  "category": "realestate",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "ผมทดลองแนวทางนี้ 6 เดือน ผลลัพธ์เหลือเชื่อ",
+  "category": "realestate",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "นี่คือสิ่งที่นักลงทุนอสังหาฯ ที่ประสบความสำเร็จมีเหมือนกัน",
+  "category": "realestate",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "ถ้าคุณอยากเริ่มลงทุนอสังหาฯ ต้องรู้เรื่องนี้",
+  "category": "realestate",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "นี่คือสิ่งที่เปลี่ยนวิธีลงทุนของผมไปตลอดกาล",
+  "category": "realestate",
+  "type": "story",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "หลายคนมองข้ามสัญญาณเตือนนี้ก่อนซื้อทรัพย์",
+  "category": "realestate",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "นี่อาจเป็นเทคนิคลงทุนอสังหาฯ ที่ดีที่สุดที่คุณเคยได้ยิน",
+  "category": "realestate",
+  "type": "future",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "ผมเสียเงินไปมาก เพราะไม่เข้าใจเรื่องนี้",
+  "category": "realestate",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "นี่คือสิ่งที่นักลงทุนอสังหาฯ ที่กำไรต่อเนื่องทุกคนมีร่วมกัน",
+  "category": "realestate",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "ผลลัพธ์นี้ทำให้ผมเปลี่ยนมุมมองเรื่องอสังหาฯ ทั้งหมด",
+  "category": "realestate",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "หลายคนกำลังพลาดโอกาสทำกำไรเพราะเรื่องนี้",
+  "category": "realestate",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "นี่คือวิธีลงทุนอสังหาฯ แบบยั่งยืน",
+  "category": "realestate",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "ผมไม่เคยเล่าเรื่องนี้เกี่ยวกับการลงทุนอสังหาฯ ให้ใครฟังมาก่อน",
+  "category": "realestate",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับอสังหาฯ ให้ซื้อจากข้อมูล ไม่ใช่อารมณ์",
+  "category": "realestate",
+  "type": "motivation",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+}
+]

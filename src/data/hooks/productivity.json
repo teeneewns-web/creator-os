@@ -1,0 +1,902 @@
+[
+  {
+    "id": 1,
+    "hook": "คนที่ทำงานเก่งส่วนใหญ่มีนิสัยนี้",
+    "category": "productivity",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "หยุดทำสิ่งนี้ ถ้าอยากมีเวลามากขึ้น",
+    "category": "productivity",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "90% ของคนเสียเวลาไปกับเรื่องนี้",
+    "category": "productivity",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "ผมเปลี่ยนแค่นิสัยเดียว ชีวิตง่ายขึ้นมาก",
+    "category": "productivity",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "นี่คือเคล็ดลับที่คนสำเร็จใช้ทุกวัน",
+    "category": "productivity",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "ทำไมคุณถึงรู้สึกไม่มีเวลา",
+    "category": "productivity",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "วิธีทำงานเสร็จเร็วขึ้น 2 เท่า",
+    "category": "productivity",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "หลายคนเข้าใจเรื่องการจัดการเวลาผิด",
+    "category": "productivity",
+    "type": "myth",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ผมทดลองวิธีนี้ 30 วัน ผลคือ...",
+    "category": "productivity",
+    "type": "story",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "นี่คือเหตุผลที่คนบางคนทำงานได้มากกว่า",
+    "category": "productivity",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+{
+  "id": 11,
+  "hook": "หลายคนพลาดโอกาสดี ๆ เพราะนิสัยนี้",
+  "category": "productivity",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 12,
+  "hook": "ผมไม่คิดว่าการเปลี่ยนแค่นี้จะช่วยได้มาก",
+  "category": "productivity",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 13,
+  "hook": "เคล็ดลับที่คนทำงานเก่งไม่ค่อยบอก",
+  "category": "productivity",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 14,
+  "hook": "90% ของคนทำผิดเรื่องนี้ทุกวัน",
+  "category": "productivity",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 15,
+  "hook": "ถ้ารู้เรื่องนี้เร็วกว่านี้คงดี",
+  "category": "productivity",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 16,
+  "hook": "นี่อาจเป็นบทเรียนสำคัญที่สุด",
+  "category": "productivity",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 17,
+  "hook": "หลายคนเข้าใจเรื่องประสิทธิภาพผิดมาตลอด",
+  "category": "productivity",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 18,
+  "hook": "ผมลองแล้ว และมันได้ผลจริง",
+  "category": "productivity",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 19,
+  "hook": "นี่คือสิ่งที่ผมอยากรู้ตั้งแต่เริ่มทำงาน",
+  "category": "productivity",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 20,
+  "hook": "อย่าเพิ่งเลื่อนผ่าน จนกว่าจะอ่านจบ",
+  "category": "productivity",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 21,
+  "hook": "นี่คือเหตุผลที่คุณรู้สึกยุ่งตลอดเวลา",
+  "category": "productivity",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "ผมเปลี่ยนวิธีนี้ แล้วมีเวลามากขึ้นทุกวัน",
+  "category": "productivity",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "เคล็ดลับเล็ก ๆ ที่ช่วยประหยัดเวลาได้มหาศาล",
+  "category": "productivity",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "หลายคนกำลังเสียเวลาทำสิ่งนี้อยู่",
+  "category": "productivity",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "90% ของคนทำงานพลาดจุดนี้",
+  "category": "productivity",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "วิธีทำงานให้เสร็จเร็วขึ้นโดยไม่เหนื่อยกว่าเดิม",
+  "category": "productivity",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "หลายคนเชื่อเรื่องนี้เกี่ยวกับการจัดการเวลา แต่ไม่จริง",
+  "category": "productivity",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "ผมทดลองวิธีนี้ 14 วัน ผลลัพธ์เปลี่ยนไปมาก",
+  "category": "productivity",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "นี่คือสิ่งที่คนมีประสิทธิภาพสูงทำเหมือนกัน",
+  "category": "productivity",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียว ให้จำเรื่องนี้",
+  "category": "productivity",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 31,
+  "hook": "นี่คือข้อผิดพลาดที่ทำให้คุณเสียเวลาโดยไม่รู้ตัว",
+  "category": "productivity",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "ผมไม่คิดว่าวิธีนี้จะช่วยได้มากขนาดนี้",
+  "category": "productivity",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "ความลับที่คนทำงานเก่งใช้ทุกวัน",
+  "category": "productivity",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "หยุดทำสิ่งนี้ ถ้าอยากทำงานได้มากขึ้น",
+  "category": "productivity",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "สิ่งเล็ก ๆ นี้เปลี่ยนผลลัพธ์ทั้งหมด",
+  "category": "productivity",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "นี่คือเหตุผลที่คุณยังทำงานไม่เสร็จ",
+  "category": "productivity",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "วิธีจัดการเวลาแบบที่ได้ผลจริง",
+  "category": "productivity",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "หลายคนเข้าใจเรื่องโฟกัสผิดมาตลอด",
+  "category": "productivity",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "ผมใช้วิธีนี้ทุกวัน และชีวิตง่ายขึ้นมาก",
+  "category": "productivity",
+  "type": "story",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "นี่คือสิ่งที่คนสำเร็จทำต่างออกไป",
+  "category": "productivity",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "คนส่วนใหญ่ไม่เคยรู้เรื่องนี้",
+  "category": "productivity",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "บทเรียนนี้ช่วยผมประหยัดเวลาได้มาก",
+  "category": "productivity",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "นี่คือสิ่งที่ผมอยากรู้ตั้งแต่วันแรก",
+  "category": "productivity",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "ผลลัพธ์นี้ทำให้ผมตกใจมาก",
+  "category": "productivity",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "หลายคนกำลังโฟกัสผิดเรื่อง",
+  "category": "productivity",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "สิ่งเล็ก ๆ ที่ช่วยเพิ่มประสิทธิภาพได้มหาศาล",
+  "category": "productivity",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "ผมทดลองเรื่องนี้ด้วยตัวเอง",
+  "category": "productivity",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "นี่คือวิธีที่ได้ผลจริงสำหรับคนไม่มีเวลา",
+  "category": "productivity",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "หลายคนมองข้ามเรื่องนี้ไป",
+  "category": "productivity",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "ถ้าจะเปลี่ยนแค่เรื่องเดียว ให้เปลี่ยนเรื่องนี้",
+  "category": "productivity",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "นี่คือเหตุผลที่คุณยังไม่มีเวลา",
+  "category": "productivity",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "ผมไม่คิดว่านิสัยนี้จะเปลี่ยนชีวิตได้",
+  "category": "productivity",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "ความลับที่คนประสบความสำเร็จใช้ทุกวัน",
+  "category": "productivity",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "ถ้าคุณยังทำแบบนี้อยู่ คุณกำลังเสียเวลา",
+  "category": "productivity",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "90% ของคนทำงานพลาดเรื่องนี้",
+  "category": "productivity",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "วิธีเพิ่มเวลาว่างโดยไม่ต้องทำงานน้อยลง",
+  "category": "productivity",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "หลายคนเข้าใจเรื่องประสิทธิภาพผิดมาตลอด",
+  "category": "productivity",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "ผมทดลองวิธีนี้ 21 วัน ผลลัพธ์ต่างไปมาก",
+  "category": "productivity",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "นี่คือสิ่งที่คนมีผลงานสูงทำเหมือนกัน",
+  "category": "productivity",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "ถ้าคุณอยากเก่งขึ้น ต้องรู้เรื่องนี้",
+  "category": "productivity",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 61,
+  "hook": "หลายคนกำลังเหนื่อยโดยไม่จำเป็น",
+  "category": "productivity",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 62,
+  "hook": "ผมเปลี่ยนสิ่งนี้ แล้วทำงานได้เร็วขึ้น",
+  "category": "productivity",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 63,
+  "hook": "เคล็ดลับที่ช่วยผมประหยัดเวลาได้วันละชั่วโมง",
+  "category": "productivity",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 64,
+  "hook": "หลายคนยังทำผิดเรื่องนี้ทุกวัน",
+  "category": "productivity",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 65,
+  "hook": "ถ้ารู้เรื่องนี้เร็วกว่านี้ ชีวิตคงง่ายกว่านี้",
+  "category": "productivity",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 66,
+  "hook": "นี่คือข้อมูลที่คนทำงานทุกคนควรรู้",
+  "category": "productivity",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 67,
+  "hook": "หลายคนเชื่อเรื่องนี้ แต่ไม่จริง",
+  "category": "productivity",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 68,
+  "hook": "ผลลัพธ์จากการทำสิ่งนี้ทุกวันน่าทึ่งมาก",
+  "category": "productivity",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 69,
+  "hook": "นี่คือความแตกต่างระหว่างคนยุ่งกับคนมีประสิทธิภาพ",
+  "category": "productivity",
+  "type": "comparison",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 70,
+  "hook": "สิ่งนี้อาจเปลี่ยนวิธีทำงานของคุณไปเลย",
+  "category": "productivity",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 71,
+  "hook": "นี่คือเหตุผลที่คนเก่งทำงานน้อยกว่าแต่ได้ผลมากกว่า",
+  "category": "productivity",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 72,
+  "hook": "ผมไม่เคยคิดว่าเรื่องนี้จะสำคัญขนาดนี้",
+  "category": "productivity",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 73,
+  "hook": "เคล็ดลับที่ช่วยให้โฟกัสได้นานขึ้น",
+  "category": "productivity",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 74,
+  "hook": "หลายคนกำลังเสียเวลาโดยไม่รู้ตัว",
+  "category": "productivity",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 75,
+  "hook": "90% ของคนยังจัดลำดับความสำคัญผิด",
+  "category": "productivity",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 76,
+  "hook": "วิธีทำงานให้เสร็จโดยไม่ต้องฝืนตัวเอง",
+  "category": "productivity",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 77,
+  "hook": "สิ่งที่คนส่วนใหญ่เชื่อเกี่ยวกับความขยัน ไม่จริง",
+  "category": "productivity",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 78,
+  "hook": "ผมลองทำแบบนี้ทุกเช้า ผลลัพธ์ต่างไปมาก",
+  "category": "productivity",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 79,
+  "hook": "นี่คือสิ่งที่คนประสบความสำเร็จทำก่อน 9 โมง",
+  "category": "productivity",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 80,
+  "hook": "ถ้าคุณรู้สึกไม่มีเวลา ต้องอ่านสิ่งนี้",
+  "category": "productivity",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "ผลลัพธ์นี้ทำให้ผมเปลี่ยนวิธีทำงานไปเลย",
+  "category": "productivity",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "นี่คือบทเรียนที่ช่วยผมได้มากที่สุด",
+  "category": "productivity",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "คนส่วนใหญ่ไม่เคยสังเกตเรื่องนี้",
+  "category": "productivity",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "ผมเสียเวลาไปหลายปี เพราะไม่รู้เรื่องนี้",
+  "category": "productivity",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "หลายคนกำลังทำตรงข้ามกับสิ่งที่ควรทำ",
+  "category": "productivity",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "นี่คือทางลัดที่ช่วยประหยัดเวลาได้มาก",
+  "category": "productivity",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "สิ่งเล็ก ๆ นี้สร้างความแตกต่างมหาศาล",
+  "category": "productivity",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "ผมทดลองเรื่องนี้ด้วยตัวเอง และผลลัพธ์ชัดเจนมาก",
+  "category": "productivity",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "นี่คือสิ่งที่คุณควรรู้ก่อนเริ่มวันใหม่",
+  "category": "productivity",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "หลายคนพลาดจุดสำคัญที่สุด",
+  "category": "productivity",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "นี่อาจเป็นเคล็ดลับที่คุ้มค่าที่สุด",
+  "category": "productivity",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "ผมไม่เคยเล่าเรื่องนี้ที่ไหนมาก่อน",
+  "category": "productivity",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "สิ่งนี้เปลี่ยนทุกอย่าง",
+  "category": "productivity",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "หลายคนกำลังมองผิดจุด",
+  "category": "productivity",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "นี่คือคำตอบที่ผมหามานาน",
+  "category": "productivity",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "ผลลัพธ์นี้ทำให้ผมตกใจจริง ๆ",
+  "category": "productivity",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "นี่คือสิ่งที่คนเก่งทำเหมือนกัน",
+  "category": "productivity",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "ถ้าคุณอยากทำงานเก่งขึ้น เริ่มจากสิ่งนี้",
+  "category": "productivity",
+  "type": "motivation",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "นี่คือความจริงที่หลายคนไม่ยอมรับ",
+  "category": "productivity",
+  "type": "curiosity",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียว ให้จำเรื่องนี้",
+  "category": "productivity",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+}
+] 

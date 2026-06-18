@@ -1,0 +1,902 @@
+[
+  {
+    "id": 1,
+    "hook": "90% ของคนไม่พัฒนาตัวเอง เพราะเรื่องนี้",
+    "category": "self_improvement",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "หยุดทำสิ่งนี้ ถ้าอยากเปลี่ยนชีวิต",
+    "category": "self_improvement",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "ความลับที่คนประสบความสำเร็จใช้ทุกวัน",
+    "category": "self_improvement",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "ผมเปลี่ยนนิสัยนี้อย่างเดียว ชีวิตก็ดีขึ้นมาก",
+    "category": "self_improvement",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "นี่คือเหตุผลที่คุณยังไม่ไปถึงเป้าหมาย",
+    "category": "self_improvement",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "วิธีพัฒนาตัวเองวันละ 1% แบบที่ทำได้จริง",
+    "category": "self_improvement",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "คนส่วนใหญ่ไม่เคยรู้เรื่องนี้เกี่ยวกับความสำเร็จ",
+    "category": "self_improvement",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "หลายคนเข้าใจเรื่องการพัฒนาตัวเองผิดมาตลอด",
+    "category": "self_improvement",
+    "type": "myth",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ผมทดลองวิธีนี้ 30 วัน ผลลัพธ์น่าทึ่งมาก",
+    "category": "self_improvement",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "นี่คือสิ่งที่คนเก่ง ๆ ทำเหมือนกัน",
+    "category": "self_improvement",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+{
+  "id": 11,
+  "hook": "หลายคนใช้ชีวิตแบบเดิม แล้วหวังผลลัพธ์ใหม่",
+  "category": "self_improvement",
+  "type": "warning",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 12,
+  "hook": "ผมไม่คิดว่านิสัยเล็ก ๆ นี้จะเปลี่ยนชีวิตได้ขนาดนี้",
+  "category": "self_improvement",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 13,
+  "hook": "เคล็ดลับที่คนประสบความสำเร็จไม่ค่อยบอกใคร",
+  "category": "self_improvement",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 14,
+  "hook": "90% ของคนล้มเหลวเพราะพลาดเรื่องนี้",
+  "category": "self_improvement",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 15,
+  "hook": "ถ้ารู้เรื่องนี้เร็วกว่านี้ ชีวิตผมคงไปไกลกว่านี้",
+  "category": "self_improvement",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 16,
+  "hook": "นี่อาจเป็นบทเรียนชีวิตที่สำคัญที่สุด",
+  "category": "self_improvement",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 17,
+  "hook": "หลายคนเข้าใจเรื่องวินัยผิดมาตลอด",
+  "category": "self_improvement",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 18,
+  "hook": "ผมลองทำแบบนี้ แล้วชีวิตดีขึ้นทุกด้าน",
+  "category": "self_improvement",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 19,
+  "hook": "นี่คือสิ่งที่ผมอยากรู้ตั้งแต่อายุ 20",
+  "category": "self_improvement",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 20,
+  "hook": "อย่าเพิ่งตั้งเป้าหมายใหม่ จนกว่าจะรู้เรื่องนี้",
+  "category": "self_improvement",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 21,
+  "hook": "นี่คือเหตุผลที่คุณเริ่มต้นได้ดี แต่ไปไม่ถึงไหน",
+  "category": "self_improvement",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "ผมเปลี่ยนสิ่งนี้อย่างเดียว ผลลัพธ์เปลี่ยนทั้งชีวิต",
+  "category": "self_improvement",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "ความลับที่คนระดับท็อปใช้พัฒนาตัวเอง",
+  "category": "self_improvement",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "หลายคนกำลังเสียเวลาไปกับเรื่องไม่สำคัญ",
+  "category": "self_improvement",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "90% ของคนไม่เคยวางแผนเรื่องนี้",
+  "category": "self_improvement",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "วิธีพัฒนาตัวเองโดยไม่ต้องใช้แรงจูงใจ",
+  "category": "self_improvement",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "หลายคนคิดว่าต้องเก่งก่อนถึงจะเริ่มได้",
+  "category": "self_improvement",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "ผมทดลองวิธีนี้ 60 วัน ผลลัพธ์ต่างไปมาก",
+  "category": "self_improvement",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "นี่คือสิ่งที่คนที่ก้าวหน้าเร็วทำเหมือนกัน",
+  "category": "self_improvement",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับการพัฒนาตัวเอง ให้จำเรื่องนี้",
+  "category": "self_improvement",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 31,
+  "hook": "นี่คือข้อผิดพลาดที่ทำให้คุณไม่เติบโตสักที",
+  "category": "self_improvement",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "ผมไม่คิดว่าการตื่นเช้าจะเปลี่ยนชีวิตได้ขนาดนี้",
+  "category": "self_improvement",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "ความลับที่คนประสบความสำเร็จส่วนใหญ่มีเหมือนกัน",
+  "category": "self_improvement",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "หยุดทำสิ่งนี้ ถ้าไม่อยากเสียเวลาไปอีกหลายปี",
+  "category": "self_improvement",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "สิ่งเล็ก ๆ นี้ช่วยให้ชีวิตดีขึ้นอย่างไม่น่าเชื่อ",
+  "category": "self_improvement",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "นี่คือเหตุผลที่คุณยังไม่ไปถึงจุดที่ต้องการ",
+  "category": "self_improvement",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "วิธีพัฒนาตัวเองโดยไม่ต้องพึ่งแรงบันดาลใจ",
+  "category": "self_improvement",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "หลายคนเข้าใจเรื่องความสำเร็จผิดมาตลอด",
+  "category": "self_improvement",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "ผมใช้วิธีนี้ทุกวัน และชีวิตเปลี่ยนไปมาก",
+  "category": "self_improvement",
+  "type": "story",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "นี่คือสิ่งที่คนที่ก้าวหน้าเร็วทำเหมือนกัน",
+  "category": "self_improvement",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "คนส่วนใหญ่กำลังใช้ชีวิตต่ำกว่าศักยภาพตัวเอง",
+  "category": "self_improvement",
+  "type": "problem",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "ผมเกือบพลาดโอกาสสำคัญ เพราะคิดแบบนี้",
+  "category": "self_improvement",
+  "type": "story",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "นี่คือความลับของคนที่พัฒนาตัวเองได้ต่อเนื่อง",
+  "category": "self_improvement",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "หลายคนกำลังขัดขวางความสำเร็จตัวเองอยู่",
+  "category": "self_improvement",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "90% ของคนไม่เคยทำสิ่งนี้อย่างจริงจัง",
+  "category": "self_improvement",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "วิธีสร้างวินัยที่อยู่กับคุณตลอดชีวิต",
+  "category": "self_improvement",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "หลายคนคิดว่าคนเก่งเกิดมาเก่งอยู่แล้ว",
+  "category": "self_improvement",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "ผมเปลี่ยนวิธีคิดนี้ แล้วทุกอย่างดีขึ้น",
+  "category": "self_improvement",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "นี่คือสิ่งที่คนที่ประสบความสำเร็จระดับสูงมีเหมือนกัน",
+  "category": "self_improvement",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "อย่าเริ่มปีใหม่โดยไม่รู้เรื่องนี้",
+  "category": "self_improvement",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "นี่คือบทเรียนชีวิตที่คุ้มค่าที่สุด",
+  "category": "self_improvement",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "คุณไม่จำเป็นต้องเก่งที่สุด เพื่อประสบความสำเร็จ",
+  "category": "self_improvement",
+  "type": "mindset",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "หลายคนกำลังเสียอนาคตเพราะนิสัยนี้",
+  "category": "self_improvement",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนของชีวิตคุณ",
+  "category": "self_improvement",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "ผมเกือบพลาดชีวิตที่ต้องการเพราะเรื่องนี้",
+  "category": "self_improvement",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "นี่คือความแตกต่างระหว่างคนที่สำเร็จกับคนที่ยอมแพ้",
+  "category": "self_improvement",
+  "type": "comparison",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "หลายคนคิดว่าต้องพร้อมก่อนถึงจะเริ่มได้",
+  "category": "self_improvement",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "ผมเริ่มทำสิ่งนี้ แล้วชีวิตดีขึ้นทุกเดือน",
+  "category": "self_improvement",
+  "type": "story",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "นี่คือทักษะสำคัญที่สุดในการพัฒนาตัวเอง",
+  "category": "self_improvement",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับการพัฒนาตัวเอง ให้จำเรื่องนี้",
+  "category": "self_improvement",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 61,
+  "hook": "นี่คือเหตุผลที่หลายคนไม่เคยเปลี่ยนชีวิตได้จริง",
+  "category": "self_improvement",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 62,
+  "hook": "ผมไม่คิดว่าการอ่านวันละ 10 นาทีจะเปลี่ยนชีวิตได้ขนาดนี้",
+  "category": "self_improvement",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 63,
+  "hook": "ความลับที่คนเก่งใช้พัฒนาตัวเองอย่างต่อเนื่อง",
+  "category": "self_improvement",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 64,
+  "hook": "ถ้าคุณยังทำแบบนี้อยู่ คุณอาจเสียเวลาไปหลายปี",
+  "category": "self_improvement",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 65,
+  "hook": "90% ของคนไม่รู้ว่าตัวเองกำลังติดอยู่กับนิสัยนี้",
+  "category": "self_improvement",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 66,
+  "hook": "วิธีเปลี่ยนชีวิตทีละนิดแบบไม่กดดันตัวเอง",
+  "category": "self_improvement",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 67,
+  "hook": "หลายคนเข้าใจเรื่องเป้าหมายผิดมาตลอด",
+  "category": "self_improvement",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 68,
+  "hook": "ผมทดลองเปลี่ยนกิจวัตรนี้ 1 ปีเต็ม ผลลัพธ์ต่างไปมาก",
+  "category": "self_improvement",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 69,
+  "hook": "นี่คือสิ่งที่คนที่พัฒนาตัวเองเก่งทำเหมือนกัน",
+  "category": "self_improvement",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 70,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนครั้งใหญ่ของชีวิตคุณ",
+  "category": "self_improvement",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 71,
+  "hook": "นี่คือเหตุผลที่คุณยังไม่มีชีวิตแบบที่ต้องการ",
+  "category": "self_improvement",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 72,
+  "hook": "วิธีสร้างตัวตนใหม่โดยไม่ต้องเริ่มจากศูนย์",
+  "category": "self_improvement",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 73,
+  "hook": "คนส่วนใหญ่ไม่เคยรู้เรื่องนี้เกี่ยวกับการเติบโต",
+  "category": "self_improvement",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 74,
+  "hook": "นี่คือบทเรียนที่เปลี่ยนชีวิตผมมากที่สุด",
+  "category": "self_improvement",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 75,
+  "hook": "ผลลัพธ์นี้ทำให้ผมเปลี่ยนวิธีใช้ชีวิตทั้งหมด",
+  "category": "self_improvement",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 76,
+  "hook": "หลายคนกำลังพยายามผิดวิธี",
+  "category": "self_improvement",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 77,
+  "hook": "สิ่งเล็ก ๆ นี้ช่วยให้ชีวิตดีขึ้นมหาศาล",
+  "category": "self_improvement",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 78,
+  "hook": "ผมใช้หลักการนี้มาหลายปี และไม่เคยเสียใจ",
+  "category": "self_improvement",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 79,
+  "hook": "นี่คือทางลัดที่ช่วยให้พัฒนาตัวเองเร็วขึ้น",
+  "category": "self_improvement",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 80,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับการพัฒนาตัวเอง ให้จำเรื่องนี้",
+  "category": "self_improvement",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "นี่คือเหตุผลที่หลายคนล้มเลิกความฝันกลางทาง",
+  "category": "self_improvement",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "ผมไม่คิดว่าการเปลี่ยนคำถามกับตัวเองจะเปลี่ยนชีวิตได้",
+  "category": "self_improvement",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "ความลับที่คนประสบความสำเร็จสูงเข้าใจดี",
+  "category": "self_improvement",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "ถ้าคุณยังทำแบบนี้อยู่ คุณอาจกำลังทำลายอนาคตตัวเอง",
+  "category": "self_improvement",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "90% ของคนไม่รู้ว่าตัวเองกำลังเสียเวลาไปกับเรื่องนี้",
+  "category": "self_improvement",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "วิธีสร้างชีวิตที่ดีขึ้นโดยไม่ต้องเปลี่ยนทุกอย่าง",
+  "category": "self_improvement",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "หลายคนเข้าใจเรื่องศักยภาพตัวเองผิดมาตลอด",
+  "category": "self_improvement",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "ผมทดลองเปลี่ยนแนวคิดนี้ 6 เดือน ผลลัพธ์เหลือเชื่อ",
+  "category": "self_improvement",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "นี่คือสิ่งที่คนที่เติบโตเร็วมีเหมือนกัน",
+  "category": "self_improvement",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "ถ้าคุณอยากเปลี่ยนชีวิตจริง ๆ ต้องรู้เรื่องนี้",
+  "category": "self_improvement",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "นี่คือสิ่งที่เปลี่ยนชีวิตผมจากคนธรรมดา",
+  "category": "self_improvement",
+  "type": "story",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "หลายคนมองข้ามสัญญาณเตือนนี้ในชีวิต",
+  "category": "self_improvement",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "นี่อาจเป็นแนวคิดที่เปลี่ยนอนาคตคุณได้",
+  "category": "self_improvement",
+  "type": "future",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "ผมเสียเวลาไปหลายปี เพราะไม่เข้าใจเรื่องนี้",
+  "category": "self_improvement",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "นี่คือสิ่งที่คนที่ประสบความสำเร็จทุกคนมีร่วมกัน",
+  "category": "self_improvement",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "ผลลัพธ์นี้ทำให้ผมเปลี่ยนชีวิตทั้งชีวิต",
+  "category": "self_improvement",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "หลายคนกำลังพลาดโอกาสสำคัญเพราะเรื่องนี้",
+  "category": "self_improvement",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "นี่คือวิธีพัฒนาตัวเองแบบยั่งยืน",
+  "category": "self_improvement",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "ผมไม่เคยเล่าเรื่องนี้เกี่ยวกับการเปลี่ยนชีวิตให้ใครฟังมาก่อน",
+  "category": "self_improvement",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับการพัฒนาตัวเอง ให้ลงมือทำวันนี้",
+  "category": "self_improvement",
+  "type": "motivation",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+}
+]

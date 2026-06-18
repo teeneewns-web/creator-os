@@ -1,0 +1,902 @@
+[
+  {
+    "id": 1,
+    "hook": "90% ของคนทำลายความสัมพันธ์โดยไม่รู้ตัว",
+    "category": "relationships",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "หยุดทำสิ่งนี้ ถ้าไม่อยากให้เขาถอยห่าง",
+    "category": "relationships",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "ความลับที่คู่รักมีความสุขใช้กัน",
+    "category": "relationships",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "ผมเปลี่ยนสิ่งนี้อย่างเดียว ความสัมพันธ์ก็ดีขึ้น",
+    "category": "relationships",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "นี่คือเหตุผลที่หลายคู่ไปต่อไม่ได้",
+    "category": "relationships",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "วิธีทำให้ความสัมพันธ์แข็งแรงขึ้นทุกวัน",
+    "category": "relationships",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "คนส่วนใหญ่ไม่เคยรู้เรื่องนี้เกี่ยวกับความรัก",
+    "category": "relationships",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "หลายคนเข้าใจเรื่องความรักผิดมาตลอด",
+    "category": "relationships",
+    "type": "myth",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ผมทดลองวิธีนี้ 30 วัน ผลลัพธ์เปลี่ยนไปมาก",
+    "category": "relationships",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "นี่คือสิ่งที่คู่รักที่ไปกันรอดทำเหมือนกัน",
+    "category": "relationships",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+{
+  "id": 11,
+  "hook": "หลายคนผลักคนที่รักออกไปโดยไม่รู้ตัว",
+  "category": "relationships",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 12,
+  "hook": "ผมไม่คิดว่าคำพูดสั้น ๆ จะเปลี่ยนความสัมพันธ์ได้ขนาดนี้",
+  "category": "relationships",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 13,
+  "hook": "เคล็ดลับที่คู่รักมีความสุขใช้ทุกวัน",
+  "category": "relationships",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 14,
+  "hook": "90% ของคนพลาดเรื่องนี้ในความสัมพันธ์",
+  "category": "relationships",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 15,
+  "hook": "ถ้ารู้เรื่องนี้เร็วกว่านี้ ผมคงไม่เสียคนสำคัญไป",
+  "category": "relationships",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 16,
+  "hook": "นี่อาจเป็นบทเรียนความรักที่สำคัญที่สุด",
+  "category": "relationships",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 17,
+  "hook": "หลายคนเข้าใจเรื่องคนรักผิดมาตลอด",
+  "category": "relationships",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 18,
+  "hook": "ผมลองทำแบบนี้ แล้วความสัมพันธ์ดีขึ้นทันที",
+  "category": "relationships",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 19,
+  "hook": "นี่คือสิ่งที่ผมอยากรู้ก่อนเริ่มความสัมพันธ์",
+  "category": "relationships",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 20,
+  "hook": "อย่าเพิ่งตัดสินใจเรื่องความรัก จนกว่าจะรู้เรื่องนี้",
+  "category": "relationships",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 21,
+  "hook": "นี่คือเหตุผลที่คนสองคนเริ่มห่างกัน",
+  "category": "relationships",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "ผมเปลี่ยนสิ่งนี้อย่างเดียว ทุกอย่างก็ดีขึ้น",
+  "category": "relationships",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "ความลับที่คนรักกันนาน ๆ เข้าใจ",
+  "category": "relationships",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "หลายคนกำลังทำร้ายความสัมพันธ์โดยไม่รู้ตัว",
+  "category": "relationships",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "90% ของคู่รักไม่เคยคุยเรื่องนี้",
+  "category": "relationships",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "วิธีทำให้คนรักรู้สึกมีคุณค่า",
+  "category": "relationships",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "หลายคนคิดว่าความรักอย่างเดียวก็พอ",
+  "category": "relationships",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "ผมทดลองเปลี่ยนพฤติกรรมนี้ 60 วัน ผลลัพธ์ต่างไปมาก",
+  "category": "relationships",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "นี่คือสิ่งที่คู่รักที่มีความสุขทำเหมือนกัน",
+  "category": "relationships",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับความสัมพันธ์ ให้จำเรื่องนี้",
+  "category": "relationships",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 31,
+  "hook": "นี่คือข้อผิดพลาดที่ทำให้ความสัมพันธ์พังโดยไม่รู้ตัว",
+  "category": "relationships",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "ผมไม่คิดว่าการฟังมากขึ้นจะเปลี่ยนทุกอย่างได้",
+  "category": "relationships",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "ความลับที่คู่รักที่อยู่กันนานเข้าใจดี",
+  "category": "relationships",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "หยุดทำสิ่งนี้ ถ้าไม่อยากให้เขาเสียความรู้สึก",
+  "category": "relationships",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "สิ่งเล็ก ๆ นี้ช่วยให้ความสัมพันธ์ดีขึ้นอย่างไม่น่าเชื่อ",
+  "category": "relationships",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "นี่คือเหตุผลที่คนรักเริ่มไม่เหมือนเดิม",
+  "category": "relationships",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "วิธีสร้างความไว้วางใจให้แข็งแรงขึ้น",
+  "category": "relationships",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "หลายคนเข้าใจเรื่องความผูกพันผิดมาตลอด",
+  "category": "relationships",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "ผมใช้วิธีนี้ทุกวัน และความสัมพันธ์เปลี่ยนไปมาก",
+  "category": "relationships",
+  "type": "story",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "นี่คือสิ่งที่คู่รักที่แข็งแรงทำเหมือนกัน",
+  "category": "relationships",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "คนส่วนใหญ่ไม่รู้ว่าคำพูดนี้ทำร้ายความสัมพันธ์",
+  "category": "relationships",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "ผมเกือบเสียคนสำคัญไป เพราะมองข้ามเรื่องนี้",
+  "category": "relationships",
+  "type": "story",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "นี่คือความลับของคู่รักที่ผ่านทุกปัญหาไปได้",
+  "category": "relationships",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "หลายคนกำลังสร้างระยะห่างโดยไม่รู้ตัว",
+  "category": "relationships",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "90% ของคู่รักไม่เคยถามคำถามนี้กัน",
+  "category": "relationships",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "วิธีคุยกันให้เข้าใจมากขึ้นโดยไม่ทะเลาะ",
+  "category": "relationships",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "หลายคนคิดว่าความเงียบคือเรื่องปกติ",
+  "category": "relationships",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "ผมเปลี่ยนพฤติกรรมนี้ แล้วทุกอย่างดีขึ้นทันที",
+  "category": "relationships",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "นี่คือสิ่งที่คู่รักที่มั่นคงมีเหมือนกัน",
+  "category": "relationships",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "อย่าเพิ่งตัดสินใจเลิกกัน จนกว่าจะคิดเรื่องนี้",
+  "category": "relationships",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "นี่คือบทเรียนความสัมพันธ์ที่คุ้มค่าที่สุด",
+  "category": "relationships",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "คุณไม่จำเป็นต้องสมบูรณ์แบบเพื่อถูกรัก",
+  "category": "relationships",
+  "type": "mindset",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "หลายคนกำลังทำเรื่องนี้ผิดทุกวัน",
+  "category": "relationships",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนของความสัมพันธ์คุณ",
+  "category": "relationships",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "ผมเกือบเสียความรักดี ๆ ไปเพราะเรื่องนี้",
+  "category": "relationships",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "นี่คือความแตกต่างระหว่างคู่ที่รอดกับคู่ที่เลิก",
+  "category": "relationships",
+  "type": "comparison",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "หลายคนคิดว่าความรักจะอยู่ได้เอง",
+  "category": "relationships",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "ผมเริ่มทำสิ่งนี้ แล้วความสัมพันธ์ดีขึ้นทุกเดือน",
+  "category": "relationships",
+  "type": "story",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "นี่คือทักษะสำคัญที่สุดในการรักษาความสัมพันธ์",
+  "category": "relationships",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับความสัมพันธ์ ให้จำเรื่องนี้",
+  "category": "relationships",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 61,
+  "hook": "นี่คือเหตุผลที่หลายความสัมพันธ์ค่อย ๆ จบลง",
+  "category": "relationships",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 62,
+  "hook": "ผมไม่คิดว่าการใส่ใจเรื่องเล็ก ๆ จะสำคัญขนาดนี้",
+  "category": "relationships",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 63,
+  "hook": "ความลับที่คู่รักที่อยู่ด้วยกันนานหลายปีรู้กัน",
+  "category": "relationships",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 64,
+  "hook": "ถ้าคุณยังทำแบบนี้อยู่ เขาอาจค่อย ๆ หมดใจ",
+  "category": "relationships",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 65,
+  "hook": "90% ของคนมองข้ามเรื่องสำคัญข้อนี้",
+  "category": "relationships",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 66,
+  "hook": "วิธีทำให้ความสัมพันธ์มั่นคงขึ้นในระยะยาว",
+  "category": "relationships",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 67,
+  "hook": "หลายคนเข้าใจเรื่องความผูกพันผิดมาตลอด",
+  "category": "relationships",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 68,
+  "hook": "ผมทดลองเปลี่ยนวิธีคุย 90 วัน ผลลัพธ์ต่างไปมาก",
+  "category": "relationships",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 69,
+  "hook": "นี่คือสิ่งที่คู่รักที่มีความสุขทำเหมือนกัน",
+  "category": "relationships",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 70,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนของความรักคุณ",
+  "category": "relationships",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 71,
+  "hook": "นี่คือเหตุผลที่อีกฝ่ายเริ่มเงียบลง",
+  "category": "relationships",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 72,
+  "hook": "วิธีสร้างความใกล้ชิดโดยไม่ต้องพยายามมากเกินไป",
+  "category": "relationships",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 73,
+  "hook": "คนส่วนใหญ่ไม่เคยรู้เรื่องนี้เกี่ยวกับความรู้สึก",
+  "category": "relationships",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 74,
+  "hook": "นี่คือบทเรียนความรักที่แพงที่สุดของผม",
+  "category": "relationships",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 75,
+  "hook": "ผลลัพธ์นี้ทำให้ผมเปลี่ยนมุมมองเรื่องความรักทั้งหมด",
+  "category": "relationships",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 76,
+  "hook": "หลายคนกำลังโฟกัสผิดเรื่องในความสัมพันธ์",
+  "category": "relationships",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 77,
+  "hook": "สิ่งเล็ก ๆ นี้ช่วยให้ความรักดีขึ้นมหาศาล",
+  "category": "relationships",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 78,
+  "hook": "ผมใช้วิธีนี้ทุกวันมาหลายปี",
+  "category": "relationships",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 79,
+  "hook": "นี่คือทางลัดที่ช่วยให้เข้าใจกันมากขึ้น",
+  "category": "relationships",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 80,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับความสัมพันธ์ ให้จำเรื่องนี้",
+  "category": "relationships",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "นี่คือเหตุผลที่หลายคนจบความสัมพันธ์ทั้งที่ยังรักกัน",
+  "category": "relationships",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "ผมไม่คิดว่าการเปลี่ยนคำพูดไม่กี่คำจะเปลี่ยนทุกอย่างได้",
+  "category": "relationships",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "ความลับที่คนมีความรักที่มั่นคงเข้าใจ",
+  "category": "relationships",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "ถ้าคุณยังทำแบบนี้อยู่ เขาอาจกำลังถอยห่าง",
+  "category": "relationships",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "90% ของคนไม่รู้ว่าตัวเองกำลังทำพลาด",
+  "category": "relationships",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "วิธีรักษาความรักให้อยู่ได้นานขึ้น",
+  "category": "relationships",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "หลายคนเข้าใจเรื่องการสื่อสารผิดมาตลอด",
+  "category": "relationships",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "ผมทดลองเปลี่ยนพฤติกรรมนี้ 6 เดือน ผลลัพธ์เหลือเชื่อ",
+  "category": "relationships",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "นี่คือสิ่งที่คู่รักที่ประสบความสำเร็จมีเหมือนกัน",
+  "category": "relationships",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "ถ้าคุณอยากรักษาความรักไว้ ต้องรู้เรื่องนี้",
+  "category": "relationships",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "นี่คือสิ่งที่เปลี่ยนมุมมองความรักของผมไปตลอดกาล",
+  "category": "relationships",
+  "type": "story",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "หลายคนมองข้ามสัญญาณเตือนนี้",
+  "category": "relationships",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "นี่อาจเป็นคำแนะนำเรื่องความรักที่ดีที่สุดที่คุณเคยได้ยิน",
+  "category": "relationships",
+  "type": "future",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "ผมเสียคนสำคัญไป เพราะไม่เข้าใจเรื่องนี้",
+  "category": "relationships",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "นี่คือสิ่งที่คู่รักที่อยู่กันยาวนานทุกคู่มีร่วมกัน",
+  "category": "relationships",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "ผลลัพธ์นี้ทำให้ผมเปลี่ยนวิธีมองความรักทั้งหมด",
+  "category": "relationships",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "หลายคนกำลังพลาดโอกาสมีความสัมพันธ์ที่ดีกว่า",
+  "category": "relationships",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "นี่คือวิธีสร้างความสัมพันธ์ที่ยั่งยืน",
+  "category": "relationships",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "ผมไม่เคยเล่าเรื่องนี้เกี่ยวกับความรักให้ใครฟังมาก่อน",
+  "category": "relationships",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับความสัมพันธ์ ให้สื่อสารกันให้มากขึ้น",
+  "category": "relationships",
+  "type": "motivation",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+}
+]

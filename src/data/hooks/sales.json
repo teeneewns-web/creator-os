@@ -1,0 +1,902 @@
+[
+  {
+    "id": 1,
+    "hook": "ลูกค้าส่วนใหญ่ตัดสินใจซื้อเพราะสิ่งนี้",
+    "category": "sales",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "หยุดขายแบบนี้ ถ้ายังไม่อยากยอดตก",
+    "category": "sales",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "เทคนิคปิดการขายที่มือใหม่ไม่ค่อยรู้",
+    "category": "sales",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "ผมเปลี่ยนประโยคเดียว ยอดขายเพิ่มขึ้นทันที",
+    "category": "sales",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "90% ของร้านค้าพลาดเรื่องนี้",
+    "category": "sales",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "นี่คือเหตุผลที่ลูกค้าไม่กดสั่งซื้อ",
+    "category": "sales",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "วิธีเพิ่มยอดขายโดยไม่ต้องเพิ่มงบโฆษณา",
+    "category": "sales",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "ลูกค้าเห็นโพสต์แล้วเลื่อนผ่าน เพราะสิ่งนี้",
+    "category": "sales",
+    "type": "warning",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "นี่คือประโยคเปิดการขายที่ผมใช้บ่อยที่สุด",
+    "category": "sales",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "ลูกค้าไม่ได้ซื้อสินค้า แต่ซื้อสิ่งนี้",
+    "category": "sales",
+    "type": "contrarian",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+{
+  "id": 11,
+  "hook": "ผมแก้จุดเดียว ยอดขายเพิ่มขึ้นเกือบเท่าตัว",
+  "category": "sales",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 12,
+  "hook": "สิ่งแรกที่ลูกค้าดู ก่อนตัดสินใจซื้อ",
+  "category": "sales",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 13,
+  "hook": "ถ้าลูกค้าบอกว่าแพง คุณควรตอบแบบนี้",
+  "category": "sales",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 14,
+  "hook": "หลายร้านเสียลูกค้าโดยไม่รู้ตัว",
+  "category": "sales",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 15,
+  "hook": "ประโยคนี้ช่วยปิดการขายได้ดีอย่างไม่น่าเชื่อ",
+  "category": "sales",
+  "type": "secret",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 16,
+  "hook": "ลูกค้าตัดสินใจภายในไม่กี่วินาทีจริงหรือ",
+  "category": "sales",
+  "type": "question",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 17,
+  "hook": "นี่คือข้อผิดพลาดที่ทำให้ยอดขายหายไป",
+  "category": "sales",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 18,
+  "hook": "คนซื้อเพราะอารมณ์ มากกว่าเหตุผล",
+  "category": "sales",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 19,
+  "hook": "วิธีเขียนโพสต์ขายของให้คนหยุดเลื่อน",
+  "category": "sales",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 20,
+  "hook": "ผมใช้เทคนิคนี้แล้วลูกค้าทักมากขึ้น",
+  "category": "sales",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 21,
+  "hook": "ลูกค้าไม่ได้ต้องการสินค้าที่ดีที่สุดเสมอไป",
+  "category": "sales",
+  "type": "contrarian",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "สิ่งที่ร้านค้ายอดขายดีทำเหมือนกัน",
+  "category": "sales",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "ก่อนลดราคา ลองทำสิ่งนี้ก่อน",
+  "category": "sales",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "ผมเพิ่มยอดขายโดยไม่ต้องยิงแอดเพิ่ม",
+  "category": "sales",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "นี่คือคำถามที่ช่วยปิดการขายได้ง่ายขึ้น",
+  "category": "sales",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "หลายคนโฟกัสผิดจุดเวลาขายของ",
+  "category": "sales",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "วิธีทำให้ลูกค้ารู้สึกว่าของชิ้นนี้คุ้มค่า",
+  "category": "sales",
+  "type": "solution",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "ลูกค้าไม่ตอบแชท เพราะเหตุผลนี้",
+  "category": "sales",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "ผมทดลองข้อความขาย 2 แบบ ผลต่างกันมาก",
+  "category": "sales",
+  "type": "comparison",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "นี่คือหลักจิตวิทยาที่ใช้ในการขายระดับโลก",
+  "category": "sales",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 31,
+  "hook": "ลูกค้าส่วนใหญ่ซื้อหลังจากเห็นสิ่งนี้",
+  "category": "sales",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "ผมเปลี่ยนหัวข้อโพสต์แค่บรรทัดเดียว ยอดพุ่งขึ้นทันที",
+  "category": "sales",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "ข้อผิดพลาดที่ทำให้ลูกค้าเลื่อนผ่านโพสต์คุณ",
+  "category": "sales",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "เทคนิคการขายที่ใช้ได้แม้ไม่มีผู้ติดตามเยอะ",
+  "category": "sales",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "ลูกค้าไม่ได้ซื้อเพราะเหตุผลที่คุณคิด",
+  "category": "sales",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "วิธีตอบลูกค้าให้ปิดการขายง่ายขึ้น",
+  "category": "sales",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "สิ่งที่ควรเลิกทำ ถ้าไม่อยากเสียลูกค้า",
+  "category": "sales",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "ผมทดสอบวิธีนี้กับลูกค้า 100 คน",
+  "category": "sales",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "นี่คือประโยคที่ช่วยให้ลูกค้าตอบกลับ",
+  "category": "sales",
+  "type": "secret",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "หลายคนพยายามขาย แต่ลืมสิ่งสำคัญที่สุด",
+  "category": "sales",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "ลูกค้ารู้สึกเชื่อใจคุณจากสิ่งนี้",
+  "category": "sales",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "ผมเพิ่มยอดขายโดยไม่เปลี่ยนสินค้าเลย",
+  "category": "sales",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "ก่อนโพสต์ขาย ลองถามตัวเองข้อนี้ก่อน",
+  "category": "sales",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "สิ่งที่ทำให้ลูกค้ารู้สึกว่าของคุณแพง",
+  "category": "sales",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "นี่คือวิธีสร้างความเร่งด่วนแบบไม่ยัดเยียด",
+  "category": "sales",
+  "type": "solution",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "คนซื้อเพราะความมั่นใจ ไม่ใช่แค่ส่วนลด",
+  "category": "sales",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "ผมค้นพบจุดที่ทำให้ยอดขายหายไปทุกวัน",
+  "category": "sales",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "ลูกค้าจะตัดสินใจเร็วขึ้น ถ้าคุณทำสิ่งนี้",
+  "category": "sales",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "หลายร้านเข้าใจเรื่องโปรโมชั่นผิดมาตลอด",
+  "category": "sales",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "นี่คือหลักการขายที่ใช้ได้ทุกยุค",
+  "category": "sales",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "ลูกค้าตัดสินใจจากอารมณ์มากกว่าที่คิด",
+  "category": "sales",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "ผมลองเปลี่ยนคำเดียว ยอดคลิกเพิ่มขึ้น",
+  "category": "sales",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "สิ่งที่ร้านค้าออนไลน์เก่ง ๆ ทำทุกวัน",
+  "category": "sales",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "นี่คือเหตุผลที่ลูกค้าไม่กดซื้อทันที",
+  "category": "sales",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "ถ้าคุณขายของออนไลน์ ต้องรู้เรื่องนี้",
+  "category": "sales",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "ผมใช้สูตรนี้ในการเขียนโพสต์ขายทุกครั้ง",
+  "category": "sales",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "ความแตกต่างเล็ก ๆ ที่สร้างยอดขายมหาศาล",
+  "category": "sales",
+  "type": "result",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "หลายคนขายเก่งขึ้น หลังเข้าใจเรื่องนี้",
+  "category": "sales",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "ผมเสียลูกค้าไปเยอะ เพราะพลาดเรื่องนี้",
+  "category": "sales",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "ลูกค้ามักตอบสนองต่อข้อความแบบนี้มากกว่า",
+  "category": "sales",
+  "type": "comparison",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 61,
+  "hook": "ลูกค้าตัดสินใจซื้อภายในไม่กี่วินาทีแรก",
+  "category": "sales",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 62,
+  "hook": "ผมเพิ่มยอดขายโดยไม่ต้องลดราคาแม้แต่บาทเดียว",
+  "category": "sales",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 63,
+  "hook": "นี่คือสิ่งที่ลูกค้าต้องการจริง ๆ",
+  "category": "sales",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 64,
+  "hook": "หลายคนเสียกำไรเพราะพลาดเรื่องนี้",
+  "category": "sales",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 65,
+  "hook": "วิธีสร้างความน่าเชื่อถือภายใน 30 วินาที",
+  "category": "sales",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 66,
+  "hook": "ถ้าคุณยังขายแบบนี้ ลูกค้าจะลังเลเสมอ",
+  "category": "sales",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 67,
+  "hook": "ผมทดสอบข้อความขาย 10 แบบ แล้วผลต่างกันมาก",
+  "category": "sales",
+  "type": "comparison",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 68,
+  "hook": "นี่คือคำถามที่ช่วยให้ลูกค้าเปิดใจ",
+  "category": "sales",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 69,
+  "hook": "ลูกค้าไม่ได้ซื้อเพราะเหตุผลที่คุณคิด",
+  "category": "sales",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 70,
+  "hook": "สิ่งที่ร้านค้ายอดขายดีทำก่อนคู่แข่ง",
+  "category": "sales",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 71,
+  "hook": "ผมเปลี่ยนแค่รูปปก ยอดขายเพิ่มขึ้นทันที",
+  "category": "sales",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 72,
+  "hook": "นี่คือเหตุผลที่คนดูแต่ไม่ซื้อ",
+  "category": "sales",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 73,
+  "hook": "หลายคนเข้าใจเรื่องส่วนลดผิดมาตลอด",
+  "category": "sales",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 74,
+  "hook": "สูตรเขียนโพสต์ขายที่ใช้ได้แทบทุกสินค้า",
+  "category": "sales",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 75,
+  "hook": "ลูกค้าเชื่อรีวิวมากกว่าคำโฆษณา",
+  "category": "sales",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 76,
+  "hook": "ผมเสียยอดขายจำนวนมาก เพราะมองข้ามเรื่องนี้",
+  "category": "sales",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 77,
+  "hook": "สิ่งที่ควรพูดแทนคำว่า 'สนใจไหม'",
+  "category": "sales",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 78,
+  "hook": "นี่คือเหตุผลที่ลูกค้ากลับมาซื้อซ้ำ",
+  "category": "sales",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 79,
+  "hook": "หลายร้านเพิ่มยอดได้จากการเปลี่ยนเรื่องเล็ก ๆ นี้",
+  "category": "sales",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 80,
+  "hook": "ถ้าคุณขายออนไลน์ ต้องรู้จิตวิทยาข้อนี้",
+  "category": "sales",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "ผมไม่คิดว่าคำพูดนี้จะปิดการขายได้",
+  "category": "sales",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "สิ่งที่ลูกค้าสังเกตก่อนอ่านข้อความขาย",
+  "category": "sales",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "หลายคนพยายามขาย แต่ลืมสร้างความเชื่อใจ",
+  "category": "sales",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "นี่คือประโยคที่ช่วยให้ลูกค้าถามกลับ",
+  "category": "sales",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "ลูกค้าไม่ได้ซื้อสินค้าดีที่สุด แต่ซื้อสินค้าที่เข้าใจง่ายที่สุด",
+  "category": "sales",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "ข้อผิดพลาดที่ทำให้ลูกค้าหายไปก่อนจ่ายเงิน",
+  "category": "sales",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "วิธีทำให้ลูกค้ารู้สึกว่าได้กำไรจากการซื้อ",
+  "category": "sales",
+  "type": "solution",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "ผมใช้หลักการนี้กับทุกสินค้าที่ขาย",
+  "category": "sales",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "นี่คือจุดที่ลูกค้าส่วนใหญ่เปลี่ยนใจ",
+  "category": "sales",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "หลายคนเสียยอดขายเพราะใช้คำผิดคำเดียว",
+  "category": "sales",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "ลูกค้าชอบข้อความแบบนี้มากกว่าที่คิด",
+  "category": "sales",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "สิ่งที่ร้านค้ามืออาชีพทำทุกวัน",
+  "category": "sales",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "ผมเพิ่มอัตราปิดการขายด้วยวิธีง่าย ๆ นี้",
+  "category": "sales",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "นี่คือความลับที่นักขายเก่ง ๆ ใช้",
+  "category": "sales",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "ลูกค้าไม่ซื้อ เพราะคุณยังไม่ตอบคำถามนี้",
+  "category": "sales",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "สิ่งที่ควรทำก่อนเสนอราคาเสมอ",
+  "category": "sales",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "ผมไม่เคยคิดว่าการเปลี่ยนแค่คำเดียวจะต่างขนาดนี้",
+  "category": "sales",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "นี่คือเหตุผลที่ลูกค้าตัดสินใจช้าลง",
+  "category": "sales",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "วิธีทำให้ลูกค้ารู้สึกมั่นใจในการซื้อ",
+  "category": "sales",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "นักขายที่เติบโตเร็วที่สุด มักเชี่ยวชาญเรื่องนี้",
+  "category": "sales",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+}
+]

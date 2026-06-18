@@ -1,0 +1,902 @@
+[
+  {
+    "id": 1,
+    "hook": "คนส่วนใหญ่ยอมแพ้ ก่อนจะสำเร็จแค่ก้าวเดียว",
+    "category": "motivation",
+    "type": "motivation",
+    "emotion": "inspiration",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "ถ้าคุณเหนื่อย แปลว่าคุณกำลังเดินอยู่",
+    "category": "motivation",
+    "type": "mindset",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "ความสำเร็จไม่ได้ชอบคนเก่ง แต่มันชอบคนไม่ยอมแพ้",
+    "category": "motivation",
+    "type": "motivation",
+    "emotion": "inspiration",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "สิ่งที่คุณทำวันนี้ กำลังสร้างอนาคตของคุณ",
+    "category": "motivation",
+    "type": "future",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "อย่าดูถูกพลังของการเริ่มต้นเล็ก ๆ",
+    "category": "motivation",
+    "type": "mindset",
+    "emotion": "inspiration",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "คุณไม่จำเป็นต้องเก่งที่สุด แค่ไม่หยุดก็พอ",
+    "category": "motivation",
+    "type": "motivation",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "คนที่หัวเราะคุณวันนี้ อาจถามเคล็ดลับคุณวันหน้า",
+    "category": "motivation",
+    "type": "success",
+    "emotion": "inspiration",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "ทุกความสำเร็จ เริ่มจากวันที่ไม่มีใครเชื่อ",
+    "category": "motivation",
+    "type": "success",
+    "emotion": "inspiration",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ชีวิตจะไม่เปลี่ยน ถ้าคุณยังทำเหมือนเดิม",
+    "category": "motivation",
+    "type": "warning",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "อนาคตที่ดี เริ่มจากวินัยเล็ก ๆ วันนี้",
+    "category": "motivation",
+    "type": "discipline",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+{
+  "id": 11,
+  "hook": "หลายคนยอมแพ้ ทั้งที่ใกล้สำเร็จที่สุดแล้ว",
+  "category": "motivation",
+  "type": "motivation",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 12,
+  "hook": "ผมเคยคิดว่าผมทำไม่ได้ จนกระทั่งลองจริง ๆ",
+  "category": "motivation",
+  "type": "story",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 13,
+  "hook": "ความลับของคนสำเร็จ ไม่ใช่พรสวรรค์",
+  "category": "motivation",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 14,
+  "hook": "90% ของคนล้มเหลวเพราะสิ่งนี้",
+  "category": "motivation",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 15,
+  "hook": "ถ้าคุณกำลังท้อ ต้องอ่านสิ่งนี้",
+  "category": "motivation",
+  "type": "hope",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 16,
+  "hook": "สิ่งที่คุณทำเงียบ ๆ วันนี้ จะส่งเสียงดังในอนาคต",
+  "category": "motivation",
+  "type": "future",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 17,
+  "hook": "หลายคนรอเวลาที่เหมาะสม แต่คนสำเร็จเริ่มทันที",
+  "category": "motivation",
+  "type": "mindset",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 18,
+  "hook": "ผมลองสู้ต่ออีกแค่วันเดียว และทุกอย่างเปลี่ยนไป",
+  "category": "motivation",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 19,
+  "hook": "นี่คือบทเรียนที่คนสำเร็จทุกคนเข้าใจ",
+  "category": "motivation",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 20,
+  "hook": "อย่าเพิ่งยอมแพ้ จนกว่าจะได้เห็นสิ่งนี้",
+  "category": "motivation",
+  "type": "curiosity",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 21,
+  "hook": "ความสำเร็จไม่เคยถามว่าคุณเริ่มช้าหรือเร็ว",
+  "category": "motivation",
+  "type": "motivation",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "ผมเคยล้มเหลวมากกว่าที่คุณคิด",
+  "category": "motivation",
+  "type": "story",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "นี่คือความลับที่คนสำเร็จไม่ค่อยพูดถึง",
+  "category": "motivation",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "หลายคนกำลังขวางตัวเองอยู่",
+  "category": "motivation",
+  "type": "warning",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "90% ของคนยอมแพ้เร็วเกินไป",
+  "category": "motivation",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "วิธีสร้างวินัยแม้วันที่ไม่มีกำลังใจ",
+  "category": "motivation",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "หลายคนเชื่อว่าต้องเก่งก่อนถึงจะเริ่มได้",
+  "category": "motivation",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "ผมเปลี่ยนนิสัยนี้ แล้วชีวิตเปลี่ยนไป",
+  "category": "motivation",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "นี่คือสิ่งที่คนสำเร็จทำทุกวัน",
+  "category": "motivation",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "ถ้าคุณยังหาข้ออ้างอยู่ คุณกำลังเสียเวลา",
+  "category": "motivation",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 31,
+  "hook": "ชีวิตคุณจะเปลี่ยนเมื่อหยุดโทษคนอื่น",
+  "category": "motivation",
+  "type": "mindset",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "ผมไม่คิดว่าวันหนึ่งจะมาถึงจุดนี้",
+  "category": "motivation",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "สิ่งที่คุณกลัว อาจเป็นทางไปสู่ความสำเร็จ",
+  "category": "motivation",
+  "type": "mindset",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "อย่ารอแรงบันดาลใจ จงสร้างมัน",
+  "category": "motivation",
+  "type": "discipline",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "ความเจ็บปวดชั่วคราว ดีกว่าความเสียใจตลอดชีวิต",
+  "category": "motivation",
+  "type": "lesson",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "นี่คือเหตุผลที่คนส่วนใหญ่ไม่ไปถึงฝัน",
+  "category": "motivation",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "วิธีคิดที่เปลี่ยนชีวิตผมไปตลอดกาล",
+  "category": "motivation",
+  "type": "solution",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "หลายคนกำลังประเมินตัวเองต่ำเกินไป",
+  "category": "motivation",
+  "type": "mindset",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "คุณแข็งแกร่งกว่าที่คุณคิด",
+  "category": "motivation",
+  "type": "motivation",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "สิ่งเล็ก ๆ ที่คุณทำวันนี้ สำคัญกว่าที่คิด",
+  "category": "motivation",
+  "type": "future",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "คนส่วนใหญ่หยุดก่อนถึงเส้นชัยเพียงไม่กี่ก้าว",
+  "category": "motivation",
+  "type": "motivation",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "ผมเคยคิดว่าผมไม่มีทางทำได้",
+  "category": "motivation",
+  "type": "story",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "นี่คือความลับของคนที่ไม่ยอมแพ้",
+  "category": "motivation",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "หลายคนกำลังทำลายอนาคตตัวเองโดยไม่รู้ตัว",
+  "category": "motivation",
+  "type": "warning",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "90% ของคนล้มเหลวเพราะความคิดนี้",
+  "category": "motivation",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "วิธีลุกขึ้นมาใหม่หลังจากล้มเหลว",
+  "category": "motivation",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "หลายคนเชื่อว่าความสำเร็จมาจากโชค",
+  "category": "motivation",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "ผมเปลี่ยนความคิดนี้ แล้วชีวิตเปลี่ยนตาม",
+  "category": "motivation",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "นี่คือสิ่งที่คนสำเร็จทุกคนมีเหมือนกัน",
+  "category": "motivation",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "อย่าปล่อยให้ความกลัวตัดสินอนาคตคุณ",
+  "category": "motivation",
+  "type": "mindset",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "วันที่ยากที่สุด อาจเป็นวันที่สำคัญที่สุด",
+  "category": "motivation",
+  "type": "hope",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "ผมเกือบยอมแพ้ ก่อนทุกอย่างจะดีขึ้น",
+  "category": "motivation",
+  "type": "story",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "ความสำเร็จเริ่มจากการควบคุมตัวเอง",
+  "category": "motivation",
+  "type": "discipline",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "หลายคนรอแรงจูงใจ แต่คนสำเร็จสร้างวินัย",
+  "category": "motivation",
+  "type": "discipline",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "นี่คือบทเรียนที่ผมใช้เวลาหลายปีถึงเข้าใจ",
+  "category": "motivation",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "คุณไม่จำเป็นต้องเร็วกว่าใคร",
+  "category": "motivation",
+  "type": "mindset",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "คุณแค่ต้องไม่หยุดเดิน",
+  "category": "motivation",
+  "type": "motivation",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "หลายคนกำลังดูถูกศักยภาพของตัวเอง",
+  "category": "motivation",
+  "type": "mindset",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "นี่คือเหตุผลที่คุณควรเริ่มวันนี้",
+  "category": "motivation",
+  "type": "future",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "ถ้าคุณยังมีลมหายใจ คุณยังมีโอกาส",
+  "category": "motivation",
+  "type": "hope",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 61,
+  "hook": "วันที่คุณอยากยอมแพ้ คือวันที่คุณต้องสู้ต่อ",
+  "category": "motivation",
+  "type": "motivation",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 62,
+  "hook": "ผมไม่เคยคิดว่าจะมาถึงจุดนี้ได้",
+  "category": "motivation",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 63,
+  "hook": "ความลับของคนที่เปลี่ยนชีวิตตัวเองได้",
+  "category": "motivation",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 64,
+  "hook": "หลายคนแพ้ก่อนที่เกมจะจบ",
+  "category": "motivation",
+  "type": "warning",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 65,
+  "hook": "90% ของคนหยุดเร็วเกินไป",
+  "category": "motivation",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 66,
+  "hook": "วิธีสร้างความมั่นใจเมื่อไม่มีใครเชื่อคุณ",
+  "category": "motivation",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 67,
+  "hook": "หลายคนคิดว่าคนสำเร็จไม่เคยล้มเหลว",
+  "category": "motivation",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 68,
+  "hook": "ผมล้มเหลวซ้ำแล้วซ้ำอีก ก่อนจะสำเร็จ",
+  "category": "motivation",
+  "type": "story",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 69,
+  "hook": "นี่คือสิ่งที่คนสำเร็จทำในวันที่ไม่มีแรง",
+  "category": "motivation",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 70,
+  "hook": "อย่าปล่อยให้ความกลัวขโมยอนาคตคุณ",
+  "category": "motivation",
+  "type": "mindset",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 71,
+  "hook": "ความสำเร็จไม่ได้มาหาคนที่รอ",
+  "category": "motivation",
+  "type": "future",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 72,
+  "hook": "ผมเกือบเลิก ก่อนที่ชีวิตจะเปลี่ยน",
+  "category": "motivation",
+  "type": "story",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 73,
+  "hook": "สิ่งที่คุณต้องเอาชนะ ไม่ใช่คนอื่น",
+  "category": "motivation",
+  "type": "mindset",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 74,
+  "hook": "หลายคนเสียอนาคตเพราะข้ออ้าง",
+  "category": "motivation",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 75,
+  "hook": "บทเรียนนี้เปลี่ยนชีวิตผมไปตลอดกาล",
+  "category": "motivation",
+  "type": "lesson",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 76,
+  "hook": "คุณไม่จำเป็นต้องสมบูรณ์แบบเพื่อเริ่ม",
+  "category": "motivation",
+  "type": "mindset",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 77,
+  "hook": "ความสำเร็จเริ่มจากการทำ แม้ไม่พร้อม",
+  "category": "motivation",
+  "type": "motivation",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 78,
+  "hook": "หลายคนไม่เคยค้นพบศักยภาพตัวเอง",
+  "category": "motivation",
+  "type": "curiosity",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 79,
+  "hook": "นี่คือเหตุผลที่คุณควรเชื่อในตัวเอง",
+  "category": "motivation",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 80,
+  "hook": "อย่ากลัวการเริ่มใหม่",
+  "category": "motivation",
+  "type": "hope",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "ทุกวันที่คุณไม่ยอมแพ้ คือชัยชนะ",
+  "category": "motivation",
+  "type": "motivation",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "ผลลัพธ์นี้ทำให้ผมเชื่อในตัวเองอีกครั้ง",
+  "category": "motivation",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "นี่คือความจริงที่คนส่วนใหญ่ไม่อยากฟัง",
+  "category": "motivation",
+  "type": "curiosity",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "หลายคนใช้เวลาทั้งชีวิตเพื่อเข้าใจเรื่องนี้",
+  "category": "motivation",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "คุณมีศักยภาพมากกว่าที่คุณคิด",
+  "category": "motivation",
+  "type": "mindset",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนของชีวิตคุณ",
+  "category": "motivation",
+  "type": "result",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "อย่าปล่อยให้อดีตกำหนดอนาคต",
+  "category": "motivation",
+  "type": "future",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "ผมทดลองเชื่อในตัวเองอีกครั้ง",
+  "category": "motivation",
+  "type": "story",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "นี่คือสิ่งที่แยกคนสำเร็จออกจากคนทั่วไป",
+  "category": "motivation",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "หลายคนหยุด เพราะคิดว่าช้าเกินไป",
+  "category": "motivation",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "นี่คือคำพูดที่เปลี่ยนชีวิตผม",
+  "category": "motivation",
+  "type": "quote",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "คุณไม่จำเป็นต้องรอวันจันทร์",
+  "category": "motivation",
+  "type": "motivation",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "วันนี้คือโอกาสที่ดีที่สุดในการเริ่ม",
+  "category": "motivation",
+  "type": "future",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "ผมเสียเวลาไปหลายปี เพราะไม่เข้าใจสิ่งนี้",
+  "category": "motivation",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "นี่คือสิ่งที่คนแข็งแกร่งทางใจทำ",
+  "category": "motivation",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "ผลลัพธ์นี้ทำให้ผมหยุดสงสัยตัวเอง",
+  "category": "motivation",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "หลายคนกำลังยอมแพ้เร็วเกินไป",
+  "category": "motivation",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "นี่คือวิธีคิดที่ช่วยผมผ่านวันที่แย่ที่สุด",
+  "category": "motivation",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "ผมไม่เคยบอกเรื่องนี้กับใครมาก่อน",
+  "category": "motivation",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียว ให้เชื่อในตัวเอง",
+  "category": "motivation",
+  "type": "motivation",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+}
+]

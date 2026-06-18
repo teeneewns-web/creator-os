@@ -1,0 +1,722 @@
+[
+  {
+    "id": 1,
+    "hook": "90% ของนักเรียนพลาดเรื่องนี้ ทำให้เรียนไม่เก่งขึ้น",
+    "category": "education",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "หยุดอ่านหนังสือแบบนี้ ถ้าอยากจำได้จริง",
+    "category": "education",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "เคล็ดลับการเรียนที่คนเก่งส่วนใหญ่ใช้",
+    "category": "education",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "ผมเปลี่ยนวิธีเรียนแค่เรื่องเดียว คะแนนดีขึ้นมาก",
+    "category": "education",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "นี่คือเหตุผลที่คุณเรียนเท่าไหร่ก็จำไม่ได้",
+    "category": "education",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "วิธีเรียนให้เร็วขึ้น โดยไม่ต้องใช้เวลามากขึ้น",
+    "category": "education",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "คนส่วนใหญ่ไม่เคยรู้ว่าสมองเรียนรู้แบบนี้",
+    "category": "education",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "หลายคนเข้าใจเรื่องการเรียนผิดมาตลอด",
+    "category": "education",
+    "type": "myth",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ผมทดลองวิธีเรียนนี้ 30 วัน ผลลัพธ์น่าทึ่งมาก",
+    "category": "education",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "นี่คือสิ่งที่คนเรียนเก่งทำเหมือนกัน",
+    "category": "education",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+{
+  "id": 11,
+  "hook": "หลายคนเสียเวลาเรียนไปครึ่งหนึ่งโดยไม่รู้ตัว",
+  "category": "education",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 12,
+  "hook": "ผมไม่คิดว่าการจดโน้ตแบบนี้จะช่วยได้มากขนาดนี้",
+  "category": "education",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 13,
+  "hook": "เคล็ดลับการจำที่คนเรียนเก่งใช้ทุกวัน",
+  "category": "education",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 14,
+  "hook": "90% ของคนอ่านหนังสือผิดวิธี",
+  "category": "education",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 15,
+  "hook": "ถ้ารู้เรื่องนี้เร็วกว่านี้ ผมคงเรียนง่ายขึ้นมาก",
+  "category": "education",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 16,
+  "hook": "นี่อาจเป็นเทคนิคการเรียนที่สำคัญที่สุด",
+  "category": "education",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 17,
+  "hook": "หลายคนเข้าใจเรื่องความจำผิดมาตลอด",
+  "category": "education",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 18,
+  "hook": "ผมลองทำแบบนี้ แล้วคะแนนดีขึ้นอย่างชัดเจน",
+  "category": "education",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 19,
+  "hook": "นี่คือสิ่งที่ผมอยากรู้ก่อนเข้ามหาวิทยาลัย",
+  "category": "education",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 20,
+  "hook": "อย่าเพิ่งอ่านหนังสือเพิ่ม จนกว่าจะรู้เรื่องนี้",
+  "category": "education",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 21,
+  "hook": "นี่คือเหตุผลที่คุณลืมสิ่งที่เพิ่งเรียนไป",
+  "category": "education",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "ผมเปลี่ยนวิธีทบทวนแค่เรื่องเดียว ผลลัพธ์ต่างไปมาก",
+  "category": "education",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "ความลับที่ครูเก่ง ๆ เข้าใจกันดี",
+  "category": "education",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "หลายคนกำลังเรียนหนักเกินความจำเป็น",
+  "category": "education",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "90% ของนักเรียนไม่เคยใช้เทคนิคนี้",
+  "category": "education",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "วิธีเรียนให้จำได้ยาวนานกว่าเดิม",
+  "category": "education",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "หลายคนคิดว่ายิ่งอ่านนานยิ่งเก่ง",
+  "category": "education",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "ผมทดลองเทคนิคนี้ 60 วัน ผลลัพธ์เหลือเชื่อ",
+  "category": "education",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "นี่คือสิ่งที่นักเรียนระดับท็อปทำเหมือนกัน",
+  "category": "education",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับการเรียน ให้จำเรื่องนี้",
+  "category": "education",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 31,
+  "hook": "นี่คือข้อผิดพลาดที่ทำให้เรียนหนักแต่ผลลัพธ์น้อย",
+  "category": "education",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "ผมไม่คิดว่าการพักให้ถูกเวลาจะช่วยเรื่องการเรียนได้ขนาดนี้",
+  "category": "education",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "ความลับที่นักเรียนหัวกะทิใช้กัน",
+  "category": "education",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "หยุดทำสิ่งนี้ ถ้าไม่อยากเสียเวลาอ่านหนังสือฟรี",
+  "category": "education",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "สิ่งเล็ก ๆ นี้ช่วยให้จำบทเรียนได้ดีขึ้นมาก",
+  "category": "education",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "นี่คือเหตุผลที่คุณเรียนแล้วไม่เข้าใจสักที",
+  "category": "education",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "วิธีเรียนให้เข้าใจเร็วขึ้นโดยไม่ต้องท่องจำ",
+  "category": "education",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "หลายคนเข้าใจเรื่อง IQ ผิดมาตลอด",
+  "category": "education",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "ผมใช้วิธีนี้ทุกวัน และผลการเรียนเปลี่ยนไปมาก",
+  "category": "education",
+  "type": "story",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "นี่คือสิ่งที่นักเรียนเก่งทุกคนทำเหมือนกัน",
+  "category": "education",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "คนส่วนใหญ่เรียนผิดวิธีมาตลอดชีวิต",
+  "category": "education",
+  "type": "problem",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "ผมเกือบสอบไม่ผ่าน เพราะไม่รู้เรื่องนี้",
+  "category": "education",
+  "type": "story",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "นี่คือความลับของคนที่เรียนรู้ได้เร็ว",
+  "category": "education",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "หลายคนกำลังเสียคะแนนโดยไม่รู้ตัว",
+  "category": "education",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "90% ของคนไม่เคยใช้วิธีทบทวนแบบนี้",
+  "category": "education",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "วิธีจำข้อมูลจำนวนมากได้ง่ายขึ้น",
+  "category": "education",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "หลายคนคิดว่าคนเรียนเก่งเกิดมาเก่งอยู่แล้ว",
+  "category": "education",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "ผมเปลี่ยนวิธีอ่านหนังสือ แล้วผลลัพธ์ดีขึ้นทันที",
+  "category": "education",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "นี่คือสิ่งที่คนสอบติดอันดับต้น ๆ มีเหมือนกัน",
+  "category": "education",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "อย่าเริ่มอ่านหนังสือ จนกว่าจะรู้เรื่องนี้",
+  "category": "education",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "นี่คือบทเรียนการเรียนรู้ที่คุ้มค่าที่สุด",
+  "category": "education",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "คุณไม่จำเป็นต้องฉลาดที่สุด เพื่อเรียนเก่งขึ้น",
+  "category": "education",
+  "type": "mindset",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "หลายคนกำลังทำลายสมาธิตัวเองทุกวัน",
+  "category": "education",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนของผลการเรียนคุณ",
+  "category": "education",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "ผมเกือบพลาดโอกาสดี ๆ เพราะเรื่องนี้",
+  "category": "education",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "นี่คือความแตกต่างระหว่างคนเรียนเก่งกับคนเรียนหนัก",
+  "category": "education",
+  "type": "comparison",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "หลายคนคิดว่าการเรียนคือการท่องจำ",
+  "category": "education",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "ผมเริ่มทำสิ่งนี้ แล้วเรียนรู้ได้เร็วขึ้นทุกเดือน",
+  "category": "education",
+  "type": "story",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "นี่คือทักษะสำคัญที่สุดในการเรียนรู้",
+  "category": "education",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับการศึกษา ให้จำเรื่องนี้",
+  "category": "education",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "นี่คือเหตุผลที่หลายคนเรียนมานานแต่ยังไม่เก่งขึ้น",
+  "category": "education",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "ผมไม่คิดว่าการเปลี่ยนวิธีทบทวนจะเปลี่ยนผลการเรียนได้ขนาดนี้",
+  "category": "education",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "ความลับที่คนสอบได้คะแนนสูงเข้าใจดี",
+  "category": "education",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "ถ้าคุณยังอ่านหนังสือแบบนี้อยู่ คุณอาจจำอะไรไม่ได้เลย",
+  "category": "education",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "90% ของคนไม่รู้ว่าวิธีเรียนของตัวเองไม่มีประสิทธิภาพ",
+  "category": "education",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "วิธีเรียนรู้เรื่องยากให้เข้าใจง่ายขึ้น",
+  "category": "education",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "หลายคนเข้าใจเรื่องพรสวรรค์ผิดมาตลอด",
+  "category": "education",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "ผมทดลองเปลี่ยนวิธีเรียน 6 เดือน ผลลัพธ์เหลือเชื่อ",
+  "category": "education",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "นี่คือสิ่งที่คนเรียนรู้เร็วมีเหมือนกัน",
+  "category": "education",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "ถ้าคุณอยากเรียนเก่งขึ้น ต้องรู้เรื่องนี้",
+  "category": "education",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "นี่คือสิ่งที่เปลี่ยนวิธีเรียนของผมไปตลอดกาล",
+  "category": "education",
+  "type": "story",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "หลายคนมองข้ามสัญญาณเตือนนี้ก่อนสอบ",
+  "category": "education",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "นี่อาจเป็นเทคนิคการเรียนที่ดีที่สุดที่คุณเคยได้ยิน",
+  "category": "education",
+  "type": "future",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "ผมเสียเวลาไปหลายปี เพราะไม่เข้าใจเรื่องนี้",
+  "category": "education",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "นี่คือสิ่งที่นักเรียนที่ประสบความสำเร็จทุกคนมีร่วมกัน",
+  "category": "education",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "ผลลัพธ์นี้ทำให้ผมเปลี่ยนมุมมองเรื่องการเรียนทั้งหมด",
+  "category": "education",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "หลายคนกำลังพลาดโอกาสพัฒนาตัวเองเพราะเรื่องนี้",
+  "category": "education",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "นี่คือวิธีเรียนรู้ได้เร็วขึ้นแบบยั่งยืน",
+  "category": "education",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "ผมไม่เคยเล่าเรื่องนี้เกี่ยวกับการเรียนให้ใครฟังมาก่อน",
+  "category": "education",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับการศึกษา ให้เรียนรู้อย่างต่อเนื่อง",
+  "category": "education",
+  "type": "motivation",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+}
+]

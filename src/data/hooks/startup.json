@@ -1,0 +1,902 @@
+[
+  {
+    "id": 1,
+    "hook": "90% ของ Startup ล้มเหลวเพราะเรื่องนี้",
+    "category": "startup",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "หยุดทำสิ่งนี้ ถ้าอยากให้ Startup รอด",
+    "category": "startup",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "เคล็ดลับที่ผู้ก่อตั้ง Startup สำเร็จใช้กัน",
+    "category": "startup",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "ผมเปลี่ยนสิ่งนี้อย่างเดียว Startup ก็เริ่มโต",
+    "category": "startup",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "นี่คือเหตุผลที่ Startup ส่วนใหญ่ไปไม่รอด",
+    "category": "startup",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "วิธีหาไอเดียธุรกิจที่คนยอมจ่ายเงินจริง",
+    "category": "startup",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "คนส่วนใหญ่ไม่เคยรู้เรื่องนี้เกี่ยวกับ Startup",
+    "category": "startup",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "หลายคนเข้าใจเรื่องการเริ่มธุรกิจผิดมาตลอด",
+    "category": "startup",
+    "type": "myth",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ผมทดลองไอเดียนี้ 30 วัน ผลคือ...",
+    "category": "startup",
+    "type": "story",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "นี่คือสิ่งที่ Startup โตเร็วทำเหมือนกัน",
+    "category": "startup",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+{
+  "id": 11,
+  "hook": "หลายคนพลาดโอกาสสร้าง Startup เพราะเรื่องนี้",
+  "category": "startup",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 12,
+  "hook": "ผมไม่คิดว่าไอเดียเล็ก ๆ นี้จะเติบโตได้ขนาดนี้",
+  "category": "startup",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 13,
+  "hook": "เคล็ดลับที่ Founder ส่วนใหญ่ไม่เคยบอก",
+  "category": "startup",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 14,
+  "hook": "90% ของ Startup พลาดจุดนี้ตั้งแต่เริ่ม",
+  "category": "startup",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 15,
+  "hook": "ถ้ารู้เรื่องนี้เร็วกว่านี้ ผมคงไม่เสียเวลาเป็นปี",
+  "category": "startup",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 16,
+  "hook": "นี่อาจเป็นบทเรียนสำคัญที่สุดสำหรับ Founder",
+  "category": "startup",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 17,
+  "hook": "หลายคนเข้าใจเรื่อง Product-Market Fit ผิดมาตลอด",
+  "category": "startup",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 18,
+  "hook": "ผมลองทำแบบนี้ แล้วลูกค้าเริ่มเข้ามาเอง",
+  "category": "startup",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 19,
+  "hook": "นี่คือสิ่งที่ผมอยากรู้ก่อนเริ่มธุรกิจแรก",
+  "category": "startup",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 20,
+  "hook": "อย่าเพิ่งเริ่ม Startup จนกว่าจะรู้เรื่องนี้",
+  "category": "startup",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 21,
+  "hook": "นี่คือเหตุผลที่ไอเดียดี ๆ จำนวนมากล้มเหลว",
+  "category": "startup",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "ผมเปลี่ยนสิ่งนี้อย่างเดียว ยอดผู้ใช้เพิ่มขึ้น",
+  "category": "startup",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "ความลับที่ Startup Unicorn ใช้กัน",
+  "category": "startup",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "หลายคนกำลังสร้างของที่ไม่มีใครต้องการ",
+  "category": "startup",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "90% ของ Founder ไม่เคยถามคำถามนี้",
+  "category": "startup",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "วิธีหาลูกค้าคนแรกโดยไม่ต้องใช้เงินโฆษณา",
+  "category": "startup",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "หลายคนเชื่อว่าต้องมีเงินเยอะก่อนถึงจะเริ่มได้",
+  "category": "startup",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "ผมทดลองไอเดียนี้ 90 วัน ผลลัพธ์เกินคาด",
+  "category": "startup",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "นี่คือสิ่งที่ Startup ที่โตเร็วทำเหมือนกัน",
+  "category": "startup",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับ Startup ให้จำเรื่องนี้",
+  "category": "startup",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 31,
+  "hook": "นี่คือข้อผิดพลาดที่ทำให้ Startup โตช้ากว่าที่ควร",
+  "category": "startup",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "ผมไม่คิดว่าสิ่งเล็ก ๆ นี้จะเพิ่มยอดผู้ใช้ได้ขนาดนี้",
+  "category": "startup",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "ความลับที่นักลงทุน VC มองหา",
+  "category": "startup",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "หยุดทำสิ่งนี้ ถ้าอยากให้ธุรกิจเติบโต",
+  "category": "startup",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "สิ่งเล็ก ๆ นี้สร้างผลลัพธ์มหาศาล",
+  "category": "startup",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "นี่คือเหตุผลที่ลูกค้าไม่ซื้อ",
+  "category": "startup",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "วิธีสร้าง MVP ให้เสร็จเร็วขึ้น",
+  "category": "startup",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "หลายคนเข้าใจเรื่องการระดมทุนผิดมาตลอด",
+  "category": "startup",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "ผมใช้วิธีนี้ตอนเริ่มธุรกิจแรก",
+  "category": "startup",
+  "type": "story",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "นี่คือสิ่งที่ Founder เก่ง ๆ ทำต่างออกไป",
+  "category": "startup",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "คนส่วนใหญ่โฟกัสผิดจุดตั้งแต่วันแรก",
+  "category": "startup",
+  "type": "problem",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "ผมเกือบปิดกิจการ เพราะไม่เข้าใจเรื่องนี้",
+  "category": "startup",
+  "type": "story",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "นี่คือความลับของ Startup ที่โตเร็ว",
+  "category": "startup",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "หลายคนกำลังสร้างฟีเจอร์ที่ไม่มีใครใช้",
+  "category": "startup",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "90% ของ Startup ไม่เคยวัดสิ่งนี้",
+  "category": "startup",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "วิธีหาความต้องการลูกค้าที่แท้จริง",
+  "category": "startup",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "หลายคนคิดว่าผลิตภัณฑ์ดีพอแล้ว",
+  "category": "startup",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "ผมเปลี่ยนสิ่งนี้ แล้วยอดขายเพิ่มขึ้นทันที",
+  "category": "startup",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "นี่คือสิ่งที่ Startup ระดับโลกมีเหมือนกัน",
+  "category": "startup",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "อย่าเริ่มธุรกิจใหม่ จนกว่าจะตอบคำถามนี้ได้",
+  "category": "startup",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "นี่คือบทเรียนที่แพงที่สุดของ Founder",
+  "category": "startup",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "คุณไม่จำเป็นต้องมีทีมใหญ่เพื่อเริ่ม",
+  "category": "startup",
+  "type": "mindset",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "หลายคนกำลังเสียเวลาไปกับเรื่องไม่สำคัญ",
+  "category": "startup",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนของธุรกิจคุณ",
+  "category": "startup",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "ผมเกือบพลาดโอกาสครั้งใหญ่เพราะเรื่องนี้",
+  "category": "startup",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "นี่คือความแตกต่างระหว่าง Startup ที่รอดกับที่ล้ม",
+  "category": "startup",
+  "type": "comparison",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "หลายคนรอให้ทุกอย่างพร้อมก่อนเริ่ม",
+  "category": "startup",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "ผมเริ่มทำสิ่งนี้ แล้วลูกค้าเพิ่มขึ้นทุกเดือน",
+  "category": "startup",
+  "type": "story",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "นี่คือทักษะสำคัญที่สุดของ Founder",
+  "category": "startup",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับ Startup ให้จำเรื่องนี้",
+  "category": "startup",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 61,
+  "hook": "นี่คือเหตุผลที่ Startup ส่วนใหญ่ไม่เคยไปถึง Series A",
+  "category": "startup",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 62,
+  "hook": "ผมไม่คิดว่าการเปลี่ยนสิ่งนี้จะเพิ่มยอดขายได้ขนาดนี้",
+  "category": "startup",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 63,
+  "hook": "ความลับที่ Founder ระดับโลกเข้าใจ",
+  "category": "startup",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 64,
+  "hook": "ถ้าคุณยังทำแบบนี้อยู่ Startup อาจไม่รอด",
+  "category": "startup",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 65,
+  "hook": "90% ของผู้ก่อตั้งไม่เคยวิเคราะห์เรื่องนี้",
+  "category": "startup",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 66,
+  "hook": "วิธีสร้างธุรกิจที่ลูกค้ากลับมาซื้อซ้ำ",
+  "category": "startup",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 67,
+  "hook": "หลายคนเข้าใจเรื่องการเติบโตผิดมาตลอด",
+  "category": "startup",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 68,
+  "hook": "ผมทดลองแนวคิดนี้ 1 ปีเต็ม ผลลัพธ์เกินคาด",
+  "category": "startup",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 69,
+  "hook": "นี่คือสิ่งที่ Startup มูลค่าพันล้านทำเหมือนกัน",
+  "category": "startup",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 70,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนของบริษัทคุณ",
+  "category": "startup",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 71,
+  "hook": "นี่คือเหตุผลที่ลูกค้าไม่ยอมจ่ายเงิน",
+  "category": "startup",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 72,
+  "hook": "วิธีสร้างรายได้ตั้งแต่ยังไม่มีผู้ใช้เยอะ",
+  "category": "startup",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 73,
+  "hook": "คนส่วนใหญ่ไม่เคยรู้เรื่องนี้เกี่ยวกับการสร้างธุรกิจ",
+  "category": "startup",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 74,
+  "hook": "นี่คือบทเรียนที่แพงที่สุดของการทำ Startup",
+  "category": "startup",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 75,
+  "hook": "ผลลัพธ์นี้ทำให้ผมเปลี่ยนแผนทั้งหมด",
+  "category": "startup",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 76,
+  "hook": "หลายคนกำลังสร้างธุรกิจผิดวิธี",
+  "category": "startup",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 77,
+  "hook": "สิ่งเล็ก ๆ นี้เพิ่มยอดขายได้มหาศาล",
+  "category": "startup",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 78,
+  "hook": "ผมใช้วิธีนี้ทุกครั้งก่อนเปิดตัวสินค้า",
+  "category": "startup",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 79,
+  "hook": "นี่คือทางลัดที่ช่วยประหยัดเวลาและเงิน",
+  "category": "startup",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 80,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับ Startup ให้จำเรื่องนี้",
+  "category": "startup",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "นี่คือเหตุผลที่ Startup ดี ๆ หลายแห่งล้มเหลว",
+  "category": "startup",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "ผมไม่คิดว่าเรื่องนี้จะสำคัญขนาดนี้",
+  "category": "startup",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "ความลับที่นักลงทุนมองหาใน Startup",
+  "category": "startup",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "หลายคนกำลังเสียเวลาไปกับสิ่งที่ไม่สร้างรายได้",
+  "category": "startup",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "90% ของ Startup ไม่เคยตรวจสอบเรื่องนี้",
+  "category": "startup",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "วิธีสร้างธุรกิจที่เติบโตได้จริง",
+  "category": "startup",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "หลายคนเข้าใจเรื่องลูกค้าผิดมาตลอด",
+  "category": "startup",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "ผมทดลองเปลี่ยนกลยุทธ์นี้ แล้วทุกอย่างดีขึ้น",
+  "category": "startup",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "นี่คือสิ่งที่ผู้ประกอบการสำเร็จมีเหมือนกัน",
+  "category": "startup",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "ถ้าคุณกำลังเริ่มธุรกิจ ต้องรู้เรื่องนี้",
+  "category": "startup",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "นี่คือสิ่งที่เปลี่ยนอนาคตธุรกิจของผม",
+  "category": "startup",
+  "type": "story",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "หลายคนมองข้ามโอกาสสำคัญนี้",
+  "category": "startup",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "นี่อาจเป็นไอเดียธุรกิจที่ใหญ่ที่สุดของคุณ",
+  "category": "startup",
+  "type": "future",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "ผมเสียเงินจำนวนมาก เพราะไม่เข้าใจเรื่องนี้",
+  "category": "startup",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "นี่คือสิ่งที่ Founder ระดับท็อปทุกคนทำ",
+  "category": "startup",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "ผลลัพธ์นี้ทำให้ผมเปลี่ยนมุมมองทั้งหมด",
+  "category": "startup",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "หลายคนกำลังพลาดบทเรียนสำคัญที่สุด",
+  "category": "startup",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "นี่คือวิธีสร้างธุรกิจที่ยั่งยืนกว่าเดิม",
+  "category": "startup",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "ผมไม่เคยเล่าเรื่องนี้ให้ใครฟังมาก่อน",
+  "category": "startup",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับ Startup ให้ฟังลูกค้า",
+  "category": "startup",
+  "type": "motivation",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+}
+]

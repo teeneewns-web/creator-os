@@ -1,0 +1,902 @@
+[
+  {
+    "id": 1,
+    "hook": "90% ของคนสมัครงานพลาดเรื่องนี้",
+    "category": "career",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "หยุดทำสิ่งนี้ ถ้าอยากก้าวหน้าในงาน",
+    "category": "career",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "เคล็ดลับที่คนเงินเดือนสูงใช้กัน",
+    "category": "career",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "ผมเปลี่ยนแค่สิ่งเดียว รายได้ก็เพิ่มขึ้น",
+    "category": "career",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "นี่คือเหตุผลที่คุณยังไม่โตในสายงาน",
+    "category": "career",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "วิธีเพิ่มโอกาสเลื่อนตำแหน่ง",
+    "category": "career",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "คนส่วนใหญ่ไม่เคยรู้เรื่องนี้",
+    "category": "career",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "หลายคนเข้าใจเรื่องความก้าวหน้าในงานผิด",
+    "category": "career",
+    "type": "myth",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ผมทดลองวิธีนี้ 30 วัน ผลคือ...",
+    "category": "career",
+    "type": "story",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "นี่คือสิ่งที่คนประสบความสำเร็จในงานทำเหมือนกัน",
+    "category": "career",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+{
+  "id": 11,
+  "hook": "หลายคนพลาดโอกาสเติบโตเพราะเรื่องนี้",
+  "category": "career",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 12,
+  "hook": "ผมไม่คิดว่าสิ่งนี้จะเปลี่ยนอาชีพได้ขนาดนี้",
+  "category": "career",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 13,
+  "hook": "เคล็ดลับที่หัวหน้าไม่ค่อยบอกลูกน้อง",
+  "category": "career",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 14,
+  "hook": "90% ของพนักงานทำผิดเรื่องนี้",
+  "category": "career",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 15,
+  "hook": "ถ้ารู้เรื่องนี้เร็วกว่านี้ เงินเดือนผมคงสูงกว่านี้",
+  "category": "career",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 16,
+  "hook": "นี่อาจเป็นคำแนะนำที่สำคัญที่สุดในชีวิตการทำงาน",
+  "category": "career",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 17,
+  "hook": "หลายคนเข้าใจเรื่องการเลื่อนตำแหน่งผิดมาตลอด",
+  "category": "career",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 18,
+  "hook": "ผมลองทำแบบนี้ และหัวหน้าเริ่มมองเห็นผลงาน",
+  "category": "career",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 19,
+  "hook": "นี่คือสิ่งที่ผมอยากรู้ตั้งแต่วันแรกที่ทำงาน",
+  "category": "career",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 20,
+  "hook": "อย่าเพิ่งลาออก จนกว่าจะอ่านสิ่งนี้",
+  "category": "career",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 21,
+  "hook": "นี่คือเหตุผลที่คนเก่งหลายคนยังไม่ก้าวหน้า",
+  "category": "career",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "ผมเปลี่ยนนิสัยนี้ แล้วหน้าที่การงานดีขึ้นมาก",
+  "category": "career",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "ความลับที่คนเงินเดือนสูงเข้าใจ",
+  "category": "career",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "หลายคนกำลังทำลายอนาคตการทำงานของตัวเอง",
+  "category": "career",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "90% ของพนักงานมองข้ามเรื่องนี้",
+  "category": "career",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "วิธีเพิ่มมูลค่าให้ตัวเองในที่ทำงาน",
+  "category": "career",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "หลายคนเชื่อว่าทำงานหนักแล้วจะก้าวหน้าเสมอ",
+  "category": "career",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "ผมทดลองวิธีนี้ 3 เดือน ผลลัพธ์ต่างไปมาก",
+  "category": "career",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "นี่คือสิ่งที่คนประสบความสำเร็จในสายงานทำเหมือนกัน",
+  "category": "career",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับงาน ให้จำเรื่องนี้",
+  "category": "career",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 31,
+  "hook": "นี่คือข้อผิดพลาดที่ทำให้เงินเดือนขึ้นช้า",
+  "category": "career",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "ผมไม่คิดว่าสิ่งนี้จะเปลี่ยนเส้นทางอาชีพได้",
+  "category": "career",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "ความลับที่คนระดับผู้บริหารรู้",
+  "category": "career",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "หยุดทำสิ่งนี้ ถ้าอยากเติบโตเร็วขึ้น",
+  "category": "career",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "สิ่งเล็ก ๆ นี้สร้างความแตกต่างมหาศาล",
+  "category": "career",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "นี่คือเหตุผลที่หัวหน้ายังไม่เลือกคุณ",
+  "category": "career",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "วิธีสร้างโอกาสให้ตัวเองโดยไม่ต้องรอ",
+  "category": "career",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "หลายคนเข้าใจเรื่องความสามารถผิดมาตลอด",
+  "category": "career",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "ผมใช้วิธีนี้ทุกวัน และอาชีพก้าวหน้าเร็วขึ้น",
+  "category": "career",
+  "type": "story",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "นี่คือสิ่งที่คนเก่งจริงทำต่างออกไป",
+  "category": "career",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "คนส่วนใหญ่ติดอยู่ที่เดิม เพราะเรื่องนี้",
+  "category": "career",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "ผมเคยคิดว่าผมไม่มีทางก้าวหน้าได้",
+  "category": "career",
+  "type": "story",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "นี่คือความลับที่คนรายได้สูงเข้าใจ",
+  "category": "career",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "หลายคนกำลังทำพลาดโดยไม่รู้ตัว",
+  "category": "career",
+  "type": "warning",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "90% ของคนทำงานไม่เคยรู้เรื่องนี้",
+  "category": "career",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "วิธีทำให้หัวหน้าเห็นคุณค่าของคุณ",
+  "category": "career",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "หลายคนเชื่อว่าประสบการณ์สำคัญที่สุด",
+  "category": "career",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "ผมเปลี่ยนวิธีคิดนี้ แล้วทุกอย่างดีขึ้น",
+  "category": "career",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "นี่คือสิ่งที่ผู้บริหารทุกคนมองหา",
+  "category": "career",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "อย่าปล่อยให้โอกาสหลุดมือเพราะเรื่องนี้",
+  "category": "career",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "นี่คือบทเรียนที่ผมใช้เวลาหลายปีถึงเข้าใจ",
+  "category": "career",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "คุณไม่จำเป็นต้องเก่งที่สุดในห้อง",
+  "category": "career",
+  "type": "mindset",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "หลายคนกำลังขายตัวเองต่ำเกินไป",
+  "category": "career",
+  "type": "mindset",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนในชีวิตการทำงาน",
+  "category": "career",
+  "type": "result",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "ผมเกือบพลาดโอกาสครั้งใหญ่เพราะเรื่องนี้",
+  "category": "career",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "นี่คือเหตุผลที่บางคนเติบโตเร็วกว่า",
+  "category": "career",
+  "type": "comparison",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "หลายคนรอให้มีคนมอบโอกาสให้",
+  "category": "career",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "ผมเริ่มทำสิ่งนี้ แล้วอาชีพเปลี่ยนไป",
+  "category": "career",
+  "type": "story",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "นี่คือทักษะที่คุ้มค่าที่สุดในยุคนี้",
+  "category": "career",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับอาชีพ ให้จำเรื่องนี้",
+  "category": "career",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 61,
+  "hook": "นี่คือเหตุผลที่คนเก่งหลายคนยังไม่รวย",
+  "category": "career",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 62,
+  "hook": "ผมไม่คิดว่าทักษะนี้จะเปลี่ยนชีวิตได้",
+  "category": "career",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 63,
+  "hook": "ความลับที่คนรายได้สูงไม่ค่อยพูดถึง",
+  "category": "career",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 64,
+  "hook": "ถ้าคุณยังทำแบบนี้อยู่ คุณกำลังเสียโอกาส",
+  "category": "career",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 65,
+  "hook": "90% ของคนทำงานไม่เคยพัฒนาจุดนี้",
+  "category": "career",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 66,
+  "hook": "วิธีเพิ่มรายได้โดยไม่ต้องเปลี่ยนงาน",
+  "category": "career",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 67,
+  "hook": "หลายคนเข้าใจเรื่องความสำเร็จในอาชีพผิดมาตลอด",
+  "category": "career",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 68,
+  "hook": "ผมทดลองสิ่งนี้ 90 วัน ผลลัพธ์เกินคาด",
+  "category": "career",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 69,
+  "hook": "นี่คือสิ่งที่คนก้าวหน้าเร็วทำเหมือนกัน",
+  "category": "career",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 70,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนของอาชีพคุณ",
+  "category": "career",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 71,
+  "hook": "นี่คือเหตุผลที่คุณยังได้เงินเดือนเท่าเดิม",
+  "category": "career",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 72,
+  "hook": "วิธีทำให้ตัวเองมีค่ามากขึ้นในตลาดงาน",
+  "category": "career",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 73,
+  "hook": "คนส่วนใหญ่ไม่เคยรู้เรื่องนี้มาก่อน",
+  "category": "career",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 74,
+  "hook": "นี่คือบทเรียนที่แพงที่สุดในชีวิตการทำงานของผม",
+  "category": "career",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 75,
+  "hook": "ผลลัพธ์นี้ทำให้ผมตกใจจริง ๆ",
+  "category": "career",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 76,
+  "hook": "หลายคนกำลังโฟกัสผิดเรื่อง",
+  "category": "career",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 77,
+  "hook": "สิ่งเล็ก ๆ นี้สร้างความแตกต่างมหาศาล",
+  "category": "career",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 78,
+  "hook": "ผมใช้วิธีนี้ทุกวัน และชีวิตการทำงานดีขึ้นมาก",
+  "category": "career",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 79,
+  "hook": "นี่คือทางลัดที่ช่วยให้ก้าวหน้าเร็วขึ้น",
+  "category": "career",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 80,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับงาน ให้จำเรื่องนี้",
+  "category": "career",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "นี่คือเหตุผลที่คนเก่งบางคนไม่เคยเติบโต",
+  "category": "career",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "ผมไม่คิดว่าสิ่งนี้จะเปลี่ยนอนาคตการทำงานได้",
+  "category": "career",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "ความลับที่ผู้บริหารระดับสูงเข้าใจ",
+  "category": "career",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "ถ้าคุณยังทำแบบนี้อยู่ คุณกำลังหยุดการเติบโตของตัวเอง",
+  "category": "career",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "90% ของคนทำงานไม่เคยฝึกทักษะนี้",
+  "category": "career",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "วิธีสร้างรายได้เพิ่มจากทักษะที่คุณมีอยู่แล้ว",
+  "category": "career",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "หลายคนเข้าใจเรื่องความมั่นคงในงานผิดมาตลอด",
+  "category": "career",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "ผมทดลองพัฒนาทักษะนี้ 6 เดือน ผลลัพธ์ต่างไปมาก",
+  "category": "career",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "นี่คือสิ่งที่คนประสบความสำเร็จในยุค AI ทำเหมือนกัน",
+  "category": "career",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "ถ้าคุณอยากก้าวหน้าเร็วขึ้น ต้องรู้เรื่องนี้",
+  "category": "career",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "นี่คือสิ่งที่เปลี่ยนเส้นทางอาชีพของผม",
+  "category": "career",
+  "type": "story",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "หลายคนมองข้ามโอกาสตรงหน้า",
+  "category": "career",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "นี่อาจเป็นทักษะที่สำคัญที่สุดในอีก 5 ปีข้างหน้า",
+  "category": "career",
+  "type": "future",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "ผมเสียเวลาไปหลายปี เพราะไม่รู้เรื่องนี้",
+  "category": "career",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "นี่คือสิ่งที่คนรายได้สูงทุกคนมีร่วมกัน",
+  "category": "career",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "ผลลัพธ์นี้ทำให้ผมเปลี่ยนเป้าหมายชีวิต",
+  "category": "career",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "หลายคนกำลังพลาดโอกาสสำคัญที่สุด",
+  "category": "career",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "นี่คือวิธีสร้างอนาคตที่มั่นคงกว่าเดิม",
+  "category": "career",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "ผมไม่เคยเปิดเผยเรื่องนี้กับใครมาก่อน",
+  "category": "career",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับอาชีพ ให้ลงทุนกับตัวเอง",
+  "category": "career",
+  "type": "motivation",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+}
+]

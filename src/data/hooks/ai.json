@@ -1,0 +1,902 @@
+[
+  {
+    "id": 1,
+    "hook": "AI ตัวนี้อาจเปลี่ยนวิธีทำงานของคุณไปเลย",
+    "category": "ai",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "คนส่วนใหญ่ยังใช้ AI ผิดวิธี",
+    "category": "ai",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "ถ้าคุณยังไม่รู้เครื่องมือนี้ คุณอาจเสียเวลาไปฟรี ๆ",
+    "category": "ai",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "ผมใช้ AI แทนคนหนึ่งตำแหน่งได้จริง",
+    "category": "ai",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "เครื่องมือ AI ฟรีที่คนทำงานควรรู้",
+    "category": "ai",
+    "type": "education",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "AI ทำงานนี้ได้ดีกว่าที่คิด",
+    "category": "ai",
+    "type": "contrarian",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "นี่คือ Prompt ที่ผมใช้ทุกวัน",
+    "category": "ai",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "หลายคนเสียเงินซื้อ AI ทั้งที่ใช้ฟรีได้",
+    "category": "ai",
+    "type": "warning",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ผมลองใช้ AI 30 วัน แล้วเกิดสิ่งนี้",
+    "category": "ai",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "AI ตัวนี้ช่วยประหยัดเวลาได้หลายชั่วโมง",
+    "category": "ai",
+    "type": "result",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 11,
+    "hook": "อย่าเพิ่งใช้ AI ถ้ายังไม่เข้าใจเรื่องนี้",
+    "category": "ai",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 12,
+    "hook": "สิ่งที่ AI ยังทำไม่ได้ในตอนนี้",
+    "category": "ai",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 13,
+    "hook": "วิธีใช้ AI ให้ฉลาดกว่าคนทั่วไป",
+    "category": "ai",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 14,
+    "hook": "Prompt เดียวสร้างคอนเทนต์ได้ทั้งสัปดาห์",
+    "category": "ai",
+    "type": "secret",
+    "emotion": "desire",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 15,
+    "hook": "AI กำลังเปลี่ยนอาชีพนี้เร็วมาก",
+    "category": "ai",
+    "type": "curiosity",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 16,
+    "hook": "หลายคนใช้ ChatGPT แบบเสียของ",
+    "category": "ai",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 17,
+    "hook": "นี่คือคำสั่งที่ทำให้ AI ตอบดีขึ้นทันที",
+    "category": "ai",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 18,
+    "hook": "AI ฟรีที่คุณควรลองก่อนเสียเงิน",
+    "category": "ai",
+    "type": "education",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 19,
+    "hook": "ผมไม่คิดว่า AI จะทำสิ่งนี้ได้",
+    "category": "ai",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 20,
+    "hook": "เครื่องมือ AI ที่ช่วยหาไอเดียคอนเทนต์ไม่รู้จบ",
+    "category": "ai",
+    "type": "result",
+    "emotion": "desire",
+    "platform": "all",
+    "language": "th"
+  },
+{
+  "id": 21,
+  "hook": "AI ตัวนี้ช่วยเขียนงานที่เคยใช้เวลา 3 ชั่วโมง เหลือ 10 นาที",
+  "category": "ai",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "คนส่วนใหญ่ถาม AI แบบนี้ แล้วได้คำตอบไม่ดี",
+  "category": "ai",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "ถ้าคุณใช้ AI แค่พิมพ์คำสั่งสั้น ๆ คุณกำลังพลาด",
+  "category": "ai",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "ผมให้ AI ทำงานแทนทั้งวัน แล้วผลลัพธ์เกินคาด",
+  "category": "ai",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "Prompt นี้ช่วยให้ AI คิดเหมือนผู้เชี่ยวชาญ",
+  "category": "ai",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "AI กำลังแทนที่งานประเภทนี้เร็วกว่าที่คิด",
+  "category": "ai",
+  "type": "curiosity",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "เครื่องมือ AI ฟรีที่หลายคนยังไม่รู้จัก",
+  "category": "ai",
+  "type": "education",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "นี่คือเหตุผลที่ AI ของคุณตอบไม่ตรงใจ",
+  "category": "ai",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "แค่เพิ่มประโยคนี้ AI จะตอบละเอียดขึ้นทันที",
+  "category": "ai",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "ผมเลิกใช้เครื่องมือเดิมหลังเจอ AI ตัวนี้",
+  "category": "ai",
+  "type": "contrarian",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 31,
+  "hook": "AI สามารถช่วยหารายได้จากสิ่งนี้ได้",
+  "category": "ai",
+  "type": "opportunity",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "สิ่งที่ผู้ใช้ AI ระดับสูงทำต่างจากมือใหม่",
+  "category": "ai",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "ผมลองใช้ AI สร้างคอนเทนต์ 100 ชิ้น ผลคือ...",
+  "category": "ai",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "AI ไม่ได้ทำให้คนตกงาน แต่คนแบบนี้ต่างหากที่เสี่ยง",
+  "category": "ai",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "ก่อนซื้อ AI แบบเสียเงิน ลองเช็กสิ่งนี้ก่อน",
+  "category": "ai",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "คำสั่งเดียวที่ช่วยให้ AI เขียนขายเก่งขึ้น",
+  "category": "ai",
+  "type": "secret",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "AI ทำงานนี้ได้แม่นกว่าที่หลายคนคิด",
+  "category": "ai",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "ความเข้าใจผิดเกี่ยวกับ AI ที่ควรเลิกเชื่อ",
+  "category": "ai",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "ถ้าใช้ AI ทุกวัน คุณควรมี Prompt นี้ติดตัว",
+  "category": "ai",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "นี่คือทักษะที่ยังสำคัญ แม้ AI จะเก่งขึ้นทุกปี",
+  "category": "ai",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "AI ตัวนี้ช่วยสรุปข้อมูลหลายร้อยหน้าในไม่กี่นาที",
+  "category": "ai",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "คนส่วนใหญ่ใช้ AI เป็นแค่เครื่องตอบคำถาม",
+  "category": "ai",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "ถ้าคุณยังไม่ใช้ AI กับงานนี้ คุณเสียเปรียบแล้ว",
+  "category": "ai",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "Prompt ที่ช่วยให้ AI วิเคราะห์เก่งขึ้นหลายเท่า",
+  "category": "ai",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "ผมลองให้ AI วางแผนธุรกิจ ผลลัพธ์น่าทึ่งมาก",
+  "category": "ai",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "AI ฟรีที่ทำงานได้ใกล้เคียงตัวเสียเงิน",
+  "category": "ai",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "ข้อผิดพลาดที่ทำให้ AI ให้ข้อมูลไม่ตรงความต้องการ",
+  "category": "ai",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "AI กำลังเปลี่ยนวงการนี้เร็วกว่าที่คาด",
+  "category": "ai",
+  "type": "curiosity",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "นี่คือคำถามที่ผมถาม AI ทุกครั้งก่อนเริ่มงาน",
+  "category": "ai",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "AI ช่วยให้ผมหาไอเดียได้ไม่หมดจริงหรือ",
+  "category": "ai",
+  "type": "question",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "หลายคนคิดว่า AI ใช้ยาก ทั้งที่จริงไม่ใช่",
+  "category": "ai",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "เครื่องมือ AI ที่ช่วยเขียนโพสต์ได้ทั้งเดือน",
+  "category": "ai",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "ผมลดเวลาทำงานลงครึ่งหนึ่งด้วย AI วิธีนี้",
+  "category": "ai",
+  "type": "story",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "AI ไม่ได้แทนคนเก่ง แต่ช่วยให้คนเก่งเร็วขึ้น",
+  "category": "ai",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "Prompt เดียวที่ช่วยให้ AI คิดเป็นขั้นตอน",
+  "category": "ai",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "ถ้าคุณสร้างคอนเทนต์ทุกวัน ต้องรู้ AI ตัวนี้",
+  "category": "ai",
+  "type": "opportunity",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "AI ช่วยตรวจข้อผิดพลาดที่คนมองไม่เห็น",
+  "category": "ai",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "นี่คือเหตุผลที่ AI ตอบผิดบ่อยกว่าที่คิด",
+  "category": "ai",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "อย่าถาม AI แบบนี้ ถ้าอยากได้คำตอบดี ๆ",
+  "category": "ai",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "สิ่งแรกที่ผมทำหลังเปิด AI ทุกครั้ง",
+  "category": "ai",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 61,
+  "hook": "AI ตัวนี้ช่วยสร้างสคริปต์วิดีโอได้ในไม่กี่วินาที",
+  "category": "ai",
+  "type": "result",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 62,
+  "hook": "คนทำธุรกิจเริ่มใช้ AI แบบนี้กันแล้ว",
+  "category": "ai",
+  "type": "trend",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 63,
+  "hook": "AI กับคน ใครทำงานนี้ได้ดีกว่ากัน",
+  "category": "ai",
+  "type": "comparison",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 64,
+  "hook": "ผมลองใช้ AI ช่วยวิเคราะห์คู่แข่ง ผลคือ...",
+  "category": "ai",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 65,
+  "hook": "วิธีใช้ AI เพื่อเพิ่มยอดขายโดยไม่เพิ่มงบ",
+  "category": "ai",
+  "type": "solution",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 66,
+  "hook": "นี่คือสิ่งที่ AI เก่งกว่ามนุษย์อย่างชัดเจน",
+  "category": "ai",
+  "type": "authority",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 67,
+  "hook": "หลายคนพลาดโอกาสเพราะยังไม่ใช้ AI",
+  "category": "ai",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 68,
+  "hook": "AI ช่วยให้มือใหม่ทำงานระดับมืออาชีพได้ไหม",
+  "category": "ai",
+  "type": "question",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 69,
+  "hook": "เครื่องมือ AI ที่ผมอยากรู้จักตั้งแต่ปีที่แล้ว",
+  "category": "ai",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 70,
+  "hook": "AI ไม่ใช่อนาคต แต่มันคือปัจจุบันแล้ว",
+  "category": "ai",
+  "type": "lesson",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 71,
+  "hook": "AI ตัวนี้ช่วยเปลี่ยนโน้ตสั้น ๆ ให้กลายเป็นบทความเต็ม",
+  "category": "ai",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 72,
+  "hook": "คนที่ใช้ AI เก่ง มักเริ่มจากสิ่งนี้",
+  "category": "ai",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 73,
+  "hook": "ถ้าคุณยังไม่ใช้ AI กับงานประจำวัน คุณกำลังเสียเวลา",
+  "category": "ai",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 74,
+  "hook": "Prompt ที่ช่วยให้ AI คิดเหมือนที่ปรึกษาธุรกิจ",
+  "category": "ai",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 75,
+  "hook": "ผมลองให้ AI วางแผนคอนเทนต์ทั้งเดือน ผลคือ...",
+  "category": "ai",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 76,
+  "hook": "AI ช่วยให้คนธรรมดาทำงานได้เร็วขึ้นหลายเท่า",
+  "category": "ai",
+  "type": "lesson",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 77,
+  "hook": "ข้อผิดพลาดที่ทำให้ AI ตอบวกวน",
+  "category": "ai",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 78,
+  "hook": "AI ฟรีตัวนี้อาจแทนเครื่องมือเสียเงินได้",
+  "category": "ai",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 79,
+  "hook": "นี่คือเหตุผลที่หลายคนใช้ AI แล้วไม่เห็นผล",
+  "category": "ai",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 80,
+  "hook": "วิธีสั่ง AI ให้เขียนเหมือนสไตล์ของคุณ",
+  "category": "ai",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "AI กำลังเปลี่ยนเกมของคนทำคอนเทนต์",
+  "category": "ai",
+  "type": "trend",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "หลายคนยังไม่รู้ว่า AI ทำสิ่งนี้ได้",
+  "category": "ai",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "สิ่งที่ควรทำก่อนถาม AI ทุกครั้ง",
+  "category": "ai",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "ผมใช้ AI วิเคราะห์ข้อมูล แล้วเจอสิ่งที่คาดไม่ถึง",
+  "category": "ai",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "AI กับ Google ใช้อะไรเมื่อไหร่ดีกว่ากัน",
+  "category": "ai",
+  "type": "comparison",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "เครื่องมือ AI ที่ช่วยสร้างไอเดียธุรกิจใหม่",
+  "category": "ai",
+  "type": "opportunity",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "ถ้าคุณสร้างคอร์สออนไลน์ AI จะช่วยตรงนี้ได้มาก",
+  "category": "ai",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "AI ไม่ได้ลดคุณค่าคน แต่มันเพิ่มคุณค่าคนที่ใช้เป็น",
+  "category": "ai",
+  "type": "lesson",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "Prompt สั้น ๆ ที่ช่วยให้ AI ตอบตรงประเด็น",
+  "category": "ai",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "นี่คือทักษะที่ควรเรียนคู่กับ AI",
+  "category": "ai",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "AI ช่วยสร้างรายได้จากความรู้เดิมของคุณได้อย่างไร",
+  "category": "ai",
+  "type": "opportunity",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "หลายคนเสียโอกาสเพราะมอง AI แค่เครื่องมือเล่น",
+  "category": "ai",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "ผมลองให้ AI เป็นโค้ชส่วนตัว 7 วัน",
+  "category": "ai",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "AI ช่วยให้คนเริ่มต้นทำงานระดับมืออาชีพได้จริงไหม",
+  "category": "ai",
+  "type": "question",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "เครื่องมือ AI ที่ผมใช้ทุกวันในปีนี้",
+  "category": "ai",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "สิ่งที่ AI ทำได้ดีที่สุดในตอนนี้",
+  "category": "ai",
+  "type": "result",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "ถ้าคุณอยากเก่ง AI เร็วขึ้น ให้เริ่มตรงนี้",
+  "category": "ai",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "AI ทำให้ผมเลิกทำงานซ้ำ ๆ แบบเดิม",
+  "category": "ai",
+  "type": "story",
+  "emotion": "relief",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "เทคนิคที่ช่วยให้ AI เข้าใจโจทย์ยาก ๆ",
+  "category": "ai",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "คนที่เรียนรู้ AI วันนี้ จะได้เปรียบในวันพรุ่งนี้",
+  "category": "ai",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+}
+]

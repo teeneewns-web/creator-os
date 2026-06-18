@@ -1,0 +1,902 @@
+[
+  {
+    "id": 1,
+    "hook": "90% ของคนออกกำลังกายไม่เห็นผลเพราะเรื่องนี้",
+    "category": "fitness",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "หยุดทำสิ่งนี้ ถ้าอยากลดไขมันเร็วขึ้น",
+    "category": "fitness",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "เคล็ดลับฟิตหุ่นที่เทรนเนอร์ไม่ค่อยบอก",
+    "category": "fitness",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "ผมเปลี่ยนสิ่งนี้อย่างเดียว ไขมันลดลงชัดเจน",
+    "category": "fitness",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "นี่คือเหตุผลที่คุณยังลดน้ำหนักไม่ได้",
+    "category": "fitness",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "วิธีฟิตหุ่นโดยไม่ต้องเข้ายิม",
+    "category": "fitness",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "คนส่วนใหญ่ไม่เคยรู้เรื่องนี้เกี่ยวกับการสร้างกล้าม",
+    "category": "fitness",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "หลายคนเข้าใจเรื่องคาร์ดิโอผิดมาตลอด",
+    "category": "fitness",
+    "type": "myth",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ผมทดลองวิธีนี้ 30 วัน ผลลัพธ์เกินคาด",
+    "category": "fitness",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "นี่คือสิ่งที่คนหุ่นดีทำเหมือนกัน",
+    "category": "fitness",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+{
+  "id": 11,
+  "hook": "หลายคนออกกำลังกายหนัก แต่ผลลัพธ์ไม่มา",
+  "category": "fitness",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 12,
+  "hook": "ผมไม่คิดว่าการเปลี่ยนอาหารมื้อเดียวจะเห็นผลขนาดนี้",
+  "category": "fitness",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 13,
+  "hook": "เคล็ดลับที่นักกีฬาใช้รักษาหุ่นตลอดปี",
+  "category": "fitness",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 14,
+  "hook": "90% ของคนลดน้ำหนักพลาดเรื่องนี้",
+  "category": "fitness",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 15,
+  "hook": "ถ้ารู้เรื่องนี้เร็วกว่านี้ ผมคงไม่เสียเวลาเป็นปี",
+  "category": "fitness",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 16,
+  "hook": "นี่อาจเป็นคำแนะนำเรื่องหุ่นที่สำคัญที่สุด",
+  "category": "fitness",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 17,
+  "hook": "หลายคนเข้าใจเรื่องคาร์ดิโอผิดมาตลอด",
+  "category": "fitness",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 18,
+  "hook": "ผมลองทำแบบนี้ แล้วไขมันลดลงชัดเจน",
+  "category": "fitness",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 19,
+  "hook": "นี่คือสิ่งที่ผมอยากรู้ก่อนเริ่มฟิตหุ่น",
+  "category": "fitness",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 20,
+  "hook": "อย่าเพิ่งเริ่มลดน้ำหนัก จนกว่าจะรู้เรื่องนี้",
+  "category": "fitness",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 21,
+  "hook": "นี่คือเหตุผลที่น้ำหนักคุณไม่ลง",
+  "category": "fitness",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "ผมเปลี่ยนสิ่งนี้อย่างเดียว หุ่นเปลี่ยนทั้งตัว",
+  "category": "fitness",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "ความลับที่คนหุ่นดีส่วนใหญ่รู้กัน",
+  "category": "fitness",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "หลายคนกำลังกินอาหารสุขภาพผิดวิธี",
+  "category": "fitness",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "90% ของคนไม่เคยนับสิ่งนี้",
+  "category": "fitness",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "วิธีลดไขมันที่มือใหม่ทำตามได้ทันที",
+  "category": "fitness",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "หลายคนคิดว่ายิ่งเหงื่อออกมากยิ่งเผาผลาญดี",
+  "category": "fitness",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "ผมทดลองวิธีนี้ 60 วัน ผลลัพธ์ต่างไปมาก",
+  "category": "fitness",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "นี่คือสิ่งที่คนฟิตจริงทำเหมือนกัน",
+  "category": "fitness",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับการฟิตหุ่น ให้จำเรื่องนี้",
+  "category": "fitness",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 31,
+  "hook": "นี่คือข้อผิดพลาดที่ทำให้กล้ามไม่โต",
+  "category": "fitness",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "ผมไม่คิดว่าการนอนจะสำคัญกับหุ่นขนาดนี้",
+  "category": "fitness",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "ความลับที่คนหุ่นดีรักษาไว้ตลอดปี",
+  "category": "fitness",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "หยุดทำสิ่งนี้ ถ้าไม่อยากเสียเวลาในยิม",
+  "category": "fitness",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "สิ่งเล็ก ๆ นี้ช่วยให้ไขมันลดเร็วขึ้น",
+  "category": "fitness",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "นี่คือเหตุผลที่คุณยังไม่เห็นซิกแพค",
+  "category": "fitness",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "วิธีสร้างกล้ามโดยไม่ต้องอยู่ยิมทั้งวัน",
+  "category": "fitness",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "หลายคนเข้าใจเรื่องโปรตีนผิดมาตลอด",
+  "category": "fitness",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "ผมใช้วิธีนี้ทุกวัน และรูปร่างเปลี่ยนไปมาก",
+  "category": "fitness",
+  "type": "story",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "นี่คือสิ่งที่นักเพาะกายมืออาชีพทำเหมือนกัน",
+  "category": "fitness",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "คนส่วนใหญ่กินมากเกินไปโดยไม่รู้ตัว",
+  "category": "fitness",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "ผมเกือบเลิกออกกำลังกาย ก่อนรู้เรื่องนี้",
+  "category": "fitness",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "นี่คือความลับของคนที่รักษาหุ่นได้ทั้งปี",
+  "category": "fitness",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "หลายคนกำลังฝึกผิดท่าโดยไม่รู้ตัว",
+  "category": "fitness",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "90% ของคนออกกำลังกายไม่ติดตามสิ่งนี้",
+  "category": "fitness",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "วิธีเพิ่มกล้ามโดยไม่เพิ่มไขมันมากเกินไป",
+  "category": "fitness",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "หลายคนคิดว่าต้องออกกำลังกายทุกวัน",
+  "category": "fitness",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "ผมเปลี่ยนสิ่งนี้ แล้วผลลัพธ์ดีขึ้นทันที",
+  "category": "fitness",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "นี่คือสิ่งที่คนหุ่นดีระดับโลกมีเหมือนกัน",
+  "category": "fitness",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "อย่าเริ่มโปรแกรมใหม่ จนกว่าจะรู้เรื่องนี้",
+  "category": "fitness",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "นี่คือบทเรียนการฟิตหุ่นที่คุ้มค่าที่สุด",
+  "category": "fitness",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "คุณไม่จำเป็นต้องใช้อุปกรณ์แพงเพื่อหุ่นดี",
+  "category": "fitness",
+  "type": "mindset",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "หลายคนกำลังเสียเวลาไปกับวิธีที่ไม่ได้ผล",
+  "category": "fitness",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนของรูปร่างคุณ",
+  "category": "fitness",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "ผมเกือบพลาดหุ่นในฝันเพราะเรื่องนี้",
+  "category": "fitness",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "นี่คือความแตกต่างระหว่างคนฟิตกับคนที่ยอมแพ้",
+  "category": "fitness",
+  "type": "comparison",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "หลายคนคิดว่าต้องมีแรงจูงใจตลอดเวลา",
+  "category": "fitness",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "ผมเริ่มทำสิ่งนี้ แล้วรูปร่างดีขึ้นทุกเดือน",
+  "category": "fitness",
+  "type": "story",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "นี่คือทักษะสำคัญที่สุดในการสร้างหุ่นที่ดี",
+  "category": "fitness",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับ Fitness ให้จำเรื่องนี้",
+  "category": "fitness",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 61,
+  "hook": "นี่คือเหตุผลที่คนส่วนใหญ่กลับมาอ้วนอีกครั้ง",
+  "category": "fitness",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 62,
+  "hook": "ผมไม่คิดว่าการนอนเพิ่มอีก 1 ชั่วโมงจะเปลี่ยนหุ่นได้",
+  "category": "fitness",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 63,
+  "hook": "ความลับที่คนหุ่นดีรักษาไว้ได้นานหลายปี",
+  "category": "fitness",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 64,
+  "hook": "ถ้าคุณยังทำแบบนี้อยู่ ไขมันจะลดยากมาก",
+  "category": "fitness",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 65,
+  "hook": "90% ของคนไม่รู้ว่ากำลังกินเกิน",
+  "category": "fitness",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 66,
+  "hook": "วิธีลดไขมันโดยไม่ต้องอดอาหาร",
+  "category": "fitness",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 67,
+  "hook": "หลายคนเข้าใจเรื่องการสร้างกล้ามผิดมาตลอด",
+  "category": "fitness",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 68,
+  "hook": "ผมทดลองวิธีนี้ 1 ปีเต็ม ผลลัพธ์ต่างไปมาก",
+  "category": "fitness",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 69,
+  "hook": "นี่คือสิ่งที่คนฟิตจริงทำเหมือนกัน",
+  "category": "fitness",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 70,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนของรูปร่างคุณ",
+  "category": "fitness",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 71,
+  "hook": "นี่คือเหตุผลที่คุณยังไม่เห็นผลลัพธ์ในกระจก",
+  "category": "fitness",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 72,
+  "hook": "วิธีสร้างหุ่นดีโดยไม่ต้องเข้ายิม",
+  "category": "fitness",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 73,
+  "hook": "คนส่วนใหญ่ไม่เคยรู้เรื่องนี้เกี่ยวกับการเผาผลาญ",
+  "category": "fitness",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 74,
+  "hook": "นี่คือบทเรียนฟิตเนสที่แพงที่สุดของผม",
+  "category": "fitness",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 75,
+  "hook": "ผลลัพธ์นี้ทำให้ผมเปลี่ยนวิธีออกกำลังกายทั้งหมด",
+  "category": "fitness",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 76,
+  "hook": "หลายคนกำลังโฟกัสผิดเรื่องในการลดไขมัน",
+  "category": "fitness",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 77,
+  "hook": "สิ่งเล็ก ๆ นี้ช่วยให้หุ่นดีขึ้นมหาศาล",
+  "category": "fitness",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 78,
+  "hook": "ผมใช้วิธีนี้ทุกวันมาหลายปี",
+  "category": "fitness",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 79,
+  "hook": "นี่คือทางลัดที่ช่วยให้เห็นผลเร็วขึ้น",
+  "category": "fitness",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 80,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับ Fitness ให้จำเรื่องนี้",
+  "category": "fitness",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "นี่คือเหตุผลที่คนส่วนใหญ่เลิกออกกำลังกายกลางทาง",
+  "category": "fitness",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "ผมไม่คิดว่าการเดินวันละ 30 นาทีจะเปลี่ยนหุ่นได้",
+  "category": "fitness",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "ความลับที่คนหุ่นดีใช้รักษารูปร่างตลอดปี",
+  "category": "fitness",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "ถ้าคุณยังทำแบบนี้อยู่ คุณอาจไม่เห็นผลลัพธ์ที่ต้องการ",
+  "category": "fitness",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "90% ของคนประเมินแคลอรี่ผิด",
+  "category": "fitness",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "วิธีสร้างวินัยในการออกกำลังกายแบบยั่งยืน",
+  "category": "fitness",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "หลายคนเข้าใจเรื่องการลดพุงผิดมาตลอด",
+  "category": "fitness",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "ผมทดลองเปลี่ยนกิจวัตรนี้ 6 เดือน ผลลัพธ์เหลือเชื่อ",
+  "category": "fitness",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "นี่คือสิ่งที่คนหุ่นดีระยะยาวมีเหมือนกัน",
+  "category": "fitness",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "ถ้าคุณอยากเปลี่ยนรูปร่าง ต้องรู้เรื่องนี้",
+  "category": "fitness",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "นี่คือสิ่งที่เปลี่ยนร่างกายของผมไปตลอดกาล",
+  "category": "fitness",
+  "type": "story",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "หลายคนมองข้ามสาเหตุที่ทำให้น้ำหนักไม่ลง",
+  "category": "fitness",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "นี่อาจเป็นเคล็ดลับฟิตหุ่นที่ดีที่สุดที่คุณเคยได้ยิน",
+  "category": "fitness",
+  "type": "future",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "ผมเสียเวลาไปหลายปี เพราะไม่เข้าใจเรื่องนี้",
+  "category": "fitness",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "นี่คือสิ่งที่คนรูปร่างดีทุกคนมีร่วมกัน",
+  "category": "fitness",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "ผลลัพธ์นี้ทำให้ผมเปลี่ยนแนวทางทั้งหมด",
+  "category": "fitness",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "หลายคนกำลังพลาดโอกาสมีหุ่นที่ดีขึ้น",
+  "category": "fitness",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "นี่คือวิธีสร้างรูปร่างที่รักษาได้ตลอดชีวิต",
+  "category": "fitness",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "ผมไม่เคยเล่าเรื่องนี้เกี่ยวกับการฟิตหุ่นให้ใครฟังมาก่อน",
+  "category": "fitness",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับ Fitness ให้ทำต่อเนื่อง",
+  "category": "fitness",
+  "type": "motivation",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+}
+]

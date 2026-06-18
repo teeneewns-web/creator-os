@@ -1,0 +1,902 @@
+[
+  {
+    "id": 1,
+    "hook": "คลิปนี้มีคนดูเกินคาด เพราะสิ่งนี้",
+    "category": "tiktok",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "tiktok",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "90% ของคนทำ TikTok พลาดเรื่องนี้",
+    "category": "tiktok",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "tiktok",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "หยุดเลื่อนก่อน ถ้าคุณอยากโตใน TikTok",
+    "category": "tiktok",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "tiktok",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "ผมเปลี่ยนแค่สิ่งนี้ ยอดวิวเพิ่มทันที",
+    "category": "tiktok",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "tiktok",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "ความลับที่คนยอดวิวหลักล้านใช้",
+    "category": "tiktok",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "tiktok",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "นี่คือสาเหตุที่คลิปคุณไม่ติดฟีด",
+    "category": "tiktok",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "tiktok",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "วิธีทำให้คนดูจนจบคลิป",
+    "category": "tiktok",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "tiktok",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "คนส่วนใหญ่เข้าใจอัลกอริทึม TikTok ผิด",
+    "category": "tiktok",
+    "type": "myth",
+    "emotion": "shock",
+    "platform": "tiktok",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ผมทดลองลงคลิป 30 วันติด ผลคือ...",
+    "category": "tiktok",
+    "type": "story",
+    "emotion": "curiosity",
+    "platform": "tiktok",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "นี่คือ Hook ที่ใช้ได้แทบทุกคลิป",
+    "category": "tiktok",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "tiktok",
+    "language": "th"
+  },
+  {
+    "id": 11,
+    "hook": "คลิปไวรัลส่วนใหญ่มีสิ่งนี้เหมือนกัน",
+    "category": "tiktok",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "tiktok",
+    "language": "th"
+  },
+  {
+    "id": 12,
+    "hook": "ผมไม่คิดว่าคลิปนี้จะปังขนาดนี้",
+    "category": "tiktok",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "tiktok",
+    "language": "th"
+  },
+  {
+    "id": 13,
+    "hook": "สิ่งแรกที่ควรพูดใน 3 วินาทีแรก",
+    "category": "tiktok",
+    "type": "education",
+    "emotion": "trust",
+    "platform": "tiktok",
+    "language": "th"
+  },
+  {
+    "id": 14,
+    "hook": "ถ้ายังเปิดคลิปแบบนี้ ยอดวิวจะโตยาก",
+    "category": "tiktok",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "tiktok",
+    "language": "th"
+  },
+  {
+    "id": 15,
+    "hook": "เคล็ดลับที่ช่วยให้คนดูไม่ปัดหนี",
+    "category": "tiktok",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "tiktok",
+    "language": "th"
+  },
+  {
+    "id": 16,
+    "hook": "นี่คือเหตุผลที่ยอดวิวตก",
+    "category": "tiktok",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "tiktok",
+    "language": "th"
+  },
+  {
+    "id": 17,
+    "hook": "ผมใช้สูตรนี้สร้างคลิปทุกวัน",
+    "category": "tiktok",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "tiktok",
+    "language": "th"
+  },
+  {
+    "id": 18,
+    "hook": "หลายคนพลาดโอกาสโตเพราะเรื่องนี้",
+    "category": "tiktok",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "tiktok",
+    "language": "th"
+  },
+  {
+    "id": 19,
+    "hook": "สิ่งที่ทำให้คนดูแชร์คลิปต่อ",
+    "category": "tiktok",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "tiktok",
+    "language": "th"
+  },
+  {
+    "id": 20,
+    "hook": "คลิปนี้ใช้เวลาทำแค่ 5 นาที",
+    "category": "tiktok",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "tiktok",
+    "language": "th"
+  },
+{
+  "id": 21,
+  "hook": "นี่คือเหตุผลที่คลิปนี้คนดูจนจบ",
+  "category": "tiktok",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "ผมเปลี่ยนแค่ 3 วินาทีแรก ยอดวิวต่างกันมาก",
+  "category": "tiktok",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "หลายคนเข้าใจเรื่องไวรัลผิดมาตลอด",
+  "category": "tiktok",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "สิ่งที่คนดูตัดสินภายใน 1 วินาที",
+  "category": "tiktok",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "คลิปนี้เกือบไม่มีคนดู ถ้าไม่แก้จุดนี้",
+  "category": "tiktok",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "หยุดทำแบบนี้ ถ้าอยากให้คนดูจนจบ",
+  "category": "tiktok",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "เคล็ดลับที่ครีเอเตอร์หลักล้านวิวใช้",
+  "category": "tiktok",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "นี่คือสาเหตุที่คลิปดีแต่ไม่ดัง",
+  "category": "tiktok",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "ผมใช้เทคนิคนี้แล้วคนติดตามเพิ่มทุกวัน",
+  "category": "tiktok",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "สิ่งที่ TikTok อยากให้คุณทำมากที่สุด",
+  "category": "tiktok",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 31,
+  "hook": "คนดูหยุดเลื่อนเพราะประโยคนี้",
+  "category": "tiktok",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "ผมลองลงคลิปเวลาแปลก ๆ ผลคือ...",
+  "category": "tiktok",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "นี่อาจเป็นข้อผิดพลาดที่ใหญ่ที่สุดของครีเอเตอร์",
+  "category": "tiktok",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "สูตรเปิดคลิปที่ใช้ได้แทบทุกแนว",
+  "category": "tiktok",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "หลายคนมองข้ามข้อมูลนี้ใน TikTok",
+  "category": "tiktok",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "นี่คือเหตุผลที่คนแชร์คลิปนี้ต่อ",
+  "category": "tiktok",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "ผมเพิ่มยอดติดตามโดยไม่ต้องลงคลิปเพิ่ม",
+  "category": "tiktok",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "สิ่งที่ควรทำก่อนกดโพสต์ทุกครั้ง",
+  "category": "tiktok",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "ถ้าคลิปไม่ปัง ลองเช็กเรื่องนี้ก่อน",
+  "category": "tiktok",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "ผมเสียเวลาไปหลายเดือน เพราะไม่รู้เรื่องนี้",
+  "category": "tiktok",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "นี่คือความจริงเกี่ยวกับอัลกอริทึม TikTok",
+  "category": "tiktok",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "หลายคนพยายามไวรัลผิดวิธี",
+  "category": "tiktok",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "คลิปนี้ใช้สูตรเดียวกับช่องใหญ่",
+  "category": "tiktok",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "ผมไม่คิดว่าคนจะดูจนจบขนาดนี้",
+  "category": "tiktok",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "นี่คือสิ่งที่ช่วยให้คลิปโตเร็วขึ้น",
+  "category": "tiktok",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "หลายคนไม่รู้ว่าคนดูคิดแบบนี้",
+  "category": "tiktok",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "ก่อนถ่ายคลิป ลองถามตัวเองคำถามนี้",
+  "category": "tiktok",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "นี่คือวิธีเพิ่ม Watch Time แบบง่ายที่สุด",
+  "category": "tiktok",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "สิ่งที่คนดูชอบมากกว่าคลิปคุณภาพสูง",
+  "category": "tiktok",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "ครีเอเตอร์ที่โตเร็วที่สุด มักทำสิ่งนี้",
+  "category": "tiktok",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "ผมเจอเหตุผลแล้วว่าทำไมคลิปนี้ถึงไวรัล",
+  "category": "tiktok",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "หลายคนคิดว่ายอดวิวสำคัญที่สุด แต่จริงๆ ไม่ใช่",
+  "category": "tiktok",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "สิ่งที่ควรทำใน 3 วินาทีแรกของทุกคลิป",
+  "category": "tiktok",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "ผมเพิ่ม Watch Time ได้ด้วยวิธีง่ายๆ นี้",
+  "category": "tiktok",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "หลายคนกำลังเสียโอกาสเพราะไม่รู้เรื่องนี้",
+  "category": "tiktok",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "นี่คือเคล็ดลับที่ครีเอเตอร์ดังไม่ค่อยบอก",
+  "category": "tiktok",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "คลิปนี้เกือบพัง ถ้าไม่แก้จุดนี้",
+  "category": "tiktok",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "นี่คือสาเหตุที่คนเลื่อนผ่านคลิปคุณ",
+  "category": "tiktok",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "ผมใช้สูตรนี้กับทุกคลิปที่ยอดวิวดี",
+  "category": "tiktok",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "สิ่งที่คนดูชอบมากกว่าการตัดต่อสวย",
+  "category": "tiktok",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 61,
+  "hook": "ผมเปลี่ยนคำเปิดคลิป แล้วผลลัพธ์ต่างกันมาก",
+  "category": "tiktok",
+  "type": "comparison",
+  "emotion": "surprise",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 62,
+  "hook": "หลายคนเข้าใจผิดเกี่ยวกับ For You Page",
+  "category": "tiktok",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 63,
+  "hook": "นี่คือสิ่งที่ TikTok ให้ความสำคัญจริงๆ",
+  "category": "tiktok",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 64,
+  "hook": "ผมใช้เวลา 30 วันเพื่อทดสอบเรื่องนี้",
+  "category": "tiktok",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 65,
+  "hook": "ถ้าคุณอยากโตเร็วขึ้น ให้เริ่มจากตรงนี้",
+  "category": "tiktok",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 66,
+  "hook": "ข้อผิดพลาดที่ทำให้คลิปดีๆ ไม่ดัง",
+  "category": "tiktok",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 67,
+  "hook": "นี่อาจเป็นเทคนิคที่คุ้มที่สุดสำหรับครีเอเตอร์",
+  "category": "tiktok",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 68,
+  "hook": "ผมไม่คิดว่าคนจะดูคลิปนี้จนจบ",
+  "category": "tiktok",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 69,
+  "hook": "สิ่งที่ควรเลิกทำ ถ้าอยากได้ยอดวิวมากขึ้น",
+  "category": "tiktok",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 70,
+  "hook": "นี่คือเหตุผลที่ครีเอเตอร์บางคนโตเร็วมาก",
+  "category": "tiktok",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 71,
+  "hook": "ผมลองทำตรงข้ามกับคนอื่น แล้วผลคือ...",
+  "category": "tiktok",
+  "type": "contrarian",
+  "emotion": "surprise",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 72,
+  "hook": "หลายคนพลาดโอกาสโตเพราะคิดแบบนี้",
+  "category": "tiktok",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 73,
+  "hook": "สิ่งที่ผมอยากรู้ตั้งแต่วันแรกที่ทำ TikTok",
+  "category": "tiktok",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 74,
+  "hook": "นี่คือปัจจัยที่ส่งผลต่อยอดวิวมากที่สุด",
+  "category": "tiktok",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 75,
+  "hook": "ครีเอเตอร์ที่โตไวที่สุด มักทำสิ่งนี้ทุกวัน",
+  "category": "tiktok",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 76,
+  "hook": "ผมไม่คิดว่าคลิปสั้นแค่นี้จะได้วิวขนาดนี้",
+  "category": "tiktok",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 77,
+  "hook": "หลายคนโฟกัสผิดจุดเวลาทำ TikTok",
+  "category": "tiktok",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 78,
+  "hook": "นี่คือสิ่งที่คนดูตัดสินภายในเสี้ยววินาที",
+  "category": "tiktok",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 79,
+  "hook": "ผมเพิ่มยอดติดตามโดยไม่เพิ่มจำนวนคลิป",
+  "category": "tiktok",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 80,
+  "hook": "เคล็ดลับที่ช่วยให้คนดูอยู่จนจบคลิป",
+  "category": "tiktok",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "สิ่งที่ควรหยุดทำทันที ถ้าอยากโตเร็วขึ้น",
+  "category": "tiktok",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "นี่คือเหตุผลที่คลิปเดียวเปลี่ยนทั้งช่องได้",
+  "category": "tiktok",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "ผมใช้เทคนิคนี้แล้ว Watch Time เพิ่มขึ้นมาก",
+  "category": "tiktok",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "หลายคนคิดว่าต้องมีอุปกรณ์แพงถึงจะดัง",
+  "category": "tiktok",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "นี่คือสูตร Hook ที่ใช้ได้กับทุกแนว",
+  "category": "tiktok",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "ผมเกือบเลิกทำ TikTok ก่อนจะรู้เรื่องนี้",
+  "category": "tiktok",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "สิ่งที่ครีเอเตอร์ใหม่ควรรู้ก่อนลงคลิปแรก",
+  "category": "tiktok",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "นี่คือจุดที่คนส่วนใหญ่กดเลื่อนผ่าน",
+  "category": "tiktok",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "ผมทดสอบคลิปสองแบบ ผลต่างกันเกินคาด",
+  "category": "tiktok",
+  "type": "comparison",
+  "emotion": "surprise",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "สิ่งที่ช่วยให้คลิปถูกแชร์มากขึ้น",
+  "category": "tiktok",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "หลายคนพยายามไวรัล แต่ลืมสิ่งนี้",
+  "category": "tiktok",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "นี่คือข้อมูลที่ผมดูทุกครั้งหลังโพสต์คลิป",
+  "category": "tiktok",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "ผมค้นพบวิธีเพิ่มยอดวิวแบบไม่เสียเงิน",
+  "category": "tiktok",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "สิ่งที่คนดูชอบมากกว่าภาพสวย",
+  "category": "tiktok",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "นี่คือเหตุผลที่คลิปธรรมดากลับดัง",
+  "category": "tiktok",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "ผมเปลี่ยนวิธีคิดเรื่อง TikTok ไปเลยหลังรู้เรื่องนี้",
+  "category": "tiktok",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "เทคนิคที่ช่วยให้คนจำช่องของคุณได้",
+  "category": "tiktok",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "หลายคนมองข้ามพลังของประโยคแรก",
+  "category": "tiktok",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "นี่คือสิ่งที่ครีเอเตอร์มืออาชีพทำต่างออกไป",
+  "category": "tiktok",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "tiktok",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "ช่องที่เติบโตเร็วที่สุด มักเริ่มจากการทำสิ่งนี้ซ้ำ ๆ",
+  "category": "tiktok",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "tiktok",
+  "language": "th"
+}
+]

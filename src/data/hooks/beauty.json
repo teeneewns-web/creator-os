@@ -1,0 +1,903 @@
+
+[
+  {
+    "id": 1,
+    "hook": "คนส่วนใหญ่ไม่รู้เรื่องนี้เกี่ยวกับการดูแลผิว",
+    "category": "beauty",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "หยุดทำสิ่งนี้ด่วน ถ้าไม่อยากให้ผิวพัง",
+    "category": "beauty",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "เคล็ดลับหน้าใสที่หลายคนมองข้าม",
+    "category": "beauty",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "90% ของคนทาสกินแคร์ผิดขั้นตอน",
+    "category": "beauty",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "ถ้ารู้เรื่องนี้เร็วกว่านี้ ผิวคงดีไปนานแล้ว",
+    "category": "beauty",
+    "type": "regret",
+    "emotion": "regret",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "ทำไมใช้ครีมแพง แต่ผิวยังไม่ดีขึ้น",
+    "category": "beauty",
+    "type": "question",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "สัญญาณที่บอกว่าผิวของคุณกำลังขาดน้ำ",
+    "category": "beauty",
+    "type": "education",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "อย่าเพิ่งซื้อสกินแคร์ตัวนี้ ถ้ายังไม่รู้เรื่องนี้",
+    "category": "beauty",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ลองทำแบบนี้ 7 วัน แล้วผิวเปลี่ยนจริง",
+    "category": "beauty",
+    "type": "result",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "สิ่งเล็ก ๆ ที่ทำให้หน้าแก่กว่าวัยโดยไม่รู้ตัว",
+    "category": "beauty",
+    "type": "shock",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 11,
+    "hook": "คนผิวมันควรรู้เรื่องนี้ก่อนเลือกครีม",
+    "category": "beauty",
+    "type": "education",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 12,
+    "hook": "แต่งหน้ายังไงให้ไม่ตกร่องระหว่างวัน",
+    "category": "beauty",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 13,
+    "hook": "ข้อผิดพลาดที่ทำให้สิวไม่หายสักที",
+    "category": "beauty",
+    "type": "mistake",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 14,
+    "hook": "ทำไมหน้าโทรม ทั้งที่นอนครบ 8 ชั่วโมง",
+    "category": "beauty",
+    "type": "question",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 15,
+    "hook": "ถ้าแต่งหน้าแล้วไม่ติดผิว ลองเช็กสิ่งนี้",
+    "category": "beauty",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 16,
+    "hook": "สูตรลับผิวดูแพงโดยไม่ต้องใช้ของแพง",
+    "category": "beauty",
+    "type": "secret",
+    "emotion": "desire",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 17,
+    "hook": "สิ่งที่บิวตี้บล็อกเกอร์หลายคนไม่ค่อยบอก",
+    "category": "beauty",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 18,
+    "hook": "ก่อนซื้อรองพื้น ต้องดูข้อนี้ก่อน",
+    "category": "beauty",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 19,
+    "hook": "ผิวแบบนี้ควรเลี่ยงสกินแคร์บางประเภท",
+    "category": "beauty",
+    "type": "warning",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 20,
+    "hook": "หน้าใสไม่ได้เริ่มจากครีมแพงเสมอไป",
+    "category": "beauty",
+    "type": "contrarian",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 21,
+    "hook": "สิ่งที่คนเป็นสิวควรหยุดทำทันที",
+    "category": "beauty",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 22,
+    "hook": "ทำไมใช้กันแดดแล้วหน้ายังหมอง",
+    "category": "beauty",
+    "type": "question",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 23,
+    "hook": "ความเชื่อผิด ๆ เรื่องการล้างหน้าที่ควรเลิก",
+    "category": "beauty",
+    "type": "myth",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 24,
+    "hook": "ถ้าหน้าแห้งลอกบ่อย อาจไม่ใช่เพราะผิวแห้ง",
+    "category": "beauty",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 25,
+    "hook": "วิธีเลือกสกินแคร์ให้เหมาะกับผิวแบบง่ายที่สุด",
+    "category": "beauty",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 26,
+    "hook": "ผิวดีขึ้นได้ ถ้าเริ่มจากเปลี่ยนสิ่งนี้",
+    "category": "beauty",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 27,
+    "hook": "สิวอุดตันอาจเกิดจากของที่คุณใช้ทุกวัน",
+    "category": "beauty",
+    "type": "shock",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 28,
+    "hook": "แต่งหน้าให้ดูแพง ไม่จำเป็นต้องใช้เครื่องสำอางแพง",
+    "category": "beauty",
+    "type": "contrarian",
+    "emotion": "desire",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 29,
+    "hook": "คนที่ผิวดีมักมีนิสัยนี้เหมือนกัน",
+    "category": "beauty",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 30,
+    "hook": "ถ้าหน้ามันระหว่างวัน ลองทำตามนี้",
+    "category": "beauty",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 31,
+    "hook": "สิ่งที่ทำให้เมคอัพหลุดเร็วโดยไม่รู้ตัว",
+    "category": "beauty",
+    "type": "mistake",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 32,
+    "hook": "ล้างหน้าสะอาดเกินไป ก็ทำให้ผิวพังได้",
+    "category": "beauty",
+    "type": "contrarian",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 33,
+    "hook": "ก่อนใช้เรตินอล ต้องรู้เรื่องนี้ก่อน",
+    "category": "beauty",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 34,
+    "hook": "หน้าใสแบบธรรมชาติ เริ่มจากขั้นตอนนี้",
+    "category": "beauty",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 35,
+    "hook": "สิ่งที่ทำให้ผิวดูหมอง แม้ไม่ได้ออกแดด",
+    "category": "beauty",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 36,
+    "hook": "ถ้ารูขุมขนดูกว้างขึ้น ลองเช็กพฤติกรรมนี้",
+    "category": "beauty",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 37,
+    "hook": "หลายคนใช้มอยส์เจอร์ไรเซอร์ผิดวิธี",
+    "category": "beauty",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 38,
+    "hook": "อยากให้หน้าดูเด็กลง ลองเริ่มจากสิ่งนี้",
+    "category": "beauty",
+    "type": "solution",
+    "emotion": "desire",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 39,
+    "hook": "สิ่งที่คนแต่งหน้ามือใหม่มักพลาด",
+    "category": "beauty",
+    "type": "mistake",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 40,
+    "hook": "ผิวไม่เรียบเนียน อาจเกิดจากขั้นตอนนี้",
+    "category": "beauty",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 41,
+    "hook": "นี่คือวิธีทำให้ลุคดูแพงขึ้นทันที",
+    "category": "beauty",
+    "type": "solution",
+    "emotion": "desire",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 42,
+    "hook": "ทำไมบางคนแต่งหน้าเบา ๆ แต่ดูดีมาก",
+    "category": "beauty",
+    "type": "question",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 43,
+    "hook": "ทริคเล็ก ๆ ที่ทำให้ผิวดูโกลว์ขึ้น",
+    "category": "beauty",
+    "type": "secret",
+    "emotion": "desire",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 44,
+    "hook": "อย่าทำสิ่งนี้ก่อนแต่งหน้า",
+    "category": "beauty",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 45,
+    "hook": "ถ้าอยากให้ลิปติดทนทั้งวัน ต้องทำแบบนี้",
+    "category": "beauty",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 46,
+    "hook": "สีลิปที่เลือกผิด อาจทำให้หน้าดูหมอง",
+    "category": "beauty",
+    "type": "warning",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 47,
+    "hook": "วิธีเลือกรองพื้นให้ไม่ลอย ไม่เทา",
+    "category": "beauty",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 48,
+    "hook": "แค่เปลี่ยนทรงคิ้ว หน้าก็ดูเปลี่ยนได้",
+    "category": "beauty",
+    "type": "result",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 49,
+    "hook": "สิ่งที่ทำให้หน้าแก่ขึ้นแบบไม่รู้ตัว",
+    "category": "beauty",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 50,
+    "hook": "บิวตี้ไอเทมที่ไม่จำเป็นต้องซื้อแพง",
+    "category": "beauty",
+    "type": "contrarian",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+{
+  "id": 51,
+  "hook": "หน้าพังทั้งที่ใช้สกินแคร์ครบ อาจเพราะขั้นตอนนี้",
+  "category": "beauty",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "เทคนิคแต่งหน้าให้ดูสดใสแม้นอนน้อย",
+  "category": "beauty",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "สิ่งที่คนผิวสวยทำทุกคืนก่อนนอน",
+  "category": "beauty",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "รองพื้นแพงไม่ได้แปลว่าจะเข้ากับผิวคุณ",
+  "category": "beauty",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "ก่อนซื้อครีมตัวใหม่ ลองเช็กส่วนผสมนี้ก่อน",
+  "category": "beauty",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "ผิวดีขึ้นมากหลังหยุดทำสิ่งนี้แค่สองสัปดาห์",
+  "category": "beauty",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "ความเข้าใจผิดเรื่องสิวที่ยังมีคนเชื่ออยู่",
+  "category": "beauty",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "เคล็ดลับทำให้ผิวดูสุขภาพดีโดยไม่ต้องแต่งหน้าเยอะ",
+  "category": "beauty",
+  "type": "secret",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "สีบลัชออนที่ช่วยให้หน้าดูเด็กลง",
+  "category": "beauty",
+  "type": "education",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "หลายคนเสียเงินกับสกินแคร์ผิดจุดมาตลอด",
+  "category": "beauty",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 61,
+  "hook": "ผิวดูโทรมลงทั้งที่ใช้สกินแคร์เหมือนเดิม",
+  "category": "beauty",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 62,
+  "hook": "ทริคเลือกสีผมให้หน้าดูสว่างขึ้น",
+  "category": "beauty",
+  "type": "education",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 63,
+  "hook": "สิ่งที่ช่างแต่งหน้าอาชีพสังเกตก่อนแต่งหน้าเสมอ",
+  "category": "beauty",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 64,
+  "hook": "ทำไมบางคนแต่งหน้า 5 นาทีแต่ดูดีมาก",
+  "category": "beauty",
+  "type": "question",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 65,
+  "hook": "เคล็ดลับทำให้คอนซีลเลอร์ไม่เป็นคราบ",
+  "category": "beauty",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 66,
+  "hook": "สิ่งที่ควรหยุดทำทันทีถ้ารูขุมขนกว้างขึ้น",
+  "category": "beauty",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 67,
+  "hook": "ผิวดูแพงขึ้นได้โดยไม่ต้องซื้อของแพง",
+  "category": "beauty",
+  "type": "contrarian",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 68,
+  "hook": "หลายคนพลาดขั้นตอนนี้หลังล้างหน้า",
+  "category": "beauty",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 69,
+  "hook": "นี่คือเหตุผลที่สิวขึ้นซ้ำที่เดิม",
+  "category": "beauty",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 70,
+  "hook": "สูตรลับผิวฉ่ำแบบสาวเกาหลี",
+  "category": "beauty",
+  "type": "secret",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 71,
+  "hook": "ก่อนนอน 3 นาทีที่ช่วยให้ผิวดีขึ้น",
+  "category": "beauty",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 72,
+  "hook": "เครื่องสำอางชิ้นนี้อาจไม่เหมาะกับทุกคน",
+  "category": "beauty",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 73,
+  "hook": "สิ่งที่ทำให้หน้าหมองแม้อยู่ในห้องทั้งวัน",
+  "category": "beauty",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 74,
+  "hook": "แต่งหน้าแบบนี้ช่วยให้กล้องกินหน้ามากขึ้น",
+  "category": "beauty",
+  "type": "result",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 75,
+  "hook": "คนผิวดีส่วนใหญ่ไม่ได้เริ่มจากสกินแคร์",
+  "category": "beauty",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 76,
+  "hook": "ข้อผิดพลาดที่ทำให้ลิปติดไม่ทน",
+  "category": "beauty",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 77,
+  "hook": "วิธีเลือกโทนสีแต่งหน้าให้เข้ากับผิว",
+  "category": "beauty",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 78,
+  "hook": "ถ้าผิวแพ้ง่าย ต้องรู้เรื่องนี้ก่อนซื้อทุกครั้ง",
+  "category": "beauty",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 79,
+  "hook": "นี่คือสิ่งที่เปลี่ยนผิวฉันมากที่สุดในปีนี้",
+  "category": "beauty",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 80,
+  "hook": "ผิวสวยไม่จำเป็นต้องมีสิบขั้นตอนเสมอไป",
+  "category": "beauty",
+  "type": "contrarian",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "ถ้าหน้าไม่เนียน ลองเช็กแปรงแต่งหน้าที่ใช้ทุกวัน",
+  "category": "beauty",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "ทริคลงแป้งให้ผิวดูเบาแต่ยังคุมมัน",
+  "category": "beauty",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "สิ่งที่ทำให้ขอบตาดูเหนื่อยแม้แต่งหน้าแล้ว",
+  "category": "beauty",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "ลุคธรรมชาติที่ดูแพง ต้องเริ่มจากจุดนี้",
+  "category": "beauty",
+  "type": "secret",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "ทำไมกันแดดบางตัวทำให้หน้าเยิ้มกว่าเดิม",
+  "category": "beauty",
+  "type": "question",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "อย่าเลือกสกินแคร์จากรีวิวอย่างเดียว",
+  "category": "beauty",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "แต่งหน้าโทนเดิมทุกวัน อาจทำให้ลุคดูจำเจ",
+  "category": "beauty",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "วิธีทำให้หน้าดูมีมิติขึ้นโดยไม่ต้องแต่งหนัก",
+  "category": "beauty",
+  "type": "solution",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "ของในกระเป๋าเครื่องสำอางชิ้นนี้อาจทำให้สิวขึ้น",
+  "category": "beauty",
+  "type": "shock",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "หลายคนลืมดูวันหมดอายุของเครื่องสำอาง",
+  "category": "beauty",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "แค่เปลี่ยนวิธีลงคอนทัวร์ หน้าก็ดูเล็กลงได้",
+  "category": "beauty",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "ผิวดีไม่ได้วัดจากความขาวอย่างเดียว",
+  "category": "beauty",
+  "type": "contrarian",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "ถ้าหน้าเป็นคราบระหว่างวัน อาจพลาดขั้นตอนเตรียมผิว",
+  "category": "beauty",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "เคล็ดลับเลือกน้ำหอมให้เข้ากับบุคลิก",
+  "category": "beauty",
+  "type": "education",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "สิ่งที่ทำให้ผิวดูสุขภาพดีบนกล้อง",
+  "category": "beauty",
+  "type": "secret",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "ถ้าหน้าแดงง่าย ต้องระวังส่วนผสมกลุ่มนี้",
+  "category": "beauty",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "ทริคจัดโต๊ะเครื่องแป้งให้หยิบใช้แล้วไม่เสียเวลา",
+  "category": "beauty",
+  "type": "solution",
+  "emotion": "relief",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "สิ่งที่ทำให้ลุคดูแพงขึ้นโดยไม่ต้องซื้อของใหม่",
+  "category": "beauty",
+  "type": "contrarian",
+  "emotion": "desire",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "ฉันเปลี่ยนแค่ขั้นตอนเดียว แล้วผิวดูดีขึ้นชัดมาก",
+  "category": "beauty",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "ความสวยที่ดูแพง เริ่มจากการเลือกให้น้อยแต่ถูกจุด",
+  "category": "beauty",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+}
+]

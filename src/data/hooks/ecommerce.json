@@ -1,0 +1,902 @@
+[
+  {
+    "id": 1,
+    "hook": "90% ของร้านค้าออนไลน์พลาดเรื่องนี้",
+    "category": "ecommerce",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "หยุดทำสิ่งนี้ ถ้ายังอยากขายได้",
+    "category": "ecommerce",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "เคล็ดลับที่ร้านยอดขายดีใช้กัน",
+    "category": "ecommerce",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "ผมเปลี่ยนแค่สิ่งเดียว ยอดขายเพิ่มขึ้น",
+    "category": "ecommerce",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "นี่คือเหตุผลที่ลูกค้าไม่ซื้อ",
+    "category": "ecommerce",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "วิธีเพิ่มยอดขายโดยไม่ต้องลดราคา",
+    "category": "ecommerce",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "คนส่วนใหญ่ไม่รู้เรื่องนี้",
+    "category": "ecommerce",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "หลายคนเข้าใจเรื่องการขายผิดมาตลอด",
+    "category": "ecommerce",
+    "type": "myth",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ผมทดลองวิธีนี้ 30 วัน ผลคือ...",
+    "category": "ecommerce",
+    "type": "story",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "นี่คือสิ่งที่ทำให้ร้านค้าต่างกัน",
+    "category": "ecommerce",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+{
+  "id": 11,
+  "hook": "หลายคนพลาดโอกาสขายเพราะเรื่องนี้",
+  "category": "ecommerce",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 12,
+  "hook": "ผมไม่คิดว่ายอดขายจะเพิ่มขนาดนี้",
+  "category": "ecommerce",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 13,
+  "hook": "เคล็ดลับที่เจ้าของร้านส่วนใหญ่ไม่รู้",
+  "category": "ecommerce",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 14,
+  "hook": "90% ของร้านค้าออนไลน์ทำผิดจุดนี้",
+  "category": "ecommerce",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 15,
+  "hook": "ถ้ารู้เรื่องนี้เร็วกว่านี้คงดี",
+  "category": "ecommerce",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 16,
+  "hook": "นี่อาจเป็นข้อมูลสำคัญที่สุดสำหรับคนขายของ",
+  "category": "ecommerce",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 17,
+  "hook": "หลายคนเข้าใจลูกค้าผิดมาตลอด",
+  "category": "ecommerce",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 18,
+  "hook": "ผมลองแล้ว และยอดขายเพิ่มจริง",
+  "category": "ecommerce",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 19,
+  "hook": "นี่คือสิ่งที่ผมอยากรู้ตั้งแต่เปิดร้านวันแรก",
+  "category": "ecommerce",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 20,
+  "hook": "อย่าเพิ่งปิดหน้านี้ จนกว่าจะอ่านจบ",
+  "category": "ecommerce",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 21,
+  "hook": "นี่คือเหตุผลที่ลูกค้าไม่กดสั่งซื้อ",
+  "category": "ecommerce",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "ผมเปลี่ยนคำเดียว ยอดขายเพิ่มขึ้นทันที",
+  "category": "ecommerce",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "เคล็ดลับที่ร้านใหญ่ไม่ค่อยบอก",
+  "category": "ecommerce",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "หลายคนกำลังเสียลูกค้าเพราะเรื่องนี้",
+  "category": "ecommerce",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "90% ของคนขายออนไลน์ไม่รู้เรื่องนี้",
+  "category": "ecommerce",
+  "type": "curiosity",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "วิธีเพิ่มยอดสั่งซื้อโดยไม่ต้องยิงโฆษณาเพิ่ม",
+  "category": "ecommerce",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "หลายคนเข้าใจเรื่องราคาผิดมาตลอด",
+  "category": "ecommerce",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "ผมทดลองวิธีนี้ 7 วัน ผลลัพธ์น่าทึ่งมาก",
+  "category": "ecommerce",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "นี่คือสิ่งที่ร้านขายดีทำเหมือนกัน",
+  "category": "ecommerce",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียว ให้จำเรื่องนี้",
+  "category": "ecommerce",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 31,
+  "hook": "นี่คือข้อผิดพลาดที่ทำให้ยอดขายหายไป",
+  "category": "ecommerce",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "ผมไม่คิดว่าลูกค้าจะตอบสนองแบบนี้",
+  "category": "ecommerce",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "นี่คือความลับที่ร้านเล็กใช้สู้ร้านใหญ่",
+  "category": "ecommerce",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "หลายคนกำลังตั้งราคาผิด",
+  "category": "ecommerce",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "ลูกค้าส่วนใหญ่ตัดสินใจจากสิ่งนี้",
+  "category": "ecommerce",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "ผมเปลี่ยนจุดเดียว ยอดสั่งซื้อเพิ่มทันที",
+  "category": "ecommerce",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "นี่คือเหตุผลที่คนดูแต่ไม่ซื้อ",
+  "category": "ecommerce",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "วิธีเพิ่มความน่าเชื่อถือให้ร้านแบบง่าย ๆ",
+  "category": "ecommerce",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "หลายคนเชื่อเรื่องนี้เกี่ยวกับการขาย แต่ไม่จริง",
+  "category": "ecommerce",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "นี่คือสิ่งที่ผมอยากรู้ตั้งแต่เริ่มขายออนไลน์",
+  "category": "ecommerce",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "คนส่วนใหญ่ไม่เคยรู้เรื่องนี้มาก่อน",
+  "category": "ecommerce",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "นี่คือบทเรียนที่คุ้มค่าที่สุดจากการขายของ",
+  "category": "ecommerce",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "ผมใช้วิธีนี้ทุกวัน และมันได้ผลจริง",
+  "category": "ecommerce",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "ผลลัพธ์นี้ทำให้ผมตกใจมาก",
+  "category": "ecommerce",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "นี่คือจุดที่ร้านส่วนใหญ่พลาด",
+  "category": "ecommerce",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "หลายคนกำลังโฟกัสผิดเรื่อง",
+  "category": "ecommerce",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "สิ่งเล็ก ๆ นี้สร้างยอดขายเพิ่มได้มาก",
+  "category": "ecommerce",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "ผมทดสอบเรื่องนี้ด้วยตัวเอง",
+  "category": "ecommerce",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "นี่คือวิธีที่ได้ผลจริงกับร้านออนไลน์",
+  "category": "ecommerce",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียว ให้จำเรื่องนี้",
+  "category": "ecommerce",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "นี่คือเหตุผลที่ยอดขายยังไม่โต",
+  "category": "ecommerce",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "ผมไม่คิดว่าวิธีนี้จะได้ผลขนาดนี้",
+  "category": "ecommerce",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "ความลับที่ร้านขายดีไม่ค่อยบอก",
+  "category": "ecommerce",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "ถ้าคุณยังทำแบบนี้อยู่ กำไรอาจหายไป",
+  "category": "ecommerce",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "90% ของร้านค้าออนไลน์ไม่รู้เรื่องนี้",
+  "category": "ecommerce",
+  "type": "curiosity",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "วิธีเพิ่มกำไรโดยไม่ต้องเพิ่มลูกค้า",
+  "category": "ecommerce",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "หลายคนเข้าใจเรื่องการตลาดผิดมาตลอด",
+  "category": "ecommerce",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "ผมลองทำแบบนี้ 14 วัน ผลลัพธ์เปลี่ยนไปมาก",
+  "category": "ecommerce",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "นี่คือสิ่งที่ร้านระดับท็อปทำเหมือนกัน",
+  "category": "ecommerce",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "ถ้าคุณเป็นเจ้าของร้าน ต้องรู้เรื่องนี้",
+  "category": "ecommerce",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 61,
+  "hook": "หลายคนกำลังเสียเงินโดยไม่รู้ตัว",
+  "category": "ecommerce",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 62,
+  "hook": "ผมไม่คิดว่าการเปลี่ยนแค่นี้จะเพิ่มยอดขายได้",
+  "category": "ecommerce",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 63,
+  "hook": "นี่คือเคล็ดลับที่คนขายเก่งใช้ทุกวัน",
+  "category": "ecommerce",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 64,
+  "hook": "90% ของร้านออนไลน์พลาดเรื่องนี้",
+  "category": "ecommerce",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 65,
+  "hook": "ถ้ารู้เรื่องนี้เร็วกว่านี้ ผมคงไม่ขาดทุน",
+  "category": "ecommerce",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 66,
+  "hook": "นี่คือข้อมูลที่เจ้าของร้านทุกคนควรรู้",
+  "category": "ecommerce",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 67,
+  "hook": "หลายคนเข้าใจลูกค้าผิดมาตลอด",
+  "category": "ecommerce",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 68,
+  "hook": "ผมทดลองเรื่องนี้ด้วยตัวเอง และผลลัพธ์น่าทึ่งมาก",
+  "category": "ecommerce",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 69,
+  "hook": "นี่คือสิ่งที่ร้านขายดีทำต่างจากคนอื่น",
+  "category": "ecommerce",
+  "type": "comparison",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 70,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนของร้านคุณ",
+  "category": "ecommerce",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 71,
+  "hook": "นี่คือเหตุผลที่ลูกค้าไม่กลับมาซื้อซ้ำ",
+  "category": "ecommerce",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 72,
+  "hook": "วิธีเพิ่มยอดขายโดยไม่ต้องเพิ่มงบโฆษณา",
+  "category": "ecommerce",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 73,
+  "hook": "คนส่วนใหญ่ไม่เคยรู้เรื่องนี้มาก่อน",
+  "category": "ecommerce",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 74,
+  "hook": "นี่คือบทเรียนที่แพงที่สุดของผม",
+  "category": "ecommerce",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 75,
+  "hook": "ผลลัพธ์นี้ทำให้ผมตกใจจริง ๆ",
+  "category": "ecommerce",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 76,
+  "hook": "หลายคนกำลังโฟกัสผิดเรื่อง",
+  "category": "ecommerce",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 77,
+  "hook": "สิ่งเล็ก ๆ นี้สร้างยอดขายเพิ่มมหาศาล",
+  "category": "ecommerce",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 78,
+  "hook": "ผมใช้วิธีนี้ทุกวัน และมันยังได้ผล",
+  "category": "ecommerce",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 79,
+  "hook": "นี่คือทางลัดที่ช่วยประหยัดเวลาได้มาก",
+  "category": "ecommerce",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 80,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียว ให้จำเรื่องนี้",
+  "category": "ecommerce",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "นี่คือเหตุผลที่ร้านส่วนใหญ่โตช้ากว่าที่ควร",
+  "category": "ecommerce",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "ผมไม่คิดว่าวิธีนี้จะเปลี่ยนยอดขายได้ขนาดนี้",
+  "category": "ecommerce",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "ความลับที่ร้านระดับท็อปไม่ค่อยพูดถึง",
+  "category": "ecommerce",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "ถ้าคุณยังทำแบบนี้อยู่ คุณกำลังเสียเงิน",
+  "category": "ecommerce",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "หลายคนเข้าใจการขายออนไลน์ผิดมาตลอด",
+  "category": "ecommerce",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "นี่คือสิ่งที่ผมใช้สร้างยอดขายทุกวัน",
+  "category": "ecommerce",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "ผลลัพธ์จริงดีกว่าที่ผมคาดไว้มาก",
+  "category": "ecommerce",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "นี่คือบทเรียนที่ช่วยผมประหยัดเงินได้มาก",
+  "category": "ecommerce",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "สิ่งที่คุณกำลังมองหา อาจง่ายกว่าที่คิด",
+  "category": "ecommerce",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "ผมลองผิดลองถูกอยู่หลายเดือน จนเจอวิธีนี้",
+  "category": "ecommerce",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "นี่คือสิ่งที่เปลี่ยนธุรกิจของผม",
+  "category": "ecommerce",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "หลายคนมองข้ามจุดสำคัญนี้",
+  "category": "ecommerce",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "นี่อาจเป็นโอกาสที่ดีที่สุดของคุณ",
+  "category": "ecommerce",
+  "type": "curiosity",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "ผมเสียเงินไปเยอะ เพราะไม่รู้เรื่องนี้",
+  "category": "ecommerce",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "นี่คือสิ่งที่ร้านสำเร็จทำเหมือนกัน",
+  "category": "ecommerce",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "ผลลัพธ์นี้ทำให้ผมต้องเปลี่ยนแผนทั้งหมด",
+  "category": "ecommerce",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "หลายคนกำลังพลาดสิ่งที่สำคัญที่สุด",
+  "category": "ecommerce",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "นี่คือวิธีที่ช่วยเพิ่มยอดขายได้จริง",
+  "category": "ecommerce",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "ผมไม่เคยเปิดเผยเรื่องนี้ที่ไหนมาก่อน",
+  "category": "ecommerce",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียว ให้จำเรื่องนี้",
+  "category": "ecommerce",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+}
+]

@@ -1,0 +1,902 @@
+[
+  {
+    "id": 1,
+    "hook": "รูปนี้มีคนบันทึกเยอะกว่าที่คิด",
+    "category": "instagram",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "instagram",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "90% ของคนโพสต์ Instagram พลาดเรื่องนี้",
+    "category": "instagram",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "instagram",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "หยุดโพสต์แบบนี้ ถ้ายังอยากโต",
+    "category": "instagram",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "instagram",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "ผมเปลี่ยนแค่สิ่งเดียว ยอดเข้าถึงเพิ่มขึ้น",
+    "category": "instagram",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "instagram",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "นี่คือเคล็ดลับที่คนติดตามหลักแสนใช้",
+    "category": "instagram",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "instagram",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "ทำไมโพสต์สวย ๆ ถึงไม่โต",
+    "category": "instagram",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "instagram",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "วิธีเพิ่มยอดบันทึกแบบง่ายที่สุด",
+    "category": "instagram",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "instagram",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "หลายคนเข้าใจ Instagram ผิดมาตลอด",
+    "category": "instagram",
+    "type": "myth",
+    "emotion": "shock",
+    "platform": "instagram",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ผมทดลองโพสต์ทุกวัน 30 วัน ผลคือ...",
+    "category": "instagram",
+    "type": "story",
+    "emotion": "curiosity",
+    "platform": "instagram",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "นี่คือสิ่งที่ทำให้คนกดติดตาม",
+    "category": "instagram",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "instagram",
+    "language": "th"
+  },
+{
+  "id": 11,
+  "hook": "คนส่วนใหญ่ไม่รู้เคล็ดลับนี้",
+  "category": "instagram",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 12,
+  "hook": "ผมลองทำแบบนี้ แล้วผลลัพธ์เกินคาด",
+  "category": "instagram",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 13,
+  "hook": "นี่คือข้อผิดพลาดที่คนส่วนใหญ่ทำ",
+  "category": "instagram",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 14,
+  "hook": "หยุดทำสิ่งนี้ทันที",
+  "category": "instagram",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 15,
+  "hook": "นี่คือความลับที่ไม่มีใครบอกคุณ",
+  "category": "instagram",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 16,
+  "hook": "หลายคนกำลังเสียเวลาอยู่กับเรื่องนี้",
+  "category": "instagram",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 17,
+  "hook": "วิธีง่าย ๆ ที่ช่วยได้จริง",
+  "category": "instagram",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 18,
+  "hook": "สิ่งที่คุณเชื่อ อาจไม่จริง",
+  "category": "instagram",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 19,
+  "hook": "ผมใช้เวลาเป็นเดือนเพื่อหาคำตอบนี้",
+  "category": "instagram",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 20,
+  "hook": "นี่คือเหตุผลที่คนแชร์โพสต์นี้",
+  "category": "instagram",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 21,
+  "hook": "หลายคนพลาดโอกาสเพราะเรื่องนี้",
+  "category": "instagram",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "ผมไม่คิดว่าจะได้ผลแบบนี้",
+  "category": "instagram",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "เคล็ดลับที่คนเก่งใช้กัน",
+  "category": "instagram",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "90% ของคนทำผิดเรื่องนี้",
+  "category": "instagram",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "ถ้ารู้เร็วกว่านี้คงดี",
+  "category": "instagram",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "นี่อาจเป็นเรื่องสำคัญที่สุด",
+  "category": "instagram",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "คนส่วนใหญ่เข้าใจผิดมาตลอด",
+  "category": "instagram",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "ผมลองแล้ว และมันได้ผลจริง",
+  "category": "instagram",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "นี่คือสิ่งที่ผมอยากรู้ตั้งแต่แรก",
+  "category": "instagram",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "อย่าเพิ่งตัดสิน จนกว่าจะเห็นสิ่งนี้",
+  "category": "instagram",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "instagram",
+  "language": "th"
+} ,
+{
+  "id": 31,
+  "hook": "เรื่องนี้เปลี่ยนความคิดผมไปเลย",
+  "category": "instagram",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "นี่คือคำตอบที่คุณหาอยู่",
+  "category": "instagram",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "ความจริงที่หลายคนไม่กล้าพูด",
+  "category": "instagram",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "นี่คือสิ่งที่ทำให้ทุกอย่างต่างออกไป",
+  "category": "instagram",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "ถ้าคุณกำลังเจอปัญหานี้ ฟังให้จบ",
+  "category": "instagram",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "ผมเคยคิดเหมือนคุณ",
+  "category": "instagram",
+  "type": "story",
+  "emotion": "trust",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "หลายคนมองข้ามเรื่องนี้",
+  "category": "instagram",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "นี่คือเหตุผลที่แท้จริง",
+  "category": "instagram",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "ผมไม่เคยเล่าเรื่องนี้มาก่อน",
+  "category": "instagram",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "นี่คือสิ่งที่คุณควรรู้",
+  "category": "instagram",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "สิ่งนี้อาจเปลี่ยนทุกอย่าง",
+  "category": "instagram",
+  "type": "curiosity",
+  "emotion": "surprise",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "ผมเสียเวลาไปนาน เพราะไม่รู้เรื่องนี้",
+  "category": "instagram",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "นี่คือเทคนิคที่ผมใช้ทุกวัน",
+  "category": "instagram",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "ผลลัพธ์นี้ทำให้ผมตกใจมาก",
+  "category": "instagram",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "นี่คือบทเรียนที่มีค่าที่สุด",
+  "category": "instagram",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "หลายคนกำลังมองผิดจุด",
+  "category": "instagram",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "สิ่งเล็ก ๆ นี้สร้างผลต่างมหาศาล",
+  "category": "instagram",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "ผมทดสอบเรื่องนี้ด้วยตัวเอง",
+  "category": "instagram",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "นี่คือวิธีที่ได้ผลจริง",
+  "category": "instagram",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียว ให้จำเรื่องนี้",
+  "category": "instagram",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "นี่คือเหตุผลที่คนส่วนใหญ่ไม่สำเร็จ",
+  "category": "instagram",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "ผมไม่เคยคิดว่าคำตอบจะง่ายขนาดนี้",
+  "category": "instagram",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "นี่คือความจริงที่หลายคนไม่รู้",
+  "category": "instagram",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "ถ้าคุณยังทำแบบนี้อยู่ ต้องอ่านให้จบ",
+  "category": "instagram",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "หลายคนเข้าใจเรื่องนี้ผิดมาตลอด",
+  "category": "instagram",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "นี่คือวิธีที่ผมใช้จนถึงทุกวันนี้",
+  "category": "instagram",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "ผลลัพธ์ที่เกิดขึ้นจริง น่าทึ่งมาก",
+  "category": "instagram",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "นี่คือบทเรียนราคาแพงที่ผมได้รับ",
+  "category": "instagram",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "สิ่งที่คุณกำลังมองหา อาจอยู่ตรงนี้",
+  "category": "instagram",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "ผมลองทุกวิธี จนมาเจอวิธีนี้",
+  "category": "instagram",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 61,
+  "hook": "คนส่วนใหญ่ไม่เคยสังเกตจุดนี้",
+  "category": "instagram",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 62,
+  "hook": "ผมเปลี่ยนแค่เรื่องเดียว ผลลัพธ์ต่างกันมาก",
+  "category": "instagram",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 63,
+  "hook": "นี่คือข้อผิดพลาดที่พบบ่อยที่สุด",
+  "category": "instagram",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 64,
+  "hook": "หยุดทำสิ่งนี้ก่อนที่บัญชีจะโตช้า",
+  "category": "instagram",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 65,
+  "hook": "นี่คือความลับที่ครีเอเตอร์ส่วนใหญ่ไม่บอก",
+  "category": "instagram",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 66,
+  "hook": "หลายคนกำลังเจอปัญหานี้อยู่",
+  "category": "instagram",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 67,
+  "hook": "วิธีนี้ช่วยให้คนกดติดตามมากขึ้น",
+  "category": "instagram",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 68,
+  "hook": "สิ่งที่คุณเชื่อเกี่ยวกับ Instagram อาจผิด",
+  "category": "instagram",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 69,
+  "hook": "ผมใช้เวลาหลายเดือนกว่าจะเข้าใจเรื่องนี้",
+  "category": "instagram",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 70,
+  "hook": "นี่คือเหตุผลที่คนติดตามคุณต่อ",
+  "category": "instagram",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 71,
+  "hook": "หลายคนกำลังพลาดโอกาสดี ๆ",
+  "category": "instagram",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 72,
+  "hook": "ผมไม่คิดว่าจะได้ผลเร็วขนาดนี้",
+  "category": "instagram",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 73,
+  "hook": "เคล็ดลับนี้ช่วยผมได้มากที่สุด",
+  "category": "instagram",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 74,
+  "hook": "90% ของคนยังทำผิดเรื่องนี้",
+  "category": "instagram",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 75,
+  "hook": "ถ้ารู้เรื่องนี้เร็วกว่านี้คงดี",
+  "category": "instagram",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 76,
+  "hook": "นี่คือสิ่งที่เปลี่ยนเกมทั้งหมด",
+  "category": "instagram",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 77,
+  "hook": "หลายคนไม่เคยรู้เรื่องนี้มาก่อน",
+  "category": "instagram",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 78,
+  "hook": "นี่คือข้อมูลที่สำคัญที่สุด",
+  "category": "instagram",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 79,
+  "hook": "สิ่งนี้ทำให้ยอดเข้าถึงต่างกันมาก",
+  "category": "instagram",
+  "type": "comparison",
+  "emotion": "surprise",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 80,
+  "hook": "นี่คือสิ่งที่ผมอยากบอกตัวเองในวันแรก",
+  "category": "instagram",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "นี่คือเหตุผลที่คนส่วนใหญ่ไม่โต",
+  "category": "instagram",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "ผมไม่คิดว่าคำตอบจะง่ายขนาดนี้",
+  "category": "instagram",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "นี่คือความจริงที่หลายคนไม่รู้",
+  "category": "instagram",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "ถ้าคุณยังทำแบบนี้อยู่ ต้องอ่านให้จบ",
+  "category": "instagram",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "หลายคนเข้าใจเรื่องนี้ผิดมาตลอด",
+  "category": "instagram",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "นี่คือวิธีที่ผมใช้จนถึงทุกวันนี้",
+  "category": "instagram",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "ผลลัพธ์ที่เกิดขึ้นจริง น่าทึ่งมาก",
+  "category": "instagram",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "นี่คือบทเรียนราคาแพงที่ผมได้รับ",
+  "category": "instagram",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "สิ่งที่คุณกำลังมองหา อาจอยู่ตรงนี้",
+  "category": "instagram",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "ผมลองทุกวิธี จนมาเจอวิธีนี้",
+  "category": "instagram",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "นี่คือสิ่งที่เปลี่ยนชีวิตผม",
+  "category": "instagram",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "หลายคนมองข้ามเรื่องเล็ก ๆ นี้",
+  "category": "instagram",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "นี่อาจเป็นโอกาสที่คุณรออยู่",
+  "category": "instagram",
+  "type": "curiosity",
+  "emotion": "hope",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "ผมเสียเวลาไปมาก เพราะไม่รู้เรื่องนี้",
+  "category": "instagram",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "นี่คือสิ่งที่คนเก่งทำเหมือนกัน",
+  "category": "instagram",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "ผลลัพธ์นี้ทำให้ผมต้องกลับมาคิดใหม่",
+  "category": "instagram",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "หลายคนกำลังพลาดจุดสำคัญที่สุด",
+  "category": "instagram",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "นี่คือทางลัดที่ช่วยประหยัดเวลาได้มาก",
+  "category": "instagram",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "ผมไม่เคยเล่าเรื่องนี้ให้ใครฟังมาก่อน",
+  "category": "instagram",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "instagram",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียว ให้จำเรื่องนี้",
+  "category": "instagram",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "instagram",
+  "language": "th"
+}
+]

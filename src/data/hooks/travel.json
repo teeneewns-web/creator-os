@@ -1,0 +1,902 @@
+[
+  {
+    "id": 1,
+    "hook": "90% ของคนเที่ยวที่นี่ผิดวิธี",
+    "category": "travel",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "หยุดทำสิ่งนี้ ถ้าไม่อยากเสียเงินเที่ยวฟรี",
+    "category": "travel",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "ความลับที่นักเดินทางตัวจริงรู้กัน",
+    "category": "travel",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "ผมไปที่นี่ครั้งแรก แล้วเจอเรื่องที่ไม่คาดคิด",
+    "category": "travel",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "นี่คือเหตุผลที่หลายคนเที่ยวแล้วไม่สนุก",
+    "category": "travel",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "วิธีเที่ยวให้คุ้มกว่าเดิมโดยใช้งบน้อยลง",
+    "category": "travel",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "คนส่วนใหญ่ไม่เคยรู้เรื่องนี้เกี่ยวกับการเดินทาง",
+    "category": "travel",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "หลายคนเข้าใจเรื่องการท่องเที่ยวผิดมาตลอด",
+    "category": "travel",
+    "type": "myth",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ผมทดลองเที่ยวแบบนี้ 30 วัน ผลลัพธ์น่าทึ่งมาก",
+    "category": "travel",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "นี่คือสิ่งที่นักเดินทางเก่ง ๆ ทำเหมือนกัน",
+    "category": "travel",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+{
+  "id": 11,
+  "hook": "หลายคนเสียเงินเที่ยวเกินจำเป็นโดยไม่รู้ตัว",
+  "category": "travel",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 12,
+  "hook": "ผมไม่คิดว่าการจองตั๋ววันนั้นจะประหยัดได้ขนาดนี้",
+  "category": "travel",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 13,
+  "hook": "เคล็ดลับการเดินทางที่สายเที่ยวตัวจริงใช้",
+  "category": "travel",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 14,
+  "hook": "90% ของนักท่องเที่ยวพลาดเรื่องนี้",
+  "category": "travel",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 15,
+  "hook": "ถ้ารู้เรื่องนี้เร็วกว่านี้ ผมคงประหยัดเงินได้เยอะ",
+  "category": "travel",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 16,
+  "hook": "นี่อาจเป็นเทคนิคเที่ยวที่คุ้มค่าที่สุด",
+  "category": "travel",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 17,
+  "hook": "หลายคนเข้าใจเรื่องการจองโรงแรมผิดมาตลอด",
+  "category": "travel",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 18,
+  "hook": "ผมลองทำแบบนี้ แล้วค่าใช้จ่ายทริปลดลงมาก",
+  "category": "travel",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 19,
+  "hook": "นี่คือสิ่งที่ผมอยากรู้ก่อนเที่ยวต่างประเทศครั้งแรก",
+  "category": "travel",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 20,
+  "hook": "อย่าเพิ่งจองทริป จนกว่าจะรู้เรื่องนี้",
+  "category": "travel",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 21,
+  "hook": "นี่คือเหตุผลที่บางคนเที่ยวได้ถูกกว่าคุณมาก",
+  "category": "travel",
+  "type": "problem",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "ผมเปลี่ยนวิธีวางแผนทริปแค่เรื่องเดียว ทุกอย่างง่ายขึ้น",
+  "category": "travel",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "ความลับที่สายเที่ยวประหยัดเข้าใจกันดี",
+  "category": "travel",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "หลายคนกำลังเสียเงินค่าตั๋วแพงเกินจริง",
+  "category": "travel",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "90% ของคนไม่เคยเช็กเรื่องนี้ก่อนเดินทาง",
+  "category": "travel",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "วิธีเที่ยวต่างประเทศด้วยงบจำกัด",
+  "category": "travel",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "หลายคนคิดว่าการเที่ยวต้องใช้เงินเยอะ",
+  "category": "travel",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "ผมทดลองเที่ยวแบบไม่วางแผน 60 วัน ผลลัพธ์เกินคาด",
+  "category": "travel",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "นี่คือสิ่งที่นักเดินทางมืออาชีพทำเหมือนกัน",
+  "category": "travel",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับการท่องเที่ยว ให้จำเรื่องนี้",
+  "category": "travel",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 31,
+  "hook": "นี่คือข้อผิดพลาดที่ทำให้ทริปดี ๆ พังตั้งแต่วันแรก",
+  "category": "travel",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "ผมไม่คิดว่าการเลือกช่วงเวลาเที่ยวจะสำคัญขนาดนี้",
+  "category": "travel",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "ความลับที่นักเดินทางรอบโลกใช้กัน",
+  "category": "travel",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "หยุดทำสิ่งนี้ ถ้าไม่อยากเสียเวลาเที่ยวไปฟรี ๆ",
+  "category": "travel",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "สิ่งเล็ก ๆ นี้ช่วยให้ทริปของผมดีขึ้นมาก",
+  "category": "travel",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "นี่คือเหตุผลที่หลายคนกลับมาจากทริปแล้วผิดหวัง",
+  "category": "travel",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "วิธีเที่ยวให้ได้ประสบการณ์มากขึ้นโดยใช้งบเท่าเดิม",
+  "category": "travel",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "หลายคนเข้าใจเรื่องการวางแผนทริปผิดมาตลอด",
+  "category": "travel",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "ผมใช้วิธีนี้ทุกครั้งก่อนเดินทาง และไม่เคยพลาด",
+  "category": "travel",
+  "type": "story",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "นี่คือสิ่งที่นักเดินทางเก่ง ๆ มีเหมือนกัน",
+  "category": "travel",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "คนส่วนใหญ่เลือกที่เที่ยวจากเหตุผลผิด ๆ",
+  "category": "travel",
+  "type": "problem",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "ผมเกือบพลาดสถานที่สวยที่สุด เพราะไม่รู้เรื่องนี้",
+  "category": "travel",
+  "type": "story",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "นี่คือความลับของคนที่เที่ยวได้บ่อยโดยไม่รวย",
+  "category": "travel",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "หลายคนกำลังเสียเงินค่าเดินทางมากเกินไป",
+  "category": "travel",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "90% ของนักท่องเที่ยวไม่เคยเช็กเรื่องนี้",
+  "category": "travel",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "วิธีเที่ยวแบบไม่ต้องเร่งรีบ แต่ได้เห็นมากกว่าเดิม",
+  "category": "travel",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "หลายคนคิดว่าทริปแพงต้องดีกว่าเสมอ",
+  "category": "travel",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "ผมเปลี่ยนวิธีเที่ยวนี้ แล้วสนุกขึ้นกว่าเดิมมาก",
+  "category": "travel",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "นี่คือสิ่งที่นักเดินทางตัวจริงทำเหมือนกัน",
+  "category": "travel",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "อย่าจองตั๋วเครื่องบิน จนกว่าจะรู้เรื่องนี้",
+  "category": "travel",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "นี่คือบทเรียนการเดินทางที่คุ้มค่าที่สุด",
+  "category": "travel",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "คุณไม่จำเป็นต้องมีเงินมาก ก็เที่ยวได้อย่างมีความสุข",
+  "category": "travel",
+  "type": "mindset",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "หลายคนกำลังพลาดประสบการณ์ดี ๆ เพราะเรื่องนี้",
+  "category": "travel",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนของทุกทริปคุณ",
+  "category": "travel",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "ผมเกือบเสียเงินทั้งทริป เพราะเรื่องนี้",
+  "category": "travel",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "นี่คือความแตกต่างระหว่างนักท่องเที่ยวกับนักเดินทาง",
+  "category": "travel",
+  "type": "comparison",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "หลายคนคิดว่าต้องเที่ยวต่างประเทศถึงจะคุ้ม",
+  "category": "travel",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "ผมเริ่มทำสิ่งนี้ แล้วทุกทริปดีขึ้นทุกปี",
+  "category": "travel",
+  "type": "story",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "นี่คือทักษะสำคัญที่สุดของนักเดินทาง",
+  "category": "travel",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับการท่องเที่ยว ให้จำเรื่องนี้",
+  "category": "travel",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 61,
+  "hook": "นี่คือเหตุผลที่หลายคนเที่ยวบ่อย แต่ไม่มีความทรงจำดี ๆ",
+  "category": "travel",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 62,
+  "hook": "ผมไม่คิดว่าการเลือกช่วงโลว์ซีซั่นจะคุ้มขนาดนี้",
+  "category": "travel",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 63,
+  "hook": "ความลับที่นักเดินทางประหยัดเงินได้หลายหมื่นบาท",
+  "category": "travel",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 64,
+  "hook": "ถ้าคุณยังวางแผนทริปแบบนี้อยู่ คุณอาจกำลังเสียเวลา",
+  "category": "travel",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 65,
+  "hook": "90% ของนักท่องเที่ยวไม่รู้เทคนิคนี้",
+  "category": "travel",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 66,
+  "hook": "วิธีเที่ยวให้ได้รูปสวยโดยไม่ต้องใช้อุปกรณ์แพง",
+  "category": "travel",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 67,
+  "hook": "หลายคนเข้าใจเรื่องการแบกเป้เที่ยวผิดมาตลอด",
+  "category": "travel",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 68,
+  "hook": "ผมทดลองเที่ยวเมืองเดียว 30 วัน ผลลัพธ์ต่างไปมาก",
+  "category": "travel",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 69,
+  "hook": "นี่คือสิ่งที่นักเดินทางที่มีประสบการณ์สูงทำเหมือนกัน",
+  "category": "travel",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 70,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนของทุกการเดินทางคุณ",
+  "category": "travel",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 71,
+  "hook": "นี่คือเหตุผลที่บางคนเที่ยวน้อยกว่า แต่ได้ประสบการณ์มากกว่า",
+  "category": "travel",
+  "type": "problem",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 72,
+  "hook": "วิธีหาตั๋วเครื่องบินราคาถูกกว่าคนส่วนใหญ่",
+  "category": "travel",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 73,
+  "hook": "คนส่วนใหญ่ไม่เคยรู้ว่าควรจองตั๋วล่วงหน้ากี่วัน",
+  "category": "travel",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 74,
+  "hook": "นี่คือบทเรียนการท่องเที่ยวที่แพงที่สุดของผม",
+  "category": "travel",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 75,
+  "hook": "ผลลัพธ์นี้ทำให้ผมเปลี่ยนวิธีเที่ยวทั้งหมด",
+  "category": "travel",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 76,
+  "hook": "หลายคนกำลังเลือกที่พักผิดวิธี",
+  "category": "travel",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 77,
+  "hook": "สิ่งเล็ก ๆ นี้ช่วยประหยัดค่าเดินทางได้มาก",
+  "category": "travel",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 78,
+  "hook": "ผมใช้วิธีนี้ทุกครั้งก่อนออกเดินทาง",
+  "category": "travel",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 79,
+  "hook": "นี่คือทางลัดที่ช่วยให้เที่ยวสนุกขึ้นทันที",
+  "category": "travel",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 80,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับการเดินทาง ให้จำเรื่องนี้",
+  "category": "travel",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "นี่คือเหตุผลที่หลายคนเที่ยวต่างประเทศแล้วไม่ประทับใจ",
+  "category": "travel",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "ผมไม่คิดว่าการเปลี่ยนแผนเล็กน้อยจะทำให้ทริปดีขึ้นขนาดนี้",
+  "category": "travel",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "ความลับที่นักเดินทางมืออาชีพเข้าใจดี",
+  "category": "travel",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "ถ้าคุณยังจองทริปแบบนี้อยู่ คุณอาจกำลังจ่ายแพงเกินไป",
+  "category": "travel",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "90% ของคนไม่รู้วิธีประหยัดค่าเดินทางแบบนี้",
+  "category": "travel",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "วิธีเที่ยวให้คุ้มค่าทุกบาทที่จ่าย",
+  "category": "travel",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "หลายคนเข้าใจเรื่องการเดินทางคนเดียวผิดมาตลอด",
+  "category": "travel",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "ผมทดลองเที่ยวแบบไม่เร่งรีบ 6 เดือน ผลลัพธ์เหลือเชื่อ",
+  "category": "travel",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "นี่คือสิ่งที่นักเดินทางที่มีความสุขทุกคนมีเหมือนกัน",
+  "category": "travel",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "ถ้าคุณอยากเที่ยวให้คุ้มจริง ๆ ต้องรู้เรื่องนี้",
+  "category": "travel",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "นี่คือสิ่งที่เปลี่ยนมุมมองการเดินทางของผมไปตลอดกาล",
+  "category": "travel",
+  "type": "story",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "หลายคนมองข้ามเรื่องนี้ก่อนออกเดินทาง",
+  "category": "travel",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "นี่อาจเป็นเทคนิคการท่องเที่ยวที่ดีที่สุดที่คุณเคยได้ยิน",
+  "category": "travel",
+  "type": "future",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "ผมเสียเงินไปเยอะ เพราะไม่รู้เรื่องนี้",
+  "category": "travel",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "นี่คือสิ่งที่นักเดินทางเก่ง ๆ ทุกคนมีร่วมกัน",
+  "category": "travel",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "ผลลัพธ์นี้ทำให้ผมเปลี่ยนวิธีเที่ยวทั้งหมด",
+  "category": "travel",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "หลายคนกำลังพลาดสถานที่ดี ๆ เพราะเรื่องนี้",
+  "category": "travel",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "นี่คือวิธีเที่ยวอย่างมีความสุขแบบยั่งยืน",
+  "category": "travel",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "ผมไม่เคยเล่าเรื่องนี้เกี่ยวกับการเดินทางให้ใครฟังมาก่อน",
+  "category": "travel",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับการท่องเที่ยว ให้เก็บประสบการณ์มากกว่าสิ่งของ",
+  "category": "travel",
+  "type": "motivation",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+}
+]

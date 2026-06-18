@@ -1,0 +1,902 @@
+[
+  {
+    "id": 1,
+    "hook": "90% ของคนถูกจิตวิทยานี้ควบคุมโดยไม่รู้ตัว",
+    "category": "psychology",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "หยุดทำสิ่งนี้ ถ้าไม่อยากถูกคนอื่นชักจูง",
+    "category": "psychology",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "ความลับทางจิตวิทยาที่คนส่วนใหญ่ไม่เคยรู้",
+    "category": "psychology",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "ผมเปลี่ยนวิธีคิดแค่เรื่องเดียว ชีวิตก็ดีขึ้นมาก",
+    "category": "psychology",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "นี่คือเหตุผลที่คุณตัดสินใจผิดซ้ำ ๆ",
+    "category": "psychology",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "วิธีเข้าใจความคิดตัวเองให้มากขึ้น",
+    "category": "psychology",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "คนส่วนใหญ่ไม่เคยรู้ว่าสมองทำงานแบบนี้",
+    "category": "psychology",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "หลายคนเข้าใจเรื่องจิตวิทยาผิดมาตลอด",
+    "category": "psychology",
+    "type": "myth",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ผมทดลองวิธีคิดนี้ 30 วัน ผลลัพธ์น่าทึ่งมาก",
+    "category": "psychology",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "นี่คือสิ่งที่คนประสบความสำเร็จเข้าใจเหมือนกัน",
+    "category": "psychology",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+{
+  "id": 11,
+  "hook": "หลายคนถูกอารมณ์ควบคุมชีวิตโดยไม่รู้ตัว",
+  "category": "psychology",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 12,
+  "hook": "ผมไม่คิดว่าการเปลี่ยนมุมมองจะเปลี่ยนชีวิตได้ขนาดนี้",
+  "category": "psychology",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 13,
+  "hook": "เคล็ดลับทางจิตวิทยาที่คนฉลาดใช้กัน",
+  "category": "psychology",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 14,
+  "hook": "90% ของคนไม่รู้ว่ากำลังคิดผิดแบบนี้",
+  "category": "psychology",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 15,
+  "hook": "ถ้ารู้เรื่องนี้เร็วกว่านี้ ชีวิตผมคงง่ายกว่านี้",
+  "category": "psychology",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 16,
+  "hook": "นี่อาจเป็นบทเรียนทางจิตวิทยาที่สำคัญที่สุด",
+  "category": "psychology",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 17,
+  "hook": "หลายคนเข้าใจเรื่องความสุขผิดมาตลอด",
+  "category": "psychology",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 18,
+  "hook": "ผมลองทำแบบนี้ แล้วความเครียดลดลงมาก",
+  "category": "psychology",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 19,
+  "hook": "นี่คือสิ่งที่ผมอยากรู้ตั้งแต่ยังเด็ก",
+  "category": "psychology",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 20,
+  "hook": "อย่าเพิ่งเชื่อความคิดตัวเอง จนกว่าจะรู้เรื่องนี้",
+  "category": "psychology",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 21,
+  "hook": "นี่คือเหตุผลที่คุณคิดมากไม่หยุด",
+  "category": "psychology",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "ผมเปลี่ยนสิ่งนี้อย่างเดียว มุมมองชีวิตก็เปลี่ยน",
+  "category": "psychology",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "ความลับที่นักจิตวิทยาเข้าใจกันดี",
+  "category": "psychology",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "หลายคนกำลังหลอกตัวเองอยู่โดยไม่รู้ตัว",
+  "category": "psychology",
+  "type": "warning",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "90% ของคนไม่เคยสังเกตเรื่องนี้เกี่ยวกับตัวเอง",
+  "category": "psychology",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "วิธีหยุดคิดมากแบบที่ใช้ได้จริง",
+  "category": "psychology",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "หลายคนคิดว่าความมั่นใจต้องสร้างจากภายนอก",
+  "category": "psychology",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "ผมทดลองเปลี่ยนวิธีคิดนี้ 60 วัน ผลลัพธ์ต่างไปมาก",
+  "category": "psychology",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "นี่คือสิ่งที่คนที่มีความสุขจริง ๆ ทำเหมือนกัน",
+  "category": "psychology",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับจิตวิทยา ให้จำเรื่องนี้",
+  "category": "psychology",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 31,
+  "hook": "นี่คือข้อผิดพลาดทางความคิดที่ทำให้ชีวิตติดอยู่ที่เดิม",
+  "category": "psychology",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "ผมไม่คิดว่าการเปลี่ยนคำถามกับตัวเองจะเปลี่ยนชีวิตได้",
+  "category": "psychology",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "ความลับที่คนฉลาดทางอารมณ์เข้าใจดี",
+  "category": "psychology",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "หยุดทำสิ่งนี้ ถ้าไม่อยากเป็นคนเครียดตลอดเวลา",
+  "category": "psychology",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "สิ่งเล็ก ๆ นี้ช่วยให้จิตใจสงบขึ้นอย่างไม่น่าเชื่อ",
+  "category": "psychology",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "นี่คือเหตุผลที่คุณยังไม่กล้าเริ่มต้น",
+  "category": "psychology",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "วิธีฝึกสมองให้คิดบวกมากขึ้น",
+  "category": "psychology",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "หลายคนเข้าใจเรื่องความมั่นใจผิดมาตลอด",
+  "category": "psychology",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "ผมใช้วิธีนี้ทุกวัน และความคิดเปลี่ยนไปมาก",
+  "category": "psychology",
+  "type": "story",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "นี่คือสิ่งที่คนที่มีวุฒิภาวะทางอารมณ์ทำเหมือนกัน",
+  "category": "psychology",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "คนส่วนใหญ่ติดกับดักทางความคิดนี้",
+  "category": "psychology",
+  "type": "problem",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "ผมเกือบทำลายโอกาสดี ๆ เพราะคิดแบบนี้",
+  "category": "psychology",
+  "type": "story",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "นี่คือความลับของคนที่ควบคุมอารมณ์เก่ง",
+  "category": "psychology",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "หลายคนกำลังทำร้ายตัวเองด้วยความคิดแบบนี้",
+  "category": "psychology",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "90% ของคนไม่รู้ว่าตัวเองมีอคติแบบนี้",
+  "category": "psychology",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "วิธีจัดการอารมณ์ในวันที่แย่ที่สุด",
+  "category": "psychology",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "หลายคนคิดว่าความสุขคือจุดหมายปลายทาง",
+  "category": "psychology",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "ผมเปลี่ยนวิธีมองปัญหา แล้วชีวิตง่ายขึ้นมาก",
+  "category": "psychology",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "นี่คือสิ่งที่คนที่มีสุขภาพจิตดีมีเหมือนกัน",
+  "category": "psychology",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "อย่าเพิ่งเชื่อทุกความคิดที่เข้ามาในหัว",
+  "category": "psychology",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "นี่คือบทเรียนจิตวิทยาที่คุ้มค่าที่สุด",
+  "category": "psychology",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "คุณไม่จำเป็นต้องสมบูรณ์แบบเพื่อมีความสุข",
+  "category": "psychology",
+  "type": "mindset",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "หลายคนกำลังใช้ชีวิตตามความกลัวโดยไม่รู้ตัว",
+  "category": "psychology",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนของชีวิตคุณ",
+  "category": "psychology",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "ผมเกือบพลาดชีวิตที่ดีขึ้นเพราะเรื่องนี้",
+  "category": "psychology",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "นี่คือความแตกต่างระหว่างคนที่ก้าวหน้ากับคนที่ติดอยู่ที่เดิม",
+  "category": "psychology",
+  "type": "comparison",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "หลายคนคิดว่าความคิดคือความจริง",
+  "category": "psychology",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "ผมเริ่มทำสิ่งนี้ แล้วชีวิตดีขึ้นทุกเดือน",
+  "category": "psychology",
+  "type": "story",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "นี่คือทักษะสำคัญที่สุดในการเข้าใจตัวเอง",
+  "category": "psychology",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับจิตวิทยา ให้จำเรื่องนี้",
+  "category": "psychology",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 61,
+  "hook": "นี่คือเหตุผลที่หลายคนติดอยู่กับปัญหาเดิม ๆ",
+  "category": "psychology",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 62,
+  "hook": "ผมไม่คิดว่าการเปลี่ยนความเชื่อจะเปลี่ยนชีวิตได้ขนาดนี้",
+  "category": "psychology",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 63,
+  "hook": "ความลับที่คนประสบความสำเร็จเข้าใจเกี่ยวกับสมอง",
+  "category": "psychology",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 64,
+  "hook": "ถ้าคุณยังคิดแบบนี้อยู่ คุณอาจกำลังขัดขวางตัวเอง",
+  "category": "psychology",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 65,
+  "hook": "90% ของคนไม่รู้ว่าตัวเองกำลังติดกับดักความคิดนี้",
+  "category": "psychology",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 66,
+  "hook": "วิธีสร้างความมั่นใจจากภายใน",
+  "category": "psychology",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 67,
+  "hook": "หลายคนเข้าใจเรื่องความสำเร็จผิดมาตลอด",
+  "category": "psychology",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 68,
+  "hook": "ผมทดลองเปลี่ยนวิธีคิด 1 ปีเต็ม ผลลัพธ์ต่างไปมาก",
+  "category": "psychology",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 69,
+  "hook": "นี่คือสิ่งที่คนคิดเป็นทำเหมือนกัน",
+  "category": "psychology",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 70,
+  "hook": "สิ่งนี้อาจเป็นจุดเปลี่ยนของชีวิตคุณ",
+  "category": "psychology",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 71,
+  "hook": "นี่คือเหตุผลที่คุณยังกลัวการเปลี่ยนแปลง",
+  "category": "psychology",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 72,
+  "hook": "วิธีฝึกสมองให้เลิกคิดลบ",
+  "category": "psychology",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 73,
+  "hook": "คนส่วนใหญ่ไม่เคยรู้เรื่องนี้เกี่ยวกับอารมณ์ตัวเอง",
+  "category": "psychology",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 74,
+  "hook": "นี่คือบทเรียนทางจิตวิทยาที่แพงที่สุดของผม",
+  "category": "psychology",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 75,
+  "hook": "ผลลัพธ์นี้ทำให้ผมเปลี่ยนวิธีมองตัวเองทั้งหมด",
+  "category": "psychology",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 76,
+  "hook": "หลายคนกำลังสู้กับปัญหาผิดจุด",
+  "category": "psychology",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 77,
+  "hook": "สิ่งเล็ก ๆ นี้ช่วยให้จิตใจแข็งแรงขึ้นมาก",
+  "category": "psychology",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 78,
+  "hook": "ผมใช้หลักจิตวิทยานี้มาหลายปี",
+  "category": "psychology",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 79,
+  "hook": "นี่คือทางลัดที่ช่วยให้เข้าใจตัวเองมากขึ้น",
+  "category": "psychology",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 80,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับจิตวิทยา ให้จำเรื่องนี้",
+  "category": "psychology",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "นี่คือเหตุผลที่หลายคนไม่เคยไปถึงเป้าหมาย",
+  "category": "psychology",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "ผมไม่คิดว่าการเปลี่ยนคำพูดกับตัวเองจะสำคัญขนาดนี้",
+  "category": "psychology",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "ความลับที่คนมีวินัยสูงเข้าใจกันดี",
+  "category": "psychology",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "ถ้าคุณยังคิดแบบนี้อยู่ คุณอาจกำลังทำร้ายตัวเอง",
+  "category": "psychology",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "90% ของคนไม่รู้ว่ากำลังตกเป็นเหยื่อของอคตินี้",
+  "category": "psychology",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "วิธีเปลี่ยนนิสัยโดยไม่ต้องฝืนตัวเอง",
+  "category": "psychology",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "หลายคนเข้าใจเรื่องแรงจูงใจผิดมาตลอด",
+  "category": "psychology",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "ผมทดลองเปลี่ยนความคิดนี้ 6 เดือน ผลลัพธ์เหลือเชื่อ",
+  "category": "psychology",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "นี่คือสิ่งที่คนที่มีสุขภาพจิตแข็งแรงมีเหมือนกัน",
+  "category": "psychology",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "ถ้าคุณอยากเข้าใจตัวเองจริง ๆ ต้องรู้เรื่องนี้",
+  "category": "psychology",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "นี่คือสิ่งที่เปลี่ยนชีวิตผมจากหน้ามือเป็นหลังมือ",
+  "category": "psychology",
+  "type": "story",
+  "emotion": "inspiration",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "หลายคนมองข้ามสัญญาณเตือนทางจิตใจนี้",
+  "category": "psychology",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "นี่อาจเป็นแนวคิดที่ทรงพลังที่สุดที่คุณเคยได้ยิน",
+  "category": "psychology",
+  "type": "future",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "ผมเสียเวลาไปหลายปี เพราะไม่เข้าใจเรื่องนี้",
+  "category": "psychology",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "นี่คือสิ่งที่คนที่มีความสุขจริง ๆ ทุกคนมีร่วมกัน",
+  "category": "psychology",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "ผลลัพธ์นี้ทำให้ผมเปลี่ยนวิธีคิดทั้งหมด",
+  "category": "psychology",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "หลายคนกำลังพลาดโอกาสเติบโตเพราะเรื่องนี้",
+  "category": "psychology",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "นี่คือวิธีสร้างกรอบความคิดที่แข็งแกร่ง",
+  "category": "psychology",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "ผมไม่เคยเล่าเรื่องนี้เกี่ยวกับความคิดของตัวเองให้ใครฟังมาก่อน",
+  "category": "psychology",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียวเกี่ยวกับจิตวิทยา ให้เข้าใจตัวเองก่อน",
+  "category": "psychology",
+  "type": "motivation",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+}
+]

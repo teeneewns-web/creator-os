@@ -1,0 +1,903 @@
+
+[
+  {
+    "id": 1,
+    "hook": "จังหวะนี้ทำคนดูตกใจทั้งไลฟ์",
+    "category": "gaming",
+    "type": "shock",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "ผมไม่คิดว่าจะรอดจากสถานการณ์นี้ได้",
+    "category": "gaming",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "นี่อาจเป็นจังหวะที่โชคดีที่สุดในเกมนี้",
+    "category": "gaming",
+    "type": "curiosity",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "90% ของผู้เล่นพลาดตรงนี้",
+    "category": "gaming",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "ทริคที่ผู้เล่นแรงค์สูงใช้กัน",
+    "category": "gaming",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "ถ้าคุณยังเล่นแบบนี้ คุณจะไม่ขึ้นแรงค์",
+    "category": "gaming",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "ผมลองวิธีนี้ 7 วัน อันดับพุ่งทันที",
+    "category": "gaming",
+    "type": "result",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "นี่คือสาเหตุที่คุณแพ้บ่อยกว่าที่คิด",
+    "category": "gaming",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ผู้เล่นส่วนใหญ่ไม่เคยสังเกตสิ่งนี้",
+    "category": "gaming",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "ผมเพิ่งค้นพบวิธีใหม่ในการเล่น",
+    "category": "gaming",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 11,
+    "hook": "การตั้งค่าที่ช่วยให้ยิงแม่นขึ้น",
+    "category": "gaming",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 12,
+    "hook": "หลายคนเสียเปรียบเพราะไม่รู้เรื่องนี้",
+    "category": "gaming",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 13,
+    "hook": "นี่คือไอเทมที่คุ้มค่าที่สุดในเกม",
+    "category": "gaming",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 14,
+    "hook": "ผมเจอบั๊กที่ทำให้เกมง่ายขึ้น",
+    "category": "gaming",
+    "type": "shock",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 15,
+    "hook": "ก่อนเข้าแรงค์ ต้องรู้เรื่องนี้ก่อน",
+    "category": "gaming",
+    "type": "education",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 16,
+    "hook": "สิ่งที่ผู้เล่นโปรทำต่างจากมือใหม่",
+    "category": "gaming",
+    "type": "comparison",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 17,
+    "hook": "ถ้าเลือกตัวละครนี้ คุณต้องรู้จุดอ่อนนี้",
+    "category": "gaming",
+    "type": "warning",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 18,
+    "hook": "นี่คือคอมโบที่หลายคนไม่รู้",
+    "category": "gaming",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 19,
+    "hook": "ผมใช้เทคนิคนี้แล้วชนะติดกัน 10 เกม",
+    "category": "gaming",
+    "type": "result",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 20,
+    "hook": "เรื่องนี้ทำให้ผมเปลี่ยนวิธีเล่นไปเลย",
+    "category": "gaming",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "all",
+    "language": "th"
+  },
+{
+  "id": 21,
+  "hook": "ผมไม่คิดว่าจังหวะนี้จะพลิกเกมได้",
+  "category": "gaming",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "เคล็ดลับการเล่นที่ผู้เล่นระดับสูงไม่ค่อยบอก",
+  "category": "gaming",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "สิ่งแรกที่ควรแก้ ถ้าคุณแพ้ติดกันหลายเกม",
+  "category": "gaming",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "หลายคนคิดว่าสกิลสำคัญที่สุด แต่จริง ๆ ไม่ใช่",
+  "category": "gaming",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "การตั้งค่าลับที่ช่วยให้เล่นลื่นขึ้น",
+  "category": "gaming",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "นี่คือสาเหตุที่แรงค์ไม่ขึ้นสักที",
+  "category": "gaming",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "ผมลองเล่นแบบผู้เล่นโปรหนึ่งวัน ผลคือ...",
+  "category": "gaming",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "ผู้เล่นใหม่เกือบทุกคนพลาดเรื่องนี้",
+  "category": "gaming",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "ไอเทมชิ้นนี้เก่งกว่าที่คนส่วนใหญ่คิด",
+  "category": "gaming",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "ผมใช้วิธีนี้แล้ว KDA ดีขึ้นทันที",
+  "category": "gaming",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 31,
+  "hook": "นี่อาจเป็นการตัดสินใจที่ผิดที่สุดในเกมนี้",
+  "category": "gaming",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "ก่อนเริ่มเกม ลองเช็กสิ่งนี้ก่อน",
+  "category": "gaming",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "ตัวละครนี้เก่งกว่าที่คนคิดมาก",
+  "category": "gaming",
+  "type": "contrarian",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "ผมเจอผู้เล่นที่เก่งที่สุดตั้งแต่เคยเล่นมา",
+  "category": "gaming",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "ถ้ายังทำแบบนี้อยู่ คุณจะเสียเปรียบทุกเกม",
+  "category": "gaming",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "นี่คือจุดแตกต่างระหว่างแรงค์สูงกับแรงค์ต่ำ",
+  "category": "gaming",
+  "type": "comparison",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "ผมค้นพบวิธีฟาร์มที่เร็วกว่าเดิมมาก",
+  "category": "gaming",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "หลายคนเข้าใจผิดเกี่ยวกับตัวละครนี้",
+  "category": "gaming",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "เทคนิคที่ช่วยให้ตัดสินใจได้เร็วขึ้นในเกม",
+  "category": "gaming",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "นี่คือเหตุผลที่ทีมส่วนใหญ่แพ้ช่วงท้ายเกม",
+  "category": "gaming",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "ผมไม่คิดว่าจะชนะไฟต์นี้ได้",
+  "category": "gaming",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "เคล็ดลับการเล่นที่ช่วยให้แรงค์ขึ้นไว",
+  "category": "gaming",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "หลายคนมองข้ามสถิตินี้ ทั้งที่สำคัญมาก",
+  "category": "gaming",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "นี่คือข้อผิดพลาดที่ทำให้เสียเปรียบตั้งแต่ต้นเกม",
+  "category": "gaming",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "ผู้เล่นระดับสูงใช้เวลาฝึกเรื่องนี้มากที่สุด",
+  "category": "gaming",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "วิธีอ่านเกมที่ช่วยให้ชนะง่ายขึ้น",
+  "category": "gaming",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "นี่อาจเป็นคอมโบที่โกงที่สุดในตอนนี้",
+  "category": "gaming",
+  "type": "curiosity",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "ผมใช้เวลา 30 วันเพื่อพิสูจน์เรื่องนี้",
+  "category": "gaming",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "สิ่งที่ควรทำทุกครั้งหลังแพ้เกม",
+  "category": "gaming",
+  "type": "lesson",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "ผู้เล่นที่พัฒนาเร็วที่สุด มักมีนิสัยแบบนี้",
+  "category": "gaming",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "ผมไม่เคยเห็นจังหวะแบบนี้มาก่อน",
+  "category": "gaming",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "เทคนิคที่ช่วยให้ยิงแม่นขึ้นแบบเห็นผล",
+  "category": "gaming",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "นี่คือสกิลที่ผู้เล่นส่วนใหญ่มองข้าม",
+  "category": "gaming",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "ผมลองเล่นโดยใช้กฎข้อนี้ ผลลัพธ์ต่างไปมาก",
+  "category": "gaming",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "หลายคนคิดว่าต้องเล่นเก่ง แต่จริง ๆ ต้องเก่งเรื่องนี้",
+  "category": "gaming",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "ข้อผิดพลาดที่ทำให้เสียเปรียบตั้งแต่นาทีแรก",
+  "category": "gaming",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "ผู้เล่นโปรเก็บข้อมูลนี้ตลอดเวลา",
+  "category": "gaming",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "ผมค้นพบทางลัดที่ช่วยให้พัฒนาเร็วขึ้น",
+  "category": "gaming",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "นี่คือเหตุผลที่หลายคนหยุดพัฒนา",
+  "category": "gaming",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "คอมโบนี้แรงกว่าที่คุณคิด",
+  "category": "gaming",
+  "type": "curiosity",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 61,
+  "hook": "ผมใช้เวลาหลายเดือนกว่าจะเข้าใจเรื่องนี้",
+  "category": "gaming",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 62,
+  "hook": "ถ้ายังทำแบบนี้อยู่ คุณจะเสียเปรียบทุกเกม",
+  "category": "gaming",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 63,
+  "hook": "นี่คือจุดที่มือใหม่ต่างจากมือโปร",
+  "category": "gaming",
+  "type": "comparison",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 64,
+  "hook": "เทคนิคที่ช่วยให้ตัดสินใจได้ถูกขึ้น",
+  "category": "gaming",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 65,
+  "hook": "สิ่งที่ควรหยุดทำทันทีถ้าอยากเก่งขึ้น",
+  "category": "gaming",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 66,
+  "hook": "หลายคนเสียเวลาไปกับการฝึกผิดวิธี",
+  "category": "gaming",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 67,
+  "hook": "ผมไม่คิดว่าไอเทมนี้จะสำคัญขนาดนี้",
+  "category": "gaming",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 68,
+  "hook": "ผู้เล่นส่วนใหญ่ไม่รู้วิธีใช้สิ่งนี้ให้คุ้ม",
+  "category": "gaming",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 69,
+  "hook": "นี่อาจเป็นการอัปเดตที่เปลี่ยนเกมมากที่สุด",
+  "category": "gaming",
+  "type": "trend",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 70,
+  "hook": "ผมชนะเพราะสังเกตสิ่งเล็ก ๆ นี้",
+  "category": "gaming",
+  "type": "story",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 71,
+  "hook": "วิธีคิดที่ช่วยให้เล่นนิ่งขึ้น",
+  "category": "gaming",
+  "type": "mindset",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 72,
+  "hook": "หลายคนมองข้ามจังหวะสำคัญนี้",
+  "category": "gaming",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 73,
+  "hook": "ผมลองเปลี่ยนแค่เรื่องเดียว อันดับดีขึ้นทันที",
+  "category": "gaming",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 74,
+  "hook": "สิ่งที่ผู้เล่นระดับสูงทำก่อนเริ่มเกม",
+  "category": "gaming",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 75,
+  "hook": "นี่คือเหตุผลที่ผมยังเล่นเกมนี้อยู่",
+  "category": "gaming",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 76,
+  "hook": "ผมเสียเวลาหลายเดือนเพราะไม่รู้เรื่องนี้",
+  "category": "gaming",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 77,
+  "hook": "เทคนิคนี้ทำให้ผมอ่านเกมขาดมากขึ้น",
+  "category": "gaming",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 78,
+  "hook": "หลายคนคิดว่าต้องใช้ของแพงถึงจะเล่นดี",
+  "category": "gaming",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 79,
+  "hook": "นี่คือสิ่งที่ผมสังเกตจากผู้เล่นแรงค์สูง",
+  "category": "gaming",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 80,
+  "hook": "ผมไม่คิดว่ากลยุทธ์นี้จะได้ผลขนาดนี้",
+  "category": "gaming",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "สิ่งที่ควรฝึกก่อน ถ้าอยากเก่งขึ้นเร็ว",
+  "category": "gaming",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "นี่อาจเป็นจังหวะพลิกเกมที่ดีที่สุด",
+  "category": "gaming",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "ผมค้นพบข้อผิดพลาดที่ตัวเองทำมาตลอด",
+  "category": "gaming",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "ผู้เล่นเก่ง ๆ มักมีนิสัยนี้เหมือนกัน",
+  "category": "gaming",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "ถ้าคุณอยากแรงค์ขึ้น ต้องเลิกทำแบบนี้",
+  "category": "gaming",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "เทคนิคนี้ใช้ได้กับทุกเกม",
+  "category": "gaming",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "หลายคนมองข้ามการตั้งค่านี้",
+  "category": "gaming",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "นี่คือเหตุผลที่ผมชนะเกมนี้",
+  "category": "gaming",
+  "type": "story",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "การเปลี่ยนเล็กน้อยที่ช่วยให้เล่นดีขึ้นมาก",
+  "category": "gaming",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "หลายคนไม่รู้ว่าตัวเลขนี้สำคัญมาก",
+  "category": "gaming",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "ผมลองฝึกแบบผู้เล่นโปรหนึ่งสัปดาห์",
+  "category": "gaming",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "สิ่งที่ควรทำหลังจบทุกเกม",
+  "category": "gaming",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "นี่คือทางลัดที่ช่วยประหยัดเวลาฝึก",
+  "category": "gaming",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "ผมไม่เคยเชื่อเรื่องนี้ จนได้ลองเอง",
+  "category": "gaming",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "สิ่งที่ผู้เล่นส่วนใหญ่เข้าใจผิดมาตลอด",
+  "category": "gaming",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "นี่คือเหตุผลที่หลายคนหยุดเล่นกลางทาง",
+  "category": "gaming",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "ถ้าทำเรื่องนี้ได้ คุณจะพัฒนาเร็วขึ้นมาก",
+  "category": "gaming",
+  "type": "motivation",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "ผมค้นพบวิธีที่ง่ายกว่าที่คิด",
+  "category": "gaming",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "หลายคนพลาดโอกาสเพราะไม่รู้ข้อมูลนี้",
+  "category": "gaming",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "ผู้เล่นที่เก่งขึ้นทุกวัน มักเริ่มจากสิ่งเล็ก ๆ นี้",
+  "category": "gaming",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+}
+]

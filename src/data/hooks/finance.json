@@ -1,0 +1,902 @@
+[
+  {
+    "id": 1,
+    "hook": "คนส่วนใหญ่เสียเงินทุกวันโดยไม่รู้ตัว",
+    "category": "finance",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "หยุดทำสิ่งนี้ ถ้าไม่อยากให้เงินหายทุกเดือน",
+    "category": "finance",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "เคล็ดลับเก็บเงินที่คนมีเงินมักใช้กัน",
+    "category": "finance",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "90% ของคนเริ่มออมเงินผิดวิธี",
+    "category": "finance",
+    "type": "mistake",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "ถ้ารู้เรื่องเงินข้อนี้เร็วกว่านี้ ชีวิตคงง่ายขึ้น",
+    "category": "finance",
+    "type": "regret",
+    "emotion": "regret",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "ทำไมเงินเดือนออกแล้วหมดเร็วทุกเดือน",
+    "category": "finance",
+    "type": "question",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "วิธีเก็บเงินง่าย ๆ สำหรับคนเริ่มต้นจากศูนย์",
+    "category": "finance",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "อย่าเพิ่งลงทุน ถ้ายังไม่เข้าใจเรื่องนี้",
+    "category": "finance",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ผมลองจดรายจ่าย 30 วัน แล้วเจอเรื่องน่าตกใจ",
+    "category": "finance",
+    "type": "story",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "สิ่งเล็ก ๆ ที่ทำให้คุณจนลงโดยไม่รู้ตัว",
+    "category": "finance",
+    "type": "shock",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 11,
+    "hook": "ถ้ามีเงินเก็บไม่ถึงหนึ่งหมื่น ต้องฟังเรื่องนี้",
+    "category": "finance",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 12,
+    "hook": "รายได้เท่าเดิม แต่เงินเหลือมากขึ้นได้ด้วยวิธีนี้",
+    "category": "finance",
+    "type": "result",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 13,
+    "hook": "ความเชื่อเรื่องเงินที่ทำให้หลายคนไม่รวยสักที",
+    "category": "finance",
+    "type": "myth",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 14,
+    "hook": "ใช้เงินแบบนี้ ต่อให้รายได้เพิ่มก็ยังไม่รวย",
+    "category": "finance",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 15,
+    "hook": "สูตรแบ่งเงินง่าย ๆ ที่มือใหม่ทำตามได้ทันที",
+    "category": "finance",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 16,
+    "hook": "เงินไม่ได้หายไปไหน แต่มันรั่วตรงนี้",
+    "category": "finance",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 17,
+    "hook": "ก่อนซื้อของชิ้นใหญ่ ให้ถามตัวเองข้อนี้ก่อน",
+    "category": "finance",
+    "type": "warning",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 18,
+    "hook": "วิธีหยุดซื้อของตามอารมณ์แบบได้ผลจริง",
+    "category": "finance",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 19,
+    "hook": "คนมีเงินไม่ได้ประหยัดทุกอย่าง แต่เขาเลือกแบบนี้",
+    "category": "finance",
+    "type": "contrarian",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 20,
+    "hook": "ถ้าอยากมีเงินเก็บ ต้องเลิกคิดแบบนี้ก่อน",
+    "category": "finance",
+    "type": "mindset",
+    "emotion": "motivation",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 21,
+    "hook": "รายจ่ายที่ดูเล็ก แต่รวมกันแล้วน่ากลัวมาก",
+    "category": "finance",
+    "type": "shock",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 22,
+    "hook": "มีหนี้อยู่ ต้องจัดการอะไรก่อนเป็นอันดับแรก",
+    "category": "finance",
+    "type": "question",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 23,
+    "hook": "วิธีเริ่มออมเงินแม้รายได้น้อย",
+    "category": "finance",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 24,
+    "hook": "คนส่วนใหญ่พลาดตรงนี้ตอนเริ่มลงทุน",
+    "category": "finance",
+    "type": "mistake",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 25,
+    "hook": "เงินฉุกเฉินควรมีเท่าไหร่กันแน่",
+    "category": "finance",
+    "type": "question",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 26,
+    "hook": "ถ้าวันนี้เริ่มช้า ยังสร้างเงินเก็บได้ไหม",
+    "category": "finance",
+    "type": "question",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 27,
+    "hook": "เรื่องเงินที่ควรรู้ก่อนอายุสามสิบ",
+    "category": "finance",
+    "type": "education",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 28,
+    "hook": "อย่าปล่อยให้เงินเดือนควบคุมชีวิตคุณ",
+    "category": "finance",
+    "type": "motivation",
+    "emotion": "motivation",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 29,
+    "hook": "วิธีดูว่าเรากำลังใช้เงินเกินตัวหรือเปล่า",
+    "category": "finance",
+    "type": "education",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 30,
+    "hook": "สิ่งที่ควรทำทันทีหลังเงินเดือนออก",
+    "category": "finance",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 31,
+    "hook": "ถ้าอยากรวยขึ้น อย่าเริ่มจากการหาเงินเพิ่มอย่างเดียว",
+    "category": "finance",
+    "type": "contrarian",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 32,
+    "hook": "ทำไมบางคนเงินเดือนน้อยกว่า แต่มีเงินเก็บมากกว่า",
+    "category": "finance",
+    "type": "question",
+    "emotion": "curiosity",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 33,
+    "hook": "วิธีลดรายจ่ายโดยไม่ต้องทรมานตัวเอง",
+    "category": "finance",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 34,
+    "hook": "ของถูกบางอย่างอาจทำให้คุณเสียเงินมากกว่าเดิม",
+    "category": "finance",
+    "type": "contrarian",
+    "emotion": "shock",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 35,
+    "hook": "ถ้าคุณยังไม่มีแผนเงิน อย่าเพิ่งซื้อสิ่งนี้",
+    "category": "finance",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 36,
+    "hook": "นิสัยการเงินเล็ก ๆ ที่เปลี่ยนชีวิตได้",
+    "category": "finance",
+    "type": "motivation",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 37,
+    "hook": "วิธีเริ่มลงทุนแบบไม่ต้องมีเงินก้อนใหญ่",
+    "category": "finance",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 38,
+    "hook": "ถ้าเงินไม่เหลือ ลองเปลี่ยนวิธีคิดข้อนี้ก่อน",
+    "category": "finance",
+    "type": "mindset",
+    "emotion": "motivation",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 39,
+    "hook": "ข้อผิดพลาดที่ทำให้คนเริ่มลงทุนแล้วถอดใจ",
+    "category": "finance",
+    "type": "mistake",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 40,
+    "hook": "คนรวยไม่ได้ซื้อทุกอย่างที่อยากได้ทันที",
+    "category": "finance",
+    "type": "lesson",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 41,
+    "hook": "ถ้ามีรายได้ทางเดียว ต้องระวังเรื่องนี้",
+    "category": "finance",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 42,
+    "hook": "วิธีทำให้เงินทำงานแทนเรา เริ่มจากตรงนี้",
+    "category": "finance",
+    "type": "education",
+    "emotion": "desire",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 43,
+    "hook": "สิ่งที่ควรรู้ก่อนกู้เงิน",
+    "category": "finance",
+    "type": "warning",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 44,
+    "hook": "วิธีคิดก่อนซื้อของที่ช่วยให้ประหยัดได้เยอะ",
+    "category": "finance",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 45,
+    "hook": "อยากมีเงินเก็บก้อนแรก ต้องเริ่มจากข้อนี้",
+    "category": "finance",
+    "type": "solution",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 46,
+    "hook": "ถ้าไม่อยากเครียดเรื่องเงินทุกเดือน ต้องวางระบบแบบนี้",
+    "category": "finance",
+    "type": "solution",
+    "emotion": "relief",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 47,
+    "hook": "การมีเงินไม่ใช่แค่หาเก่ง แต่ต้องจัดการเป็น",
+    "category": "finance",
+    "type": "lesson",
+    "emotion": "trust",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 48,
+    "hook": "นี่คือสาเหตุที่หลายคนเก็บเงินไม่สำเร็จ",
+    "category": "finance",
+    "type": "problem",
+    "emotion": "concern",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 49,
+    "hook": "ลองทำระบบนี้หนึ่งเดือน แล้วดูเงินที่เหลือ",
+    "category": "finance",
+    "type": "result",
+    "emotion": "hope",
+    "platform": "all",
+    "language": "th"
+  },
+  {
+    "id": 50,
+    "hook": "ถ้าวันนี้เริ่มจัดการเงินได้ อนาคตจะขอบคุณตัวเอง",
+    "category": "finance",
+    "type": "motivation",
+    "emotion": "motivation",
+    "platform": "all",
+    "language": "th"
+  },
+{
+  "id": 51,
+  "hook": "เงินเดือนเพิ่ม แต่ทำไมยังไม่มีเงินเก็บ",
+  "category": "finance",
+  "type": "question",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "คนรวยมองเงินต่างจากคนทั่วไปตรงนี้",
+  "category": "finance",
+  "type": "mindset",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "นิสัยการเงินที่ทำให้หลายคนติดกับดักรายเดือน",
+  "category": "finance",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "เริ่มเก็บเงินตอนอายุนี้ ยังทันไหม",
+  "category": "finance",
+  "type": "question",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "เทคนิคง่าย ๆ ที่ช่วยให้มีเงินเหลือทุกเดือน",
+  "category": "finance",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "หลายคนเสียเงินฟรีกับเรื่องนี้ทุกปี",
+  "category": "finance",
+  "type": "shock",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "สิ่งที่ควรทำก่อนเริ่มลงทุนก้อนแรก",
+  "category": "finance",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "เงินเก็บน้อย ไม่ได้แปลว่าเริ่มลงทุนไม่ได้",
+  "category": "finance",
+  "type": "contrarian",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "ข้อผิดพลาดที่ทำให้ดอกเบี้ยกินเงินคุณ",
+  "category": "finance",
+  "type": "mistake",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "ถ้าเลือกได้แค่หนึ่งอย่าง ควรออมหรือลงทุนก่อน",
+  "category": "finance",
+  "type": "comparison",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 61,
+  "hook": "คนส่วนใหญ่คิดว่ารายได้สำคัญที่สุด แต่จริง ๆ ไม่ใช่",
+  "category": "finance",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 62,
+  "hook": "นี่คือเหตุผลที่บางคนรวยขึ้นทุกปี",
+  "category": "finance",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 63,
+  "hook": "ถ้ามีหนี้บัตรเครดิต อย่ามองข้ามเรื่องนี้",
+  "category": "finance",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 64,
+  "hook": "รายได้เสริมที่เริ่มได้โดยใช้ทุนน้อย",
+  "category": "finance",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 65,
+  "hook": "สิ่งที่ควรเลิกซื้อ ถ้าเป้าหมายคืออิสรภาพทางการเงิน",
+  "category": "finance",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 66,
+  "hook": "ทำไมบางคนเก็บเงินเก่ง ทั้งที่รายได้ไม่สูง",
+  "category": "finance",
+  "type": "question",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 67,
+  "hook": "เคล็ดลับจัดงบประมาณแบบไม่เครียด",
+  "category": "finance",
+  "type": "solution",
+  "emotion": "relief",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 68,
+  "hook": "กับดักการเงินที่คนวัยทำงานเจอบ่อยที่สุด",
+  "category": "finance",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 69,
+  "hook": "ถ้าเริ่มลงทุนวันนี้ อีก 10 ปีจะต่างแค่ไหน",
+  "category": "finance",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 70,
+  "hook": "วิธีคิดเรื่องเงินที่เปลี่ยนชีวิตหลายคนมาแล้ว",
+  "category": "finance",
+  "type": "mindset",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 71,
+  "hook": "คนที่มีเงินสำรองมักทำสิ่งนี้ก่อนคนอื่น",
+  "category": "finance",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 72,
+  "hook": "ความจริงเรื่องการออมที่โรงเรียนไม่เคยสอน",
+  "category": "finance",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 73,
+  "hook": "ถ้าคุณยังใช้เงินแบบนี้ อีก 5 ปีจะเหนื่อยกว่าเดิม",
+  "category": "finance",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 74,
+  "hook": "วิธีเพิ่มเงินเก็บโดยไม่ต้องหารายได้เพิ่ม",
+  "category": "finance",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 75,
+  "hook": "คนส่วนใหญ่เข้าใจผิดเรื่องดอกเบี้ยข้อนี้",
+  "category": "finance",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 76,
+  "hook": "เงินเดือน 20,000 กับ 50,000 ต่างกันตรงไหนจริง ๆ",
+  "category": "finance",
+  "type": "comparison",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 77,
+  "hook": "สิ่งที่ทำให้หลายคนไม่มีเงินใช้ก่อนสิ้นเดือน",
+  "category": "finance",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 78,
+  "hook": "เริ่มต้นวางแผนการเงินจากจุดนี้ดีที่สุด",
+  "category": "finance",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 79,
+  "hook": "ผมเคยคิดว่าเงินน้อยเก็บไม่ได้ จนได้ลองวิธีนี้",
+  "category": "finance",
+  "type": "story",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 80,
+  "hook": "สิ่งที่คนมีอิสรภาพทางการเงินทำเหมือนกัน",
+  "category": "finance",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "รายจ่ายที่ดูคุ้มค่า แต่อาจทำให้คุณจนลง",
+  "category": "finance",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "ก่อนซื้อรถ ต้องคำนวณเรื่องนี้ก่อนเสมอ",
+  "category": "finance",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "สูตรจัดการเงินสำหรับคนที่ไม่ชอบตัวเลข",
+  "category": "finance",
+  "type": "solution",
+  "emotion": "relief",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "ทำไมบางคนลงทุนเก่งแต่ยังไม่รวย",
+  "category": "finance",
+  "type": "question",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "เงินฉุกเฉินช่วยชีวิตคนมาแล้วมากกว่าที่คิด",
+  "category": "finance",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "ถ้าคุณอายุไม่ถึง 30 เรื่องนี้สำคัญมาก",
+  "category": "finance",
+  "type": "education",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "หลายคนเริ่มลงทุนช้าเพราะความกลัวนี้",
+  "category": "finance",
+  "type": "problem",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "วิธีดูว่าคุณกำลังใช้ชีวิตเกินกำลังหรือไม่",
+  "category": "finance",
+  "type": "question",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "สิ่งที่ควรทำในวันแรกที่เริ่มทำงาน",
+  "category": "finance",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "คนที่มีเงินเหลือทุกเดือน ไม่ได้เก่งกว่าเสมอไป",
+  "category": "finance",
+  "type": "contrarian",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "วิธีสร้างวินัยการเงินโดยไม่ต้องฝืนตัวเอง",
+  "category": "finance",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "ข้อผิดพลาดที่ทำให้เก็บเงินไม่เคยอยู่",
+  "category": "finance",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "ถ้าคุณมีหนี้มากกว่ารายได้ ต้องเริ่มตรงนี้",
+  "category": "finance",
+  "type": "solution",
+  "emotion": "relief",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "เงินก้อนแรกหนึ่งแสนบาท ยากที่สุดจริงไหม",
+  "category": "finance",
+  "type": "question",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "เคล็ดลับเล็ก ๆ ที่ช่วยลดรายจ่ายได้ทั้งปี",
+  "category": "finance",
+  "type": "secret",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "เรื่องการเงินที่ควรคุยกับตัวเองทุกเดือน",
+  "category": "finance",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "หลายคนเสียโอกาสทางการเงินเพราะมองข้ามเรื่องนี้",
+  "category": "finance",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "ถ้าเริ่มใหม่ได้ ผมจะจัดการเงินแบบนี้ตั้งแต่วันแรก",
+  "category": "finance",
+  "type": "story",
+  "emotion": "regret",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "ระบบการเงินส่วนตัวที่ใช้ได้แม้รายได้ไม่แน่นอน",
+  "category": "finance",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "อนาคตทางการเงินเริ่มจากการตัดสินใจเล็ก ๆ วันนี้",
+  "category": "finance",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "all",
+  "language": "th"
+}
+]

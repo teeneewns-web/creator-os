@@ -1,0 +1,902 @@
+[
+  {
+    "id": 1,
+    "hook": "สิ่งที่คุณกำลังจะเห็น อาจเปลี่ยนความคิดของคุณไปเลย",
+    "category": "youtube",
+    "type": "curiosity",
+    "emotion": "curiosity",
+    "platform": "youtube",
+    "language": "th"
+  },
+  {
+    "id": 2,
+    "hook": "90% ของคนไม่เคยรู้เรื่องนี้มาก่อน",
+    "category": "youtube",
+    "type": "shock",
+    "emotion": "surprise",
+    "platform": "youtube",
+    "language": "th"
+  },
+  {
+    "id": 3,
+    "hook": "ผมใช้เวลาหลายเดือนเพื่อหาคำตอบนี้",
+    "category": "youtube",
+    "type": "story",
+    "emotion": "curiosity",
+    "platform": "youtube",
+    "language": "th"
+  },
+  {
+    "id": 4,
+    "hook": "หยุดก่อน ถ้าคุณยังเชื่อแบบนี้",
+    "category": "youtube",
+    "type": "warning",
+    "emotion": "fear",
+    "platform": "youtube",
+    "language": "th"
+  },
+  {
+    "id": 5,
+    "hook": "นี่คือเหตุผลที่หลายคนทำพลาด",
+    "category": "youtube",
+    "type": "mistake",
+    "emotion": "concern",
+    "platform": "youtube",
+    "language": "th"
+  },
+  {
+    "id": 6,
+    "hook": "ผลลัพธ์ที่ได้ ทำให้ผมตกใจมาก",
+    "category": "youtube",
+    "type": "story",
+    "emotion": "surprise",
+    "platform": "youtube",
+    "language": "th"
+  },
+  {
+    "id": 7,
+    "hook": "ความจริงที่ไม่มีใครบอกคุณ",
+    "category": "youtube",
+    "type": "secret",
+    "emotion": "curiosity",
+    "platform": "youtube",
+    "language": "th"
+  },
+  {
+    "id": 8,
+    "hook": "หลายคนกำลังเสียเวลาไปกับสิ่งนี้",
+    "category": "youtube",
+    "type": "warning",
+    "emotion": "concern",
+    "platform": "youtube",
+    "language": "th"
+  },
+  {
+    "id": 9,
+    "hook": "ผมลองทำสิ่งนี้ 30 วัน แล้วผลคือ...",
+    "category": "youtube",
+    "type": "story",
+    "emotion": "curiosity",
+    "platform": "youtube",
+    "language": "th"
+  },
+  {
+    "id": 10,
+    "hook": "นี่อาจเป็นข้อมูลสำคัญที่สุดที่คุณจะได้ยินวันนี้",
+    "category": "youtube",
+    "type": "authority",
+    "emotion": "trust",
+    "platform": "youtube",
+    "language": "th"
+  },
+{
+  "id": 11,
+  "hook": "สิ่งที่คุณกำลังทำ อาจเป็นสาเหตุของปัญหาทั้งหมด",
+  "category": "youtube",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 12,
+  "hook": "ผมไม่คิดว่าผลลัพธ์จะออกมาแบบนี้",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 13,
+  "hook": "90% ของคนพลาดจุดนี้",
+  "category": "youtube",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 14,
+  "hook": "นี่คือความจริงที่หลายคนไม่กล้าพูด",
+  "category": "youtube",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 15,
+  "hook": "ผมใช้เวลาหลายปีเพื่อเข้าใจเรื่องนี้",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 16,
+  "hook": "หลายคนคิดแบบนี้ แต่ความจริงตรงกันข้าม",
+  "category": "youtube",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 17,
+  "hook": "สิ่งที่กำลังจะเกิดขึ้นต่อไป อาจทำให้คุณแปลกใจ",
+  "category": "youtube",
+  "type": "curiosity",
+  "emotion": "surprise",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 18,
+  "hook": "นี่คือเหตุผลที่คนส่วนใหญ่ล้มเหลว",
+  "category": "youtube",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 19,
+  "hook": "ผมทดลองสิ่งนี้ด้วยตัวเอง และผลลัพธ์ชัดเจนมาก",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 20,
+  "hook": "นี่คือข้อมูลที่อาจช่วยคุณได้มากที่สุด",
+  "category": "youtube",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 21,
+  "hook": "หยุดทำสิ่งนี้ทันที ถ้าคุณยังอยากสำเร็จ",
+  "category": "youtube",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 22,
+  "hook": "ผลลัพธ์ที่ได้ แตกต่างจากที่ผมคาดไว้มาก",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 23,
+  "hook": "นี่คือเคล็ดลับที่คนเก่งใช้กัน",
+  "category": "youtube",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 24,
+  "hook": "หลายคนเสียเวลาเป็นปี เพราะไม่รู้เรื่องนี้",
+  "category": "youtube",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 25,
+  "hook": "นี่อาจเป็นความเข้าใจผิดที่ใหญ่ที่สุด",
+  "category": "youtube",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 26,
+  "hook": "ผมค้นพบสิ่งนี้โดยบังเอิญ",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 27,
+  "hook": "สิ่งที่คุณกำลังมองหา อาจอยู่ตรงนี้",
+  "category": "youtube",
+  "type": "curiosity",
+  "emotion": "hope",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 28,
+  "hook": "นี่คือสาเหตุที่แท้จริง",
+  "category": "youtube",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 29,
+  "hook": "ผมลองทุกวิธี จนเหลือวิธีนี้",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 30,
+  "hook": "ถ้าคุณจำได้แค่เรื่องเดียว ให้จำเรื่องนี้",
+  "category": "youtube",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 31,
+  "hook": "ผมไม่เคยคิดว่าสิ่งนี้จะสำคัญขนาดนี้",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 32,
+  "hook": "หลายคนกำลังเข้าใจเรื่องนี้ผิด",
+  "category": "youtube",
+  "type": "myth",
+  "emotion": "shock",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 33,
+  "hook": "นี่คือข้อผิดพลาดที่คนส่วนใหญ่ทำ",
+  "category": "youtube",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 34,
+  "hook": "สิ่งที่ผมกำลังจะบอก อาจช่วยคุณได้มาก",
+  "category": "youtube",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 35,
+  "hook": "ผมลองทำแบบนี้ 7 วันติด ผลคือ...",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 36,
+  "hook": "นี่คือความลับที่คนส่วนใหญ่ไม่รู้",
+  "category": "youtube",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 37,
+  "hook": "ถ้าคุณยังทำแบบนี้อยู่ คุณอาจกำลังเสียเวลา",
+  "category": "youtube",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 38,
+  "hook": "ผลลัพธ์ที่เกิดขึ้นจริง แตกต่างจากที่คิดมาก",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 39,
+  "hook": "นี่คือเหตุผลที่เรื่องนี้สำคัญ",
+  "category": "youtube",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 40,
+  "hook": "หลายคนพลาดโอกาสเพราะไม่รู้เรื่องนี้",
+  "category": "youtube",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 41,
+  "hook": "ผมใช้เวลาหลายเดือนเพื่อพิสูจน์เรื่องนี้",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 42,
+  "hook": "นี่คือข้อมูลที่เปลี่ยนมุมมองของผมไปเลย",
+  "category": "youtube",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 43,
+  "hook": "สิ่งที่คุณกำลังทำ อาจไม่ใช่วิธีที่ดีที่สุด",
+  "category": "youtube",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 44,
+  "hook": "ผมค้นพบสิ่งนี้หลังจากลองผิดลองถูกมานาน",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "hope",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 45,
+  "hook": "นี่คือสิ่งที่คนเก่งทำแตกต่างออกไป",
+  "category": "youtube",
+  "type": "comparison",
+  "emotion": "curiosity",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 46,
+  "hook": "หลายคนมองข้ามเรื่องนี้ ทั้งที่สำคัญมาก",
+  "category": "youtube",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 47,
+  "hook": "ผลลัพธ์นี้ทำให้ผมตกใจจริง ๆ",
+  "category": "youtube",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 48,
+  "hook": "นี่อาจเป็นบทเรียนที่มีค่าที่สุด",
+  "category": "youtube",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 49,
+  "hook": "ผมเกือบยอมแพ้ ก่อนจะรู้เรื่องนี้",
+  "category": "youtube",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 50,
+  "hook": "นี่คือคำตอบที่ผมหามานาน",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "relief",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 51,
+  "hook": "สิ่งนี้เปลี่ยนผลลัพธ์ทั้งหมด",
+  "category": "youtube",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 52,
+  "hook": "หลายคนไม่รู้ว่าความจริงเป็นแบบนี้",
+  "category": "youtube",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 53,
+  "hook": "นี่คือเหตุผลที่ผมอยากเล่าเรื่องนี้",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 54,
+  "hook": "ถ้าคุณกำลังเจอปัญหานี้ ฟังให้จบ",
+  "category": "youtube",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 55,
+  "hook": "นี่คือวิธีที่ได้ผลจริง",
+  "category": "youtube",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 56,
+  "hook": "ผมเคยคิดเหมือนคุณ จนกระทั่ง...",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 57,
+  "hook": "ความจริงข้อนี้ทำให้หลายคนประหลาดใจ",
+  "category": "youtube",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 58,
+  "hook": "นี่คือสิ่งที่คุณควรรู้ก่อนตัดสินใจ",
+  "category": "youtube",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 59,
+  "hook": "ผมใช้วิธีนี้ทุกครั้ง และมันได้ผลเสมอ",
+  "category": "youtube",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 60,
+  "hook": "ถ้าจำได้แค่เรื่องเดียว ให้จำเรื่องนี้",
+  "category": "youtube",
+  "type": "lesson",
+  "emotion": "motivation",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 61,
+  "hook": "ผมเสียเวลาไปนานมาก เพราะไม่รู้เรื่องนี้",
+  "category": "youtube",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 62,
+  "hook": "นี่คือสิ่งที่เปลี่ยนทุกอย่าง",
+  "category": "youtube",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 63,
+  "hook": "หลายคนกำลังทำผิดโดยไม่รู้ตัว",
+  "category": "youtube",
+  "type": "mistake",
+  "emotion": "concern",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 64,
+  "hook": "ผมลองทำแบบนี้ครั้งแรก และผลลัพธ์เกินคาด",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "surprise",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 65,
+  "hook": "นี่คือความลับที่ซ่อนอยู่",
+  "category": "youtube",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 66,
+  "hook": "ถ้าคุณกำลังเริ่มต้น ต้องรู้เรื่องนี้",
+  "category": "youtube",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 67,
+  "hook": "นี่คือเหตุผลที่ผมเปลี่ยนความคิด",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 68,
+  "hook": "หลายคนไม่เคยได้ยินเรื่องนี้มาก่อน",
+  "category": "youtube",
+  "type": "curiosity",
+  "emotion": "surprise",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 69,
+  "hook": "ผมไม่คิดว่าคำตอบจะง่ายขนาดนี้",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "relief",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 70,
+  "hook": "สิ่งที่คุณกำลังมองหาอยู่ตรงนี้",
+  "category": "youtube",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 71,
+  "hook": "หยุดก่อน ถ้าคุณยังเชื่อเรื่องนี้",
+  "category": "youtube",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 72,
+  "hook": "นี่คือข้อมูลที่คนส่วนใหญ่พลาด",
+  "category": "youtube",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 73,
+  "hook": "ผมทดสอบเรื่องนี้ด้วยตัวเอง",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 74,
+  "hook": "ผลลัพธ์นี้ทำให้ผมต้องกลับมาคิดใหม่",
+  "category": "youtube",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 75,
+  "hook": "นี่คือสิ่งที่คนเก่งทำเป็นประจำ",
+  "category": "youtube",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 76,
+  "hook": "ผมเคยเข้าใจผิดเรื่องนี้มาตลอด",
+  "category": "youtube",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 77,
+  "hook": "หลายคนตกใจเมื่อรู้ความจริงข้อนี้",
+  "category": "youtube",
+  "type": "shock",
+  "emotion": "surprise",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 78,
+  "hook": "นี่อาจเป็นเทคนิคที่ดีที่สุดที่ผมเคยใช้",
+  "category": "youtube",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 79,
+  "hook": "สิ่งนี้ช่วยผมได้มากกว่าที่คิด",
+  "category": "youtube",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 80,
+  "hook": "นี่คือสาเหตุที่แท้จริงของปัญหา",
+  "category": "youtube",
+  "type": "problem",
+  "emotion": "concern",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 81,
+  "hook": "ผมค้นพบสิ่งนี้โดยบังเอิญ",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 82,
+  "hook": "นี่คือบทเรียนที่ผมไม่มีวันลืม",
+  "category": "youtube",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 83,
+  "hook": "หลายคนมองข้ามจุดสำคัญนี้",
+  "category": "youtube",
+  "type": "warning",
+  "emotion": "concern",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 84,
+  "hook": "ผมใช้เวลาเป็นปีเพื่อหาคำตอบนี้",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "curiosity",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 85,
+  "hook": "นี่คือสิ่งที่ผมอยากรู้ตั้งแต่วันแรก",
+  "category": "youtube",
+  "type": "regret",
+  "emotion": "regret",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 86,
+  "hook": "ความจริงอาจไม่ใช่อย่างที่คุณคิด",
+  "category": "youtube",
+  "type": "contrarian",
+  "emotion": "shock",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 87,
+  "hook": "ผมไม่เคยเล่าเรื่องนี้ที่ไหนมาก่อน",
+  "category": "youtube",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 88,
+  "hook": "สิ่งที่กำลังจะเกิดขึ้นต่อไป สำคัญมาก",
+  "category": "youtube",
+  "type": "curiosity",
+  "emotion": "surprise",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 89,
+  "hook": "นี่คือวิธีที่ผมใช้จนถึงทุกวันนี้",
+  "category": "youtube",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 90,
+  "hook": "หลายคนพลาดโอกาสเพราะเรื่องนี้",
+  "category": "youtube",
+  "type": "warning",
+  "emotion": "fear",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 91,
+  "hook": "ผมไม่คิดว่าจะได้ผลเร็วขนาดนี้",
+  "category": "youtube",
+  "type": "result",
+  "emotion": "surprise",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 92,
+  "hook": "นี่คือข้อมูลที่คุณควรรู้ก่อน",
+  "category": "youtube",
+  "type": "education",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 93,
+  "hook": "สิ่งเล็ก ๆ นี้สร้างความแตกต่างมหาศาล",
+  "category": "youtube",
+  "type": "result",
+  "emotion": "hope",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 94,
+  "hook": "ผมเกือบพลาดสิ่งสำคัญที่สุด",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "concern",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 95,
+  "hook": "นี่คือคำถามที่ควรถามตัวเอง",
+  "category": "youtube",
+  "type": "lesson",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 96,
+  "hook": "หลายคนไม่รู้ว่ามันทำงานแบบนี้",
+  "category": "youtube",
+  "type": "curiosity",
+  "emotion": "curiosity",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 97,
+  "hook": "นี่คือทางลัดที่ช่วยประหยัดเวลาได้มาก",
+  "category": "youtube",
+  "type": "solution",
+  "emotion": "hope",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 98,
+  "hook": "ผมเรียนรู้เรื่องนี้จากความผิดพลาด",
+  "category": "youtube",
+  "type": "story",
+  "emotion": "regret",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 99,
+  "hook": "นี่คือสิ่งที่คนสำเร็จมักทำเหมือนกัน",
+  "category": "youtube",
+  "type": "authority",
+  "emotion": "trust",
+  "platform": "youtube",
+  "language": "th"
+},
+{
+  "id": 100,
+  "hook": "ถ้าจะจำได้แค่เรื่องเดียว ให้จำเรื่องนี้",
+  "category": "youtube",
+  "type": "motivation",
+  "emotion": "motivation",
+  "platform": "youtube",
+  "language": "th"
+}
+]
