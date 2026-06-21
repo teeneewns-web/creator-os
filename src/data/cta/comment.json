@@ -1,0 +1,62 @@
+[ 
+  {
+    "id": 1,
+    "cta": "พิมพ์ 1 ถ้าคุณอยากได้ Part 2",
+    "category": "comment",
+    "type": "engagement"
+  },
+  {
+    "id": 2,
+    "cta": "คอมเมนต์คำว่า สนใจ แล้วเดี๋ยวส่งรายละเอียดให้",
+    "category": "comment",
+    "type": "lead"
+  },
+  {
+    "id": 3,
+    "cta": "คุณคิดเห็นยังไง? บอกผมด้านล่าง",
+    "category": "comment",
+    "type": "engagement"
+  },
+  {
+    "id": 4,
+    "cta": "แท็กเพื่อนที่ควรเห็นโพสต์นี้",
+    "category": "comment",
+    "type": "tag"
+  },
+  {
+    "id": 5,
+    "cta": "กดเซฟไว้ก่อน เดี๋ยวหาไม่เจอ",
+    "category": "comment",
+    "type": "save"
+  },
+  {
+    "id": 6,
+    "cta": "แชร์โพสต์นี้ให้คนที่กำลังเจอปัญหานี้",
+    "category": "comment",
+    "type": "share"
+  },
+  {
+    "id": 7,
+    "cta": "กดติดตามไว้ เดี๋ยวมีเทคนิคดี ๆ มาอีก",
+    "category": "comment",
+    "type": "follow"
+  },
+  {
+    "id": 8,
+    "cta": "ถ้าเห็นด้วย กด ❤️ ให้หน่อย",
+    "category": "comment",
+    "type": "like"
+  },
+  {
+    "id": 9,
+    "cta": "คุณเคยเจอแบบนี้ไหม? คอมเมนต์มาเลย",
+    "category": "comment",
+    "type": "engagement"
+  },
+  {
+    "id": 10,
+    "cta": "พิมพ์ YES ถ้าพร้อมเริ่มต้น",
+    "category": "comment",
+    "type": "action"
+  }
+]

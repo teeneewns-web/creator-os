@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "caption": "คุณคิดเห็นยังไงกับเรื่องนี้?",
+    "category": "engagement",
+    "type": "question"
+  },
+  {
+    "id": 2,
+    "caption": "ถ้าเป็นคุณ คุณจะเลือกแบบไหน?",
+    "category": "engagement",
+    "type": "question"
+  },
+  {
+    "id": 3,
+    "caption": "เคยเจอเหตุการณ์แบบนี้ไหม?",
+    "category": "engagement",
+    "type": "question"
+  },
+  {
+    "id": 4,
+    "caption": "พิมพ์ 1 ถ้าเห็นด้วย พิมพ์ 2 ถ้าไม่เห็นด้วย",
+    "category": "engagement",
+    "type": "comment"
+  },
+  {
+    "id": 5,
+    "caption": "มีใครเป็นเหมือนกันบ้าง?",
+    "category": "engagement",
+    "type": "comment"
+  },
+  {
+    "id": 6,
+    "caption": "แท็กเพื่อนที่ควรเห็นโพสต์นี้",
+    "category": "engagement",
+    "type": "tag"
+  },
+  {
+    "id": 7,
+    "caption": "แชร์โพสต์นี้ให้คนที่กำลังเจอปัญหานี้",
+    "category": "engagement",
+    "type": "share"
+  },
+  {
+    "id": 8,
+    "caption": "คุณให้คะแนนเรื่องนี้กี่คะแนนจาก 10?",
+    "category": "engagement",
+    "type": "rating"
+  },
+  {
+    "id": 9,
+    "caption": "คอมเมนต์คำแรกที่นึกออก",
+    "category": "engagement",
+    "type": "comment"
+  },
+  {
+    "id": 10,
+    "caption": "ใครเคยลองแล้วบ้าง?",
+    "category": "engagement",
+    "type": "question"
+  },
+  {
+    "id": 11,
+    "caption": "เห็นแล้วคิดถึงใคร?",
+    "category": "engagement",
+    "type": "emotion"
+  },
+  {
+    "id": 12,
+    "caption": "คุณเคยทำผิดพลาดแบบนี้หรือไม่?",
+    "category": "engagement",
+    "type": "question"
+  },
+  {
+    "id": 13,
+    "caption": "บอกประสบการณ์ของคุณด้านล่าง",
+    "category": "engagement",
+    "type": "story"
+  },
+  {
+    "id": 14,
+    "caption": "คุณจะทำอะไรเป็นอย่างแรก?",
+    "category": "engagement",
+    "type": "question"
+  },
+  {
+    "id": 15,
+    "caption": "เรื่องนี้จริงหรือไม่จริง?",
+    "category": "engagement",
+    "type": "debate"
+  },
+  {
+    "id": 16,
+    "caption": "เลือกได้เพียงข้อเดียว คุณจะเลือกอะไร?",
+    "category": "engagement",
+    "type": "choice"
+  },
+  {
+    "id": 17,
+    "caption": "คอมเมนต์จังหวัดที่คุณอยู่",
+    "category": "engagement",
+    "type": "comment"
+  },
+  {
+    "id": 18,
+    "caption": "ใครกำลังเจอแบบนี้อยู่บ้าง?",
+    "category": "engagement",
+    "type": "question"
+  },
+  {
+    "id": 19,
+    "caption": "แชร์ต่อถ้าคุณคิดว่ามีประโยชน์",
+    "category": "engagement",
+    "type": "share"
+  },
+  {
+    "id": 20,
+    "caption": "เห็นด้วยหรือไม่เห็นด้วย? เพราะอะไร?",
+    "category": "engagement",
+    "type": "discussion"
+  }
+]
