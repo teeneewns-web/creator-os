@@ -1,5 +1,3 @@
-import CopyButton from "../../components/CopyButton";
-import FavoriteButton from "../../components/FavoriteButton";
 import ctas from "../../data/cta/comment.json";
 
 export default function CTAPage() {
@@ -29,13 +27,6 @@ export default function CTAPage() {
             <small style={{ color: "#555" }}>
               หมวด: {item.category} | ประเภท: {item.type}
             </small>
-
-            <br />
-
-            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-              <CopyButton text={item.cta} />
-              <FavoriteButton hook={item.cta} />
-            </div>
           </div>
         ))}
       </div>

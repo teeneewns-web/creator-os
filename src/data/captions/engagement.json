@@ -118,5 +118,185 @@
     "caption": "เห็นด้วยหรือไม่เห็นด้วย? เพราะอะไร?",
     "category": "engagement",
     "type": "discussion"
+  },
+  {
+    "id": 21,
+    "caption": "ถ้าคุณอ่านมาถึงตรงนี้ แสดงว่าคุณสนใจเรื่องนี้จริง ๆ",
+    "category": "engagement",
+    "type": "comment"
+  },
+  {
+    "id": 22,
+    "caption": "คุณเห็นด้วยหรือไม่? ลองบอกเหตุผลของคุณในคอมเมนต์",
+    "category": "engagement",
+    "type": "discussion"
+  },
+  {
+    "id": 23,
+    "caption": "หลายคนมองข้ามเรื่องนี้ แต่จริง ๆ แล้วสำคัญมาก",
+    "category": "engagement",
+    "type": "insight"
+  },
+  {
+    "id": 24,
+    "caption": "เซฟโพสต์นี้ไว้ เผื่อวันหนึ่งคุณจะต้องกลับมาใช้",
+    "category": "engagement",
+    "type": "save"
+  },
+  {
+    "id": 25,
+    "caption": "มีใครเคยเจอสถานการณ์แบบนี้บ้างไหม?",
+    "category": "engagement",
+    "type": "question"
+  },
+  {
+    "id": 26,
+    "caption": "แชร์ให้เพื่อนที่ควรเห็นสิ่งนี้ด้วยนะ",
+    "category": "engagement",
+    "type": "share"
+  },
+  {
+    "id": 27,
+    "caption": "บางครั้งความสำเร็จเริ่มจากการลงมือทำเรื่องเล็ก ๆ",
+    "category": "engagement",
+    "type": "motivation"
+  },
+  {
+    "id": 28,
+    "caption": "คุณคิดว่าข้อไหนสำคัญที่สุด?",
+    "category": "engagement",
+    "type": "question"
+  },
+  {
+    "id": 29,
+    "caption": "ผมอยากรู้ความคิดเห็นของคุณ ลองพิมพ์มาได้เลย",
+    "category": "engagement",
+    "type": "comment"
+  },
+  {
+    "id": 30,
+    "caption": "ถ้าคอนเทนต์นี้มีประโยชน์ อย่าลืมกดติดตามไว้",
+    "category": "engagement",
+    "type": "follow"
+  },
+  {
+    "id": 31,
+    "caption": "คุณอยากให้ทำ Part 2 ไหม?",
+    "category": "engagement",
+    "type": "comment"
+  },
+  {
+    "id": 32,
+    "caption": "ถ้าคุณเคยเจอแบบนี้ พิมพ์ว่า เคย",
+    "category": "engagement",
+    "type": "comment"
+  },
+  {
+    "id": 33,
+    "caption": "ส่งโพสต์นี้ให้คนที่กำลังต้องการกำลังใจ",
+    "category": "engagement",
+    "type": "share"
+  },
+  {
+    "id": 34,
+    "caption": "คุณเลือกทีมไหน? คอมเมนต์ด้านล่าง",
+    "category": "engagement",
+    "type": "choice"
+  },
+  {
+    "id": 35,
+    "caption": "ถ้าได้ประโยชน์จากโพสต์นี้ กดเซฟไว้เลย",
+    "category": "engagement",
+    "type": "save"
+  },
+  {
+    "id": 36,
+    "caption": "อยากให้ขยายข้อไหนเป็นพิเศษ?",
+    "category": "engagement",
+    "type": "question"
+  },
+  {
+    "id": 37,
+    "caption": "คุณเคยคิดแบบนี้เหมือนกันไหม?",
+    "category": "engagement",
+    "type": "question"
+  },
+  {
+    "id": 38,
+    "caption": "ถ้าโพสต์นี้ตรงกับชีวิตคุณ ส่ง ❤️ มาในคอมเมนต์",
+    "category": "engagement",
+    "type": "emotion"
+  },
+  {
+    "id": 39,
+    "caption": "แท็กคนที่คุณอยากให้เขาเห็นข้อความนี้",
+    "category": "engagement",
+    "type": "tag"
+  },
+  {
+    "id": 40,
+    "caption": "คุณให้คะแนนไอเดียนี้เท่าไหร่?",
+    "category": "engagement",
+    "type": "rating"
+  },
+  {
+    "id": 41,
+    "caption": "ลองเอาไปใช้ แล้วกลับมาเล่าผลลัพธ์ให้ฟังนะ",
+    "category": "engagement",
+    "type": "action"
+  },
+  {
+    "id": 42,
+    "caption": "ถ้าคุณอยากเริ่มต้น ให้เริ่มจากข้อแรกก่อน",
+    "category": "engagement",
+    "type": "action"
+  },
+  {
+    "id": 43,
+    "caption": "คอมเมนต์คำว่า เริ่ม ถ้าคุณพร้อมลงมือทำ",
+    "category": "engagement",
+    "type": "comment"
+  },
+  {
+    "id": 44,
+    "caption": "โพสต์นี้เหมาะกับคนที่กำลังเริ่มจากศูนย์",
+    "category": "engagement",
+    "type": "relatable"
+  },
+  {
+    "id": 45,
+    "caption": "อย่าลืมแชร์ไว้ให้ตัวเองในอนาคต",
+    "category": "engagement",
+    "type": "share"
+  },
+  {
+    "id": 46,
+    "caption": "คุณอยากเห็นตัวอย่างจริงไหม?",
+    "category": "engagement",
+    "type": "question"
+  },
+  {
+    "id": 47,
+    "caption": "สิ่งนี้อาจช่วยประหยัดเวลาคุณได้มาก",
+    "category": "engagement",
+    "type": "insight"
+  },
+  {
+    "id": 48,
+    "caption": "ถ้าเห็นด้วยกับข้อสุดท้าย คอมเมนต์ว่า ใช่",
+    "category": "engagement",
+    "type": "comment"
+  },
+  {
+    "id": 49,
+    "caption": "เก็บโพสต์นี้ไว้เป็นเช็กลิสต์ส่วนตัว",
+    "category": "engagement",
+    "type": "save"
+  },
+  {
+    "id": 50,
+    "caption": "ติดตามไว้ เดี๋ยวผมทำตัวอย่างใช้งานจริงให้ดูต่อ",
+    "category": "engagement",
+    "type": "follow"
   }
 ]

@@ -1,61 +1,301 @@
-[ 
+[
   {
     "id": 1,
-    "cta": "พิมพ์ 1 ถ้าคุณอยากได้ Part 2",
-    "category": "comment",
-    "type": "engagement"
+    "cta": "กดติดตามไว้เพื่อไม่พลาดคอนเทนต์ใหม่",
+    "category": "follow",
+    "type": "follow"
   },
   {
     "id": 2,
-    "cta": "คอมเมนต์คำว่า สนใจ แล้วเดี๋ยวส่งรายละเอียดให้",
+    "cta": "คอมเมนต์คำว่า สนใจ เพื่อรับข้อมูลเพิ่มเติม",
     "category": "comment",
     "type": "lead"
   },
   {
     "id": 3,
-    "cta": "คุณคิดเห็นยังไง? บอกผมด้านล่าง",
-    "category": "comment",
-    "type": "engagement"
-  },
-  {
-    "id": 4,
-    "cta": "แท็กเพื่อนที่ควรเห็นโพสต์นี้",
-    "category": "comment",
-    "type": "tag"
-  },
-  {
-    "id": 5,
-    "cta": "กดเซฟไว้ก่อน เดี๋ยวหาไม่เจอ",
-    "category": "comment",
-    "type": "save"
-  },
-  {
-    "id": 6,
-    "cta": "แชร์โพสต์นี้ให้คนที่กำลังเจอปัญหานี้",
-    "category": "comment",
+    "cta": "แชร์โพสต์นี้ให้เพื่อนที่ควรเห็น",
+    "category": "share",
     "type": "share"
   },
   {
-    "id": 7,
-    "cta": "กดติดตามไว้ เดี๋ยวมีเทคนิคดี ๆ มาอีก",
-    "category": "comment",
-    "type": "follow"
+    "id": 4,
+    "cta": "เซฟโพสต์นี้ไว้ใช้อ้างอิงภายหลัง",
+    "category": "save",
+    "type": "save"
   },
   {
-    "id": 8,
-    "cta": "ถ้าเห็นด้วย กด ❤️ ให้หน่อย",
-    "category": "comment",
-    "type": "like"
+    "id": 5,
+    "cta": "แท็กคนที่คุณนึกถึงทันทีเมื่อเห็นโพสต์นี้",
+    "category": "tag",
+    "type": "tag"
   },
   {
-    "id": 9,
-    "cta": "คุณเคยเจอแบบนี้ไหม? คอมเมนต์มาเลย",
+    "id": 6,
+    "cta": "พิมพ์ 1 ถ้าคุณเห็นด้วย",
     "category": "comment",
     "type": "engagement"
   },
   {
+    "id": 7,
+    "cta": "ส่งข้อความมาหาผมได้เลยถ้าต้องการรายละเอียด",
+    "category": "dm",
+    "type": "lead"
+  },
+  {
+    "id": 8,
+    "cta": "กดไลก์ถ้าคุณอยากเห็นเนื้อหาแบบนี้อีก",
+    "category": "like",
+    "type": "engagement"
+  },
+  {
+    "id": 9,
+    "cta": "บันทึกโพสต์นี้ไว้ก่อน เดี๋ยวได้ใช้แน่นอน",
+    "category": "save",
+    "type": "save"
+  },
+  {
     "id": 10,
-    "cta": "พิมพ์ YES ถ้าพร้อมเริ่มต้น",
+    "cta": "คอมเมนต์คำว่า เริ่ม ถ้าพร้อมลงมือทำ",
+    "category": "comment",
+    "type": "action"
+  },
+  {
+    "id": 11,
+    "cta": "ติดตามไว้ แล้วผมจะสอนต่อในโพสต์หน้า",
+    "category": "follow",
+    "type": "follow"
+  },
+  {
+    "id": 12,
+    "cta": "พิมพ์คำว่า อยากได้ แล้วผมจะส่งตัวอย่างให้",
+    "category": "comment",
+    "type": "lead"
+  },
+  {
+    "id": 13,
+    "cta": "แชร์ให้คนที่กำลังเจอปัญหานี้",
+    "category": "share",
+    "type": "share"
+  },
+  {
+    "id": 14,
+    "cta": "เซฟไว้ก่อน แล้วค่อยกลับมาอ่านอีกครั้ง",
+    "category": "save",
+    "type": "save"
+  },
+  {
+    "id": 15,
+    "cta": "แท็กเพื่อนที่ควรรู้เรื่องนี้",
+    "category": "tag",
+    "type": "tag"
+  },
+  {
+    "id": 16,
+    "cta": "คอมเมนต์ความคิดเห็นของคุณด้านล่าง",
+    "category": "comment",
+    "type": "engagement"
+  },
+  {
+    "id": 17,
+    "cta": "ส่ง DM มาคำว่า GUIDE เพื่อรับคู่มือ",
+    "category": "dm",
+    "type": "lead"
+  },
+  {
+    "id": 18,
+    "cta": "กดหัวใจถ้าคุณเคยเจอแบบนี้",
+    "category": "like",
+    "type": "engagement"
+  },
+  {
+    "id": 19,
+    "cta": "บันทึกไว้เป็นเช็กลิสต์ส่วนตัว",
+    "category": "save",
+    "type": "save"
+  },
+  {
+    "id": 20,
+    "cta": "พิมพ์ พร้อม ถ้าคุณจะเริ่มวันนี้",
+    "category": "comment",
+    "type": "action"
+  },
+  {
+    "id": 21,
+    "cta": "ติดตามเพื่อดู Part 2",
+    "category": "follow",
+    "type": "follow"
+  },
+  {
+    "id": 22,
+    "cta": "คอมเมนต์คำว่า สนใจ เพื่อรับลิงก์",
+    "category": "comment",
+    "type": "lead"
+  },
+  {
+    "id": 23,
+    "cta": "แชร์โพสต์นี้ให้ทีมของคุณ",
+    "category": "share",
+    "type": "share"
+  },
+  {
+    "id": 24,
+    "cta": "เซฟเก็บไว้ก่อน แล้วกลับมาใช้ภายหลัง",
+    "category": "save",
+    "type": "save"
+  },
+  {
+    "id": 25,
+    "cta": "แท็กคนที่ควรเริ่มทำเรื่องนี้",
+    "category": "tag",
+    "type": "tag"
+  },
+  {
+    "id": 26,
+    "cta": "บอกผมหน่อยว่าคุณคิดยังไง",
+    "category": "comment",
+    "type": "engagement"
+  },
+  {
+    "id": 27,
+    "cta": "ส่งข้อความคำว่า START เพื่อรับข้อมูล",
+    "category": "dm",
+    "type": "lead"
+  },
+  {
+    "id": 28,
+    "cta": "กดไลก์ถ้าคุณอยากให้ทำเพิ่ม",
+    "category": "like",
+    "type": "engagement"
+  },
+  {
+    "id": 29,
+    "cta": "บันทึกโพสต์นี้ไว้เป็นแนวทาง",
+    "category": "save",
+    "type": "save"
+  },
+  {
+    "id": 30,
+    "cta": "พิมพ์ YES ถ้าคุณพร้อม",
+    "category": "comment",
+    "type": "action"
+  },
+  {
+    "id": 31,
+    "cta": "กดติดตามเพื่อดูตัวอย่างจริง",
+    "category": "follow",
+    "type": "follow"
+  },
+  {
+    "id": 32,
+    "cta": "คอมเมนต์คำว่า ส่งมา เพื่อรับไฟล์",
+    "category": "comment",
+    "type": "lead"
+  },
+  {
+    "id": 33,
+    "cta": "แชร์โพสต์นี้ให้เพื่อนร่วมงาน",
+    "category": "share",
+    "type": "share"
+  },
+  {
+    "id": 34,
+    "cta": "เซฟไว้ก่อน เดี๋ยวลืม",
+    "category": "save",
+    "type": "save"
+  },
+  {
+    "id": 35,
+    "cta": "แท็กคนที่ต้องเห็นสิ่งนี้",
+    "category": "tag",
+    "type": "tag"
+  },
+  {
+    "id": 36,
+    "cta": "คอมเมนต์ประสบการณ์ของคุณ",
+    "category": "comment",
+    "type": "engagement"
+  },
+  {
+    "id": 37,
+    "cta": "ส่ง DM มาหาผมเพื่อรับตัวอย่าง",
+    "category": "dm",
+    "type": "lead"
+  },
+  {
+    "id": 38,
+    "cta": "กดหัวใจถ้าข้อมูลนี้มีประโยชน์",
+    "category": "like",
+    "type": "engagement"
+  },
+  {
+    "id": 39,
+    "cta": "บันทึกไว้เพื่อกลับมาทบทวน",
+    "category": "save",
+    "type": "save"
+  },
+  {
+    "id": 40,
+    "cta": "พิมพ์ GO ถ้าคุณพร้อมลุย",
+    "category": "comment",
+    "type": "action"
+  },
+  {
+    "id": 41,
+    "cta": "ติดตามเพื่อรับเทคนิคใหม่ทุกวัน",
+    "category": "follow",
+    "type": "follow"
+  },
+  {
+    "id": 42,
+    "cta": "คอมเมนต์คำว่า TOOL เพื่อรับเครื่องมือ",
+    "category": "comment",
+    "type": "lead"
+  },
+  {
+    "id": 43,
+    "cta": "แชร์ให้คนที่คุณแคร์",
+    "category": "share",
+    "type": "share"
+  },
+  {
+    "id": 44,
+    "cta": "เซฟไว้ใช้ในอนาคต",
+    "category": "save",
+    "type": "save"
+  },
+  {
+    "id": 45,
+    "cta": "แท็กคนที่กำลังเริ่มต้น",
+    "category": "tag",
+    "type": "tag"
+  },
+  {
+    "id": 46,
+    "cta": "คอมเมนต์ว่าคุณมาจากจังหวัดไหน",
+    "category": "comment",
+    "type": "engagement"
+  },
+  {
+    "id": 47,
+    "cta": "ส่งข้อความคำว่า HELP เพื่อรับคำแนะนำ",
+    "category": "dm",
+    "type": "lead"
+  },
+  {
+    "id": 48,
+    "cta": "กดไลก์ถ้าคุณจะลองทำตาม",
+    "category": "like",
+    "type": "engagement"
+  },
+  {
+    "id": 49,
+    "cta": "บันทึกโพสต์นี้ไว้เป็นคู่มือ",
+    "category": "save",
+    "type": "save"
+  },
+  {
+    "id": 50,
+    "cta": "คอมเมนต์คำว่า สำเร็จ เมื่อคุณทำได้แล้ว",
     "category": "comment",
     "type": "action"
   }
