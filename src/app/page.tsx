@@ -148,6 +148,29 @@ export default function Home() {
             🚀 เริ่มใช้งาน Premium
           </button>
         </Link>
+      <Link href="/search">
+  <button>🔍 ค้นหา Hook</button>
+</Link>
+
+<Link href="/captions">
+  <button>📝 คลัง Caption</button>
+</Link>
+
+<Link href="/cta">
+  <button>📢 คลัง CTA</button>
+</Link>
+
+<Link href="/scripts">
+  <button>🎬 คลังสคริปต์</button>
+</Link>
+
+<Link href="/favorites">
+  <button>⭐ รายการโปรด</button>
+</Link>
+
+<Link href="/trending">
+  <button>🔥 มาแรง</button>
+</Link>
       </section>
     </main>
   );

@@ -1,9 +1,11 @@
 import ctas from "../../data/cta/comment.json";
+import CopyButton from "../../components/CopyButton";
+import FavoriteButton from "../../components/FavoriteButton";
 
 export default function CTAPage() {
   return (
     <main style={{ padding: "24px", maxWidth: "900px", margin: "0 auto" }}>
-      <h1>CTA Library</h1>
+      <h1>📢 คลัง CTA</h1>
 
       <p style={{ color: "#555", marginBottom: "20px" }}>
         จำนวนทั้งหมด {ctas.length} รายการ
@@ -20,13 +22,44 @@ export default function CTAPage() {
               backgroundColor: "#f8faff",
             }}
           >
-            <p style={{ fontSize: "18px", fontWeight: "bold" }}>
+            <div
+              style={{
+                display: "inline-block",
+                padding: "4px 10px",
+                borderRadius: "999px",
+                backgroundColor: "#e0e7ff",
+                color: "#3730a3",
+                fontSize: "12px",
+                marginBottom: "10px",
+              }}
+            >
+              {item.type}
+            </div>
+
+            <p
+              style={{
+                fontSize: "18px",
+                fontWeight: "bold",
+              }}
+            >
               {item.cta}
             </p>
 
             <small style={{ color: "#555" }}>
-              หมวด: {item.category} | ประเภท: {item.type}
+              หมวด: {item.category}
             </small>
+
+            <div
+              style={{
+                display: "flex",
+                gap: "10px",
+                marginTop: "10px",
+                alignItems: "center",
+              }}
+            >
+              <CopyButton text={item.cta} />
+              <FavoriteButton hook={item.cta} />
+            </div>
           </div>
         ))}
       </div>
