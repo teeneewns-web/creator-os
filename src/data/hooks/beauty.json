@@ -1,22 +1,22 @@
 
 [
   {
-    "id": 1,
-    "hook": "คนส่วนใหญ่ไม่รู้เรื่องนี้เกี่ยวกับการดูแลผิว",
-    "category": "beauty",
-    "type": "curiosity",
-    "emotion": "curiosity",
-    "platform": "all",
-    "language": "th"
-  },
-  {
-    "id": 2,
-    "hook": "หยุดทำสิ่งนี้ด่วน ถ้าไม่อยากให้ผิวพัง",
-    "category": "beauty",
-    "type": "warning",
-    "emotion": "fear",
-    "platform": "all",
-    "language": "th"
+  "id": 1,
+  "hook": "ผิวดีไม่ได้เริ่มจากครีมแพง แต่เริ่มจากขั้นตอนที่ถูกต้อง",
+  "category": "beauty",
+  "type": "secret",
+  "emotion": "curiosity",
+  "platform": "all",
+  "language": "th"
+},
+{
+  "id": 2,
+  "hook": "หลายคนดูแลผิวทุกวัน แต่พลาดจุดเล็ก ๆ ที่ทำให้หน้าไม่ดีขึ้น",
+  "category": "beauty",
+  "type": "mistake",
+  "emotion": "shock",
+  "platform": "all",
+  "language": "th"
   },
   {
     "id": 3,

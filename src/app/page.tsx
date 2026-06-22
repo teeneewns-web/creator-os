@@ -36,6 +36,25 @@ export default function Home() {
           สำหรับ Creator ไว้ในที่เดียว
         </p>
 
+<form action="/search" style={{ marginBottom: "24px" }}>
+  <input
+    name="q"
+    placeholder="ค้นหา Hook, CTA, Caption, Script..."
+    style={{
+      width: "100%",
+      maxWidth: "600px",
+      padding: "14px",
+      border: "1px solid #c7d2fe",
+      borderRadius: "12px",
+      fontSize: "16px",
+      marginBottom: "12px",
+    }}
+  />
+
+  <br />
+
+  <button type="submit">🔍 ค้นหา</button>
+</form>
         <div
           style={{
             display: "flex",
@@ -148,9 +167,6 @@ export default function Home() {
             🚀 เริ่มใช้งาน Premium
           </button>
         </Link>
-      <Link href="/search">
-  <button>🔍 ค้นหา Hook</button>
-</Link>
 
 <Link href="/captions">
   <button>📝 คลัง Caption</button>
@@ -171,6 +187,7 @@ export default function Home() {
 <Link href="/trending">
   <button>🔥 มาแรง</button>
 </Link>
+
       </section>
     </main>
   );

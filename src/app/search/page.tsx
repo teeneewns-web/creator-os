@@ -1,67 +1,166 @@
 import fs from "fs";
 import path from "path";
 
-type HookItem = {
+type SearchItem = {
   id: number;
-  hook: string;
+  text: string;
+  kind: "Hook" | "CTA" | "Caption" | "Script";
   category?: string;
   type?: string;
-  emotion?: string;
-  platform?: string;
-  language?: string;
+  source?: string;
 };
 
-function getAllHooks() {
-  const hooksDir = path.join(process.cwd(), "src", "data", "hooks");
-  const files = fs.readdirSync(hooksDir).filter((file) => file.endsWith(".json"));
+function readJsonFile(filePath: string) {
+  const fileContent = fs.readFileSync(filePath, "utf8");
+  return JSON.parse(fileContent);
+}
 
-  let allHooks: (HookItem & { source: string })[] = [];
+function getAllHooks(): SearchItem[] {
+  const hooksDir = path.join(process.cwd(), "src", "data", "hooks");
+  const files = fs
+    .readdirSync(hooksDir)
+    .filter((file) => file.endsWith(".json"));
+
+  let results: SearchItem[] = [];
 
   files.forEach((file) => {
     const filePath = path.join(hooksDir, file);
-    const fileContent = fs.readFileSync(filePath, "utf8");
-    const data = JSON.parse(fileContent);
+    const data = readJsonFile(filePath);
     const source = file.replace(".json", "");
 
-    const hooksWithCategory = data.map((item: HookItem) => ({
-      ...item,
-      source,
-    }));
+    const items = data
+      .filter((item: any) => item.hook)
+      .map((item: any) => ({
+        id: item.id,
+        text: item.hook,
+        kind: "Hook" as const,
+        category: item.category || source,
+        type: item.type || "general",
+        source,
+      }));
 
-    allHooks = [...allHooks, ...hooksWithCategory];
+    results = [...results, ...items];
   });
 
-  return allHooks;
+  return results;
+}
+
+function getAllCTAs(): SearchItem[] {
+  const filePath = path.join(
+    process.cwd(),
+    "src",
+    "data",
+    "cta",
+    "comment.json"
+  );
+
+  const data = readJsonFile(filePath);
+
+  return data
+    .filter((item: any) => item.cta)
+    .map((item: any) => ({
+      id: item.id,
+      text: item.cta,
+      kind: "CTA" as const,
+      category: item.category || "cta",
+      type: item.type || "general",
+      source: "cta",
+    }));
+}
+
+function getAllCaptions(): SearchItem[] {
+  const filePath = path.join(
+    process.cwd(),
+    "src",
+    "data",
+    "captions",
+    "engagement.json"
+  );
+
+  const data = readJsonFile(filePath);
+
+  return data
+    .filter((item: any) => item.caption)
+    .map((item: any) => ({
+      id: item.id,
+      text: item.caption,
+      kind: "Caption" as const,
+      category: item.category || "caption",
+      type: item.type || "general",
+      source: "captions",
+    }));
+}
+
+function getAllScripts(): SearchItem[] {
+  const filePath = path.join(
+    process.cwd(),
+    "src",
+    "data",
+    "scripts",
+    "tiktok.json"
+  );
+
+  const data = readJsonFile(filePath);
+
+  return data
+    .filter((item: any) => item.script)
+    .map((item: any) => ({
+      id: item.id,
+      text: item.script,
+      kind: "Script" as const,
+      category: "script",
+      type: item.title || "script",
+      source: "scripts",
+    }));
+}
+
+function getAllItems(): SearchItem[] {
+  return [
+    ...getAllHooks(),
+    ...getAllCTAs(),
+    ...getAllCaptions(),
+    ...getAllScripts(),
+  ];
 }
 
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string; kind?: string }>;
 }) {
   const params = await searchParams;
   const q = params.q || "";
-  const allHooks = getAllHooks();
+  const kind = params.kind || "";
 
-  const results = q
-    ? allHooks.filter((item) =>
-        `${item.hook} ${item.category || ""} ${item.type || ""} ${
-          item.emotion || ""
-        } ${item.platform || ""} ${item.source || ""}`
-          .toLowerCase()
-          .includes(q.toLowerCase())
-      )
-    : allHooks;
+  const allItems = getAllItems();
+
+  let results = allItems;
+
+  if (kind) {
+    results = results.filter((item) => item.kind === kind);
+  }
+
+  if (q) {
+    results = results.filter((item) =>
+      `${item.text} ${item.kind} ${item.category || ""} ${item.type || ""} ${
+        item.source || ""
+      }`
+        .toLowerCase()
+        .includes(q.toLowerCase())
+    );
+  }
 
   return (
     <main style={{ padding: "24px", maxWidth: "900px", margin: "0 auto" }}>
-      <h1 style={{ fontSize: "32px", marginBottom: "12px" }}>Search Hooks</h1>
+      <h1 style={{ fontSize: "32px", marginBottom: "12px" }}>
+        🔍 ค้นหาคอนเทนต์ทั้งหมด
+      </h1>
 
-      <form action="/search" style={{ marginBottom: "24px" }}>
+      <form action="/search" style={{ marginBottom: "20px" }}>
         <input
           name="q"
           defaultValue={q}
-          placeholder="ค้นหา Hook เช่น เงิน, AI, เกม, curiosity, warning"
+          placeholder="ค้นหา เช่น AI, ขายของ, แชร์, คอมเมนต์, TikTok"
           style={{
             width: "100%",
             padding: "14px",
@@ -72,30 +171,40 @@ export default async function SearchPage({
           }}
         />
 
-        <button
-          type="submit"
-          style={{
-            padding: "12px 20px",
-            borderRadius: "10px",
-            border: "none",
-            backgroundColor: "#4f46e5",
-            color: "white",
-            fontSize: "16px",
-            cursor: "pointer",
-          }}
-        >
-          ค้นหา
-        </button>
+        <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+          <button type="submit">ค้นหา</button>
+
+          <a href="/search">
+            <button type="button">ทั้งหมด</button>
+          </a>
+
+          <a href={`/search?kind=Hook&q=${q}`}>
+            <button type="button">Hook</button>
+          </a>
+
+          <a href={`/search?kind=CTA&q=${q}`}>
+            <button type="button">CTA</button>
+          </a>
+
+          <a href={`/search?kind=Caption&q=${q}`}>
+            <button type="button">Caption</button>
+          </a>
+
+          <a href={`/search?kind=Script&q=${q}`}>
+            <button type="button">Script</button>
+          </a>
+        </div>
       </form>
 
       <p style={{ marginBottom: "16px", color: "#555" }}>
-        คำค้นหา: {q || "ทั้งหมด"} | พบทั้งหมด {results.length} รายการ
+        คำค้นหา: {q || "ทั้งหมด"} | ประเภท: {kind || "ทั้งหมด"} | พบทั้งหมด{" "}
+        {results.length} รายการ
       </p>
 
       <div style={{ display: "grid", gap: "12px" }}>
         {results.map((item, index) => (
           <div
-            key={`${item.source}-${item.id}-${index}`}
+            key={`${item.kind}-${item.source}-${item.id}-${index}`}
             style={{
               border: "1px solid #c7d2fe",
               borderRadius: "14px",
@@ -114,16 +223,16 @@ export default async function SearchPage({
                 marginBottom: "10px",
               }}
             >
-              {item.type || "general"}
+              {item.kind} | {item.type || "general"}
             </div>
 
             <p style={{ marginBottom: "8px", fontWeight: "bold" }}>
-              {item.hook}
+              {item.text}
             </p>
 
             <small style={{ color: "#555" }}>
-              หมวด: {item.category || item.source} | แพลตฟอร์ม:{" "}
-              {item.platform || "all"}
+              หมวด: {item.category || "general"} | แหล่งข้อมูล:{" "}
+              {item.source || "-"}
             </small>
           </div>
         ))}
