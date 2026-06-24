@@ -4,39 +4,73 @@ import Link from "next/link";
 import CopyButton from "../../components/CopyButton";
 import FavoriteButton from "../../components/FavoriteButton";
 
+type CaptionItem = {
+  id: number;
+  caption: string;
+  category?: string;
+  type?: string;
+  emotion?: string;
+  platform?: string;
+  source: string;
+};
+
+function getAllCaptions(): CaptionItem[] {
+  const captionsDir = path.join(process.cwd(), "src", "data", "captions");
+
+  const files = fs
+    .readdirSync(captionsDir)
+    .filter((file) => file.endsWith(".json"));
+
+  let allCaptions: CaptionItem[] = [];
+
+  files.forEach((file) => {
+    const filePath = path.join(captionsDir, file);
+    const fileContent = fs.readFileSync(filePath, "utf8");
+    const data = JSON.parse(fileContent);
+    const source = file.replace(".json", "");
+
+    const captions = data
+      .filter((item: any) => item.caption)
+      .map((item: any) => ({
+        ...item,
+        category: item.category || source,
+        type: item.type || source,
+        platform: item.platform || "all",
+        source,
+      }));
+
+    allCaptions = [...allCaptions, ...captions];
+  });
+
+  return allCaptions;
+}
+
 export default async function CaptionsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ type?: string; q?: string }>;
+  searchParams: Promise<{ category?: string; q?: string }>;
 }) {
-  const { type, q } = await searchParams;
+  const { category, q } = await searchParams;
 
-  const filePath = path.join(
-    process.cwd(),
-    "src",
-    "data",
-    "captions",
-    "engagement.json"
-  );
+  const captions = getAllCaptions();
 
-  const fileContent = fs.readFileSync(filePath, "utf8");
-  const captions = JSON.parse(fileContent);
-
-  const types = Array.from(
-    new Set(captions.map((item: any) => item.type || "caption"))
+  const categories = Array.from(
+    new Set(captions.map((item) => item.category || item.source))
   );
 
   let filteredCaptions = captions;
 
-  if (type) {
+  if (category) {
     filteredCaptions = filteredCaptions.filter(
-      (item: any) => (item.type || "caption") === type
+      (item) => (item.category || item.source) === category
     );
   }
 
   if (q) {
-    filteredCaptions = filteredCaptions.filter((item: any) =>
-      `${item.caption} ${item.category || ""} ${item.type || ""}`
+    filteredCaptions = filteredCaptions.filter((item) =>
+      `${item.caption} ${item.category || ""} ${item.type || ""} ${
+        item.platform || ""
+      } ${item.source || ""}`
         .toLowerCase()
         .includes(q.toLowerCase())
     );
@@ -44,17 +78,17 @@ export default async function CaptionsPage({
 
   return (
     <main style={{ padding: "24px", maxWidth: "900px", margin: "0 auto" }}>
-      <h1>Caption Library</h1>
+      <h1>📝 คลัง Caption</h1>
 
       <p style={{ color: "#555", marginBottom: "20px" }}>
-        Engagement Captions สำหรับเพิ่มคอมเมนต์ แชร์ และการมีส่วนร่วม
+        รวม Caption หลายหมวดสำหรับ Creator, TikTok, Reels และโพสต์ขายของ
       </p>
 
       <form action="/captions" style={{ marginBottom: "20px" }}>
         <input
           name="q"
           defaultValue={q || ""}
-          placeholder="ค้นหา Caption เช่น แชร์, คอมเมนต์, เห็นด้วย"
+          placeholder="ค้นหา Caption เช่น แชร์, ขายของ, แรงบันดาลใจ, เรื่องเล่า"
           style={{
             width: "100%",
             padding: "14px",
@@ -65,43 +99,38 @@ export default async function CaptionsPage({
           }}
         />
 
-        <button
-          type="submit"
-          style={{
-            padding: "12px 20px",
-            borderRadius: "10px",
-            border: "none",
-            backgroundColor: "#4f46e5",
-            color: "white",
-            cursor: "pointer",
-          }}
-        >
-          ค้นหา Caption
-        </button>
+        <button type="submit">ค้นหา Caption</button>
       </form>
 
       <p style={{ color: "#555", marginBottom: "20px" }}>
         พบทั้งหมด {filteredCaptions.length} รายการ
       </p>
 
-      <h3>Type</h3>
+      <h3>หมวดหมู่</h3>
 
-      <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "20px" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: "10px",
+          flexWrap: "wrap",
+          marginBottom: "20px",
+        }}
+      >
         <Link href="/captions">
-          <button>All Type</button>
+          <button>ทั้งหมด</button>
         </Link>
 
-        {types.map((t: any) => (
-          <Link key={t} href={`/captions?type=${t}`}>
-            <button>{t}</button>
+        {categories.map((c) => (
+          <Link key={c} href={`/captions?category=${c}`}>
+            <button>{c}</button>
           </Link>
         ))}
       </div>
 
       <div style={{ display: "grid", gap: "12px" }}>
-        {filteredCaptions.map((item: any) => (
+        {filteredCaptions.map((item, index) => (
           <div
-            key={item.id}
+            key={`${item.source}-${item.id}-${index}`}
             style={{
               border: "1px solid #c7d2fe",
               borderRadius: "14px",
@@ -120,7 +149,7 @@ export default async function CaptionsPage({
                 marginBottom: "10px",
               }}
             >
-              {item.type || "caption"}
+              {item.category || item.source}
             </div>
 
             <p style={{ fontSize: "18px", fontWeight: "bold" }}>
@@ -128,13 +157,18 @@ export default async function CaptionsPage({
             </p>
 
             <small style={{ color: "#555" }}>
-              หมวด: {item.category || "engagement"} | แพลตฟอร์ม:{" "}
+              ประเภท: {item.type || "caption"} | แพลตฟอร์ม:{" "}
               {item.platform || "all"}
             </small>
 
-            <br />
-
-            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            <div
+              style={{
+                display: "flex",
+                gap: "10px",
+                alignItems: "center",
+                marginTop: "10px",
+              }}
+            >
               <CopyButton text={item.caption} />
               <FavoriteButton hook={item.caption} />
             </div>
