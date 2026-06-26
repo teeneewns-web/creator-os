@@ -102,6 +102,10 @@ export default function Home() {
         <div style={{ display: "flex", justifyContent: "center", gap: "12px", flexWrap: "wrap" }}>
           <Link href="/search"><button>🔍 เริ่มค้นหา</button></Link>
           <Link href="/premium"><button>💎 ดู Premium</button></Link>
+          <Link href="/plans">
+  <button>แผนสร้างคอนเทนต์</button>
+</Link>
+
         </div>
       </section>
     </main>

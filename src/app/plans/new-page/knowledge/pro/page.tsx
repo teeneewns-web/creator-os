@@ -1,64 +1,66 @@
 import Link from "next/link";
 
-export default function ProKnowledgePlan() {
+export default function PlusKnowledgePlan() {
   return (
-    <main
-      style={{
-        maxWidth: "900px",
-        margin: "0 auto",
-        padding: "24px",
-      }}
-    >
+    <main style={{ maxWidth: "900px", margin: "0 auto", padding: "24px" }}>
       <Link href="/plans/new-page/knowledge">
         <button>⬅️ กลับ</button>
       </Link>
 
-      <h1>💎 Creator Pro</h1>
+      <h1>🚀 Creator Plus</h1>
 
-      <h2>แผนเพจสายความรู้ (30 วัน)</h2>
-
-      <p style={{ color: "#555" }}>
-        สำหรับคนที่ต้องการเติบโตจริงจัง ทั้งโพสต์และคลิปสั้น
+      <p style={{ color: "#666", fontSize: "18px", marginBottom: "24px" }}>
+        แผนสร้างเพจสายความรู้ 15 วัน สำหรับคนที่อยากทำต่อเนื่องแบบไม่ต้องคิดเองทุกวัน
       </p>
 
       <div
         style={{
-          border: "2px solid #8b5cf6",
-          borderRadius: "16px",
-          padding: "20px",
-          background: "#faf7ff",
-          marginTop: "20px",
+          border: "2px solid #3b82f6",
+          borderRadius: "18px",
+          padding: "24px",
+          background: "#f8fbff",
         }}
       >
-        <h2>สิ่งที่คุณจะได้รับ</h2>
+        <h2>คุณจะได้อะไรในแผนนี้</h2>
 
         <ul>
-          <li>✅ แผน 30 วัน</li>
+          <li>✅ แผนโพสต์ 15 วัน</li>
           <li>✅ ภารกิจรายวัน</li>
-          <li>✅ แนวทางโพสต์</li>
+          <li>✅ โครงสร้างโพสต์</li>
           <li>✅ Hook เปิดโพสต์</li>
-          <li>✅ Hook เปิดคลิป</li>
-          <li>✅ CTA ปิดโพสต์</li>
-          <li>✅ CTA ปิดคลิป</li>
           <li>✅ Hashtag แนะนำ</li>
-          <li>✅ เวลาโพสต์ที่แนะนำ</li>
+          <li>✅ เวลาโพสต์แนะนำ</li>
           <li>✅ เช็กลิสต์รายวัน</li>
-          <li>✅ KPI ที่ควรติดตาม</li>
+          <li>✅ เคล็ดลับเพิ่มการมองเห็น</li>
+        </ul>
+
+        <h2>เหมาะกับใคร?</h2>
+
+        <ul>
+          <li>คนที่เพิ่งเริ่มทำเพจสายความรู้</li>
+          <li>คนที่คิดไม่ออกว่าวันนี้จะโพสต์อะไร</li>
+          <li>คนที่อยากเริ่มทำเพจแบบมีระบบ</li>
         </ul>
 
         <h2>ราคา</h2>
 
-        <p
-          style={{
-            fontSize: "28px",
-            fontWeight: "bold",
-            color: "#7c3aed",
-          }}
-        >
-          59 บาท
+        <p style={{ fontSize: "30px", fontWeight: "bold", color: "#2563eb" }}>
+          29 บาท
         </p>
 
-        <button>ซื้อแผนนี้</button>
+        <button
+          style={{
+            padding: "12px 24px",
+            borderRadius: "10px",
+            border: "none",
+            background: "#2563eb",
+            color: "white",
+            fontSize: "16px",
+            cursor: "pointer",
+          }}
+        >
+          ซื้อแผน Plus
+        </button>
       </div>
     </main>
   );
