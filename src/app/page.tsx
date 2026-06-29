@@ -9,8 +9,40 @@ export default function Home() {
         </h1>
 
         <p style={{ fontSize: "20px", color: "#555", marginBottom: "24px" }}>
-          รวม Hook, Caption, CTA และ Script พร้อมใช้ ช่วยให้คุณคิดคอนเทนต์ได้เร็วขึ้น
+          รวมเครื่องมือช่วยคิดคอนเทนต์ และผู้ช่วยภารกิจรายวันสำหรับคนทำเพจ
         </p>
+
+        <div
+          style={{
+            border: "2px solid #4f46e5",
+            borderRadius: "20px",
+            padding: "24px",
+            background: "#f8faff",
+            marginBottom: "24px",
+          }}
+        >
+          <h2>🏠 เริ่มจากภารกิจวันนี้</h2>
+
+          <p style={{ color: "#555" }}>
+            ไม่ต้องคิดเองว่าวันนี้จะทำอะไร เปิดหน้า Dashboard แล้วทำตามภารกิจได้เลย
+          </p>
+
+          <Link href="/dashboard">
+            <button
+              style={{
+                padding: "14px 24px",
+                borderRadius: "12px",
+                border: "none",
+                background: "#4f46e5",
+                color: "white",
+                fontSize: "18px",
+                cursor: "pointer",
+              }}
+            >
+              🏠 ไปที่ภารกิจวันนี้
+            </button>
+          </Link>
+        </div>
 
         <form action="/search" style={{ marginBottom: "24px" }}>
           <input
@@ -33,6 +65,8 @@ export default function Home() {
         </form>
 
         <div style={{ display: "flex", justifyContent: "center", gap: "12px", flexWrap: "wrap" }}>
+          <Link href="/plans"><button>📅 แผนสร้างคอนเทนต์</button></Link>
+          <Link href="/dashboard/weekly"><button>🏠 แผน 7 วัน</button></Link>
           <Link href="/hooks"><button>🎣 คลัง Hook</button></Link>
           <Link href="/captions"><button>📝 คลัง Caption</button></Link>
           <Link href="/cta"><button>📢 คลัง CTA</button></Link>
@@ -52,6 +86,11 @@ export default function Home() {
         }}
       >
         <div style={{ border: "1px solid #ddd", borderRadius: "16px", padding: "20px" }}>
+          <h2>🏠</h2>
+          <p>ภารกิจรายวัน</p>
+        </div>
+
+        <div style={{ border: "1px solid #ddd", borderRadius: "16px", padding: "20px" }}>
           <h2>500+</h2>
           <p>Hook พร้อมใช้</p>
         </div>
@@ -65,11 +104,6 @@ export default function Home() {
           <h2>50+</h2>
           <p>Caption เพิ่ม Engagement</p>
         </div>
-
-        <div style={{ border: "1px solid #ddd", borderRadius: "16px", padding: "20px" }}>
-          <h2>50+</h2>
-          <p>CTA สำหรับปิดท้ายโพสต์</p>
-        </div>
       </section>
 
       <section
@@ -80,33 +114,15 @@ export default function Home() {
           padding: "24px",
         }}
       >
-        <h2>ทำไม Creator ถึงควรใช้เว็บนี้?</h2>
+        <h2>เว็บนี้ช่วยอะไรคุณ?</h2>
 
         <ul>
-          <li>ช่วยคิด Hook ได้เร็วขึ้น</li>
-          <li>มี Caption พร้อมนำไปปรับใช้</li>
-          <li>มี CTA ช่วยเพิ่มคอมเมนต์ แชร์ และการติดตาม</li>
-          <li>มี Script สำหรับ TikTok, Reels และ Shorts</li>
-          <li>ค้นหาทุกอย่างได้จากช่องเดียว</li>
+          <li>บอกว่าวันนี้ควรทำอะไร</li>
+          <li>ช่วยคิด Hook, Caption, CTA และ Script</li>
+          <li>มีแผนสร้างคอนเทนต์ให้ทำตาม</li>
+          <li>ลดเวลาคิดคอนเทนต์เอง</li>
           <li>บันทึกรายการโปรดไว้ใช้ซ้ำได้</li>
         </ul>
-      </section>
-
-      <section style={{ marginTop: "40px", textAlign: "center" }}>
-        <h2>เริ่มทำคอนเทนต์ให้เร็วขึ้นวันนี้</h2>
-
-        <p style={{ color: "#555" }}>
-          ทดลองใช้คลังคอนเทนต์ฟรี และอัปเกรดเป็น Premium เมื่อพร้อม
-        </p>
-
-        <div style={{ display: "flex", justifyContent: "center", gap: "12px", flexWrap: "wrap" }}>
-          <Link href="/search"><button>🔍 เริ่มค้นหา</button></Link>
-          <Link href="/premium"><button>💎 ดู Premium</button></Link>
-          <Link href="/plans">
-  <button>แผนสร้างคอนเทนต์</button>
-</Link>
-
-        </div>
       </section>
     </main>
   );
