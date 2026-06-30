@@ -1,128 +1,145 @@
 import Link from "next/link";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main style={{ maxWidth: "1000px", margin: "0 auto", padding: "24px" }}>
-      <section style={{ textAlign: "center", padding: "40px 20px" }}>
-        <h1 style={{ fontSize: "42px", fontWeight: "bold", marginBottom: "16px" }}>
-          🚀 คลังคอนเทนต์สำหรับ Creator
+    <main style={{ maxWidth: "1100px", margin: "0 auto", padding: "24px" }}>
+      <section
+        style={{
+          padding: "40px 24px",
+          borderRadius: "24px",
+          background: "#f8fafc",
+          border: "1px solid #e5e7eb",
+        }}
+      >
+        <p style={{ color: "#4f46e5", fontWeight: "bold" }}>
+          Creator OS
+        </p>
+
+        <h1
+          style={{
+            fontSize: "44px",
+            lineHeight: "1.15",
+            margin: "12px 0",
+          }}
+        >
+          ระบบผู้ช่วย Creator ให้รู้ว่าวันนี้ต้องทำอะไร
         </h1>
 
-        <p style={{ fontSize: "20px", color: "#555", marginBottom: "24px" }}>
-          รวมเครื่องมือช่วยคิดคอนเทนต์ และผู้ช่วยภารกิจรายวันสำหรับคนทำเพจ
+        <p style={{ fontSize: "18px", color: "#555", maxWidth: "720px" }}>
+          ไม่ใช่แค่คลัง Hook แต่เป็นระบบภารกิจรายวันสำหรับวางแผน เขียนโพสต์
+          ตรวจคุณภาพ บันทึกผล และสรุปบทเรียนใน 7 วัน
         </p>
 
         <div
           style={{
-            border: "2px solid #4f46e5",
-            borderRadius: "20px",
-            padding: "24px",
-            background: "#f8faff",
-            marginBottom: "24px",
+            display: "flex",
+            gap: "12px",
+            flexWrap: "wrap",
+            marginTop: "24px",
           }}
         >
-          <h2>🏠 เริ่มจากภารกิจวันนี้</h2>
-
-          <p style={{ color: "#555" }}>
-            ไม่ต้องคิดเองว่าวันนี้จะทำอะไร เปิดหน้า Dashboard แล้วทำตามภารกิจได้เลย
-          </p>
-
           <Link href="/dashboard">
             <button
               style={{
-                padding: "14px 24px",
-                borderRadius: "12px",
-                border: "none",
+                padding: "12px 18px",
+                borderRadius: "14px",
+                border: "1px solid #4f46e5",
                 background: "#4f46e5",
                 color: "white",
-                fontSize: "18px",
                 cursor: "pointer",
+                fontWeight: "bold",
               }}
             >
-              🏠 ไปที่ภารกิจวันนี้
+              🏠 เริ่มภารกิจวันนี้
             </button>
           </Link>
-        </div>
 
-        <form action="/search" style={{ marginBottom: "24px" }}>
-          <input
-            name="q"
-            placeholder="ค้นหา Hook, CTA, Caption, Script..."
-            style={{
-              width: "100%",
-              maxWidth: "600px",
-              padding: "14px",
-              border: "1px solid #c7d2fe",
-              borderRadius: "12px",
-              fontSize: "16px",
-              marginBottom: "12px",
-            }}
-          />
-
-          <br />
-
-          <button type="submit">🔍 ค้นหาคอนเทนต์</button>
-        </form>
-
-        <div style={{ display: "flex", justifyContent: "center", gap: "12px", flexWrap: "wrap" }}>
-          <Link href="/plans"><button>📅 แผนสร้างคอนเทนต์</button></Link>
-          <Link href="/dashboard/weekly"><button>🏠 แผน 7 วัน</button></Link>
-          <Link href="/hooks"><button>🎣 คลัง Hook</button></Link>
-          <Link href="/captions"><button>📝 คลัง Caption</button></Link>
-          <Link href="/cta"><button>📢 คลัง CTA</button></Link>
-          <Link href="/scripts"><button>🎬 คลังสคริปต์</button></Link>
-          <Link href="/favorites"><button>⭐ รายการโปรด</button></Link>
-          <Link href="/pricing"><button>💎 ราคาใช้งาน</button></Link>
-          <Link href="/premium"><button>🚀 พรีเมียม</button></Link>
+          <Link href="/dashboard/weekly">
+            <button
+              style={{
+                padding: "12px 18px",
+                borderRadius: "14px",
+                border: "1px solid #ddd",
+                background: "white",
+                cursor: "pointer",
+                fontWeight: "bold",
+              }}
+            >
+              📅 ดูแผน 7 วัน
+            </button>
+          </Link>
         </div>
       </section>
 
       <section
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
+          gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))",
           gap: "16px",
-          marginTop: "30px",
+          marginTop: "28px",
         }}
       >
-        <div style={{ border: "1px solid #ddd", borderRadius: "16px", padding: "20px" }}>
-          <h2>🏠</h2>
-          <p>ภารกิจรายวัน</p>
+        <div
+          style={{
+            border: "1px solid #ddd",
+            borderRadius: "18px",
+            padding: "20px",
+            background: "white",
+          }}
+        >
+          <h2>✅ ภารกิจรายวัน</h2>
+          <p style={{ color: "#555" }}>
+            เลือกเวลาที่มี 15 / 30 / 60 นาที แล้วทำตามภารกิจที่ระบบแนะนำ
+          </p>
         </div>
 
-        <div style={{ border: "1px solid #ddd", borderRadius: "16px", padding: "20px" }}>
-          <h2>500+</h2>
-          <p>Hook พร้อมใช้</p>
+        <div
+          style={{
+            border: "1px solid #ddd",
+            borderRadius: "18px",
+            padding: "20px",
+            background: "white",
+          }}
+        >
+          <h2>✍️ เขียนโพสต์</h2>
+          <p style={{ color: "#555" }}>
+            มี Hook โครงโพสต์ CTA Hashtag และช่องร่างโพสต์ที่จำแยกตาม Day
+          </p>
         </div>
 
-        <div style={{ border: "1px solid #ddd", borderRadius: "16px", padding: "20px" }}>
-          <h2>60+</h2>
-          <p>สคริปต์สำหรับคลิปสั้น</p>
-        </div>
-
-        <div style={{ border: "1px solid #ddd", borderRadius: "16px", padding: "20px" }}>
-          <h2>50+</h2>
-          <p>Caption เพิ่ม Engagement</p>
+        <div
+          style={{
+            border: "1px solid #ddd",
+            borderRadius: "18px",
+            padding: "20px",
+            background: "white",
+          }}
+        >
+          <h2>📈 บันทึกผลลัพธ์</h2>
+          <p style={{ color: "#555" }}>
+            จดไลก์ คอมเมนต์ แชร์ และบทเรียน เพื่อนำไปปรับคอนเทนต์ต่อ
+          </p>
         </div>
       </section>
 
-      <section
-        style={{
-          marginTop: "50px",
-          border: "1px solid #ddd",
-          borderRadius: "20px",
-          padding: "24px",
-        }}
-      >
-        <h2>เว็บนี้ช่วยอะไรคุณ?</h2>
+      <section style={{ marginTop: "32px" }}>
+        <h2>เมนูอื่น ๆ</h2>
 
-        <ul>
-          <li>บอกว่าวันนี้ควรทำอะไร</li>
-          <li>ช่วยคิด Hook, Caption, CTA และ Script</li>
-          <li>มีแผนสร้างคอนเทนต์ให้ทำตาม</li>
-          <li>ลดเวลาคิดคอนเทนต์เอง</li>
-          <li>บันทึกรายการโปรดไว้ใช้ซ้ำได้</li>
-        </ul>
+        <div
+          style={{
+            display: "flex",
+            gap: "10px",
+            flexWrap: "wrap",
+            marginTop: "14px",
+          }}
+        >
+          <Link href="/hooks"><button>🎣 คลัง Hook</button></Link>
+          <Link href="/captions"><button>📝 Caption</button></Link>
+          <Link href="/cta"><button>📣 CTA</button></Link>
+          <Link href="/scripts"><button>🎬 Script</button></Link>
+          <Link href="/search"><button>🔍 ค้นหา</button></Link>
+          <Link href="/pricing"><button>💰 ราคา</button></Link>
+        </div>
       </section>
     </main>
   );
