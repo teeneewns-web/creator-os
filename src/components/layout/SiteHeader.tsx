@@ -48,7 +48,7 @@ export default function SiteHeader() {
     >
       <div
         style={{
-          maxWidth: "1100px",
+          maxWidth: "1200px",
           margin: "0 auto",
           padding: "14px 24px",
           display: "flex",
@@ -86,15 +86,36 @@ export default function SiteHeader() {
             ภารกิจวันนี้
           </Link>
 
-          <Link
-            href="/dashboard/weekly"
-            style={getLinkStyle("/dashboard/weekly")}
-          >
+          <Link href="/dashboard/weekly" style={getLinkStyle("/dashboard/weekly")}>
             แผน 7 วัน
           </Link>
 
+          <Link href="/search" style={getLinkStyle("/search")}>
+            ค้นหา
+          </Link>
+
           <Link href="/hooks" style={getLinkStyle("/hooks")}>
-            คลัง Hook
+            Hook
+          </Link>
+
+          <Link href="/captions" style={getLinkStyle("/captions")}>
+            Caption
+          </Link>
+
+          <Link href="/cta" style={getLinkStyle("/cta")}>
+            CTA
+          </Link>
+
+          <Link href="/scripts" style={getLinkStyle("/scripts")}>
+            Script
+          </Link>
+
+          <Link href="/plans" style={getLinkStyle("/plans")}>
+            แผน
+          </Link>
+
+          <Link href="/premium" style={getLinkStyle("/premium")}>
+            Premium
           </Link>
 
           <Link href="/pricing" style={getLinkStyle("/pricing")}>
