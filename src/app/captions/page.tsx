@@ -1,180 +1,152 @@
-import fs from "fs";
-import path from "path";
 import Link from "next/link";
-import CopyButton from "../../components/CopyButton";
-import FavoriteButton from "../../components/FavoriteButton";
 
-type CaptionItem = {
-  id: number;
-  caption: string;
-  category?: string;
-  type?: string;
-  emotion?: string;
-  platform?: string;
-  source: string;
-};
-
-function getAllCaptions(): CaptionItem[] {
-  const captionsDir = path.join(process.cwd(), "src", "data", "captions");
-
-  const files = fs
-    .readdirSync(captionsDir)
-    .filter((file) => file.endsWith(".json"));
-
-  let allCaptions: CaptionItem[] = [];
-
-  files.forEach((file) => {
-    const filePath = path.join(captionsDir, file);
-    const fileContent = fs.readFileSync(filePath, "utf8");
-    const data = JSON.parse(fileContent);
-    const source = file.replace(".json", "");
-
-    const captions = data
-      .filter((item: any) => item.caption)
-      .map((item: any) => ({
-        ...item,
-        category: item.category || source,
-        type: item.type || source,
-        platform: item.platform || "all",
-        source,
-      }));
-
-    allCaptions = [...allCaptions, ...captions];
-  });
-
-  return allCaptions;
-}
-
-export default async function CaptionsPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ category?: string; q?: string }>;
-}) {
-  const { category, q } = await searchParams;
-
-  const captions = getAllCaptions();
-
-  const categories = Array.from(
-    new Set(captions.map((item) => item.category || item.source))
-  );
-
-  let filteredCaptions = captions;
-
-  if (category) {
-    filteredCaptions = filteredCaptions.filter(
-      (item) => (item.category || item.source) === category
-    );
-  }
-
-  if (q) {
-    filteredCaptions = filteredCaptions.filter((item) =>
-      `${item.caption} ${item.category || ""} ${item.type || ""} ${
-        item.platform || ""
-      } ${item.source || ""}`
-        .toLowerCase()
-        .includes(q.toLowerCase())
-    );
-  }
+export default function CaptionsPage() {
+  const captionTypes = [
+    {
+      title: "Caption สั้น",
+      icon: "⚡",
+      description: "เหมาะกับโพสต์ไว คลิปสั้น และคอนเทนต์ที่ต้องการความกระชับ",
+      examples: ["รู้แบบนี้ตั้งนานแล้ว", "เรื่องนี้หลายคนมองข้าม", "ลองเช็กตัวเองดู"],
+    },
+    {
+      title: "Caption ให้ความรู้",
+      icon: "📚",
+      description: "เหมาะกับเพจความรู้ การเงิน ความงาม สุขภาพ และธุรกิจ",
+      examples: ["สิ่งที่มือใหม่ควรรู้", "สรุปให้เข้าใจง่ายในโพสต์เดียว", "ถ้าคุณกำลังเริ่มต้น ต้องอ่าน"],
+    },
+    {
+      title: "Caption ขายของ",
+      icon: "🛒",
+      description: "เหมาะกับสินค้าหรือบริการที่ต้องการปิดการขายแบบไม่ยัดเยียด",
+      examples: ["เหมาะกับคนที่กำลังเจอปัญหานี้", "ตัวช่วยเล็ก ๆ ที่ทำให้ชีวิตง่ายขึ้น", "ก่อนตัดสินใจซื้อ ลองอ่านสิ่งนี้"],
+    },
+  ];
 
   return (
-    <main style={{ padding: "24px", maxWidth: "900px", margin: "0 auto" }}>
-      <h1>📝 คลัง Caption</h1>
-
-      <p style={{ color: "#555", marginBottom: "20px" }}>
-        รวม Caption หลายหมวดสำหรับ Creator, TikTok, Reels และโพสต์ขายของ
-      </p>
-
-      <form action="/captions" style={{ marginBottom: "20px" }}>
-        <input
-          name="q"
-          defaultValue={q || ""}
-          placeholder="ค้นหา Caption เช่น แชร์, ขายของ, แรงบันดาลใจ, เรื่องเล่า"
-          style={{
-            width: "100%",
-            padding: "14px",
-            border: "1px solid #c7d2fe",
-            borderRadius: "12px",
-            fontSize: "16px",
-            marginBottom: "12px",
-          }}
-        />
-
-        <button type="submit">ค้นหา Caption</button>
-      </form>
-
-      <p style={{ color: "#555", marginBottom: "20px" }}>
-        พบทั้งหมด {filteredCaptions.length} รายการ
-      </p>
-
-      <h3>หมวดหมู่</h3>
-
-      <div
+    <main style={{ maxWidth: "1100px", margin: "0 auto", padding: "24px" }}>
+      <section
         style={{
-          display: "flex",
-          gap: "10px",
-          flexWrap: "wrap",
-          marginBottom: "20px",
+          padding: "40px 24px",
+          borderRadius: "24px",
+          background: "#f8fafc",
+          border: "1px solid #e5e7eb",
         }}
       >
-        <Link href="/captions">
-          <button>ทั้งหมด</button>
-        </Link>
+        <p style={{ color: "#4f46e5", fontWeight: "bold" }}>
+          Caption Library
+        </p>
 
-        {categories.map((c) => (
-          <Link key={c} href={`/captions?category=${c}`}>
-            <button>{c}</button>
+        <h1
+          style={{
+            fontSize: "42px",
+            lineHeight: "1.15",
+            margin: "12px 0",
+          }}
+        >
+          คลัง Caption สำหรับเขียนโพสต์ให้เร็วขึ้น
+        </h1>
+
+        <p style={{ color: "#555", fontSize: "18px", maxWidth: "760px" }}>
+          รวมแนวทาง Caption สำหรับ Creator ที่อยากเขียนโพสต์ได้ง่ายขึ้น
+          ใช้เป็นไอเดียตั้งต้น แล้วปรับให้เข้ากับสไตล์ของเพจคุณ
+        </p>
+
+        <div
+          style={{
+            display: "flex",
+            gap: "12px",
+            flexWrap: "wrap",
+            marginTop: "24px",
+          }}
+        >
+          <Link href="/dashboard">
+            <button style={primaryButtonStyle}>🏠 ใช้กับภารกิจวันนี้</button>
           </Link>
-        ))}
-      </div>
 
-      <div style={{ display: "grid", gap: "12px" }}>
-        {filteredCaptions.map((item, index) => (
-          <div
-            key={`${item.source}-${item.id}-${index}`}
-            style={{
-              border: "1px solid #c7d2fe",
-              borderRadius: "14px",
-              padding: "16px",
-              backgroundColor: "#f8faff",
-            }}
-          >
+          <Link href="/hooks">
+            <button style={secondaryButtonStyle}>🎣 ไปคลัง Hook</button>
+          </Link>
+        </div>
+      </section>
+
+      <section style={{ marginTop: "32px" }}>
+        <h2 style={{ fontSize: "30px" }}>ประเภท Caption</h2>
+
+        <p style={{ color: "#555" }}>
+          เลือกแนว Caption ให้ตรงกับเป้าหมายของโพสต์
+        </p>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))",
+            gap: "18px",
+            marginTop: "20px",
+          }}
+        >
+          {captionTypes.map((item) => (
             <div
+              key={item.title}
               style={{
-                display: "inline-block",
-                padding: "4px 10px",
-                borderRadius: "999px",
-                backgroundColor: "#e0e7ff",
-                color: "#3730a3",
-                fontSize: "12px",
-                marginBottom: "10px",
+                border: "1px solid #ddd",
+                borderRadius: "22px",
+                padding: "24px",
+                background: "white",
               }}
             >
-              {item.category || item.source}
+              <div style={{ fontSize: "34px" }}>{item.icon}</div>
+
+              <h2>{item.title}</h2>
+
+              <p style={{ color: "#555", lineHeight: "1.7" }}>
+                {item.description}
+              </p>
+
+              <ul style={{ lineHeight: "2" }}>
+                {item.examples.map((example) => (
+                  <li key={example}>{example}</li>
+                ))}
+              </ul>
             </div>
+          ))}
+        </div>
+      </section>
 
-            <p style={{ fontSize: "18px", fontWeight: "bold" }}>
-              {item.caption}
-            </p>
+      <section
+        style={{
+          marginTop: "34px",
+          padding: "24px",
+          borderRadius: "22px",
+          border: "1px solid #e5e7eb",
+          background: "#f8fafc",
+        }}
+      >
+        <h2>วิธีใช้ Caption ให้ดีขึ้น</h2>
 
-            <small style={{ color: "#555" }}>
-              ประเภท: {item.type || "caption"} | แพลตฟอร์ม:{" "}
-              {item.platform || "all"}
-            </small>
-
-            <div
-              style={{
-                display: "flex",
-                gap: "10px",
-                alignItems: "center",
-                marginTop: "10px",
-              }}
-            >
-              <CopyButton text={item.caption} />
-              <FavoriteButton hook={item.caption} />
-            </div>
-          </div>
-        ))}
-      </div>
+        <p style={{ color: "#555", fontSize: "17px", lineHeight: "1.8" }}>
+          เริ่มจาก Hook เพื่อดึงความสนใจ จากนั้นใช้ Caption อธิบายเนื้อหาให้ชัด
+          แล้วปิดท้ายด้วย CTA เพื่อให้คนอ่านรู้ว่าควรทำอะไรต่อ
+        </p>
+      </section>
     </main>
   );
 }
+
+const primaryButtonStyle = {
+  padding: "12px 18px",
+  borderRadius: "14px",
+  border: "1px solid #4f46e5",
+  background: "#4f46e5",
+  color: "white",
+  cursor: "pointer",
+  fontWeight: "bold",
+};
+
+const secondaryButtonStyle = {
+  padding: "12px 18px",
+  borderRadius: "14px",
+  border: "1px solid #ddd",
+  background: "white",
+  cursor: "pointer",
+  fontWeight: "bold",
+};
