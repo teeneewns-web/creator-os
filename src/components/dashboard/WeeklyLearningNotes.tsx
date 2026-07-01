@@ -1,110 +1,122 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 
-type PostResult = {
-  posted: boolean;
-  platform: string;
-  likes: string;
-  comments: string;
-  shares: string;
-  notes: string;
+type ResultData = {
+  likes?: string;
+  comments?: string;
+  shares?: string;
+  lesson?: string;
 };
 
-type LearningNote = {
+type LessonItem = {
   day: number;
-  platform: string;
-  notes: string;
+  lesson: string;
 };
-
-const STORAGE_KEY = "creator-os-post-result-day-";
-
-function getStorageKey(day: number) {
-  return STORAGE_KEY + day;
-}
 
 export default function WeeklyLearningNotes() {
-  const [notes, setNotes] = useState<LearningNote[]>([]);
+  const [lessons, setLessons] = useState<LessonItem[]>([]);
 
   useEffect(() => {
-    const loadedNotes: LearningNote[] = [];
+    const loadedLessons: LessonItem[] = [];
 
     for (let day = 1; day <= 7; day++) {
-      const saved = localStorage.getItem(getStorageKey(day));
+      const storageKey = "creator-os-post-result-day-" + day;
+      const saved = localStorage.getItem(storageKey);
 
       if (saved) {
-        const result: PostResult = JSON.parse(saved);
+        try {
+          const parsed: ResultData = JSON.parse(saved);
 
-        if (result.notes.trim() !== "") {
-          loadedNotes.push({
-            day,
-            platform: result.platform,
-            notes: result.notes,
-          });
+          if (parsed.lesson) {
+            loadedLessons.push({
+              day,
+              lesson: parsed.lesson,
+            });
+          }
+        } catch {
+          // skip broken data
         }
       }
     }
 
-    setNotes(loadedNotes);
+    setLessons(loadedLessons);
   }, []);
 
   return (
-    <section
-      style={{
-        marginTop: "24px",
-        border: "1px solid #ddd",
-        borderRadius: "20px",
-        padding: "20px",
-        background: "white",
-      }}
-    >
-      <h2>🧠 บทเรียนจากโพสต์ 7 วัน</h2>
+    <section style={sectionStyle}>
+      <p style={labelStyle}>Learning Notes</p>
 
-      <p style={{ color: "#555" }}>
-        รวมสิ่งที่คุณได้เรียนรู้จากการลงโพสต์แต่ละวัน เพื่อนำไปปรับโพสต์ต่อไป
+      <h2 style={{ margin: "6px 0" }}>บทเรียนจากการทำคอนเทนต์</h2>
+
+      <p style={{ color: "#555", lineHeight: "1.7" }}>
+        รวมสิ่งที่คุณเรียนรู้จากแต่ละโพสต์ เพื่อใช้ปรับ Hook เนื้อหา CTA
+        และแนวทางการโพสต์ครั้งต่อไป
       </p>
 
-      {notes.length === 0 ? (
-        <div
-          style={{
-            marginTop: "16px",
-            padding: "14px",
-            borderRadius: "14px",
-            background: "#f8fafc",
-            color: "#555",
-          }}
-        >
-          ยังไม่มีบทเรียนที่บันทึกไว้ ลองไปกรอกในช่องบันทึกผลหลังโพสต์ก่อน
+      {lessons.length > 0 ? (
+        <div style={listStyle}>
+          {lessons.map((item) => (
+            <article key={item.day} style={noteCardStyle}>
+              <p style={dayLabelStyle}>Day {item.day}</p>
+
+              <p style={{ color: "#374151", lineHeight: "1.8", marginBottom: 0 }}>
+                {item.lesson}
+              </p>
+            </article>
+          ))}
         </div>
       ) : (
-        <div style={{ marginTop: "16px" }}>
-          {notes.map((item) => (
-            <div
-              key={item.day}
-              style={{
-                border: "1px solid #ddd",
-                borderRadius: "14px",
-                padding: "14px",
-                marginBottom: "12px",
-                background: "#f8fafc",
-              }}
-            >
-              <strong>Day {item.day}</strong>
+        <div style={emptyBoxStyle}>
+          <h3 style={{ marginTop: 0 }}>ยังไม่มีบทเรียนที่บันทึกไว้</h3>
 
-              <p style={{ color: "#555", marginTop: "6px" }}>
-                แพลตฟอร์ม: {item.platform || "ยังไม่ได้ระบุ"}
-              </p>
-
-              <p style={{ lineHeight: "1.6" }}>{item.notes}</p>
-
-              <Link href={"/dashboard?day=" + item.day}>
-                <button>กลับไปดู Day {item.day}</button>
-              </Link>
-            </div>
-          ))}
+          <p style={{ color: "#555", lineHeight: "1.7", marginBottom: 0 }}>
+            หลังโพสต์จริง ให้กลับไปกรอกช่อง “บทเรียนจากโพสต์นี้”
+            ในหน้า Dashboard ของแต่ละ Day
+          </p>
         </div>
       )}
     </section>
   );
 }
+
+const sectionStyle: CSSProperties = {
+  border: "1px solid #ddd",
+  borderRadius: "24px",
+  padding: "24px",
+  background: "white",
+};
+
+const labelStyle: CSSProperties = {
+  color: "#4f46e5",
+  fontWeight: "bold",
+  marginTop: 0,
+};
+
+const listStyle: CSSProperties = {
+  display: "grid",
+  gap: "12px",
+  marginTop: "18px",
+};
+
+const noteCardStyle: CSSProperties = {
+  border: "1px solid #e5e7eb",
+  borderRadius: "18px",
+  padding: "16px",
+  background: "#f8fafc",
+};
+
+const dayLabelStyle: CSSProperties = {
+  marginTop: 0,
+  color: "#4f46e5",
+  fontWeight: "bold",
+};
+
+const emptyBoxStyle: CSSProperties = {
+  marginTop: "18px",
+  border: "1px dashed #cbd5e1",
+  borderRadius: "18px",
+  padding: "20px",
+  background: "#f8fafc",
+};
