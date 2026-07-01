@@ -1,24 +1,14 @@
-"use client";
+import type { CSSProperties } from "react";
 
 type TaskCardProps = {
-  id: string;
-  priority: string;
   title: string;
   time: string;
   detail: string;
   checked: boolean;
-  onToggle: (taskId: string) => void;
+  onToggle: () => void;
 };
 
-function getPriorityLabel(priority: string) {
-  if (priority === "must") return "🔴 ต้องทำ";
-  if (priority === "should") return "🟡 ถ้ามีเวลา";
-  return "🟢 โบนัส";
-}
-
 export default function TaskCard({
-  id,
-  priority,
   title,
   time,
   detail,
@@ -26,30 +16,58 @@ export default function TaskCard({
   onToggle,
 }: TaskCardProps) {
   return (
-    <div
+    <button
+      onClick={onToggle}
       style={{
+        ...cardStyle,
         border: checked ? "2px solid #22c55e" : "1px solid #ddd",
-        borderRadius: "18px",
-        padding: "20px",
         background: checked ? "#f0fdf4" : "white",
       }}
     >
-      <p style={{ margin: 0, color: "#555" }}>{getPriorityLabel(priority)}</p>
+      <div style={checkboxStyle}>{checked ? "✅" : "⬜"}</div>
 
-      <h3 style={{ marginBottom: "6px" }}>{title}</h3>
+      <div style={{ flex: 1 }}>
+        <div style={topRowStyle}>
+          <h3 style={{ margin: 0 }}>{title}</h3>
 
-      <p style={{ color: "#555" }}>⏱ ใช้เวลาประมาณ {time}</p>
+          <span style={timeBadgeStyle}>{time}</span>
+        </div>
 
-      <p>{detail}</p>
-
-      <label style={{ display: "flex", gap: "10px", alignItems: "center", marginTop: "12px" }}>
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={() => onToggle(id)}
-        />
-        ทำภารกิจนี้แล้ว
-      </label>
-    </div>
+        <p style={{ color: "#555", lineHeight: "1.7", marginBottom: 0 }}>
+          {detail}
+        </p>
+      </div>
+    </button>
   );
 }
+
+const cardStyle: CSSProperties = {
+  width: "100%",
+  borderRadius: "20px",
+  padding: "18px",
+  display: "flex",
+  gap: "14px",
+  cursor: "pointer",
+  textAlign: "left",
+};
+
+const checkboxStyle: CSSProperties = {
+  fontSize: "22px",
+  flexShrink: 0,
+};
+
+const topRowStyle: CSSProperties = {
+  display: "flex",
+  justifyContent: "space-between",
+  gap: "12px",
+  flexWrap: "wrap",
+};
+
+const timeBadgeStyle: CSSProperties = {
+  padding: "5px 9px",
+  borderRadius: "999px",
+  background: "#eef2ff",
+  color: "#4f46e5",
+  fontSize: "13px",
+  fontWeight: "bold",
+};

@@ -1,4 +1,4 @@
-"use client";
+import type { CSSProperties } from "react";
 
 type MissionDay = {
   day: number;
@@ -19,30 +19,20 @@ export default function DaySelector({
   onSelectDay,
 }: DaySelectorProps) {
   return (
-    <section
-      style={{
-        marginTop: "24px",
-        border: "1px solid #ddd",
-        borderRadius: "20px",
-        padding: "20px",
-        background: "white",
-      }}
-    >
-      <h2>📅 เลือกวันของแผน</h2>
+    <section style={sectionStyle}>
+      <div style={headerRowStyle}>
+        <div>
+          <p style={labelStyle}>7-Day Plan</p>
+          <h2 style={{ margin: "6px 0" }}>เลือกวันของแผน</h2>
+          <p style={{ color: "#555", marginBottom: 0 }}>
+            ระบบจะจำความคืบหน้าแยกตามแต่ละ Day
+          </p>
+        </div>
+      </div>
 
-      <p style={{ color: "#555" }}>
-        เลือก Day ที่ต้องการทำ ระบบจะจำความคืบหน้าแยกตามแต่ละวัน
-      </p>
-
-      <div
-        style={{
-          display: "flex",
-          gap: "10px",
-          flexWrap: "wrap",
-          marginTop: "16px",
-        }}
-      >
+      <div style={dayGridStyle}>
         {missions.map((mission) => {
+          const isActive = currentDay === mission.day;
           const isCompleted = completedDays.includes(mission.day);
 
           return (
@@ -51,25 +41,41 @@ export default function DaySelector({
               onClick={() => onSelectDay(mission.day)}
               title={mission.title}
               style={{
-                padding: "12px 16px",
-                borderRadius: "12px",
-                border:
-                  currentDay === mission.day
-                    ? "2px solid #4f46e5"
-                    : isCompleted
-                    ? "2px solid #22c55e"
-                    : "1px solid #ddd",
-                background:
-                  currentDay === mission.day
-                    ? "#eef2ff"
-                    : isCompleted
-                    ? "#f0fdf4"
-                    : "white",
+                border: isActive
+                  ? "2px solid #4f46e5"
+                  : isCompleted
+                  ? "2px solid #22c55e"
+                  : "1px solid #ddd",
+                borderRadius: "18px",
+                padding: "14px",
+                background: isActive
+                  ? "#eef2ff"
+                  : isCompleted
+                  ? "#f0fdf4"
+                  : "white",
                 cursor: "pointer",
-                fontWeight: currentDay === mission.day ? "bold" : "normal",
+                textAlign: "left",
               }}
             >
-              Day {mission.day} {isCompleted ? "✅" : ""}
+              <p
+                style={{
+                  margin: 0,
+                  color: isCompleted ? "#16a34a" : "#4f46e5",
+                  fontWeight: "bold",
+                }}
+              >
+                Day {mission.day} {isCompleted ? "✅" : ""}
+              </p>
+
+              <p
+                style={{
+                  margin: "6px 0 0",
+                  color: "#555",
+                  fontSize: "14px",
+                }}
+              >
+                {mission.title}
+              </p>
             </button>
           );
         })}
@@ -77,3 +83,31 @@ export default function DaySelector({
     </section>
   );
 }
+
+const sectionStyle: CSSProperties = {
+  marginTop: "24px",
+  border: "1px solid #ddd",
+  borderRadius: "24px",
+  padding: "24px",
+  background: "white",
+};
+
+const headerRowStyle: CSSProperties = {
+  display: "flex",
+  justifyContent: "space-between",
+  gap: "16px",
+  flexWrap: "wrap",
+};
+
+const labelStyle: CSSProperties = {
+  color: "#4f46e5",
+  fontWeight: "bold",
+  marginTop: 0,
+};
+
+const dayGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit,minmax(140px,1fr))",
+  gap: "12px",
+  marginTop: "18px",
+};
