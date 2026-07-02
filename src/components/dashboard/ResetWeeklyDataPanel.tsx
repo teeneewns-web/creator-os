@@ -1,9 +1,11 @@
 "use client";
 
+import type { CSSProperties } from "react";
+
 export default function ResetWeeklyDataPanel() {
   function resetAllData() {
     const confirmed = window.confirm(
-      "ต้องการล้างข้อมูลแผน 7 วันทั้งหมดใช่ไหม? ข้อมูลภารกิจ โพสต์ที่ร่างไว้ เช็กลิสต์ และผลลัพธ์จะถูกลบทั้งหมด"
+      "ต้องการล้างข้อมูล Dashboard ทั้งหมดจริงไหม? ข้อมูลร่างโพสต์ เช็กคุณภาพ ผลลัพธ์ และความคืบหน้า 7 วันจะถูกลบ"
     );
 
     if (!confirmed) return;
@@ -20,34 +22,43 @@ export default function ResetWeeklyDataPanel() {
   }
 
   return (
-    <section
-      style={{
-        marginTop: "24px",
-        border: "1px solid #fecaca",
-        borderRadius: "20px",
-        padding: "20px",
-        background: "#fff1f2",
-      }}
-    >
-      <h2>🧹 ล้างข้อมูลทดสอบ</h2>
+    <section style={sectionStyle}>
+      <p style={labelStyle}>Danger Zone</p>
 
-      <p style={{ color: "#555" }}>
-        ใช้สำหรับรีเซ็ตข้อมูลแผน 7 วันทั้งหมด ตอนทดสอบระบบหรือเริ่มใหม่
+      <h2 style={{ margin: "6px 0" }}>รีเซ็ตข้อมูล 7 วัน</h2>
+
+      <p style={{ color: "#555", lineHeight: "1.7" }}>
+        ใช้เมื่อคุณต้องการเริ่มแผนใหม่ตั้งแต่ Day 1 ระบบจะล้างข้อมูลที่บันทึกไว้ในเครื่องนี้
       </p>
 
-      <button
-        onClick={resetAllData}
-        style={{
-          marginTop: "12px",
-          padding: "10px 14px",
-          borderRadius: "12px",
-          border: "1px solid #fca5a5",
-          background: "white",
-          cursor: "pointer",
-        }}
-      >
-        🗑️ ล้างข้อมูลทั้งหมด
+      <button onClick={resetAllData} style={dangerButtonStyle}>
+        ล้างข้อมูลทั้งหมด
       </button>
     </section>
   );
 }
+
+const sectionStyle: CSSProperties = {
+  border: "1px solid #fecaca",
+  borderRadius: "24px",
+  padding: "22px",
+  background: "#fff7f7",
+};
+
+const labelStyle: CSSProperties = {
+  color: "#dc2626",
+  fontWeight: "bold",
+  marginTop: 0,
+};
+
+const dangerButtonStyle: CSSProperties = {
+  width: "100%",
+  marginTop: "12px",
+  padding: "12px 18px",
+  borderRadius: "14px",
+  border: "1px solid #dc2626",
+  background: "#dc2626",
+  color: "white",
+  cursor: "pointer",
+  fontWeight: "bold",
+};
