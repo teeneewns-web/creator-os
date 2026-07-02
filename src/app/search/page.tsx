@@ -3,17 +3,12 @@ import path from "path";
 import SearchClient from "./SearchClient";
 import { contentLibraries } from "../../data/content/contentLibraries";
 import { hookCategoryList } from "../../data/hooks/hookCategories";
+import {
+  auditHookQuality,
+  type RawHookItem,
+} from "../../lib/content/auditHookQuality";
 
-type HookItem = {
-  id: number | string;
-  text?: string;
-  hook?: string;
-  title?: string;
-  type?: string;
-  emotion?: string;
-  platform?: string;
-  language?: string;
-};
+type HookItem = RawHookItem;
 
 type SearchItem = {
   id: string;
@@ -26,6 +21,8 @@ type SearchItem = {
   emotion?: string;
   platform?: string;
   language?: string;
+  level?: string;
+  score?: number;
   href: string;
 };
 
@@ -57,6 +54,8 @@ function loadHookItems() {
 
       if (!text) return;
 
+      const audit = auditHookQuality(item, index + 1);
+
       items.push({
         id: "hook-" + category + "-" + String(item.id || index),
         source: "hooks",
@@ -68,6 +67,8 @@ function loadHookItems() {
         emotion: item.emotion,
         platform: item.platform,
         language: item.language,
+        level: audit.level,
+        score: audit.score,
         href: hookCategory.href,
       });
     });

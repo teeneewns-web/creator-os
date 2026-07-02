@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
+import CopyButton from "../../../components/dashboard/CopyButton";
 import { hookCategoryList } from "../../../data/hooks/hookCategories";
 import {
   auditHookQuality,
@@ -138,13 +139,17 @@ export default function HookQualityPage() {
         <article style={summaryCardStyle}>
           <p style={summaryLabelStyle}>พร้อมขายแบบ Premium</p>
           <h2 style={summaryNumberStyle}>{premiumReady}</h2>
-          <p style={mutedTextStyle}>{getPercent(premiumReady, total)}% ของทั้งหมด</p>
+          <p style={mutedTextStyle}>
+            {getPercent(premiumReady, total)}% ของทั้งหมด
+          </p>
         </article>
 
         <article style={summaryCardStyle}>
           <p style={summaryLabelStyle}>ควรปรับก่อนขาย</p>
           <h2 style={summaryNumberStyle}>{weakTotal}</h2>
-          <p style={mutedTextStyle}>{getPercent(weakTotal, total)}% ของทั้งหมด</p>
+          <p style={mutedTextStyle}>
+            {getPercent(weakTotal, total)}% ของทั้งหมด
+          </p>
         </article>
       </section>
 
@@ -219,7 +224,19 @@ export default function HookQualityPage() {
                         <strong>{item.score}/100</strong>
                       </div>
 
-                      <p style={hookTextStyle}>{item.text || "ไม่มีข้อความ"}</p>
+                      <p style={hookTextStyle}>
+                        {item.text || "ไม่มีข้อความ"}
+                      </p>
+
+                      <div style={rewriteBoxStyle}>
+                        <p style={rewriteLabelStyle}>Rewrite Suggestion</p>
+
+                        <p style={rewriteTextStyle}>{item.rewriteText}</p>
+
+                        <p style={rewriteReasonStyle}>{item.rewriteReason}</p>
+
+                        <CopyButton text={item.rewriteText} />
+                      </div>
 
                       {item.issues.length > 0 ? (
                         <div style={miniBoxStyle}>
@@ -469,6 +486,33 @@ const miniTitleStyle: CSSProperties = {
 const listStyle: CSSProperties = {
   margin: 0,
   paddingLeft: "18px",
+  color: "#555",
+  lineHeight: "1.7",
+};
+
+const rewriteBoxStyle: CSSProperties = {
+  marginTop: "12px",
+  padding: "14px",
+  borderRadius: "16px",
+  border: "1px solid #c7d2fe",
+  background: "#eef2ff",
+};
+
+const rewriteLabelStyle: CSSProperties = {
+  marginTop: 0,
+  marginBottom: "8px",
+  color: "#4f46e5",
+  fontWeight: "bold",
+};
+
+const rewriteTextStyle: CSSProperties = {
+  color: "#111827",
+  lineHeight: "1.75",
+  fontWeight: "bold",
+  whiteSpace: "pre-wrap",
+};
+
+const rewriteReasonStyle: CSSProperties = {
   color: "#555",
   lineHeight: "1.7",
 };

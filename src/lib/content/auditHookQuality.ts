@@ -26,6 +26,8 @@ export type HookQualityAudit = {
   level: HookQualityLevel;
   issues: string[];
   suggestions: string[];
+  rewriteText: string;
+  rewriteReason: string;
 };
 
 function getHookText(item: RawHookItem) {
@@ -54,6 +56,112 @@ export function getQualityLevelLabel(level: HookQualityLevel) {
   if (level === "free") return "Free";
 
   return "Needs rewrite";
+}
+
+function createRewriteSuggestion(text: string, item: RawHookItem) {
+  const cleanText = text.trim();
+  const platform = hasText(item.platform) ? item.platform : "โพสต์หรือคลิป";
+  const audience = hasText(item.audience) ? item.audience : "คนดู";
+
+  if (!cleanText) {
+    return {
+      rewriteText:
+        "ถ้าคุณกำลังเริ่มทำคอนเทนต์ อย่าข้ามจุดนี้ เพราะอาจเป็นเหตุผลที่ทำให้คนดูเลื่อนผ่านตั้งแต่แรก",
+      rewriteReason:
+        "เพิ่มปัญหา กลุ่มเป้าหมาย และเหตุผลให้คนรู้สึกว่าข้อความนี้เกี่ยวกับเขา",
+    };
+  }
+
+  if (cleanText.length < 25) {
+    return {
+      rewriteText:
+        "ถ้าคุณเป็น" +
+        audience +
+        " อย่าเพิ่งมองข้ามเรื่องนี้ เพราะจุดเล็ก ๆ อาจทำให้ผลลัพธ์ต่างจากเดิมมากกว่าที่คิด",
+      rewriteReason:
+        "ข้อความเดิมสั้นเกินไป จึงเพิ่มกลุ่มเป้าหมายและเหตุผลให้คนอยากอ่านต่อ",
+    };
+  }
+
+  if (cleanText.includes("เรื่องนี้")) {
+    return {
+      rewriteText:
+        cleanText.replace("เรื่องนี้", "จุดนี้") +
+        " เพราะมันอาจเป็นสาเหตุที่ทำให้คนดูเลื่อนผ่านโดยไม่รู้ตัว",
+      rewriteReason:
+        "เปลี่ยนคำกว้าง ๆ ให้มีผลลัพธ์หรือความเสี่ยงที่ชัดขึ้น",
+    };
+  }
+
+  if (cleanText.includes("สิ่งนี้")) {
+    return {
+      rewriteText:
+        cleanText.replace("สิ่งนี้", "จุดนี้") +
+        " โดยเฉพาะถ้าคุณอยากให้คอนเทนต์ดูน่าเชื่อถือและใช้งานได้จริง",
+      rewriteReason:
+        "ลดความกว้างของคำ และเพิ่มประโยชน์ที่คนดูจะได้รับ",
+    };
+  }
+
+  if (cleanText.includes("ควรรู้")) {
+    return {
+      rewriteText:
+        cleanText.replace("ควรรู้", "ควรเช็กก่อนเริ่ม") +
+        " เพื่อไม่ให้เสียเวลาแก้ทีหลัง",
+      rewriteReason:
+        "ทำให้ Hook มีแรงจูงใจมากขึ้น ไม่ใช่แค่บอกว่าเป็นความรู้ทั่วไป",
+    };
+  }
+
+  if (cleanText.includes("เคล็ดลับ")) {
+    return {
+      rewriteText:
+        cleanText.replace("เคล็ดลับ", "จุดที่หลายคนมองข้าม") +
+        " และอาจเป็นเหตุผลที่ทำให้ผลลัพธ์ต่างจากคนอื่น",
+      rewriteReason:
+        "คำว่าเคล็ดลับมักกว้างเกินไป จึงเปลี่ยนให้มีมุมปัญหาและความแตกต่าง",
+    };
+  }
+
+  if (cleanText.includes("สำคัญมาก")) {
+    return {
+      rewriteText:
+        cleanText.replace("สำคัญมาก", "เป็นจุดที่หลายคนพลาดโดยไม่รู้ตัว") +
+        " ถ้าแก้ตรงนี้ได้ ผลลัพธ์อาจดีขึ้นทันที",
+      rewriteReason:
+        "เปลี่ยนภาษาทั่วไปให้มีปัญหาและผลลัพธ์ชัดขึ้น",
+    };
+  }
+
+  if (cleanText.includes("หลายคน")) {
+    return {
+      rewriteText:
+        cleanText +
+        " แต่สิ่งที่น่าสนใจกว่าคือ คนส่วนใหญ่มักไม่รู้ว่าควรแก้จากจุดไหนก่อน",
+      rewriteReason:
+        "เพิ่มความค้างคาและทำให้คนอยากอ่านต่อหลังประโยคเปิด",
+    };
+  }
+
+  if (cleanText.includes("ถ้าคุณ")) {
+    return {
+      rewriteText:
+        cleanText +
+        " เพราะปัญหาอาจไม่ได้อยู่ที่ความพยายาม แต่อยู่ที่วิธีเริ่มต้น",
+      rewriteReason:
+        "เพิ่มเหตุผลเชิงลึก ทำให้ Hook มีน้ำหนักมากกว่าเดิม",
+    };
+  }
+
+  return {
+    rewriteText:
+      "ก่อนจะใช้ไอเดียนี้กับ" +
+      platform +
+      " ลองเช็กก่อนว่า Hook นี้ชี้ปัญหาให้คนดูเห็นชัดพอหรือยัง: " +
+      cleanText,
+    rewriteReason:
+      "ข้อความเดิมพอใช้ได้ แต่ควรเพิ่มปัญหา ผลลัพธ์ หรือกลุ่มเป้าหมายให้คมขึ้นก่อนขาย",
+  };
 }
 
 export function auditHookQuality(
@@ -143,6 +251,8 @@ export function auditHookQuality(
   if (score < 0) score = 0;
   if (score > 100) score = 100;
 
+  const rewrite = createRewriteSuggestion(text, item);
+
   return {
     id: String(item.id || fallbackId),
     text,
@@ -150,5 +260,7 @@ export function auditHookQuality(
     level: getLevel(score),
     issues,
     suggestions,
+    rewriteText: rewrite.rewriteText,
+    rewriteReason: rewrite.rewriteReason,
   };
 }
