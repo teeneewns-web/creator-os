@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import SearchClient from "./SearchClient";
 import { contentLibraries } from "../../data/content/contentLibraries";
+import { hookCategoryList } from "../../data/hooks/hookCategories";
 
 type HookItem = {
   id: number | string;
@@ -28,8 +29,6 @@ type SearchItem = {
   href: string;
 };
 
-const hookCategories = ["beauty", "finance", "gaming"];
-
 function getHookText(item: HookItem) {
   return item.text || item.hook || item.title || "";
 }
@@ -37,7 +36,9 @@ function getHookText(item: HookItem) {
 function loadHookItems() {
   const items: SearchItem[] = [];
 
-  hookCategories.forEach((category) => {
+  hookCategoryList.forEach((hookCategory) => {
+    const category = hookCategory.slug;
+
     const filePath = path.join(
       process.cwd(),
       "src",
@@ -59,14 +60,15 @@ function loadHookItems() {
       items.push({
         id: "hook-" + category + "-" + String(item.id || index),
         source: "hooks",
-        category,
+        category: hookCategory.label,
         text,
-        title: "Hook - " + category,
+        title: hookCategory.title,
+        description: hookCategory.description,
         type: item.type,
         emotion: item.emotion,
         platform: item.platform,
         language: item.language,
-        href: "/hooks/" + category,
+        href: hookCategory.href,
       });
     });
   });
