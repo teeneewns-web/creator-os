@@ -75,19 +75,23 @@ export default function SiteFooter() {
         </div>
 
         <div>
-          <h3 style={{ marginTop: 0 }}>สำหรับอนาคต</h3>
+          <h3 style={{ marginTop: 0 }}>คุณภาพสินค้า</h3>
 
           <div style={linkGroupStyle}>
-            <Link href="/pricing" style={footerLinkStyle}>
-              แพ็กเกจราคา
+            <Link href="/quality" style={footerLinkStyle}>
+              มาตรฐานคุณภาพ
+            </Link>
+
+            <Link href="/quality/hooks" style={footerLinkStyle}>
+              ตรวจคุณภาพ Hook
             </Link>
 
             <Link href="/premium" style={footerLinkStyle}>
               Premium
             </Link>
 
-            <Link href="/favorites" style={footerLinkStyle}>
-              รายการโปรด
+            <Link href="/pricing" style={footerLinkStyle}>
+              แพ็กเกจราคา
             </Link>
           </div>
         </div>

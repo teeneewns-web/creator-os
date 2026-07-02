@@ -19,6 +19,14 @@ export default function SiteHeader() {
       return pathname === "/dashboard/weekly";
     }
 
+    if (href === "/quality") {
+      return pathname === "/quality";
+    }
+
+    if (href === "/quality/hooks") {
+      return pathname === "/quality/hooks";
+    }
+
     return pathname.startsWith(href);
   }
 
@@ -108,6 +116,14 @@ export default function SiteHeader() {
 
           <Link href="/scripts" style={getLinkStyle("/scripts")}>
             Script
+          </Link>
+
+          <Link href="/quality" style={getLinkStyle("/quality")}>
+            คุณภาพ
+          </Link>
+
+          <Link href="/quality/hooks" style={getLinkStyle("/quality/hooks")}>
+            ตรวจ Hook
           </Link>
 
           <Link href="/plans" style={getLinkStyle("/plans")}>
