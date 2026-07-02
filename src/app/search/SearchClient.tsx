@@ -1,228 +1,333 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import CopyButton from "../../components/dashboard/CopyButton";
 
 type SearchItem = {
   id: string;
+  source: string;
   category: string;
   text: string;
+  title?: string;
+  description?: string;
   type?: string;
   emotion?: string;
   platform?: string;
   language?: string;
+  href: string;
 };
 
 type SearchClientProps = {
   items: SearchItem[];
 };
 
+const sourceOptions = [
+  {
+    value: "all",
+    label: "ทุกอย่าง",
+  },
+  {
+    value: "hooks",
+    label: "Hook",
+  },
+  {
+    value: "captions",
+    label: "Caption",
+  },
+  {
+    value: "cta",
+    label: "CTA",
+  },
+  {
+    value: "scripts",
+    label: "Script",
+  },
+];
+
+function getSourceLabel(source: string) {
+  if (source === "hooks") return "Hook";
+  if (source === "captions") return "Caption";
+  if (source === "cta") return "CTA";
+  if (source === "scripts") return "Script";
+
+  return source;
+}
+
 export default function SearchClient({ items }: SearchClientProps) {
   const [keyword, setKeyword] = useState("");
-  const [category, setCategory] = useState("all");
+  const [source, setSource] = useState("all");
 
   const filteredItems = useMemo(() => {
+    const cleanKeyword = keyword.trim().toLowerCase();
+
     return items.filter((item) => {
-      const matchKeyword =
-        keyword.trim() === "" ||
-        item.text.toLowerCase().includes(keyword.toLowerCase()) ||
-        item.category.toLowerCase().includes(keyword.toLowerCase()) ||
-        (item.type || "").toLowerCase().includes(keyword.toLowerCase()) ||
-        (item.emotion || "").toLowerCase().includes(keyword.toLowerCase()) ||
-        (item.platform || "").toLowerCase().includes(keyword.toLowerCase());
+      const matchSource = source === "all" || item.source === source;
 
-      const matchCategory =
-        category === "all" || item.category.toLowerCase() === category;
+      const searchText = [
+        item.source,
+        item.category,
+        item.text,
+        item.title || "",
+        item.description || "",
+        item.type || "",
+        item.emotion || "",
+        item.platform || "",
+        item.language || "",
+      ]
+        .join(" ")
+        .toLowerCase();
 
-      return matchKeyword && matchCategory;
+      const matchKeyword = cleanKeyword === "" || searchText.includes(cleanKeyword);
+
+      return matchSource && matchKeyword;
     });
-  }, [items, keyword, category]);
+  }, [items, keyword, source]);
 
   return (
     <main style={{ maxWidth: "1100px", margin: "0 auto", padding: "24px" }}>
-      <section
-        style={{
-          padding: "40px 24px",
-          borderRadius: "24px",
-          background: "#f8fafc",
-          border: "1px solid #e5e7eb",
-        }}
-      >
-        <p style={{ color: "#4f46e5", fontWeight: "bold" }}>
-          Search Library
-        </p>
+      <section style={heroStyle}>
+        <p style={labelStyle}>Search Library</p>
 
-        <h1 style={{ fontSize: "42px", lineHeight: "1.15", margin: "12px 0" }}>
-          ค้นหา Hook ที่เหมาะกับโพสต์ของคุณ
-        </h1>
+        <h1 style={titleStyle}>ค้นหาไอเดียคอนเทนต์ทั้งหมดในที่เดียว</h1>
 
-        <p style={{ color: "#555", fontSize: "18px", maxWidth: "760px" }}>
-          พิมพ์คำค้นหา เช่น ความงาม การเงิน เกม TikTok หรืออารมณ์ของคอนเทนต์
-          เพื่อหา Hook ที่นำไปใช้ได้เร็วขึ้น
+        <p style={subtitleStyle}>
+          ค้นหา Hook, Caption, CTA และ Script จากคลังข้อมูลของ Creator OS
+          แล้วคัดลอกไปใช้กับโพสต์หรือ Dashboard ได้ทันที
         </p>
       </section>
 
-      <section
-        style={{
-          marginTop: "24px",
-          display: "grid",
-          gridTemplateColumns: "minmax(220px,1fr) 180px",
-          gap: "12px",
-        }}
-      >
+      <section style={searchBoxStyle}>
         <input
           value={keyword}
           onChange={(event) => setKeyword(event.target.value)}
-          placeholder="ค้นหา Hook..."
-          style={{
-            padding: "14px",
-            borderRadius: "14px",
-            border: "1px solid #ddd",
-            fontSize: "16px",
-          }}
+          placeholder="ค้นหา เช่น เกม เงิน ขายของ คอมเมนต์ TikTok"
+          style={inputStyle}
         />
 
         <select
-          value={category}
-          onChange={(event) => setCategory(event.target.value)}
-          style={{
-            padding: "14px",
-            borderRadius: "14px",
-            border: "1px solid #ddd",
-            fontSize: "16px",
-            background: "white",
-          }}
+          value={source}
+          onChange={(event) => setSource(event.target.value)}
+          style={selectStyle}
         >
-          <option value="all">ทุกหมวด</option>
-          <option value="beauty">Beauty</option>
-          <option value="finance">Finance</option>
-          <option value="gaming">Gaming</option>
+          {sourceOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
         </select>
       </section>
 
-      <section style={{ marginTop: "20px" }}>
-        <p style={{ color: "#555" }}>
+      <section style={summaryStyle}>
+        <p style={{ color: "#555", margin: 0 }}>
           พบทั้งหมด <strong>{filteredItems.length}</strong> รายการ
         </p>
-      </section>
 
-      <section
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
-          gap: "18px",
-          marginTop: "18px",
-        }}
-      >
-        {filteredItems.map((item, index) => (
-          <article
-            key={item.id}
-            style={{
-              border: "1px solid #ddd",
-              borderRadius: "20px",
-              padding: "20px",
-              background: "white",
-            }}
-          >
-            <p
+        <div style={quickFilterStyle}>
+          {sourceOptions.map((option) => (
+            <button
+              key={option.value}
+              onClick={() => setSource(option.value)}
               style={{
-                color: "#4f46e5",
+                border: source === option.value ? "1px solid #4f46e5" : "1px solid #ddd",
+                background: source === option.value ? "#eef2ff" : "white",
+                color: source === option.value ? "#4f46e5" : "#374151",
+                padding: "8px 12px",
+                borderRadius: "999px",
+                cursor: "pointer",
                 fontWeight: "bold",
-                marginTop: 0,
               }}
             >
-              {item.category.toUpperCase()} #{index + 1}
-            </p>
-
-            <h2
-              style={{
-                fontSize: "22px",
-                lineHeight: "1.45",
-                marginBottom: "14px",
-              }}
-            >
-              {item.text}
-            </h2>
-
-            <div
-              style={{
-                display: "flex",
-                gap: "8px",
-                flexWrap: "wrap",
-                marginBottom: "16px",
-              }}
-            >
-              {item.type ? <span style={tagStyle}>{item.type}</span> : null}
-              {item.emotion ? <span style={tagStyle}>{item.emotion}</span> : null}
-              {item.platform ? <span style={tagStyle}>{item.platform}</span> : null}
-              {item.language ? <span style={tagStyle}>{item.language}</span> : null}
-            </div>
-
-            <CopyButton text={item.text} />
-          </article>
-        ))}
+              {option.label}
+            </button>
+          ))}
+        </div>
       </section>
 
-      {filteredItems.length === 0 ? (
-        <section
-          style={{
-            marginTop: "24px",
-            padding: "24px",
-            borderRadius: "20px",
-            border: "1px dashed #cbd5e1",
-            textAlign: "center",
-            background: "white",
-          }}
-        >
-          <h2>ไม่พบผลลัพธ์</h2>
+      {filteredItems.length > 0 ? (
+        <section style={gridStyle}>
+          {filteredItems.map((item, index) => (
+            <article key={item.id} style={cardStyle}>
+              <div style={cardTopRowStyle}>
+                <p style={sourceBadgeStyle}>{getSourceLabel(item.source)}</p>
 
-          <p style={{ color: "#555" }}>
-            ลองเปลี่ยนคำค้นหา หรือเลือกเป็นทุกหมวดอีกครั้ง
+                <p style={{ color: "#777", margin: 0 }}>#{index + 1}</p>
+              </div>
+
+              <h2 style={cardTitleStyle}>{item.text}</h2>
+
+              <p style={{ color: "#555", lineHeight: "1.7" }}>
+                {item.category}
+              </p>
+
+              <div style={tagRowStyle}>
+                {item.type ? <span style={tagStyle}>{item.type}</span> : null}
+                {item.emotion ? <span style={tagStyle}>{item.emotion}</span> : null}
+                {item.platform ? <span style={tagStyle}>{item.platform}</span> : null}
+                {item.language ? <span style={tagStyle}>{item.language}</span> : null}
+              </div>
+
+              <div style={buttonRowStyle}>
+                <CopyButton text={item.text} />
+
+                <Link href={item.href}>
+                  <button style={secondaryButtonStyle}>เปิดหมวดนี้</button>
+                </Link>
+              </div>
+            </article>
+          ))}
+        </section>
+      ) : (
+        <section style={emptyBoxStyle}>
+          <h2 style={{ marginTop: 0 }}>ไม่พบผลลัพธ์</h2>
+
+          <p style={{ color: "#555", lineHeight: "1.7", marginBottom: 0 }}>
+            ลองเปลี่ยนคำค้นหา หรือเลือกเป็น “ทุกอย่าง”
           </p>
         </section>
-      ) : null}
-
-      <section
-        style={{
-          marginTop: "34px",
-          padding: "24px",
-          borderRadius: "22px",
-          border: "1px solid #e5e7eb",
-          background: "#f8fafc",
-          textAlign: "center",
-        }}
-      >
-        <h2>อยากใช้ Hook กับระบบวางโพสต์?</h2>
-
-        <p style={{ color: "#555", fontSize: "17px" }}>
-          เปิด Dashboard เพื่อใช้ Hook ร่วมกับโครงโพสต์ CTA และระบบภารกิจรายวัน
-        </p>
-
-        <Link href="/dashboard">
-          <button style={primaryButtonStyle}>🏠 ไปที่ภารกิจวันนี้</button>
-        </Link>
-      </section>
+      )}
     </main>
   );
 }
 
-const tagStyle = {
+const heroStyle: CSSProperties = {
+  padding: "40px 24px",
+  borderRadius: "24px",
+  background: "#eef2ff",
+  border: "1px solid #c7d2fe",
+};
+
+const labelStyle: CSSProperties = {
+  color: "#4f46e5",
+  fontWeight: "bold",
+  marginTop: 0,
+};
+
+const titleStyle: CSSProperties = {
+  fontSize: "42px",
+  lineHeight: "1.15",
+  margin: "12px 0",
+};
+
+const subtitleStyle: CSSProperties = {
+  color: "#374151",
+  fontSize: "18px",
+  lineHeight: "1.8",
+  maxWidth: "760px",
+};
+
+const searchBoxStyle: CSSProperties = {
+  marginTop: "24px",
+  display: "grid",
+  gridTemplateColumns: "minmax(220px,1fr) 180px",
+  gap: "12px",
+};
+
+const inputStyle: CSSProperties = {
+  padding: "14px",
+  borderRadius: "14px",
+  border: "1px solid #ddd",
+  fontSize: "16px",
+};
+
+const selectStyle: CSSProperties = {
+  padding: "14px",
+  borderRadius: "14px",
+  border: "1px solid #ddd",
+  fontSize: "16px",
+  background: "white",
+};
+
+const summaryStyle: CSSProperties = {
+  marginTop: "18px",
+  display: "flex",
+  justifyContent: "space-between",
+  gap: "14px",
+  flexWrap: "wrap",
+  alignItems: "center",
+};
+
+const quickFilterStyle: CSSProperties = {
+  display: "flex",
+  gap: "8px",
+  flexWrap: "wrap",
+};
+
+const gridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
+  gap: "18px",
+  marginTop: "20px",
+};
+
+const cardStyle: CSSProperties = {
+  border: "1px solid #ddd",
+  borderRadius: "22px",
+  padding: "20px",
+  background: "white",
+};
+
+const cardTopRowStyle: CSSProperties = {
+  display: "flex",
+  justifyContent: "space-between",
+  gap: "12px",
+  alignItems: "center",
+};
+
+const sourceBadgeStyle: CSSProperties = {
+  margin: 0,
   padding: "6px 10px",
   borderRadius: "999px",
   background: "#eef2ff",
   color: "#4f46e5",
+  fontWeight: "bold",
+  fontSize: "13px",
+};
+
+const cardTitleStyle: CSSProperties = {
+  fontSize: "21px",
+  lineHeight: "1.55",
+  whiteSpace: "pre-wrap",
+};
+
+const tagRowStyle: CSSProperties = {
+  display: "flex",
+  gap: "8px",
+  flexWrap: "wrap",
+  marginTop: "10px",
+};
+
+const tagStyle: CSSProperties = {
+  padding: "6px 10px",
+  borderRadius: "999px",
+  background: "#f8fafc",
+  color: "#374151",
   fontSize: "13px",
   fontWeight: "bold",
 };
 
-const primaryButtonStyle = {
-  marginTop: "14px",
-  padding: "12px 18px",
-  borderRadius: "14px",
-  border: "1px solid #4f46e5",
-  background: "#4f46e5",
-  color: "white",
+const buttonRowStyle: CSSProperties = {
+  display: "flex",
+  gap: "10px",
+  flexWrap: "wrap",
+  marginTop: "16px",
+};
+
+const secondaryButtonStyle: CSSProperties = {
+  padding: "10px 14px",
+  borderRadius: "12px",
+  border: "1px solid #ddd",
+  background: "#f8fafc",
   cursor: "pointer",
   fontWeight: "bold",
+};
+
+const emptyBoxStyle: CSSProperties = {
+  marginTop: "24px",
+  padding: "24px",
+  borderRadius: "20px",
+  border: "1px dashed #cbd5e1",
+  background: "white",
+  textAlign: "center",
 };
