@@ -12,7 +12,7 @@ export type SearchItem = {
   source: string;
   category: string;
   href: string;
-  level?: "premium-ready" | "pro" | "free" | "needs-rewrite";
+  level?: string;
   score?: number;
 };
 
@@ -21,7 +21,10 @@ type SearchClientProps = {
   searchItems?: SearchItem[];
   allItems?: SearchItem[];
   data?: SearchItem[];
-  [key: string]: unknown;
+  allSearchItems?: SearchItem[];
+  searchData?: SearchItem[];
+  results?: SearchItem[];
+  initialItems?: SearchItem[];
 };
 
 type SourceFilter = "all" | "hooks" | "captions" | "cta" | "scripts";
@@ -68,10 +71,22 @@ function getLevelDescription(level?: string) {
 }
 
 function getItemsFromProps(props: SearchClientProps) {
-  if (Array.isArray(props.items)) return props.items;
-  if (Array.isArray(props.searchItems)) return props.searchItems;
-  if (Array.isArray(props.allItems)) return props.allItems;
-  if (Array.isArray(props.data)) return props.data;
+  const possibleItems = [
+    props.items,
+    props.searchItems,
+    props.allItems,
+    props.data,
+    props.allSearchItems,
+    props.searchData,
+    props.results,
+    props.initialItems,
+  ];
+
+  for (const value of possibleItems) {
+    if (Array.isArray(value)) {
+      return value;
+    }
+  }
 
   return [];
 }

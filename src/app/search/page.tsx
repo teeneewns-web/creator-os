@@ -108,4 +108,4 @@ export default function SearchPage() {
   const items = [...loadHookItems(), ...loadContentLibraryItems()];
 
   return <SearchClient items={items} />;
-}
+}  

@@ -8,21 +8,28 @@ import {
   auditHookQuality,
   getQualityLevelLabel,
   type HookQualityAudit,
-  type HookQualityLevel,
   type RawHookItem,
 } from "../../../lib/content/auditHookQuality";
 
-type CategoryAudit = {
+type WeakHookItem = HookQualityAudit & {
+  categorySlug: string;
+  categoryName: string;
+  categoryHref: string;
+};
+
+type CategoryQualitySummary = {
   slug: string;
+  icon: string;
   label: string;
-  title: string;
+  thaiLabel: string;
   href: string;
   total: number;
   premiumReady: number;
   pro: number;
   free: number;
   needsRewrite: number;
-  weakItems: HookQualityAudit[];
+  averageScore: number;
+  weakItems: WeakHookItem[];
 };
 
 function loadHookFile(slug: string) {
@@ -44,88 +51,249 @@ function loadHookFile(slug: string) {
   return hooks;
 }
 
-function countLevel(items: HookQualityAudit[], level: HookQualityLevel) {
+function getThaiCategoryLabel(slug: string, fallback: string) {
+  const labels: Record<string, string> = {
+    beauty: "ความงาม",
+    finance: "การเงิน",
+    gaming: "เกม",
+    ai: "AI / ปัญญาประดิษฐ์",
+    food: "อาหาร",
+    travel: "ท่องเที่ยว",
+    fitness: "ฟิตเนส",
+    business: "ธุรกิจ",
+    education: "การเรียนรู้",
+    health: "สุขภาพ",
+    lifestyle: "ไลฟ์สไตล์",
+    marketing: "การตลาด",
+    realestate: "อสังหา",
+    real_estate: "อสังหา",
+    ecommerce: "ขายของออนไลน์",
+    career: "อาชีพ",
+    productivity: "การทำงาน",
+    relationship: "ความสัมพันธ์",
+    parenting: "ครอบครัว",
+    tech: "เทคโนโลยี",
+  };
+
+  return labels[slug] || fallback;
+}
+
+function getAverageScore(items: HookQualityAudit[]) {
+  if (items.length === 0) return 0;
+
+  const total = items.reduce((sum, item) => sum + item.score, 0);
+
+  return Math.round(total / items.length);
+}
+
+function getLevelCount(items: HookQualityAudit[], level: string) {
   return items.filter((item) => item.level === level).length;
 }
 
-function createCategoryAudits() {
-  const results: CategoryAudit[] = [];
+function createCategorySummaries() {
+  const summaries: CategoryQualitySummary[] = hookCategoryList.map(
+    (category) => {
+      const hooks = loadHookFile(category.slug);
 
-  hookCategoryList.forEach((category) => {
-    const hooks = loadHookFile(category.slug);
+      const auditedItems = hooks.map((item, index) => {
+        return auditHookQuality(item, index + 1);
+      });
 
-    const auditedItems = hooks.map((item, index) => {
-      return auditHookQuality(item, index + 1);
-    });
+      const thaiLabel = getThaiCategoryLabel(category.slug, category.label);
 
-    const weakItems = auditedItems
-      .filter((item) => item.level === "needs-rewrite" || item.level === "free")
-      .slice(0, 12);
+      const weakItems: WeakHookItem[] = auditedItems
+        .filter((item) => item.level === "free" || item.level === "needs-rewrite")
+        .slice(0, 12)
+        .map((item) => {
+          return {
+            ...item,
+            categorySlug: category.slug,
+            categoryName: thaiLabel,
+            categoryHref: category.href,
+          };
+        });
 
-    results.push({
-      slug: category.slug,
-      label: category.label,
-      title: category.title,
-      href: category.href,
-      total: auditedItems.length,
-      premiumReady: countLevel(auditedItems, "premium-ready"),
-      pro: countLevel(auditedItems, "pro"),
-      free: countLevel(auditedItems, "free"),
-      needsRewrite: countLevel(auditedItems, "needs-rewrite"),
-      weakItems,
-    });
-  });
-
-  return results;
-}
-
-function getPercent(value: number, total: number) {
-  if (total === 0) return 0;
-
-  return Math.round((value / total) * 100);
-}
-
-function getOverallTotal(categories: CategoryAudit[]) {
-  return categories.reduce((sum, category) => sum + category.total, 0);
-}
-
-function getOverallPremium(categories: CategoryAudit[]) {
-  return categories.reduce((sum, category) => sum + category.premiumReady, 0);
-}
-
-function getOverallWeak(categories: CategoryAudit[]) {
-  return categories.reduce(
-    (sum, category) => sum + category.free + category.needsRewrite,
-    0
+      return {
+        slug: category.slug,
+        icon: category.icon,
+        label: category.label,
+        thaiLabel,
+        href: category.href,
+        total: auditedItems.length,
+        premiumReady: getLevelCount(auditedItems, "premium-ready"),
+        pro: getLevelCount(auditedItems, "pro"),
+        free: getLevelCount(auditedItems, "free"),
+        needsRewrite: getLevelCount(auditedItems, "needs-rewrite"),
+        averageScore: getAverageScore(auditedItems),
+        weakItems,
+      };
+    }
   );
+
+  return summaries;
+}
+
+function getTotal(
+  categories: CategoryQualitySummary[],
+  key: keyof Pick<
+    CategoryQualitySummary,
+    "total" | "premiumReady" | "pro" | "free" | "needsRewrite"
+  >
+) {
+  return categories.reduce((sum, category) => sum + category[key], 0);
+}
+
+function getLevelLabel(level: string) {
+  if (level === "premium-ready") return "พร้อมพรีเมียม";
+  if (level === "pro") return "ระดับ Pro";
+  if (level === "free") return "ใช้ฟรี";
+  if (level === "needs-rewrite") return "ควรเขียนใหม่";
+
+  return getQualityLevelLabel(level as never);
+}
+
+function getLevelDescription(level: string) {
+  if (level === "premium-ready") return "พร้อมนำไปใช้จริงหรือทำแพ็กขาย";
+  if (level === "pro") return "คุณภาพดี ใช้กับงานจริงได้";
+  if (level === "free") return "ใช้เป็นตัวอย่างได้ แต่ยังไม่ควรขายเป็นของหลัก";
+  if (level === "needs-rewrite") return "ควรปรับถ้อยคำก่อนนำไปใช้จริง";
+
+  return "ยังไม่มีคำอธิบายระดับ";
+}
+
+function translateIssue(issue: string) {
+  const lowerIssue = issue.toLowerCase();
+
+  if (lowerIssue.includes("short") || lowerIssue.includes("length")) {
+    return "ข้อความสั้นหรือบางเกินไป อาจยังไม่ดึงดูดพอ";
+  }
+
+  if (lowerIssue.includes("generic") || lowerIssue.includes("basic")) {
+    return "ข้อความยังกว้างเกินไป ยังไม่เจาะปัญหาชัด";
+  }
+
+  if (lowerIssue.includes("angle")) {
+    return "ยังไม่มีมุมนำเสนอที่ชัด เช่น เตือน สงสัย รีวิว หรือขาย";
+  }
+
+  if (lowerIssue.includes("metadata") || lowerIssue.includes("tag")) {
+    return "ข้อมูลประกอบยังไม่พอ เช่น ประเภท อารมณ์ แพลตฟอร์ม หรือกลุ่มเป้าหมาย";
+  }
+
+  if (lowerIssue.includes("direct") || lowerIssue.includes("audience")) {
+    return "ยังพูดกับกลุ่มเป้าหมายไม่ชัด";
+  }
+
+  return issue;
+}
+
+function translateSuggestion(suggestion: string) {
+  const lowerSuggestion = suggestion.toLowerCase();
+
+  if (lowerSuggestion.includes("specific")) {
+    return "ทำให้ข้อความเฉพาะเจาะจงขึ้น เช่น ระบุปัญหา กลุ่มเป้าหมาย หรือสถานการณ์";
+  }
+
+  if (lowerSuggestion.includes("angle")) {
+    return "เพิ่มมุมที่ชัด เช่น ความผิดพลาด ความลับ คำเตือน หรือผลลัพธ์ที่คนอยากได้";
+  }
+
+  if (lowerSuggestion.includes("audience")) {
+    return "ระบุให้ชัดว่าข้อความนี้พูดกับใคร";
+  }
+
+  if (lowerSuggestion.includes("platform")) {
+    return "เพิ่มบริบทแพลตฟอร์ม เช่น TikTok, Reels, Shorts หรือโพสต์ขาย";
+  }
+
+  return suggestion;
+}
+
+function getQualityBadgeStyle(score: number): CSSProperties {
+  if (score >= 80) {
+    return {
+      ...qualityBadgeStyle,
+      background: "#ecfdf5",
+      color: "#047857",
+      border: "1px solid #a7f3d0",
+    };
+  }
+
+  if (score >= 60) {
+    return {
+      ...qualityBadgeStyle,
+      background: "#eef2ff",
+      color: "#4f46e5",
+      border: "1px solid #c7d2fe",
+    };
+  }
+
+  if (score >= 40) {
+    return {
+      ...qualityBadgeStyle,
+      background: "#fffbeb",
+      color: "#92400e",
+      border: "1px solid #fde68a",
+    };
+  }
+
+  return {
+    ...qualityBadgeStyle,
+    background: "#fff7f7",
+    color: "#dc2626",
+    border: "1px solid #fecaca",
+  };
+}
+
+function getHealthLabel(score: number) {
+  if (score >= 80) return "ดีมาก";
+  if (score >= 60) return "ดี";
+  if (score >= 40) return "พอใช้";
+
+  return "ควรปรับ";
 }
 
 export default function HookQualityPage() {
-  const categories = createCategoryAudits();
+  const categories = createCategorySummaries();
 
-  const total = getOverallTotal(categories);
-  const premiumReady = getOverallPremium(categories);
-  const weakTotal = getOverallWeak(categories);
+  const totalHooks = getTotal(categories, "total");
+  const premiumReady = getTotal(categories, "premiumReady");
+  const pro = getTotal(categories, "pro");
+  const free = getTotal(categories, "free");
+  const needsRewrite = getTotal(categories, "needsRewrite");
+
+  const weakTotal = free + needsRewrite;
+  const sellableTotal = premiumReady + pro;
+
+  const sortedCategories = [...categories].sort(
+    (a, b) => b.needsRewrite + b.free - (a.needsRewrite + a.free)
+  );
 
   return (
     <main style={{ maxWidth: "1200px", margin: "0 auto", padding: "24px" }}>
       <section style={heroStyle}>
-        <p style={labelStyle}>Hook Quality Audit</p>
+        <p style={labelStyle}>ตรวจคุณภาพ Hook</p>
 
-        <h1 style={titleStyle}>ตรวจคุณภาพ Hook ก่อนทำเป็นสินค้าขาย</h1>
+        <h1 style={titleStyle}>
+          ตรวจว่า Hook ไหนพร้อมใช้ และ Hook ไหนควรปรับก่อนขายจริง
+        </h1>
 
         <p style={subtitleStyle}>
-          หน้านี้อ่าน Hook ทุกหมวดจากไฟล์ JSON แล้วประเมินเบื้องต้นว่าอันไหนพร้อมขาย
-          อันไหนควรปรับคำ เพิ่ม tag หรือเขียนใหม่ก่อนนำไปทำแพ็ก Premium
+          หน้านี้ช่วยดูคุณภาพของ Hook ทั้งระบบ แยกออกว่าอันไหนพร้อมใช้เชิงสินค้า
+          อันไหนเหมาะใช้ฟรี และอันไหนควรเขียนใหม่ก่อนนำไปใช้จริงหรือใส่ในแพ็กพรีเมียม
         </p>
 
         <div style={buttonRowStyle}>
-          <Link href="/quality">
-            <button style={secondaryButtonStyle}>← กลับไปมาตรฐานคุณภาพ</button>
+          <Link href="/hooks">
+            <button style={primaryButtonStyle}>กลับไปคลัง Hook</button>
           </Link>
 
-          <Link href="/hooks">
-            <button style={primaryButtonStyle}>เปิดคลัง Hook</button>
+          <Link href="/search">
+            <button style={secondaryButtonStyle}>ค้นหาไอเดีย</button>
+          </Link>
+
+          <Link href="/premium">
+            <button style={secondaryButtonStyle}>ดูแพ็กพรีเมียม</button>
           </Link>
         </div>
       </section>
@@ -133,144 +301,218 @@ export default function HookQualityPage() {
       <section style={summaryGridStyle}>
         <article style={summaryCardStyle}>
           <p style={summaryLabelStyle}>Hook ทั้งหมด</p>
-          <h2 style={summaryNumberStyle}>{total}</h2>
+          <h2 style={summaryNumberStyle}>{totalHooks}</h2>
+          <p style={mutedTextStyle}>รวมทุกหมวดในระบบ</p>
         </article>
 
         <article style={summaryCardStyle}>
-          <p style={summaryLabelStyle}>พร้อมขายแบบ Premium</p>
-          <h2 style={summaryNumberStyle}>{premiumReady}</h2>
-          <p style={mutedTextStyle}>
-            {getPercent(premiumReady, total)}% ของทั้งหมด
-          </p>
+          <p style={summaryLabelStyle}>พร้อมใช้เชิงสินค้า</p>
+          <h2 style={summaryNumberStyle}>{sellableTotal}</h2>
+          <p style={mutedTextStyle}>พร้อมพรีเมียม + ระดับ Pro</p>
         </article>
 
         <article style={summaryCardStyle}>
-          <p style={summaryLabelStyle}>ควรปรับก่อนขาย</p>
-          <h2 style={summaryNumberStyle}>{weakTotal}</h2>
-          <p style={mutedTextStyle}>
-            {getPercent(weakTotal, total)}% ของทั้งหมด
-          </p>
+          <p style={summaryLabelStyle}>ใช้ฟรี</p>
+          <h2 style={summaryNumberStyle}>{free}</h2>
+          <p style={mutedTextStyle}>ใช้เป็นตัวอย่างได้ แต่ยังไม่ควรขายเป็นของหลัก</p>
+        </article>
+
+        <article style={summaryCardStyle}>
+          <p style={summaryLabelStyle}>ควรเขียนใหม่</p>
+          <h2 style={summaryNumberStyle}>{needsRewrite}</h2>
+          <p style={mutedTextStyle}>ควรปรับก่อนนำไปใช้จริง</p>
         </article>
       </section>
 
       <section style={sectionStyle}>
-        <p style={labelStyle}>Category Score</p>
+        <div style={sectionTopRowStyle}>
+          <div>
+            <p style={labelStyle}>ภาพรวมรายหมวด</p>
 
-        <h2 style={{ margin: "6px 0" }}>คะแนนภาพรวมรายหมวด</h2>
+            <h2 style={{ margin: "6px 0" }}>
+              หมวดไหนควรปรับคุณภาพก่อนขาย
+            </h2>
+          </div>
+
+          <Link href="/pricing">
+            <button style={smallButtonStyle}>ดูราคาแพ็กเกจ</button>
+          </Link>
+        </div>
 
         <div style={categoryGridStyle}>
-          {categories.map((category) => (
-            <article key={category.slug} style={categoryCardStyle}>
-              <div style={categoryTopRowStyle}>
-                <div>
-                  <h3 style={{ margin: "0 0 6px" }}>{category.label}</h3>
-                  <p style={mutedTextStyle}>{category.title}</p>
+          {sortedCategories.map((category) => {
+            const weak = category.free + category.needsRewrite;
+            const sellable = category.premiumReady + category.pro;
+
+            return (
+              <article key={category.slug} style={categoryCardStyle}>
+                <div style={categoryTopRowStyle}>
+                  <div>
+                    <p style={categoryIconStyle}>{category.icon}</p>
+                    <h3 style={categoryTitleStyle}>{category.thaiLabel}</h3>
+                    <p style={englishNameStyle}>{category.label}</p>
+                  </div>
+
+                  <span style={getQualityBadgeStyle(category.averageScore)}>
+                    {getHealthLabel(category.averageScore)}
+                  </span>
                 </div>
+
+                <div style={scoreBoxStyle}>
+                  <p style={scoreLabelStyle}>คะแนนเฉลี่ย</p>
+                  <strong style={scoreNumberStyle}>
+                    {category.averageScore}/100
+                  </strong>
+
+                  <div style={progressOuterStyle}>
+                    <div
+                      style={{
+                        ...progressInnerStyle,
+                        width: category.averageScore + "%",
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div style={statGridStyle}>
+                  <div style={statBoxStyle}>
+                    <strong>{category.total}</strong>
+                    <span>ทั้งหมด</span>
+                  </div>
+
+                  <div style={statBoxStyle}>
+                    <strong>{sellable}</strong>
+                    <span>พร้อมใช้</span>
+                  </div>
+
+                  <div style={statBoxStyle}>
+                    <strong>{category.free}</strong>
+                    <span>ใช้ฟรี</span>
+                  </div>
+
+                  <div style={statBoxStyle}>
+                    <strong>{category.needsRewrite}</strong>
+                    <span>เขียนใหม่</span>
+                  </div>
+                </div>
+
+                <p style={mutedTextStyle}>
+                  มี Hook ที่ควรตรวจเพิ่ม {weak} รายการ
+                </p>
 
                 <Link href={category.href}>
-                  <button style={smallButtonStyle}>เปิดหมวด</button>
+                  <button style={primaryButtonStyle}>เปิดหมวดนี้</button>
                 </Link>
-              </div>
-
-              <div style={statGridStyle}>
-                <div style={statBoxStyle}>
-                  <strong>{category.total}</strong>
-                  <span>ทั้งหมด</span>
-                </div>
-
-                <div style={statBoxStyle}>
-                  <strong>{category.premiumReady}</strong>
-                  <span>Premium</span>
-                </div>
-
-                <div style={statBoxStyle}>
-                  <strong>{category.pro}</strong>
-                  <span>Pro</span>
-                </div>
-
-                <div style={statBoxStyle}>
-                  <strong>{category.free + category.needsRewrite}</strong>
-                  <span>ควรปรับ</span>
-                </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
       </section>
 
       <section style={sectionStyle}>
-        <p style={labelStyle}>Items to Improve</p>
+        <p style={labelStyle}>รายการที่ควรตรวจ</p>
 
-        <h2 style={{ margin: "6px 0" }}>รายการที่ควรปรับก่อนทำเป็นของขาย</h2>
+        <h2 style={{ margin: "6px 0" }}>
+          ตัวอย่าง Hook ที่ควรปรับก่อนขายหรือใช้จริง
+        </h2>
 
         <p style={mutedTextStyle}>
-          แสดงสูงสุด 12 รายการต่อหมวด เพื่อให้เริ่มแก้จากจุดที่กระทบคุณภาพสินค้ามากที่สุดก่อน
+          ระบบแสดงบางรายการจากแต่ละหมวด เพื่อให้เห็นว่าควรแก้ตรงไหน
+          และมีคำแนะนำสำหรับเขียนใหม่ให้คัดลอกได้ทันที
         </p>
 
-        <div style={weakSectionGridStyle}>
-          {categories.map((category) => (
-            <article key={category.slug} style={weakCategoryStyle}>
-              <h3 style={{ marginTop: 0 }}>{category.label}</h3>
+        <div style={weakGridStyle}>
+          {sortedCategories.map((category) => {
+            if (category.weakItems.length === 0) {
+              return null;
+            }
 
-              {category.weakItems.length > 0 ? (
-                <div style={weakListStyle}>
+            return (
+              <section key={category.slug} style={weakCategoryBoxStyle}>
+                <div style={weakCategoryHeaderStyle}>
+                  <div>
+                    <p style={labelStyle}>
+                      {category.icon} {category.thaiLabel}
+                    </p>
+
+                    <h3 style={{ margin: "4px 0" }}>
+                      รายการที่ควรปรับในหมวดนี้
+                    </h3>
+                  </div>
+
+                  <Link href={category.href}>
+                    <button style={smallButtonStyle}>เปิดหมวด</button>
+                  </Link>
+                </div>
+
+                <div style={weakItemListStyle}>
                   {category.weakItems.map((item) => (
-                    <div key={category.slug + "-" + item.id} style={weakItemStyle}>
-                      <div style={weakTopRowStyle}>
-                        <span style={levelBadgeStyle(item.level)}>
-                          {getQualityLevelLabel(item.level)}
+                    <article key={item.id} style={weakItemCardStyle}>
+                      <div style={topRowStyle}>
+                        <span style={getQualityBadgeStyle(item.score)}>
+                          {getLevelLabel(item.level)}
                         </span>
 
-                        <strong>{item.score}/100</strong>
+                        <span style={scorePillStyle}>คะแนน {item.score}/100</span>
                       </div>
 
-                      <p style={hookTextStyle}>
-                        {item.text || "ไม่มีข้อความ"}
+                      <h4 style={hookTextStyle}>{item.text}</h4>
+
+                      <p style={levelDescriptionStyle}>
+                        {getLevelDescription(item.level)}
                       </p>
 
-                      <div style={rewriteBoxStyle}>
-                        <p style={rewriteLabelStyle}>Rewrite Suggestion</p>
-
-                        <p style={rewriteTextStyle}>{item.rewriteText}</p>
-
-                        <p style={rewriteReasonStyle}>{item.rewriteReason}</p>
-
-                        <CopyButton text={item.rewriteText} />
-                      </div>
-
                       {item.issues.length > 0 ? (
-                        <div style={miniBoxStyle}>
-                          <p style={miniTitleStyle}>ปัญหา</p>
+                        <div style={noteBoxStyle}>
+                          <p style={noteTitleStyle}>จุดที่ควรดู</p>
 
                           <ul style={listStyle}>
                             {item.issues.map((issue) => (
-                              <li key={issue}>{issue}</li>
+                              <li key={issue}>{translateIssue(issue)}</li>
                             ))}
                           </ul>
                         </div>
                       ) : null}
 
                       {item.suggestions.length > 0 ? (
-                        <div style={miniBoxStyle}>
-                          <p style={miniTitleStyle}>ควรปรับ</p>
+                        <div style={noteBoxStyle}>
+                          <p style={noteTitleStyle}>คำแนะนำ</p>
 
                           <ul style={listStyle}>
                             {item.suggestions.map((suggestion) => (
-                              <li key={suggestion}>{suggestion}</li>
+                              <li key={suggestion}>
+                                {translateSuggestion(suggestion)}
+                              </li>
                             ))}
                           </ul>
                         </div>
                       ) : null}
-                    </div>
+
+                      <div style={rewriteBoxStyle}>
+                        <p style={rewriteLabelStyle}>ตัวอย่างเขียนใหม่</p>
+
+                        <p style={rewriteTextStyle}>{item.rewriteText}</p>
+
+                        {item.rewriteReason ? (
+                          <p style={rewriteReasonStyle}>{item.rewriteReason}</p>
+                        ) : null}
+                      </div>
+
+                      <div style={buttonRowStyle}>
+                        <CopyButton text={item.text} />
+
+                        <CopyButton text={item.rewriteText} />
+
+                        <Link href={item.categoryHref}>
+                          <button style={secondaryButtonStyle}>เปิดต้นทาง</button>
+                        </Link>
+                      </div>
+                    </article>
                   ))}
                 </div>
-              ) : (
-                <p style={mutedTextStyle}>
-                  หมวดนี้ยังไม่พบรายการอ่อนมากจากเกณฑ์เบื้องต้น
-                </p>
-              )}
-            </article>
-          ))}
+              </section>
+            );
+          })}
         </div>
       </section>
     </main>
@@ -278,10 +520,10 @@ export default function HookQualityPage() {
 }
 
 const heroStyle: CSSProperties = {
-  padding: "42px 24px",
-  borderRadius: "24px",
-  background: "#eef2ff",
-  border: "1px solid #c7d2fe",
+  padding: "46px 24px",
+  borderRadius: "28px",
+  background: "#111827",
+  color: "white",
 };
 
 const labelStyle: CSSProperties = {
@@ -291,23 +533,24 @@ const labelStyle: CSSProperties = {
 };
 
 const titleStyle: CSSProperties = {
-  fontSize: "42px",
-  lineHeight: "1.15",
+  fontSize: "46px",
+  lineHeight: "1.12",
   margin: "12px 0",
+  maxWidth: "980px",
 };
 
 const subtitleStyle: CSSProperties = {
-  color: "#374151",
+  color: "#d1d5db",
   fontSize: "18px",
   lineHeight: "1.8",
-  maxWidth: "860px",
+  maxWidth: "880px",
 };
 
 const buttonRowStyle: CSSProperties = {
   display: "flex",
-  gap: "12px",
+  gap: "10px",
   flexWrap: "wrap",
-  marginTop: "22px",
+  marginTop: "18px",
 };
 
 const primaryButtonStyle: CSSProperties = {
@@ -325,6 +568,7 @@ const secondaryButtonStyle: CSSProperties = {
   borderRadius: "14px",
   border: "1px solid #c7d2fe",
   background: "white",
+  color: "#111827",
   cursor: "pointer",
   fontWeight: "bold",
 };
@@ -333,7 +577,7 @@ const summaryGridStyle: CSSProperties = {
   display: "grid",
   gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
   gap: "16px",
-  marginTop: "24px",
+  marginTop: "22px",
 };
 
 const summaryCardStyle: CSSProperties = {
@@ -351,7 +595,7 @@ const summaryLabelStyle: CSSProperties = {
 
 const summaryNumberStyle: CSSProperties = {
   margin: "8px 0",
-  fontSize: "36px",
+  fontSize: "38px",
 };
 
 const mutedTextStyle: CSSProperties = {
@@ -368,17 +612,34 @@ const sectionStyle: CSSProperties = {
   background: "white",
 };
 
+const sectionTopRowStyle: CSSProperties = {
+  display: "flex",
+  justifyContent: "space-between",
+  gap: "16px",
+  flexWrap: "wrap",
+  alignItems: "center",
+};
+
+const smallButtonStyle: CSSProperties = {
+  padding: "10px 14px",
+  borderRadius: "12px",
+  border: "1px solid #ddd",
+  background: "#f8fafc",
+  cursor: "pointer",
+  fontWeight: "bold",
+};
+
 const categoryGridStyle: CSSProperties = {
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))",
-  gap: "16px",
-  marginTop: "18px",
+  gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
+  gap: "18px",
+  marginTop: "20px",
 };
 
 const categoryCardStyle: CSSProperties = {
   border: "1px solid #e5e7eb",
-  borderRadius: "20px",
-  padding: "18px",
+  borderRadius: "22px",
+  padding: "20px",
   background: "#f8fafc",
 };
 
@@ -389,13 +650,61 @@ const categoryTopRowStyle: CSSProperties = {
   alignItems: "flex-start",
 };
 
-const smallButtonStyle: CSSProperties = {
-  padding: "8px 12px",
-  borderRadius: "12px",
-  border: "1px solid #ddd",
-  background: "white",
-  cursor: "pointer",
+const categoryIconStyle: CSSProperties = {
+  fontSize: "30px",
+  margin: "0 0 8px",
+};
+
+const categoryTitleStyle: CSSProperties = {
+  margin: 0,
+  fontSize: "24px",
+};
+
+const englishNameStyle: CSSProperties = {
+  margin: "4px 0 0",
+  color: "#6b7280",
+  fontSize: "13px",
   fontWeight: "bold",
+};
+
+const qualityBadgeStyle: CSSProperties = {
+  display: "inline-block",
+  padding: "7px 11px",
+  borderRadius: "999px",
+  fontWeight: "bold",
+  fontSize: "13px",
+  whiteSpace: "nowrap",
+};
+
+const scoreBoxStyle: CSSProperties = {
+  marginTop: "16px",
+};
+
+const scoreLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#555",
+  fontSize: "13px",
+  fontWeight: "bold",
+};
+
+const scoreNumberStyle: CSSProperties = {
+  display: "inline-block",
+  fontSize: "28px",
+  marginTop: "6px",
+};
+
+const progressOuterStyle: CSSProperties = {
+  height: "10px",
+  borderRadius: "999px",
+  background: "#e5e7eb",
+  overflow: "hidden",
+  marginTop: "10px",
+};
+
+const progressInnerStyle: CSSProperties = {
+  height: "100%",
+  borderRadius: "999px",
+  background: "#4f46e5",
 };
 
 const statGridStyle: CSSProperties = {
@@ -403,6 +712,7 @@ const statGridStyle: CSSProperties = {
   gridTemplateColumns: "repeat(4,1fr)",
   gap: "8px",
   marginTop: "16px",
+  marginBottom: "14px",
 };
 
 const statBoxStyle: CSSProperties = {
@@ -415,104 +725,112 @@ const statBoxStyle: CSSProperties = {
   color: "#555",
 };
 
-const weakSectionGridStyle: CSSProperties = {
+const weakGridStyle: CSSProperties = {
   display: "grid",
   gap: "20px",
-  marginTop: "18px",
+  marginTop: "20px",
 };
 
-const weakCategoryStyle: CSSProperties = {
+const weakCategoryBoxStyle: CSSProperties = {
   border: "1px solid #e5e7eb",
-  borderRadius: "20px",
-  padding: "18px",
+  borderRadius: "24px",
+  padding: "20px",
   background: "#f8fafc",
 };
 
-const weakListStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))",
-  gap: "14px",
-};
-
-const weakItemStyle: CSSProperties = {
-  border: "1px solid #e5e7eb",
-  borderRadius: "18px",
-  padding: "16px",
-  background: "white",
-};
-
-const weakTopRowStyle: CSSProperties = {
+const weakCategoryHeaderStyle: CSSProperties = {
   display: "flex",
   justifyContent: "space-between",
-  gap: "10px",
+  gap: "16px",
+  flexWrap: "wrap",
   alignItems: "center",
 };
 
-function levelBadgeStyle(level: HookQualityLevel): CSSProperties {
-  const isBad = level === "needs-rewrite";
-  const isFree = level === "free";
+const weakItemListStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
+  gap: "16px",
+  marginTop: "16px",
+};
 
-  return {
-    display: "inline-block",
-    padding: "6px 10px",
-    borderRadius: "999px",
-    background: isBad ? "#fff7f7" : isFree ? "#fffbeb" : "#eef2ff",
-    color: isBad ? "#dc2626" : isFree ? "#92400e" : "#4f46e5",
-    fontWeight: "bold",
-    fontSize: "13px",
-  };
-}
+const weakItemCardStyle: CSSProperties = {
+  border: "1px solid #e5e7eb",
+  borderRadius: "20px",
+  padding: "18px",
+  background: "white",
+};
 
-const hookTextStyle: CSSProperties = {
-  color: "#111827",
-  lineHeight: "1.7",
+const topRowStyle: CSSProperties = {
+  display: "flex",
+  justifyContent: "space-between",
+  gap: "10px",
+  flexWrap: "wrap",
+  alignItems: "center",
+};
+
+const scorePillStyle: CSSProperties = {
+  padding: "6px 10px",
+  borderRadius: "999px",
+  background: "#f8fafc",
+  color: "#374151",
+  border: "1px solid #e5e7eb",
+  fontSize: "13px",
   fontWeight: "bold",
 };
 
-const miniBoxStyle: CSSProperties = {
-  marginTop: "10px",
+const hookTextStyle: CSSProperties = {
+  fontSize: "20px",
+  lineHeight: "1.55",
+};
+
+const levelDescriptionStyle: CSSProperties = {
+  color: "#555",
+  lineHeight: "1.7",
+};
+
+const noteBoxStyle: CSSProperties = {
+  marginTop: "12px",
   padding: "12px",
   borderRadius: "14px",
   background: "#f8fafc",
+  border: "1px solid #e5e7eb",
 };
 
-const miniTitleStyle: CSSProperties = {
-  marginTop: 0,
-  marginBottom: "6px",
+const noteTitleStyle: CSSProperties = {
+  margin: "0 0 8px",
   fontWeight: "bold",
-  color: "#374151",
 };
 
 const listStyle: CSSProperties = {
   margin: 0,
-  paddingLeft: "18px",
-  color: "#555",
-  lineHeight: "1.7",
+  paddingLeft: "20px",
+  color: "#374151",
+  lineHeight: "1.75",
 };
 
 const rewriteBoxStyle: CSSProperties = {
-  marginTop: "12px",
+  marginTop: "14px",
   padding: "14px",
   borderRadius: "16px",
-  border: "1px solid #c7d2fe",
-  background: "#eef2ff",
+  background: "#fffbeb",
+  border: "1px solid #fde68a",
 };
 
 const rewriteLabelStyle: CSSProperties = {
-  marginTop: 0,
-  marginBottom: "8px",
-  color: "#4f46e5",
+  margin: "0 0 8px",
   fontWeight: "bold",
+  color: "#92400e",
 };
 
 const rewriteTextStyle: CSSProperties = {
-  color: "#111827",
-  lineHeight: "1.75",
-  fontWeight: "bold",
-  whiteSpace: "pre-wrap",
+  margin: 0,
+  color: "#374151",
+  lineHeight: "1.7",
 };
 
 const rewriteReasonStyle: CSSProperties = {
-  color: "#555",
-  lineHeight: "1.7",
+  margin: "8px 0 0",
+  color: "#6b7280",
+  lineHeight: "1.6",
+  fontSize: "14px",
 };
