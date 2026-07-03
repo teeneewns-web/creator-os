@@ -83,16 +83,16 @@ export default function HomePage() {
   return (
     <main style={{ maxWidth: "1200px", margin: "0 auto", padding: "24px" }}>
       <section style={heroStyle}>
-        <p style={labelStyle}>Creator OS</p>
+        <p style={labelStyle}>ระบบผู้ช่วยทำคอนเทนต์</p>
 
         <h1 style={titleStyle}>
-          ระบบช่วย Creator คิดคอนเทนต์ ค้นหา Hook และคัดคุณภาพก่อนนำไปใช้จริง
+          Creator OS ช่วยคิดคอนเทนต์ ค้นหา Hook และคัดคุณภาพก่อนนำไปใช้จริง
         </h1>
 
         <p style={subtitleStyle}>
-          Creator OS รวม Hook, Caption, CTA, Script, Dashboard และระบบตรวจคุณภาพ
-          ไว้ในที่เดียว เพื่อช่วยให้คุณเริ่มทำคอนเทนต์ได้เร็วขึ้น
-          ไม่ต้องเริ่มจากหน้าว่าง และเลือกใช้ข้อความที่เหมาะกับงานจริงมากขึ้น
+          รวมคลัง Hook, แคปชัน, CTA, สคริปต์, ภารกิจรายวัน และระบบตรวจคุณภาพ
+          ไว้ในที่เดียว เหมาะกับคนทำคอนเทนต์ที่ไม่อยากเริ่มจากหน้าว่าง
+          และอยากเลือกใช้ไอเดียที่พร้อมใช้งานมากขึ้น
         </p>
 
         <div style={buttonRowStyle}>
@@ -105,7 +105,7 @@ export default function HomePage() {
           </Link>
 
           <Link href="/pricing">
-            <button style={secondaryButtonStyle}>ดูแพ็กเกจ</button>
+            <button style={secondaryButtonStyle}>ดูราคาแพ็กเกจ</button>
           </Link>
         </div>
       </section>
@@ -121,13 +121,13 @@ export default function HomePage() {
           <p style={proofLabelStyle}>พร้อมใช้เชิงสินค้า</p>
           <h2 style={proofNumberStyle}>{stats.sellable}</h2>
           <p style={mutedTextStyle}>
-            Premium-ready + Pro รวม{" "}
+            ระดับพรีเมียม + ระดับ Pro รวม{" "}
             {getPercent(stats.sellable, stats.totalHooks)}%
           </p>
         </article>
 
         <article style={proofCardStyle}>
-          <p style={proofLabelStyle}>Premium-ready</p>
+          <p style={proofLabelStyle}>พร้อมพรีเมียม</p>
           <h2 style={proofNumberStyle}>{stats.premiumReady}</h2>
           <p style={mutedTextStyle}>Hook ที่เหมาะนำไปทำแพ็กขายก่อน</p>
         </article>
@@ -142,94 +142,100 @@ export default function HomePage() {
       <section style={sectionStyle}>
         <div style={sectionTopRowStyle}>
           <div>
-            <p style={labelStyle}>How it works</p>
+            <p style={labelStyle}>วิธีใช้งาน</p>
 
             <h2 style={{ margin: "6px 0" }}>เริ่มทำคอนเทนต์จากระบบเดียว</h2>
           </div>
 
           <Link href="/dashboard">
-            <button style={smallButtonStyle}>เปิด Dashboard</button>
+            <button style={smallButtonStyle}>เปิดภารกิจวันนี้</button>
           </Link>
         </div>
 
         <div style={stepGridStyle}>
           <article style={stepCardStyle}>
             <p style={stepNumberStyle}>01</p>
-            <h3>เลือก Hook</h3>
+            <h3>เลือก Hook หรือประโยคเปิด</h3>
             <p>
-              ค้นหา Hook ตามหมวดหรือคำค้น แล้วดูระดับคุณภาพว่าเป็น
-              Premium-ready, Pro, Free หรือ Needs rewrite
+              ค้นหา Hook ตามหมวดหรือคำค้น แล้วดูระดับคุณภาพว่าอันไหนพร้อมใช้
+              อันไหนควรปรับก่อน
             </p>
           </article>
 
           <article style={stepCardStyle}>
             <p style={stepNumberStyle}>02</p>
-            <h3>ต่อเป็น Caption / CTA / Script</h3>
+            <h3>ต่อเป็นแคปชัน CTA หรือสคริปต์</h3>
             <p>
-              นำ Hook ที่เลือกไปต่อยอดเป็นข้อความโพสต์ คำชวนกดติดตาม
-              หรือสคริปต์คลิปสั้น
+              นำ Hook ที่เลือกไปต่อยอดเป็นข้อความโพสต์ คำชวนให้กดติดตาม
+              คำชวนซื้อ หรือสคริปต์คลิปสั้น
             </p>
           </article>
 
           <article style={stepCardStyle}>
             <p style={stepNumberStyle}>03</p>
-            <h3>ใช้ Dashboard ทำงานรายวัน</h3>
+            <h3>ใช้ภารกิจรายวันช่วยลงมือทำ</h3>
             <p>
-              ใช้แผนรายวันและแผน 7 วันช่วยบอกว่าควรทำอะไรต่อ
-              ไม่ต้องคิดทุกอย่างใหม่เอง
+              ใช้หน้า Dashboard ช่วยบอกว่าวันนี้ควรทำอะไร
+              เหมาะกับคนที่อยากมีระบบทำคอนเทนต์แบบเป็นขั้นตอน
             </p>
           </article>
 
           <article style={stepCardStyle}>
             <p style={stepNumberStyle}>04</p>
-            <h3>ตรวจคุณภาพก่อนขายหรือโพสต์จริง</h3>
+            <h3>ตรวจคุณภาพก่อนโพสต์หรือขายจริง</h3>
             <p>
-              ใช้หน้าตรวจ Hook เพื่อดูคะแนน ปัญหา และ Rewrite Suggestion
-              ก่อนนำไปทำเป็นแพ็ก Premium
+              ใช้หน้าตรวจ Hook เพื่อดูคะแนน จุดที่ควรแก้ และคำแนะนำสำหรับเขียนใหม่
+              ก่อนนำไปใช้จริง
             </p>
           </article>
         </div>
       </section>
 
       <section style={sectionStyle}>
-        <p style={labelStyle}>Creator Tools</p>
+        <p style={labelStyle}>เครื่องมือในระบบ</p>
 
-        <h2 style={{ margin: "6px 0" }}>เครื่องมือหลักใน Creator OS</h2>
+        <h2 style={{ margin: "6px 0" }}>เมนูหลักที่ใช้ทำงาน</h2>
 
         <div style={toolGridStyle}>
           <Link href="/hooks" style={toolCardStyle}>
             <span style={toolIconStyle}>⚡</span>
-            <h3>Hook Library</h3>
-            <p>คลัง Hook แยกหมวด พร้อมคะแนนคุณภาพและตัวกรองระดับ</p>
+            <h3>คลัง Hook</h3>
+            <p>คลังประโยคเปิดแยกหมวด พร้อมคะแนนคุณภาพและตัวกรองระดับ</p>
           </Link>
 
           <Link href="/search" style={toolCardStyle}>
             <span style={toolIconStyle}>🔍</span>
-            <h3>Search Library</h3>
-            <p>ค้นหา Hook, Caption, CTA และ Script จากจุดเดียว</p>
+            <h3>ค้นหาไอเดีย</h3>
+            <p>ค้นหา Hook, แคปชัน, CTA และสคริปต์จากจุดเดียว</p>
+          </Link>
+
+          <Link href="/favorites" style={toolCardStyle}>
+            <span style={toolIconStyle}>⭐</span>
+            <h3>บันทึกไว้</h3>
+            <p>เก็บ Hook หรือไอเดียที่ชอบไว้กลับมาใช้ต่อภายหลัง</p>
           </Link>
 
           <Link href="/quality/hooks" style={toolCardStyle}>
             <span style={toolIconStyle}>✅</span>
-            <h3>Hook Quality Audit</h3>
-            <p>ตรวจ Hook ที่ควรปรับ พร้อม Rewrite Suggestion</p>
+            <h3>ตรวจคุณภาพ Hook</h3>
+            <p>ตรวจ Hook ที่ควรปรับ พร้อมคำแนะนำสำหรับเขียนใหม่</p>
           </Link>
 
           <Link href="/premium" style={toolCardStyle}>
             <span style={toolIconStyle}>💎</span>
-            <h3>Premium</h3>
-            <p>หน้าขายที่ใช้ข้อมูลจริงจากระบบเพื่ออธิบายคุณค่าแพ็ก</p>
+            <h3>พรีเมียม</h3>
+            <p>หน้าขายที่ใช้ข้อมูลจริงจากระบบเพื่ออธิบายคุณค่าของแพ็ก</p>
           </Link>
 
           <Link href="/pricing" style={toolCardStyle}>
             <span style={toolIconStyle}>💰</span>
-            <h3>Pricing</h3>
+            <h3>ราคาแพ็กเกจ</h3>
             <p>โครงสร้างแพ็ก Free / Pro / Premium สำหรับเตรียมขาย</p>
           </Link>
 
           <Link href="/dashboard/weekly" style={toolCardStyle}>
             <span style={toolIconStyle}>📅</span>
-            <h3>7-Day Plan</h3>
+            <h3>แผน 7 วัน</h3>
             <p>แผนทำงาน 7 วันสำหรับ Creator ที่ต้องการลงมือทำจริง</p>
           </Link>
         </div>
@@ -237,21 +243,21 @@ export default function HomePage() {
 
       <section style={premiumSectionStyle}>
         <div>
-          <p style={darkLabelStyle}>Built for selling later</p>
+          <p style={darkLabelStyle}>เตรียมต่อยอดเป็นสินค้า</p>
 
           <h2 style={darkTitleStyle}>
             ไม่ใช่แค่เว็บรวมข้อความ แต่เป็นระบบที่เริ่มแยกของฟรีกับของขายได้
           </h2>
 
           <p style={darkTextStyle}>
-            ตอนนี้ระบบเริ่มรู้แล้วว่า Hook ไหนพร้อมใช้ Hook ไหนควรปรับ
+            ระบบเริ่มรู้แล้วว่า Hook ไหนพร้อมใช้ Hook ไหนควรปรับ
             และหมวดไหนเหมาะนำไปทำแพ็กขายก่อน นี่คือพื้นฐานสำคัญก่อนต่อยอดเป็นระบบสมาชิก
-            ระบบล็อก Premium หรือหน้าชำระเงินในอนาคต
+            ระบบล็อกพรีเมียม หรือหน้าชำระเงินในอนาคต
           </p>
 
           <div style={buttonRowStyle}>
             <Link href="/premium">
-              <button style={darkButtonStyle}>ดูหน้า Premium</button>
+              <button style={darkButtonStyle}>ดูหน้าแพ็กพรีเมียม</button>
             </Link>
 
             <Link href="/quality/hooks">
@@ -261,13 +267,13 @@ export default function HomePage() {
         </div>
 
         <div style={darkStatBoxStyle}>
-          <p style={darkStatLabelStyle}>Premium-ready</p>
+          <p style={darkStatLabelStyle}>พร้อมพรีเมียม</p>
           <h3 style={darkStatNumberStyle}>{stats.premiumReady}</h3>
 
-          <p style={darkStatLabelStyle}>Pro</p>
+          <p style={darkStatLabelStyle}>ระดับ Pro</p>
           <h3 style={darkStatNumberStyle}>{stats.pro}</h3>
 
-          <p style={darkStatLabelStyle}>Sellable Hooks</p>
+          <p style={darkStatLabelStyle}>Hook พร้อมใช้เชิงสินค้า</p>
           <h3 style={darkStatNumberStyle}>{stats.sellable}</h3>
         </div>
       </section>
@@ -276,8 +282,8 @@ export default function HomePage() {
         <h2 style={{ marginTop: 0 }}>เริ่มจากภารกิจวันนี้ก่อน</h2>
 
         <p style={bottomTextStyle}>
-          ถ้ายังไม่รู้จะเริ่มตรงไหน ให้เปิด Dashboard แล้วทำตามภารกิจรายวัน
-          จากนั้นค่อยใช้ Hook, Caption, CTA และ Script มาต่อเป็นคอนเทนต์จริง
+          ถ้ายังไม่รู้จะเริ่มตรงไหน ให้เปิดภารกิจวันนี้ แล้วทำตามขั้นตอนในระบบ
+          จากนั้นค่อยใช้ Hook, แคปชัน, CTA และสคริปต์มาต่อเป็นคอนเทนต์จริง
         </p>
 
         <Link href="/dashboard">

@@ -1,144 +1,107 @@
-"use client";
-
+import type { CSSProperties } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+
+const navItems = [
+  { href: "/", label: "หน้าแรก" },
+  { href: "/dashboard", label: "ภารกิจวันนี้" },
+  { href: "/dashboard/weekly", label: "แผน 7 วัน" },
+  { href: "/search", label: "ค้นหา" },
+  { href: "/hooks", label: "คลัง Hook" },
+  { href: "/favorites", label: "บันทึกไว้" },
+  { href: "/captions", label: "แคปชัน" },
+  { href: "/cta", label: "CTA" },
+  { href: "/scripts", label: "สคริปต์" },
+  { href: "/quality", label: "คุณภาพ" },
+  { href: "/quality/hooks", label: "ตรวจ Hook" },
+  { href: "/premium", label: "พรีเมียม" },
+  { href: "/pricing", label: "ราคาแพ็กเกจ" },
+];
 
 export default function SiteHeader() {
-  const pathname = usePathname();
-
-  function isActive(href: string) {
-    if (href === "/") {
-      return pathname === "/";
-    }
-
-    if (href === "/dashboard") {
-      return pathname === "/dashboard";
-    }
-
-    if (href === "/dashboard/weekly") {
-      return pathname === "/dashboard/weekly";
-    }
-
-    if (href === "/quality") {
-      return pathname === "/quality";
-    }
-
-    if (href === "/quality/hooks") {
-      return pathname === "/quality/hooks";
-    }
-
-    return pathname.startsWith(href);
-  }
-
-  function getLinkStyle(href: string) {
-    const active = isActive(href);
-
-    return {
-      textDecoration: "none",
-      color: active ? "#4f46e5" : "#374151",
-      fontSize: "15px",
-      fontWeight: active ? "bold" : "500",
-      background: active ? "#eef2ff" : "transparent",
-      padding: "8px 10px",
-      borderRadius: "10px",
-    };
-  }
-
   return (
-    <header
-      style={{
-        borderBottom: "1px solid #e5e7eb",
-        background: "white",
-        position: "sticky",
-        top: 0,
-        zIndex: 50,
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          padding: "14px 24px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          gap: "16px",
-          flexWrap: "wrap",
-        }}
-      >
-        <Link
-          href="/"
-          style={{
-            textDecoration: "none",
-            color: "#111827",
-            fontWeight: "bold",
-            fontSize: "20px",
-          }}
-        >
-          Creator OS
+    <header style={headerStyle}>
+      <div style={innerStyle}>
+        <Link href="/" style={brandStyle}>
+          <span style={logoStyle}>Creator OS</span>
+          <span style={taglineStyle}>ระบบผู้ช่วยทำคอนเทนต์</span>
         </Link>
 
-        <nav
-          style={{
-            display: "flex",
-            gap: "6px",
-            flexWrap: "wrap",
-            alignItems: "center",
-          }}
-        >
-          <Link href="/" style={getLinkStyle("/")}>
-            หน้าแรก
-          </Link>
-
-          <Link href="/dashboard" style={getLinkStyle("/dashboard")}>
-            ภารกิจวันนี้
-          </Link>
-
-          <Link href="/dashboard/weekly" style={getLinkStyle("/dashboard/weekly")}>
-            แผน 7 วัน
-          </Link>
-
-          <Link href="/search" style={getLinkStyle("/search")}>
-            ค้นหา
-          </Link>
-
-          <Link href="/hooks" style={getLinkStyle("/hooks")}>
-            Hook
-          </Link>
-
-          <Link href="/captions" style={getLinkStyle("/captions")}>
-            Caption
-          </Link>
-
-          <Link href="/cta" style={getLinkStyle("/cta")}>
-            CTA
-          </Link>
-
-          <Link href="/scripts" style={getLinkStyle("/scripts")}>
-            Script
-          </Link>
-
-          <Link href="/quality" style={getLinkStyle("/quality")}>
-            คุณภาพ
-          </Link>
-
-          <Link href="/quality/hooks" style={getLinkStyle("/quality/hooks")}>
-            ตรวจ Hook
-          </Link>
-
-          <Link href="/plans" style={getLinkStyle("/plans")}>
-            แผน
-          </Link>
-
-          <Link href="/premium" style={getLinkStyle("/premium")}>
-            Premium
-          </Link>
-
-          <Link href="/pricing" style={getLinkStyle("/pricing")}>
-            ราคา
-          </Link>
+        <nav style={navStyle}>
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              style={item.href === "/favorites" ? favoriteLinkStyle : linkStyle}
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
       </div>
     </header>
   );
 }
+
+const headerStyle: CSSProperties = {
+  position: "sticky",
+  top: 0,
+  zIndex: 50,
+  background: "rgba(255,255,255,0.95)",
+  borderBottom: "1px solid #e5e7eb",
+  backdropFilter: "blur(10px)",
+};
+
+const innerStyle: CSSProperties = {
+  maxWidth: "1200px",
+  margin: "0 auto",
+  padding: "14px 24px",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  gap: "20px",
+  flexWrap: "wrap",
+};
+
+const brandStyle: CSSProperties = {
+  display: "grid",
+  gap: "2px",
+  color: "#111827",
+  textDecoration: "none",
+};
+
+const logoStyle: CSSProperties = {
+  fontSize: "20px",
+  fontWeight: "bold",
+};
+
+const taglineStyle: CSSProperties = {
+  fontSize: "13px",
+  color: "#6b7280",
+};
+
+const navStyle: CSSProperties = {
+  display: "flex",
+  gap: "8px",
+  flexWrap: "wrap",
+  alignItems: "center",
+};
+
+const linkStyle: CSSProperties = {
+  padding: "8px 10px",
+  borderRadius: "999px",
+  color: "#374151",
+  textDecoration: "none",
+  fontSize: "14px",
+  fontWeight: 600,
+};
+
+const favoriteLinkStyle: CSSProperties = {
+  padding: "8px 12px",
+  borderRadius: "999px",
+  color: "#4f46e5",
+  background: "#eef2ff",
+  border: "1px solid #c7d2fe",
+  textDecoration: "none",
+  fontSize: "14px",
+  fontWeight: 700,
+};

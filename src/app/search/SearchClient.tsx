@@ -4,179 +4,113 @@ import type { CSSProperties } from "react";
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import CopyButton from "../../components/dashboard/CopyButton";
+import FavoriteButton from "../../components/favorites/FavoriteButton";
 
-type SearchItem = {
-  id: string;
+export type SearchItem = {
+  id: string | number;
+  text: string;
   source: string;
   category: string;
-  text: string;
-  title?: string;
-  description?: string;
-  type?: string;
-  emotion?: string;
-  platform?: string;
-  language?: string;
-  level?: string;
-  score?: number;
   href: string;
+  level?: "premium-ready" | "pro" | "free" | "needs-rewrite";
+  score?: number;
 };
 
 type SearchClientProps = {
-  items: SearchItem[];
+  items?: SearchItem[];
+  searchItems?: SearchItem[];
+  allItems?: SearchItem[];
+  data?: SearchItem[];
+  [key: string]: unknown;
 };
 
-const sourceOptions = [
-  {
-    value: "all",
-    label: "ทุกอย่าง",
-  },
-  {
-    value: "hooks",
-    label: "Hook",
-  },
-  {
-    value: "captions",
-    label: "Caption",
-  },
-  {
-    value: "cta",
-    label: "CTA",
-  },
-  {
-    value: "scripts",
-    label: "Script",
-  },
-];
-
-const levelOptions = [
-  {
-    value: "all",
-    label: "ทุกระดับ",
-  },
-  {
-    value: "premium-ready",
-    label: "Premium-ready",
-  },
-  {
-    value: "pro",
-    label: "Pro",
-  },
-  {
-    value: "free",
-    label: "Free",
-  },
-  {
-    value: "needs-rewrite",
-    label: "Needs rewrite",
-  },
-];
+type SourceFilter = "all" | "hooks" | "captions" | "cta" | "scripts";
+type LevelFilter = "all" | "premium-ready" | "pro" | "free" | "needs-rewrite";
 
 function getSourceLabel(source: string) {
-  if (source === "hooks") return "Hook";
-  if (source === "captions") return "Caption";
-  if (source === "cta") return "CTA";
-  if (source === "scripts") return "Script";
+  if (source === "hooks") return "คลัง Hook";
+  if (source === "captions") return "แคปชัน";
+  if (source === "cta") return "CTA / คำชวนให้ทำ";
+  if (source === "scripts") return "สคริปต์";
 
   return source;
 }
 
-function getLevelLabel(level: string | undefined) {
-  if (level === "premium-ready") return "Premium-ready";
-  if (level === "pro") return "Pro";
-  if (level === "free") return "Free";
-  if (level === "needs-rewrite") return "Needs rewrite";
+function getLevelLabel(level?: string) {
+  if (!level) return "ไม่ระบุระดับ";
 
-  return "";
+  if (level === "premium-ready") return "พร้อมพรีเมียม";
+  if (level === "pro") return "ระดับ Pro";
+  if (level === "free") return "ใช้ฟรี";
+  if (level === "needs-rewrite") return "ควรเขียนใหม่";
+
+  return level;
 }
 
-function getLevelBadgeStyle(level: string | undefined): CSSProperties {
+function getLevelDescription(level?: string) {
   if (level === "premium-ready") {
-    return {
-      ...levelBadgeBaseStyle,
-      background: "#eef2ff",
-      color: "#4f46e5",
-      border: "1px solid #c7d2fe",
-    };
+    return "เหมาะนำไปใช้จริงหรือทำแพ็กขาย";
   }
 
   if (level === "pro") {
-    return {
-      ...levelBadgeBaseStyle,
-      background: "#f0fdf4",
-      color: "#166534",
-      border: "1px solid #bbf7d0",
-    };
+    return "ใช้ได้ดี เหมาะกับงานจริง";
   }
 
   if (level === "free") {
-    return {
-      ...levelBadgeBaseStyle,
-      background: "#fffbeb",
-      color: "#92400e",
-      border: "1px solid #fde68a",
-    };
+    return "ใช้เป็นตัวอย่างหรือไอเดียเริ่มต้น";
   }
 
   if (level === "needs-rewrite") {
-    return {
-      ...levelBadgeBaseStyle,
-      background: "#fff7f7",
-      color: "#dc2626",
-      border: "1px solid #fecaca",
-    };
+    return "ควรปรับถ้อยคำก่อนนำไปใช้จริง";
   }
 
-  return levelBadgeBaseStyle;
+  return "ยังไม่มีคะแนนคุณภาพ";
 }
 
-function getScoreByLevel(items: SearchItem[], level: string) {
-  return items.filter((item) => item.level === level).length;
+function getItemsFromProps(props: SearchClientProps) {
+  if (Array.isArray(props.items)) return props.items;
+  if (Array.isArray(props.searchItems)) return props.searchItems;
+  if (Array.isArray(props.allItems)) return props.allItems;
+  if (Array.isArray(props.data)) return props.data;
+
+  return [];
 }
 
-export default function SearchClient({ items }: SearchClientProps) {
+export default function SearchClient(props: SearchClientProps) {
+  const items = getItemsFromProps(props);
+
   const [keyword, setKeyword] = useState("");
-  const [source, setSource] = useState("all");
-  const [level, setLevel] = useState("all");
+  const [source, setSource] = useState<SourceFilter>("all");
+  const [level, setLevel] = useState<LevelFilter>("all");
 
   const filteredItems = useMemo(() => {
     const cleanKeyword = keyword.trim().toLowerCase();
 
     return items.filter((item) => {
+      const matchKeyword =
+        cleanKeyword === "" ||
+        item.text.toLowerCase().includes(cleanKeyword) ||
+        item.category.toLowerCase().includes(cleanKeyword) ||
+        item.source.toLowerCase().includes(cleanKeyword);
+
       const matchSource = source === "all" || item.source === source;
 
-      const matchLevel =
-        level === "all" || (item.source === "hooks" && item.level === level);
+      const matchLevel = level === "all" || item.level === level;
 
-      const searchText = [
-        item.source,
-        item.category,
-        item.text,
-        item.title || "",
-        item.description || "",
-        item.type || "",
-        item.emotion || "",
-        item.platform || "",
-        item.language || "",
-        item.level || "",
-      ]
-        .join(" ")
-        .toLowerCase();
-
-      const matchKeyword = cleanKeyword === "" || searchText.includes(cleanKeyword);
-
-      return matchSource && matchLevel && matchKeyword;
+      return matchKeyword && matchSource && matchLevel;
     });
   }, [items, keyword, source, level]);
 
-  const premiumCount = getScoreByLevel(items, "premium-ready");
-  const proCount = getScoreByLevel(items, "pro");
-  const freeCount = getScoreByLevel(items, "free");
-  const rewriteCount = getScoreByLevel(items, "needs-rewrite");
+  const premiumReadyCount = items.filter(
+    (item) => item.level === "premium-ready"
+  ).length;
 
-  function handleSelectLevel(nextLevel: string) {
-    setLevel(nextLevel);
-    setSource("hooks");
-  }
+  const proCount = items.filter((item) => item.level === "pro").length;
+  const freeCount = items.filter((item) => item.level === "free").length;
+
+  const needsRewriteCount = items.filter(
+    (item) => item.level === "needs-rewrite"
+  ).length;
 
   function resetFilters() {
     setKeyword("");
@@ -184,118 +118,201 @@ export default function SearchClient({ items }: SearchClientProps) {
     setLevel("all");
   }
 
-  return (
-    <main style={{ maxWidth: "1100px", margin: "0 auto", padding: "24px" }}>
-      <section style={heroStyle}>
-        <p style={labelStyle}>Search Library</p>
+  function handleSelectLevel(nextLevel: LevelFilter) {
+    setLevel(nextLevel);
 
-        <h1 style={titleStyle}>ค้นหาไอเดียคอนเทนต์ทั้งหมดในที่เดียว</h1>
+    if (nextLevel !== "all") {
+      setSource("hooks");
+    }
+  }
+
+  return (
+    <main style={{ maxWidth: "1200px", margin: "0 auto", padding: "24px" }}>
+      <section style={heroStyle}>
+        <p style={labelStyle}>ค้นหาไอเดีย</p>
+
+        <h1 style={titleStyle}>ค้นหา Hook แคปชัน CTA และสคริปต์จากที่เดียว</h1>
 
         <p style={subtitleStyle}>
-          ค้นหา Hook, Caption, CTA และ Script จากคลังข้อมูลของ Creator OS
-          พร้อมเริ่มแยกระดับ Hook ว่าอันไหนพร้อมขาย อันไหนควรปรับก่อนทำเป็น Premium
+          ใช้หน้านี้เพื่อค้นหาไอเดียจากคลังคอนเทนต์ทั้งหมด
+          แล้วกรองตามประเภทหรือระดับคุณภาพ เพื่อเลือกข้อความที่เหมาะกับงานจริงได้เร็วขึ้น
         </p>
       </section>
 
-      <section style={scoreSummaryGridStyle}>
+      <section style={summaryGridStyle}>
         <button
           type="button"
           onClick={() => handleSelectLevel("premium-ready")}
-          style={scoreButtonStyle(level === "premium-ready")}
+          style={
+            level === "premium-ready" ? activeSummaryCardStyle : summaryCardStyle
+          }
         >
-          <p style={scoreLabelStyle}>Premium-ready</p>
-          <h2 style={scoreNumberStyle}>{premiumCount}</h2>
-          <span style={scoreHintStyle}>กดเพื่อกรอง</span>
+          <p style={summaryLabelStyle}>พร้อมพรีเมียม</p>
+          <h2 style={summaryNumberStyle}>{premiumReadyCount}</h2>
+          <span style={summaryHintStyle}>Hook ที่เหมาะใช้ขายหรือใช้จริง</span>
         </button>
 
         <button
           type="button"
           onClick={() => handleSelectLevel("pro")}
-          style={scoreButtonStyle(level === "pro")}
+          style={level === "pro" ? activeSummaryCardStyle : summaryCardStyle}
         >
-          <p style={scoreLabelStyle}>Pro</p>
-          <h2 style={scoreNumberStyle}>{proCount}</h2>
-          <span style={scoreHintStyle}>กดเพื่อกรอง</span>
+          <p style={summaryLabelStyle}>ระดับ Pro</p>
+          <h2 style={summaryNumberStyle}>{proCount}</h2>
+          <span style={summaryHintStyle}>ไอเดียที่คุณภาพดี ใช้งานง่าย</span>
         </button>
 
         <button
           type="button"
           onClick={() => handleSelectLevel("free")}
-          style={scoreButtonStyle(level === "free")}
+          style={level === "free" ? activeSummaryCardStyle : summaryCardStyle}
         >
-          <p style={scoreLabelStyle}>Free</p>
-          <h2 style={scoreNumberStyle}>{freeCount}</h2>
-          <span style={scoreHintStyle}>กดเพื่อกรอง</span>
+          <p style={summaryLabelStyle}>ใช้ฟรี</p>
+          <h2 style={summaryNumberStyle}>{freeCount}</h2>
+          <span style={summaryHintStyle}>เหมาะเป็นตัวอย่างหรือไอเดียตั้งต้น</span>
         </button>
 
         <button
           type="button"
           onClick={() => handleSelectLevel("needs-rewrite")}
-          style={scoreButtonStyle(level === "needs-rewrite")}
+          style={
+            level === "needs-rewrite"
+              ? activeSummaryCardStyle
+              : summaryCardStyle
+          }
         >
-          <p style={scoreLabelStyle}>Needs rewrite</p>
-          <h2 style={scoreNumberStyle}>{rewriteCount}</h2>
-          <span style={scoreHintStyle}>กดเพื่อกรอง</span>
+          <p style={summaryLabelStyle}>ควรเขียนใหม่</p>
+          <h2 style={summaryNumberStyle}>{needsRewriteCount}</h2>
+          <span style={summaryHintStyle}>ควรปรับก่อนใช้จริง</span>
         </button>
       </section>
 
-      <section style={searchBoxStyle}>
-        <input
-          value={keyword}
-          onChange={(event) => setKeyword(event.target.value)}
-          placeholder="ค้นหา เช่น เกม เงิน ขายของ คอมเมนต์ TikTok"
-          style={inputStyle}
-        />
+      <section style={filterBoxStyle}>
+        <div>
+          <label style={inputLabelStyle} htmlFor="search-keyword">
+            ค้นหาด้วยคำ
+          </label>
 
-        <select
-          value={source}
-          onChange={(event) => setSource(event.target.value)}
-          style={selectStyle}
-        >
-          {sourceOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+          <input
+            id="search-keyword"
+            value={keyword}
+            onChange={(event) => setKeyword(event.target.value)}
+            placeholder="เช่น ขายของ, มือใหม่, TikTok, ความงาม"
+            style={inputStyle}
+          />
+        </div>
 
-        <select
-          value={level}
-          onChange={(event) => handleSelectLevel(event.target.value)}
-          style={selectStyle}
-        >
-          {levelOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      </section>
+        <div style={filterGroupStyle}>
+          <p style={filterTitleStyle}>เลือกประเภทข้อมูล</p>
 
-      <section style={summaryStyle}>
-        <p style={{ color: "#555", margin: 0 }}>
-          พบทั้งหมด <strong>{filteredItems.length}</strong> รายการ
-        </p>
-
-        <div style={quickFilterStyle}>
-          {sourceOptions.map((option) => (
+          <div style={buttonRowStyle}>
             <button
-              key={option.value}
               type="button"
-              onClick={() => setSource(option.value)}
-              style={{
-                border: source === option.value ? "1px solid #4f46e5" : "1px solid #ddd",
-                background: source === option.value ? "#eef2ff" : "white",
-                color: source === option.value ? "#4f46e5" : "#374151",
-                padding: "8px 12px",
-                borderRadius: "999px",
-                cursor: "pointer",
-                fontWeight: "bold",
-              }}
+              onClick={() => setSource("all")}
+              style={source === "all" ? activeFilterButtonStyle : filterButtonStyle}
             >
-              {option.label}
+              ทั้งหมด
             </button>
-          ))}
+
+            <button
+              type="button"
+              onClick={() => setSource("hooks")}
+              style={
+                source === "hooks" ? activeFilterButtonStyle : filterButtonStyle
+              }
+            >
+              คลัง Hook
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setSource("captions")}
+              style={
+                source === "captions" ? activeFilterButtonStyle : filterButtonStyle
+              }
+            >
+              แคปชัน
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setSource("cta")}
+              style={source === "cta" ? activeFilterButtonStyle : filterButtonStyle}
+            >
+              CTA / คำชวนให้ทำ
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setSource("scripts")}
+              style={
+                source === "scripts" ? activeFilterButtonStyle : filterButtonStyle
+              }
+            >
+              สคริปต์
+            </button>
+          </div>
+        </div>
+
+        <div style={filterGroupStyle}>
+          <p style={filterTitleStyle}>เลือกระดับคุณภาพ</p>
+
+          <div style={buttonRowStyle}>
+            <button
+              type="button"
+              onClick={() => setLevel("all")}
+              style={level === "all" ? activeFilterButtonStyle : filterButtonStyle}
+            >
+              ทุกระดับ
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleSelectLevel("premium-ready")}
+              style={
+                level === "premium-ready"
+                  ? activeFilterButtonStyle
+                  : filterButtonStyle
+              }
+            >
+              พร้อมพรีเมียม
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleSelectLevel("pro")}
+              style={level === "pro" ? activeFilterButtonStyle : filterButtonStyle}
+            >
+              ระดับ Pro
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleSelectLevel("free")}
+              style={level === "free" ? activeFilterButtonStyle : filterButtonStyle}
+            >
+              ใช้ฟรี
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleSelectLevel("needs-rewrite")}
+              style={
+                level === "needs-rewrite"
+                  ? activeFilterButtonStyle
+                  : filterButtonStyle
+              }
+            >
+              ควรเขียนใหม่
+            </button>
+          </div>
+        </div>
+
+        <div style={resultTopRowStyle}>
+          <p style={resultCountStyle}>
+            แสดงผล <strong>{filteredItems.length}</strong> จากทั้งหมด{" "}
+            <strong>{items.length}</strong> รายการ
+          </p>
 
           <button type="button" onClick={resetFilters} style={resetButtonStyle}>
             ล้างตัวกรอง
@@ -303,67 +320,51 @@ export default function SearchClient({ items }: SearchClientProps) {
         </div>
       </section>
 
-      <section style={levelFilterRowStyle}>
-        {levelOptions.map((option) => (
-          <button
-            key={option.value}
-            type="button"
-            onClick={() => handleSelectLevel(option.value)}
-            style={{
-              border: level === option.value ? "1px solid #4f46e5" : "1px solid #ddd",
-              background: level === option.value ? "#eef2ff" : "white",
-              color: level === option.value ? "#4f46e5" : "#374151",
-              padding: "8px 12px",
-              borderRadius: "999px",
-              cursor: "pointer",
-              fontWeight: "bold",
-            }}
-          >
-            {option.label}
-          </button>
-        ))}
-      </section>
-
       {filteredItems.length > 0 ? (
         <section style={gridStyle}>
-          {filteredItems.map((item, index) => (
-            <article key={item.id} style={cardStyle}>
-              <div style={cardTopRowStyle}>
-                <p style={sourceBadgeStyle}>{getSourceLabel(item.source)}</p>
+          {filteredItems.map((item) => (
+            <article key={String(item.id)} style={cardStyle}>
+              <div style={topRowStyle}>
+                <span style={sourceBadgeStyle}>
+                  {getSourceLabel(item.source)}
+                </span>
 
-                <p style={{ color: "#777", margin: 0 }}>#{index + 1}</p>
+                {item.level ? (
+                  <span style={levelBadgeStyle}>{getLevelLabel(item.level)}</span>
+                ) : null}
               </div>
 
-              <h2 style={cardTitleStyle}>{item.text}</h2>
+              <h2 style={itemTextStyle}>{item.text}</h2>
 
-              <p style={{ color: "#555", lineHeight: "1.7" }}>
-                {item.category}
-              </p>
+              <p style={categoryStyle}>หมวด: {item.category}</p>
 
-              {item.level ? (
-                <div style={qualityRowStyle}>
-                  <span style={getLevelBadgeStyle(item.level)}>
-                    {getLevelLabel(item.level)}
-                  </span>
+              <div style={metaRowStyle}>
+                {typeof item.score === "number" ? (
+                  <span style={metaBadgeStyle}>คะแนน {item.score}/100</span>
+                ) : null}
 
-                  {typeof item.score === "number" ? (
-                    <span style={scorePillStyle}>{item.score}/100</span>
-                  ) : null}
-                </div>
-              ) : null}
-
-              <div style={tagRowStyle}>
-                {item.type ? <span style={tagStyle}>{item.type}</span> : null}
-                {item.emotion ? <span style={tagStyle}>{item.emotion}</span> : null}
-                {item.platform ? <span style={tagStyle}>{item.platform}</span> : null}
-                {item.language ? <span style={tagStyle}>{item.language}</span> : null}
+                <span style={metaBadgeStyle}>
+                  {getLevelDescription(item.level)}
+                </span>
               </div>
 
               <div style={buttonRowStyle}>
                 <CopyButton text={item.text} />
 
+                <FavoriteButton
+                  item={{
+                    id: "search-" + String(item.id),
+                    text: item.text,
+                    source: item.source,
+                    category: item.category,
+                    href: item.href,
+                    level: item.level,
+                    score: item.score,
+                  }}
+                />
+
                 <Link href={item.href}>
-                  <button style={secondaryButtonStyle}>เปิดหมวดนี้</button>
+                  <button style={secondaryButtonStyle}>เปิดต้นทาง</button>
                 </Link>
               </div>
             </article>
@@ -371,11 +372,15 @@ export default function SearchClient({ items }: SearchClientProps) {
         </section>
       ) : (
         <section style={emptyBoxStyle}>
-          <h2 style={{ marginTop: 0 }}>ไม่พบผลลัพธ์</h2>
+          <h2 style={{ marginTop: 0 }}>ไม่พบไอเดียที่ตรงกับตัวกรอง</h2>
 
-          <p style={{ color: "#555", lineHeight: "1.7", marginBottom: 0 }}>
-            ลองเปลี่ยนคำค้นหา เลือกเป็น “ทุกอย่าง” หรือเปลี่ยนระดับคุณภาพ
+          <p style={{ color: "#555", lineHeight: "1.7" }}>
+            ลองเปลี่ยนคำค้น ล้างตัวกรอง หรือเลือกดูทุกประเภทข้อมูลอีกครั้ง
           </p>
+
+          <button type="button" onClick={resetFilters} style={primaryButtonStyle}>
+            ล้างตัวกรองทั้งหมด
+          </button>
         </section>
       )}
     </main>
@@ -383,7 +388,7 @@ export default function SearchClient({ items }: SearchClientProps) {
 }
 
 const heroStyle: CSSProperties = {
-  padding: "40px 24px",
+  padding: "42px 24px",
   borderRadius: "24px",
   background: "#eef2ff",
   border: "1px solid #c7d2fe",
@@ -405,123 +410,157 @@ const subtitleStyle: CSSProperties = {
   color: "#374151",
   fontSize: "18px",
   lineHeight: "1.8",
-  maxWidth: "800px",
+  maxWidth: "860px",
 };
 
-const scoreSummaryGridStyle: CSSProperties = {
+const summaryGridStyle: CSSProperties = {
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))",
+  gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
   gap: "14px",
   marginTop: "22px",
 };
 
-function scoreButtonStyle(active: boolean): CSSProperties {
-  return {
-    textAlign: "left",
-    border: active ? "1px solid #4f46e5" : "1px solid #e5e7eb",
-    borderRadius: "18px",
-    padding: "16px",
-    background: active ? "#eef2ff" : "white",
-    cursor: "pointer",
-  };
-}
+const summaryCardStyle: CSSProperties = {
+  textAlign: "left",
+  border: "1px solid #e5e7eb",
+  borderRadius: "18px",
+  padding: "18px",
+  background: "white",
+  cursor: "pointer",
+};
 
-const scoreLabelStyle: CSSProperties = {
-  marginTop: 0,
+const activeSummaryCardStyle: CSSProperties = {
+  textAlign: "left",
+  border: "2px solid #4f46e5",
+  borderRadius: "18px",
+  padding: "18px",
+  background: "#eef2ff",
+  cursor: "pointer",
+};
+
+const summaryLabelStyle: CSSProperties = {
   color: "#555",
   fontWeight: "bold",
+  margin: 0,
 };
 
-const scoreNumberStyle: CSSProperties = {
-  margin: "8px 0 0",
-  fontSize: "30px",
+const summaryNumberStyle: CSSProperties = {
+  fontSize: "34px",
+  margin: "8px 0",
 };
 
-const scoreHintStyle: CSSProperties = {
-  display: "inline-block",
-  marginTop: "8px",
-  color: "#4f46e5",
-  fontSize: "13px",
-  fontWeight: "bold",
+const summaryHintStyle: CSSProperties = {
+  color: "#6b7280",
+  fontSize: "14px",
+  lineHeight: "1.5",
 };
 
-const searchBoxStyle: CSSProperties = {
+const filterBoxStyle: CSSProperties = {
   marginTop: "24px",
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
-  gap: "12px",
-};
-
-const inputStyle: CSSProperties = {
-  padding: "14px",
-  borderRadius: "14px",
-  border: "1px solid #ddd",
-  fontSize: "16px",
-};
-
-const selectStyle: CSSProperties = {
-  padding: "14px",
-  borderRadius: "14px",
-  border: "1px solid #ddd",
-  fontSize: "16px",
+  padding: "22px",
+  borderRadius: "22px",
+  border: "1px solid #e5e7eb",
   background: "white",
 };
 
-const summaryStyle: CSSProperties = {
-  marginTop: "18px",
-  display: "flex",
-  justifyContent: "space-between",
-  gap: "14px",
-  flexWrap: "wrap",
-  alignItems: "center",
+const inputLabelStyle: CSSProperties = {
+  display: "block",
+  fontWeight: "bold",
+  marginBottom: "8px",
 };
 
-const quickFilterStyle: CSSProperties = {
+const inputStyle: CSSProperties = {
+  width: "100%",
+  boxSizing: "border-box",
+  padding: "14px 16px",
+  borderRadius: "14px",
+  border: "1px solid #d1d5db",
+  fontSize: "16px",
+};
+
+const filterGroupStyle: CSSProperties = {
+  marginTop: "18px",
+};
+
+const filterTitleStyle: CSSProperties = {
+  fontWeight: "bold",
+  marginBottom: "10px",
+};
+
+const buttonRowStyle: CSSProperties = {
   display: "flex",
-  gap: "8px",
+  gap: "10px",
   flexWrap: "wrap",
+  marginTop: "14px",
+};
+
+const filterButtonStyle: CSSProperties = {
+  padding: "10px 14px",
+  borderRadius: "999px",
+  border: "1px solid #e5e7eb",
+  background: "#f8fafc",
+  cursor: "pointer",
+  fontWeight: "bold",
+  color: "#374151",
+};
+
+const activeFilterButtonStyle: CSSProperties = {
+  padding: "10px 14px",
+  borderRadius: "999px",
+  border: "1px solid #4f46e5",
+  background: "#eef2ff",
+  cursor: "pointer",
+  fontWeight: "bold",
+  color: "#4f46e5",
+};
+
+const resultTopRowStyle: CSSProperties = {
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  gap: "14px",
+  flexWrap: "wrap",
+  marginTop: "20px",
+};
+
+const resultCountStyle: CSSProperties = {
+  margin: 0,
+  color: "#555",
 };
 
 const resetButtonStyle: CSSProperties = {
-  border: "1px solid #dc2626",
-  background: "#fff7f7",
-  color: "#dc2626",
-  padding: "8px 12px",
-  borderRadius: "999px",
+  padding: "10px 14px",
+  borderRadius: "12px",
+  border: "1px solid #ddd",
+  background: "#f8fafc",
   cursor: "pointer",
   fontWeight: "bold",
-};
-
-const levelFilterRowStyle: CSSProperties = {
-  display: "flex",
-  gap: "8px",
-  flexWrap: "wrap",
-  marginTop: "12px",
 };
 
 const gridStyle: CSSProperties = {
   display: "grid",
   gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
   gap: "18px",
-  marginTop: "20px",
+  marginTop: "22px",
 };
 
 const cardStyle: CSSProperties = {
-  border: "1px solid #ddd",
+  border: "1px solid #e5e7eb",
   borderRadius: "22px",
   padding: "20px",
   background: "white",
 };
 
-const cardTopRowStyle: CSSProperties = {
+const topRowStyle: CSSProperties = {
   display: "flex",
   justifyContent: "space-between",
-  gap: "12px",
+  gap: "10px",
+  flexWrap: "wrap",
   alignItems: "center",
 };
 
 const sourceBadgeStyle: CSSProperties = {
-  margin: 0,
+  display: "inline-block",
   padding: "6px 10px",
   borderRadius: "999px",
   background: "#eef2ff",
@@ -530,67 +569,60 @@ const sourceBadgeStyle: CSSProperties = {
   fontSize: "13px",
 };
 
-const cardTitleStyle: CSSProperties = {
-  fontSize: "21px",
-  lineHeight: "1.55",
-  whiteSpace: "pre-wrap",
-};
-
-const qualityRowStyle: CSSProperties = {
-  display: "flex",
-  gap: "8px",
-  flexWrap: "wrap",
-  alignItems: "center",
-  marginTop: "10px",
-};
-
-const levelBadgeBaseStyle: CSSProperties = {
+const levelBadgeStyle: CSSProperties = {
   display: "inline-block",
-  padding: "7px 11px",
-  borderRadius: "999px",
-  fontWeight: "bold",
-  fontSize: "13px",
-};
-
-const scorePillStyle: CSSProperties = {
-  display: "inline-block",
-  padding: "7px 11px",
-  borderRadius: "999px",
-  background: "#f8fafc",
-  color: "#374151",
-  fontWeight: "bold",
-  fontSize: "13px",
-  border: "1px solid #e5e7eb",
-};
-
-const tagRowStyle: CSSProperties = {
-  display: "flex",
-  gap: "8px",
-  flexWrap: "wrap",
-  marginTop: "10px",
-};
-
-const tagStyle: CSSProperties = {
   padding: "6px 10px",
   borderRadius: "999px",
   background: "#f8fafc",
   color: "#374151",
+  border: "1px solid #e5e7eb",
+  fontWeight: "bold",
+  fontSize: "13px",
+};
+
+const itemTextStyle: CSSProperties = {
+  fontSize: "22px",
+  lineHeight: "1.55",
+};
+
+const categoryStyle: CSSProperties = {
+  color: "#555",
+  lineHeight: "1.7",
+};
+
+const metaRowStyle: CSSProperties = {
+  display: "flex",
+  gap: "8px",
+  flexWrap: "wrap",
+  marginTop: "10px",
+};
+
+const metaBadgeStyle: CSSProperties = {
+  padding: "6px 10px",
+  borderRadius: "999px",
+  background: "#f8fafc",
+  color: "#374151",
+  border: "1px solid #e5e7eb",
   fontSize: "13px",
   fontWeight: "bold",
 };
 
-const buttonRowStyle: CSSProperties = {
-  display: "flex",
-  gap: "10px",
-  flexWrap: "wrap",
-  marginTop: "16px",
+const primaryButtonStyle: CSSProperties = {
+  padding: "12px 18px",
+  borderRadius: "14px",
+  border: "1px solid #4f46e5",
+  background: "#4f46e5",
+  color: "white",
+  cursor: "pointer",
+  fontWeight: "bold",
 };
 
 const secondaryButtonStyle: CSSProperties = {
-  padding: "10px 14px",
-  borderRadius: "12px",
-  border: "1px solid #ddd",
-  background: "#f8fafc",
+  padding: "12px 18px",
+  borderRadius: "14px",
+  border: "1px solid #c7d2fe",
+  background: "white",
+  color: "#111827",
   cursor: "pointer",
   fontWeight: "bold",
 };

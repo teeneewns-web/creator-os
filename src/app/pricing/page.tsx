@@ -9,16 +9,17 @@ import {
   type RawHookItem,
 } from "../../lib/content/auditHookQuality";
 
-type PricingPlan = {
-  name: string;
-  price: string;
-  period: string;
-  description: string;
-  badge?: string;
-  recommended?: boolean;
-  features: string[];
+type PremiumCategorySummary = {
+  slug: string;
+  icon: string;
+  label: string;
+  title: string;
   href: string;
-  buttonText: string;
+  total: number;
+  premiumReady: number;
+  pro: number;
+  weak: number;
+  averageScore: number;
 };
 
 function loadHookFile(slug: string) {
@@ -40,22 +41,57 @@ function loadHookFile(slug: string) {
   return hooks;
 }
 
-function loadAllAuditedHooks() {
-  const auditedHooks: HookQualityAudit[] = [];
+function getAverageScore(items: HookQualityAudit[]) {
+  if (items.length === 0) return 0;
 
-  hookCategoryList.forEach((category) => {
-    const hooks = loadHookFile(category.slug);
+  const total = items.reduce((sum, item) => sum + item.score, 0);
 
-    hooks.forEach((item, index) => {
-      auditedHooks.push(auditHookQuality(item, index + 1));
-    });
-  });
-
-  return auditedHooks;
+  return Math.round(total / items.length);
 }
 
-function countByLevel(items: HookQualityAudit[], level: string) {
-  return items.filter((item) => item.level === level).length;
+function createPremiumSummaries() {
+  const summaries: PremiumCategorySummary[] = hookCategoryList.map((category) => {
+    const hooks = loadHookFile(category.slug);
+
+    const auditedItems = hooks.map((item, index) => {
+      return auditHookQuality(item, index + 1);
+    });
+
+    const premiumReady = auditedItems.filter(
+      (item) => item.level === "premium-ready"
+    ).length;
+
+    const pro = auditedItems.filter((item) => item.level === "pro").length;
+
+    const weak = auditedItems.filter(
+      (item) => item.level === "free" || item.level === "needs-rewrite"
+    ).length;
+
+    return {
+      slug: category.slug,
+      icon: category.icon,
+      label: category.label,
+      title: category.title,
+      href: category.href,
+      total: auditedItems.length,
+      premiumReady,
+      pro,
+      weak,
+      averageScore: getAverageScore(auditedItems),
+    };
+  });
+
+  return summaries;
+}
+
+function getTotal(
+  categories: PremiumCategorySummary[],
+  key: keyof Pick<
+    PremiumCategorySummary,
+    "total" | "premiumReady" | "pro" | "weak"
+  >
+) {
+  return categories.reduce((sum, category) => sum + category[key], 0);
 }
 
 function getPercent(value: number, total: number) {
@@ -64,86 +100,38 @@ function getPercent(value: number, total: number) {
   return Math.round((value / total) * 100);
 }
 
-export default function PricingPage() {
-  const auditedHooks = loadAllAuditedHooks();
+export default function PremiumPage() {
+  const categories = createPremiumSummaries();
 
-  const totalHooks = auditedHooks.length;
-  const premiumReady = countByLevel(auditedHooks, "premium-ready");
-  const pro = countByLevel(auditedHooks, "pro");
-  const free = countByLevel(auditedHooks, "free");
-  const needsRewrite = countByLevel(auditedHooks, "needs-rewrite");
+  const totalHooks = getTotal(categories, "total");
+  const premiumReady = getTotal(categories, "premiumReady");
+  const pro = getTotal(categories, "pro");
+  const weak = getTotal(categories, "weak");
 
-  const sellableHooks = premiumReady + pro;
-  const weakHooks = free + needsRewrite;
+  const sellableTotal = premiumReady + pro;
 
-  const pricingPlans: PricingPlan[] = [
-    {
-      name: "Free",
-      price: "฿0",
-      period: "เริ่มต้นใช้งาน",
-      description:
-        "เหมาะสำหรับคนที่อยากลองระบบก่อน เห็นตัวอย่าง Hook และเริ่มใช้ Dashboard เบื้องต้น",
-      features: [
-        "ดูตัวอย่าง Hook บางส่วน",
-        "ใช้ Search เพื่อค้นหาไอเดียพื้นฐาน",
-        "ใช้ Dashboard วางแผนคอนเทนต์เบื้องต้น",
-        "เหมาะกับการทดลองก่อนตัดสินใจ",
-      ],
-      href: "/dashboard",
-      buttonText: "เริ่มใช้ฟรี",
-    },
-    {
-      name: "Pro",
-      price: "฿149",
-      period: "ต่อเดือน",
-      description:
-        "เหมาะสำหรับ Creator ที่อยากประหยัดเวลา มี Hook, Caption, CTA และ Script ให้ใช้งานจริงมากขึ้น",
-      badge: "แนะนำเริ่มต้น",
-      recommended: true,
-      features: [
-        "เข้าถึง Hook ระดับ Pro",
-        "ค้นหา Hook, Caption, CTA และ Script ได้สะดวกขึ้น",
-        "ใช้ตัวกรองคุณภาพเพื่อเลือกของที่เหมาะกับงาน",
-        "เหมาะกับคนทำเพจ TikTok Reels Shorts และโพสต์ขาย",
-        "ช่วยลดเวลาคิดคอนเทนต์จากศูนย์",
-      ],
-      href: "/premium",
-      buttonText: "ดูรายละเอียด Pro",
-    },
-    {
-      name: "Premium",
-      price: "฿299",
-      period: "ต่อเดือน",
-      description:
-        "เหมาะสำหรับคนที่อยากได้แพ็กคุณภาพสูง คัดเฉพาะ Hook ที่พร้อมใช้จริงและต่อยอดเป็น workflow รายวัน",
-      badge: "คุ้มสุด",
-      features: [
-        "เข้าถึง Hook ระดับ Premium-ready",
-        "ใช้ระบบตรวจคุณภาพ Hook ก่อนนำไปขายหรือโพสต์จริง",
-        "ดู Rewrite Suggestion สำหรับ Hook ที่ยังอ่อน",
-        "เข้าถึงแพ็กเฉพาะหมวด เช่น AI, Finance, Beauty, Gaming",
-        "เหมาะกับ Creator เจ้าของร้าน ฟรีแลนซ์ และทีมคอนเทนต์",
-      ],
-      href: "/premium",
-      buttonText: "ดู Premium",
-    },
-  ];
+  const topCategories = [...categories]
+    .sort((a, b) => b.premiumReady + b.pro - (a.premiumReady + a.pro))
+    .slice(0, 6);
 
   return (
     <main style={{ maxWidth: "1200px", margin: "0 auto", padding: "24px" }}>
       <section style={heroStyle}>
-        <p style={labelStyle}>Pricing</p>
+        <p style={labelStyle}>แพ็กพรีเมียม</p>
 
-        <h1 style={titleStyle}>แพ็กเกจ Creator OS สำหรับเริ่มทำคอนเทนต์จริง</h1>
+        <h1 style={titleStyle}>
+          แพ็กสำหรับคนทำคอนเทนต์ที่อยากได้ไอเดียพร้อมใช้ ไม่เสียเวลาคิดเอง
+        </h1>
 
         <p style={subtitleStyle}>
-          เลือกแพ็กตามระดับการใช้งาน ตั้งแต่ทดลองฟรี ไปจนถึงแพ็ก Premium
-          ที่คัด Hook คุณภาพสูง พร้อมระบบค้นหา ตรวจคุณภาพ และ workflow สำหรับ Creator
+          Creator OS ไม่ได้เป็นแค่คลังข้อความ แต่มีระบบช่วยคัดคุณภาพ
+          แยก Hook ที่พร้อมใช้งานจริง ออกจาก Hook ที่ควรปรับก่อน
+          เพื่อให้ผู้ใช้เลือกไอเดียได้ง่ายขึ้น ประหยัดเวลา และนำไปใช้กับงานจริงได้เร็วขึ้น
         </p>
 
         <div style={buttonRowStyle}>
-          <Link href="/premium">
-            <button style={primaryButtonStyle}>ดูหน้า Premium</button>
+          <Link href="/pricing">
+            <button style={primaryButtonStyle}>ดูราคาแพ็กเกจ</button>
           </Link>
 
           <Link href="/hooks">
@@ -151,117 +139,192 @@ export default function PricingPage() {
           </Link>
 
           <Link href="/quality/hooks">
-            <button style={secondaryButtonStyle}>ตรวจคุณภาพ Hook</button>
+            <button style={secondaryButtonStyle}>ดูระบบตรวจคุณภาพ</button>
           </Link>
         </div>
       </section>
 
-      <section style={proofGridStyle}>
-        <article style={proofCardStyle}>
-          <p style={proofLabelStyle}>Hook ทั้งหมด</p>
-          <h2 style={proofNumberStyle}>{totalHooks}</h2>
+      <section style={summaryGridStyle}>
+        <article style={summaryCardStyle}>
+          <p style={summaryLabelStyle}>Hook ทั้งหมดในระบบ</p>
+          <h2 style={summaryNumberStyle}>{totalHooks}</h2>
+          <p style={mutedTextStyle}>รวมทุกหมวดที่มีข้อมูลในคลัง</p>
         </article>
 
-        <article style={proofCardStyle}>
-          <p style={proofLabelStyle}>พร้อมใช้เชิงสินค้า</p>
-          <h2 style={proofNumberStyle}>{sellableHooks}</h2>
+        <article style={summaryCardStyle}>
+          <p style={summaryLabelStyle}>พร้อมใช้เชิงสินค้า</p>
+          <h2 style={summaryNumberStyle}>{sellableTotal}</h2>
           <p style={mutedTextStyle}>
-            Premium-ready + Pro รวม {getPercent(sellableHooks, totalHooks)}%
+            ระดับพรีเมียม + ระดับ Pro รวม {getPercent(sellableTotal, totalHooks)}%
           </p>
         </article>
 
-        <article style={proofCardStyle}>
-          <p style={proofLabelStyle}>Premium-ready</p>
-          <h2 style={proofNumberStyle}>{premiumReady}</h2>
-        </article>
-
-        <article style={proofCardStyle}>
-          <p style={proofLabelStyle}>ควรปรับก่อนขาย</p>
-          <h2 style={proofNumberStyle}>{weakHooks}</h2>
+        <article style={summaryCardStyle}>
+          <p style={summaryLabelStyle}>พร้อมพรีเมียม</p>
+          <h2 style={summaryNumberStyle}>{premiumReady}</h2>
           <p style={mutedTextStyle}>
-            Free {free} / Needs rewrite {needsRewrite}
+            Hook ที่คะแนนสูงและเหมาะนำไปทำแพ็กขายมากที่สุด
           </p>
         </article>
-      </section>
 
-      <section style={pricingGridStyle}>
-        {pricingPlans.map((plan) => (
-          <article
-            key={plan.name}
-            style={plan.recommended ? recommendedCardStyle : planCardStyle}
-          >
-            {plan.badge ? <p style={badgeStyle}>{plan.badge}</p> : null}
-
-            <h2 style={planNameStyle}>{plan.name}</h2>
-
-            <div style={priceRowStyle}>
-              <strong style={priceStyle}>{plan.price}</strong>
-              <span style={periodStyle}>{plan.period}</span>
-            </div>
-
-            <p style={planDescriptionStyle}>{plan.description}</p>
-
-            <ul style={featureListStyle}>
-              {plan.features.map((feature) => (
-                <li key={feature}>{feature}</li>
-              ))}
-            </ul>
-
-            <Link href={plan.href}>
-              <button
-                style={
-                  plan.recommended ? recommendedButtonStyle : planButtonStyle
-                }
-              >
-                {plan.buttonText}
-              </button>
-            </Link>
-          </article>
-        ))}
+        <article style={summaryCardStyle}>
+          <p style={summaryLabelStyle}>ควรปรับก่อนขาย</p>
+          <h2 style={summaryNumberStyle}>{weak}</h2>
+          <p style={mutedTextStyle}>
+            ระบบแยกไว้เพื่อไม่ให้เอาของอ่อนมาขายปนกับของดี
+          </p>
+        </article>
       </section>
 
       <section style={sectionStyle}>
-        <p style={labelStyle}>How to sell</p>
+        <div style={sectionTopRowStyle}>
+          <div>
+            <p style={labelStyle}>เหตุผลที่ควรมีแพ็กพรีเมียม</p>
 
-        <h2 style={{ margin: "6px 0" }}>โครงสร้างการขายที่ควรใช้ตอนเริ่มต้น</h2>
+            <h2 style={{ margin: "6px 0" }}>
+              ทำไมคนถึงควรจ่ายเงินให้แพ็กนี้
+            </h2>
+          </div>
 
-        <div style={stepGridStyle}>
-          <article style={stepCardStyle}>
-            <h3>1. ให้ใช้ฟรีบางส่วน</h3>
-            <p>
-              ให้ผู้ใช้เห็นว่าเว็บช่วยประหยัดเวลาได้จริง เช่น ค้น Hook,
-              คัดลอกข้อความ และใช้ Dashboard เบื้องต้น
+          <Link href="/pricing">
+            <button style={smallButtonStyle}>ไปหน้าราคา</button>
+          </Link>
+        </div>
+
+        <div style={valueGridStyle}>
+          <article style={valueCardStyle}>
+            <h3 style={valueTitleStyle}>ประหยัดเวลาคิด Hook</h3>
+            <p style={valueTextStyle}>
+              ผู้ใช้ไม่ต้องเริ่มจากหน้าว่าง แต่เลือกจาก Hook ที่จัดหมวด
+              และตรวจคุณภาพแล้ว ทำให้เริ่มเขียนโพสต์หรือทำคลิปได้เร็วขึ้น
             </p>
           </article>
 
-          <article style={stepCardStyle}>
-            <h3>2. ขาย Pro เป็นแพ็กหลัก</h3>
-            <p>
-              Pro ควรเป็นแพ็กที่คนทั่วไปตัดสินใจง่าย ได้ Hook และเครื่องมือ
-              มากพอสำหรับทำงานจริงทุกวัน
+          <article style={valueCardStyle}>
+            <h3 style={valueTitleStyle}>แยกของดีออกจากของทั่วไป</h3>
+            <p style={valueTextStyle}>
+              ระบบแบ่งระดับเป็น พร้อมพรีเมียม, Pro, Free และควรเขียนใหม่
+              ทำให้ผู้ใช้รู้ว่าอันไหนควรใช้จริง อันไหนควรปรับก่อน
             </p>
           </article>
 
-          <article style={stepCardStyle}>
-            <h3>3. ใช้ Premium เป็นแพ็กกำไร</h3>
-            <p>
-              Premium ควรล็อกของที่คัดแล้วดีที่สุด เช่น Premium-ready,
-              แพ็กเฉพาะหมวด และระบบช่วยปรับคุณภาพ
+          <article style={valueCardStyle}>
+            <h3 style={valueTitleStyle}>เหมาะกับ Creator หลายสาย</h3>
+            <p style={valueTextStyle}>
+              รองรับหลายหมวด เช่น ความงาม การเงิน เกม AI อาหาร ท่องเที่ยว
+              ฟิตเนส และสามารถเพิ่มหมวดใหม่ได้เรื่อย ๆ
+            </p>
+          </article>
+
+          <article style={valueCardStyle}>
+            <h3 style={valueTitleStyle}>ต่อยอดเป็นระบบทำงานรายวัน</h3>
+            <p style={valueTextStyle}>
+              Hook สามารถนำไปใช้ต่อกับภารกิจวันนี้ แคปชัน CTA และสคริปต์
+              เพื่อสร้างขั้นตอนทำคอนเทนต์ที่ใช้งานจริง
             </p>
           </article>
         </div>
       </section>
 
-      <section style={bottomCtaStyle}>
-        <h2 style={{ marginTop: 0 }}>ยังไม่ต้องเก็บเงินทันที</h2>
+      <section style={sectionStyle}>
+        <p style={labelStyle}>หมวดที่เหมาะทำแพ็กขายก่อน</p>
 
-        <p style={darkTextStyle}>
-          ตอนนี้หน้า Pricing ใช้เป็นหน้าวางโครงสร้างสินค้าได้ก่อน
-          เมื่อระบบพร้อมค่อยเชื่อมปุ่มจ่ายเงิน สมัครสมาชิก หรือระบบล็อก Premium ภายหลัง
+        <h2 style={{ margin: "6px 0" }}>
+          หมวดที่มีไอเดียพร้อมใช้มากที่สุด
+        </h2>
+
+        <p style={mutedTextStyle}>
+          ระบบเรียงจากจำนวน Hook ระดับพร้อมพรีเมียมและระดับ Pro
+          เพื่อดูว่าหมวดไหนเหมาะนำไปทำแพ็กขายก่อน
         </p>
 
-        <Link href="/dashboard">
-          <button style={darkButtonStyle}>กลับไปเริ่มใช้งาน</button>
+        <div style={categoryGridStyle}>
+          {topCategories.map((category) => {
+            const sellable = category.premiumReady + category.pro;
+
+            return (
+              <article key={category.slug} style={categoryCardStyle}>
+                <div style={categoryTopRowStyle}>
+                  <div>
+                    <p style={categoryIconStyle}>{category.icon}</p>
+                    <h3 style={categoryTitleStyle}>{category.label}</h3>
+                  </div>
+
+                  <span style={scoreBadgeStyle}>{category.averageScore}/100</span>
+                </div>
+
+                <p style={mutedTextStyle}>{category.title}</p>
+
+                <div style={statGridStyle}>
+                  <div style={statBoxStyle}>
+                    <strong>{category.total}</strong>
+                    <span>ทั้งหมด</span>
+                  </div>
+
+                  <div style={statBoxStyle}>
+                    <strong>{category.premiumReady}</strong>
+                    <span>พรีเมียม</span>
+                  </div>
+
+                  <div style={statBoxStyle}>
+                    <strong>{category.pro}</strong>
+                    <span>Pro</span>
+                  </div>
+
+                  <div style={statBoxStyle}>
+                    <strong>{sellable}</strong>
+                    <span>พร้อมใช้</span>
+                  </div>
+                </div>
+
+                <div style={buttonRowStyle}>
+                  <Link href={category.href}>
+                    <button style={primaryButtonStyle}>เปิดหมวดนี้</button>
+                  </Link>
+
+                  <Link href="/search">
+                    <button style={secondaryButtonStyle}>ค้นหาเพิ่ม</button>
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section style={pricingTeaserStyle}>
+        <div>
+          <p style={darkLabelStyle}>โครงสร้างแพ็กที่แนะนำ</p>
+
+          <h2 style={{ margin: "8px 0", fontSize: "32px" }}>
+            เริ่มขายแบบง่าย: ทดลองฟรี + แพ็ก Pro + แพ็กพรีเมียม
+          </h2>
+
+          <p style={darkTextStyle}>
+            เปิดให้ใช้ฟรีบางส่วนเพื่อให้คนเห็นคุณค่า แล้วล็อก Hook คุณภาพสูง
+            แม่แบบการใช้งาน ขั้นตอนทำงาน และแพ็กเฉพาะหมวดไว้ในแพ็กจ่ายเงิน
+          </p>
+        </div>
+
+        <div style={offerGridStyle}>
+          <article style={offerCardStyle}>
+            <h3>ใช้ฟรี</h3>
+            <p>ให้ลองใช้ Hook พื้นฐานบางส่วน</p>
+          </article>
+
+          <article style={offerCardStyle}>
+            <h3>Pro</h3>
+            <p>เข้าถึง Hook ระดับ Pro และเครื่องมือค้นหา</p>
+          </article>
+
+          <article style={offerCardStyle}>
+            <h3>พรีเมียม</h3>
+            <p>เข้าถึง Hook พร้อมพรีเมียม แพ็กเฉพาะหมวด และระบบช่วยคัดคุณภาพ</p>
+          </article>
+        </div>
+
+        <Link href="/pricing">
+          <button style={darkButtonStyle}>ไปจัดราคาแพ็กเกจ</button>
         </Link>
       </section>
     </main>
@@ -271,8 +334,8 @@ export default function PricingPage() {
 const heroStyle: CSSProperties = {
   padding: "46px 24px",
   borderRadius: "28px",
-  background: "#eef2ff",
-  border: "1px solid #c7d2fe",
+  background: "#111827",
+  color: "white",
 };
 
 const labelStyle: CSSProperties = {
@@ -281,18 +344,24 @@ const labelStyle: CSSProperties = {
   marginTop: 0,
 };
 
+const darkLabelStyle: CSSProperties = {
+  color: "#a5b4fc",
+  fontWeight: "bold",
+  marginTop: 0,
+};
+
 const titleStyle: CSSProperties = {
   fontSize: "46px",
   lineHeight: "1.12",
   margin: "12px 0",
-  maxWidth: "920px",
+  maxWidth: "980px",
 };
 
 const subtitleStyle: CSSProperties = {
-  color: "#374151",
+  color: "#d1d5db",
   fontSize: "18px",
   lineHeight: "1.8",
-  maxWidth: "860px",
+  maxWidth: "880px",
 };
 
 const buttonRowStyle: CSSProperties = {
@@ -322,27 +391,27 @@ const secondaryButtonStyle: CSSProperties = {
   fontWeight: "bold",
 };
 
-const proofGridStyle: CSSProperties = {
+const summaryGridStyle: CSSProperties = {
   display: "grid",
   gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
   gap: "16px",
   marginTop: "22px",
 };
 
-const proofCardStyle: CSSProperties = {
+const summaryCardStyle: CSSProperties = {
   border: "1px solid #e5e7eb",
   borderRadius: "20px",
   padding: "20px",
   background: "white",
 };
 
-const proofLabelStyle: CSSProperties = {
+const summaryLabelStyle: CSSProperties = {
   marginTop: 0,
   color: "#555",
   fontWeight: "bold",
 };
 
-const proofNumberStyle: CSSProperties = {
+const summaryNumberStyle: CSSProperties = {
   margin: "8px 0",
   fontSize: "38px",
 };
@@ -353,93 +422,6 @@ const mutedTextStyle: CSSProperties = {
   margin: 0,
 };
 
-const pricingGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
-  gap: "18px",
-  marginTop: "28px",
-};
-
-const planCardStyle: CSSProperties = {
-  border: "1px solid #e5e7eb",
-  borderRadius: "24px",
-  padding: "24px",
-  background: "white",
-};
-
-const recommendedCardStyle: CSSProperties = {
-  border: "2px solid #4f46e5",
-  borderRadius: "24px",
-  padding: "24px",
-  background: "#eef2ff",
-  boxShadow: "0 18px 40px rgba(79, 70, 229, 0.15)",
-};
-
-const badgeStyle: CSSProperties = {
-  display: "inline-block",
-  padding: "7px 11px",
-  borderRadius: "999px",
-  background: "#4f46e5",
-  color: "white",
-  fontWeight: "bold",
-  fontSize: "13px",
-  marginTop: 0,
-};
-
-const planNameStyle: CSSProperties = {
-  fontSize: "28px",
-  margin: "12px 0",
-};
-
-const priceRowStyle: CSSProperties = {
-  display: "flex",
-  alignItems: "baseline",
-  gap: "8px",
-};
-
-const priceStyle: CSSProperties = {
-  fontSize: "42px",
-};
-
-const periodStyle: CSSProperties = {
-  color: "#555",
-  fontWeight: "bold",
-};
-
-const planDescriptionStyle: CSSProperties = {
-  color: "#555",
-  lineHeight: "1.8",
-};
-
-const featureListStyle: CSSProperties = {
-  paddingLeft: "20px",
-  color: "#374151",
-  lineHeight: "1.9",
-};
-
-const planButtonStyle: CSSProperties = {
-  width: "100%",
-  marginTop: "18px",
-  padding: "13px 18px",
-  borderRadius: "14px",
-  border: "1px solid #ddd",
-  background: "#f8fafc",
-  cursor: "pointer",
-  fontWeight: "bold",
-};
-
-const recommendedButtonStyle: CSSProperties = {
-  width: "100%",
-  marginTop: "18px",
-  padding: "13px 18px",
-  borderRadius: "14px",
-  border: "1px solid #4f46e5",
-  background: "#4f46e5",
-  color: "white",
-  cursor: "pointer",
-  fontWeight: "bold",
-};
-
 const sectionStyle: CSSProperties = {
   marginTop: "28px",
   padding: "24px",
@@ -448,37 +430,134 @@ const sectionStyle: CSSProperties = {
   background: "white",
 };
 
-const stepGridStyle: CSSProperties = {
+const sectionTopRowStyle: CSSProperties = {
+  display: "flex",
+  justifyContent: "space-between",
+  gap: "16px",
+  flexWrap: "wrap",
+  alignItems: "center",
+};
+
+const smallButtonStyle: CSSProperties = {
+  padding: "10px 14px",
+  borderRadius: "12px",
+  border: "1px solid #ddd",
+  background: "#f8fafc",
+  cursor: "pointer",
+  fontWeight: "bold",
+};
+
+const valueGridStyle: CSSProperties = {
   display: "grid",
   gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))",
   gap: "16px",
-  marginTop: "18px",
+  marginTop: "20px",
 };
 
-const stepCardStyle: CSSProperties = {
+const valueCardStyle: CSSProperties = {
   padding: "20px",
   borderRadius: "20px",
   background: "#f8fafc",
   border: "1px solid #e5e7eb",
-  color: "#374151",
-  lineHeight: "1.8",
 };
 
-const bottomCtaStyle: CSSProperties = {
+const valueTitleStyle: CSSProperties = {
+  marginTop: 0,
+  fontSize: "21px",
+};
+
+const valueTextStyle: CSSProperties = {
+  color: "#555",
+  lineHeight: "1.8",
+  marginBottom: 0,
+};
+
+const categoryGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
+  gap: "18px",
+  marginTop: "20px",
+};
+
+const categoryCardStyle: CSSProperties = {
+  border: "1px solid #e5e7eb",
+  borderRadius: "22px",
+  padding: "20px",
+  background: "#f8fafc",
+};
+
+const categoryTopRowStyle: CSSProperties = {
+  display: "flex",
+  justifyContent: "space-between",
+  gap: "12px",
+  alignItems: "flex-start",
+};
+
+const categoryIconStyle: CSSProperties = {
+  fontSize: "30px",
+  margin: "0 0 8px",
+};
+
+const categoryTitleStyle: CSSProperties = {
+  margin: 0,
+  fontSize: "24px",
+};
+
+const scoreBadgeStyle: CSSProperties = {
+  display: "inline-block",
+  padding: "7px 11px",
+  borderRadius: "999px",
+  background: "#eef2ff",
+  color: "#4f46e5",
+  border: "1px solid #c7d2fe",
+  fontWeight: "bold",
+  fontSize: "13px",
+};
+
+const statGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "repeat(4,1fr)",
+  gap: "8px",
+  marginTop: "14px",
+};
+
+const statBoxStyle: CSSProperties = {
+  padding: "10px",
+  borderRadius: "14px",
+  background: "white",
+  display: "grid",
+  gap: "4px",
+  fontSize: "13px",
+  color: "#555",
+};
+
+const pricingTeaserStyle: CSSProperties = {
   marginTop: "34px",
   padding: "30px 24px",
   borderRadius: "28px",
   background: "#111827",
   color: "white",
-  textAlign: "center",
 };
 
 const darkTextStyle: CSSProperties = {
   color: "#d1d5db",
   lineHeight: "1.8",
   fontSize: "17px",
-  maxWidth: "820px",
-  margin: "0 auto",
+  maxWidth: "860px",
+};
+
+const offerGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
+  gap: "14px",
+  marginTop: "20px",
+};
+
+const offerCardStyle: CSSProperties = {
+  padding: "18px",
+  borderRadius: "18px",
+  background: "#1f2937",
+  border: "1px solid #374151",
 };
 
 const darkButtonStyle: CSSProperties = {

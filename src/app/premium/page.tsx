@@ -117,21 +117,21 @@ export default function PremiumPage() {
   return (
     <main style={{ maxWidth: "1200px", margin: "0 auto", padding: "24px" }}>
       <section style={heroStyle}>
-        <p style={labelStyle}>Premium Creator OS</p>
+        <p style={labelStyle}>แพ็กพรีเมียม</p>
 
         <h1 style={titleStyle}>
-          แพ็ก Premium สำหรับ Creator ที่อยากได้ไอเดียพร้อมใช้ ไม่เสียเวลาคิดเอง
+          แพ็กสำหรับคนทำคอนเทนต์ที่อยากได้ไอเดียพร้อมใช้ ไม่เสียเวลาคิดเอง
         </h1>
 
         <p style={subtitleStyle}>
-          Creator OS ไม่ได้เป็นแค่คลังข้อความ แต่มีระบบคัดคุณภาพ แยก Hook
-          ที่พร้อมใช้จริง ออกจาก Hook ที่ควรปรับก่อนขาย เพื่อให้ผู้ใช้ประหยัดเวลา
-          และเลือกข้อความที่มีโอกาสใช้งานได้จริงมากขึ้น
+          Creator OS ไม่ได้เป็นแค่คลังข้อความ แต่มีระบบช่วยคัดคุณภาพ
+          แยก Hook ที่พร้อมใช้งานจริง ออกจาก Hook ที่ควรปรับก่อน
+          เพื่อให้ผู้ใช้เลือกไอเดียได้ง่ายขึ้น ประหยัดเวลา และนำไปใช้กับงานจริงได้เร็วขึ้น
         </p>
 
         <div style={buttonRowStyle}>
           <Link href="/pricing">
-            <button style={primaryButtonStyle}>ดูแพ็กเกจราคา</button>
+            <button style={primaryButtonStyle}>ดูราคาแพ็กเกจ</button>
           </Link>
 
           <Link href="/hooks">
@@ -155,15 +155,15 @@ export default function PremiumPage() {
           <p style={summaryLabelStyle}>พร้อมใช้เชิงสินค้า</p>
           <h2 style={summaryNumberStyle}>{sellableTotal}</h2>
           <p style={mutedTextStyle}>
-            Premium-ready + Pro รวม {getPercent(sellableTotal, totalHooks)}%
+            ระดับพรีเมียม + ระดับ Pro รวม {getPercent(sellableTotal, totalHooks)}%
           </p>
         </article>
 
         <article style={summaryCardStyle}>
-          <p style={summaryLabelStyle}>Premium-ready</p>
+          <p style={summaryLabelStyle}>พร้อมพรีเมียม</p>
           <h2 style={summaryNumberStyle}>{premiumReady}</h2>
           <p style={mutedTextStyle}>
-            คัดจาก Hook ที่คะแนนสูงสุดและพร้อมขายมากที่สุด
+            Hook ที่คะแนนสูงและเหมาะนำไปทำแพ็กขายมากที่สุด
           </p>
         </article>
 
@@ -179,9 +179,11 @@ export default function PremiumPage() {
       <section style={sectionStyle}>
         <div style={sectionTopRowStyle}>
           <div>
-            <p style={labelStyle}>Why Premium?</p>
+            <p style={labelStyle}>เหตุผลที่ควรมีแพ็กพรีเมียม</p>
 
-            <h2 style={{ margin: "6px 0" }}>ทำไมคนถึงควรจ่ายเงินให้แพ็กนี้</h2>
+            <h2 style={{ margin: "6px 0" }}>
+              ทำไมคนถึงควรจ่ายเงินให้แพ็กนี้
+            </h2>
           </div>
 
           <Link href="/pricing">
@@ -193,15 +195,15 @@ export default function PremiumPage() {
           <article style={valueCardStyle}>
             <h3 style={valueTitleStyle}>ประหยัดเวลาคิด Hook</h3>
             <p style={valueTextStyle}>
-              ผู้ใช้ไม่ต้องเริ่มจากหน้าว่าง แต่เลือกจาก Hook ที่จัดหมวดและตรวจคุณภาพแล้ว
-              ทำให้เริ่มเขียนโพสต์หรือคลิปได้เร็วขึ้น
+              ผู้ใช้ไม่ต้องเริ่มจากหน้าว่าง แต่เลือกจาก Hook ที่จัดหมวด
+              และตรวจคุณภาพแล้ว ทำให้เริ่มเขียนโพสต์หรือทำคลิปได้เร็วขึ้น
             </p>
           </article>
 
           <article style={valueCardStyle}>
             <h3 style={valueTitleStyle}>แยกของดีออกจากของทั่วไป</h3>
             <p style={valueTextStyle}>
-              ระบบแบ่งระดับ Premium-ready, Pro, Free และ Needs rewrite
+              ระบบแบ่งระดับเป็น พร้อมพรีเมียม, Pro, Free และควรเขียนใหม่
               ทำให้ผู้ใช้รู้ว่าอันไหนควรใช้จริง อันไหนควรปรับก่อน
             </p>
           </article>
@@ -209,28 +211,31 @@ export default function PremiumPage() {
           <article style={valueCardStyle}>
             <h3 style={valueTitleStyle}>เหมาะกับ Creator หลายสาย</h3>
             <p style={valueTextStyle}>
-              หมวดต่าง ๆ รองรับ Beauty, Finance, Gaming, AI, Food, Travel,
-              Fitness และต่อยอดเพิ่มหมวดใหม่ได้เรื่อย ๆ
+              รองรับหลายหมวด เช่น ความงาม การเงิน เกม AI อาหาร ท่องเที่ยว
+              ฟิตเนส และสามารถเพิ่มหมวดใหม่ได้เรื่อย ๆ
             </p>
           </article>
 
           <article style={valueCardStyle}>
             <h3 style={valueTitleStyle}>ต่อยอดเป็นระบบทำงานรายวัน</h3>
             <p style={valueTextStyle}>
-              Hook สามารถนำไปใช้ต่อกับ Dashboard, Caption, CTA และ Script
-              เพื่อสร้าง workflow สำหรับทำคอนเทนต์จริง
+              Hook สามารถนำไปใช้ต่อกับภารกิจวันนี้ แคปชัน CTA และสคริปต์
+              เพื่อสร้างขั้นตอนทำคอนเทนต์ที่ใช้งานจริง
             </p>
           </article>
         </div>
       </section>
 
       <section style={sectionStyle}>
-        <p style={labelStyle}>Premium Candidates</p>
+        <p style={labelStyle}>หมวดที่เหมาะทำแพ็กขายก่อน</p>
 
-        <h2 style={{ margin: "6px 0" }}>หมวดที่เหมาะนำไปทำแพ็กขายก่อน</h2>
+        <h2 style={{ margin: "6px 0" }}>
+          หมวดที่มีไอเดียพร้อมใช้มากที่สุด
+        </h2>
 
         <p style={mutedTextStyle}>
-          ระบบเรียงจากจำนวน Hook ระดับ Premium-ready และ Pro เพื่อดูว่าหมวดไหนพร้อมขายมากที่สุด
+          ระบบเรียงจากจำนวน Hook ระดับพร้อมพรีเมียมและระดับ Pro
+          เพื่อดูว่าหมวดไหนเหมาะนำไปทำแพ็กขายก่อน
         </p>
 
         <div style={categoryGridStyle}>
@@ -258,7 +263,7 @@ export default function PremiumPage() {
 
                   <div style={statBoxStyle}>
                     <strong>{category.premiumReady}</strong>
-                    <span>Premium</span>
+                    <span>พรีเมียม</span>
                   </div>
 
                   <div style={statBoxStyle}>
@@ -278,7 +283,7 @@ export default function PremiumPage() {
                   </Link>
 
                   <Link href="/search">
-                    <button style={secondaryButtonStyle}>ค้นหา</button>
+                    <button style={secondaryButtonStyle}>ค้นหาเพิ่ม</button>
                   </Link>
                 </div>
               </article>
@@ -289,21 +294,21 @@ export default function PremiumPage() {
 
       <section style={pricingTeaserStyle}>
         <div>
-          <p style={darkLabelStyle}>Suggested Offer</p>
+          <p style={darkLabelStyle}>โครงสร้างแพ็กที่แนะนำ</p>
 
           <h2 style={{ margin: "8px 0", fontSize: "32px" }}>
-            เริ่มขายแบบง่าย: Free Preview + Pro Pack + Premium Pack
+            เริ่มขายแบบง่าย: ทดลองฟรี + แพ็ก Pro + แพ็กพรีเมียม
           </h2>
 
           <p style={darkTextStyle}>
-            เปิดให้ใช้ฟรีบางส่วนเพื่อให้คนเห็นคุณค่า แล้วล็อก Hook คุณภาพสูง,
-            Template, Workflow และแพ็กเฉพาะหมวดไว้ในแพ็กจ่ายเงิน
+            เปิดให้ใช้ฟรีบางส่วนเพื่อให้คนเห็นคุณค่า แล้วล็อก Hook คุณภาพสูง
+            แม่แบบการใช้งาน ขั้นตอนทำงาน และแพ็กเฉพาะหมวดไว้ในแพ็กจ่ายเงิน
           </p>
         </div>
 
         <div style={offerGridStyle}>
           <article style={offerCardStyle}>
-            <h3>Free</h3>
+            <h3>ใช้ฟรี</h3>
             <p>ให้ลองใช้ Hook พื้นฐานบางส่วน</p>
           </article>
 
@@ -313,13 +318,13 @@ export default function PremiumPage() {
           </article>
 
           <article style={offerCardStyle}>
-            <h3>Premium</h3>
-            <p>เข้าถึง Premium-ready, แพ็กเฉพาะหมวด และระบบช่วยคัดคุณภาพ</p>
+            <h3>พรีเมียม</h3>
+            <p>เข้าถึง Hook พร้อมพรีเมียม แพ็กเฉพาะหมวด และระบบช่วยคัดคุณภาพ</p>
           </article>
         </div>
 
         <Link href="/pricing">
-          <button style={darkButtonStyle}>ไปจัดแพ็กเกจราคา</button>
+          <button style={darkButtonStyle}>ไปจัดราคาแพ็กเกจ</button>
         </Link>
       </section>
     </main>
