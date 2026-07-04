@@ -4,6 +4,9 @@ import Link from "next/link";
 const navItems = [
   { href: "/", label: "หน้าแรก" },
   { href: "/about", label: "เกี่ยวกับเว็บ" },
+  { href: "/faq", label: "FAQ" },
+  { href: "/contact", label: "ติดต่อ" },
+  { href: "/guide", label: "คู่มือ" },
   { href: "/dashboard", label: "ภารกิจวันนี้" },
   { href: "/dashboard/weekly", label: "แผน 7 วัน" },
   { href: "/search", label: "ค้นหา" },

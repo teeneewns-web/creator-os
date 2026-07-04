@@ -1,74 +1,82 @@
 import type { CSSProperties } from "react";
 import Link from "next/link";
 
-const productLinks = [
-  { href: "/dashboard", label: "ภารกิจวันนี้" },
-  { href: "/dashboard/weekly", label: "แผน 7 วัน" },
-  { href: "/search", label: "ค้นหาไอเดีย" },
-  { href: "/favorites", label: "บันทึกไว้" },
-];
-
-const libraryLinks = [
-  { href: "/hooks", label: "คลัง Hook" },
-  { href: "/captions", label: "แคปชัน" },
-  { href: "/cta", label: "CTA / คำชวนให้ทำ" },
-  { href: "/scripts", label: "สคริปต์" },
-];
-
-const businessLinks = [
-  { href: "/quality", label: "มาตรฐานคุณภาพ" },
-  { href: "/quality/hooks", label: "ตรวจคุณภาพ Hook" },
-  { href: "/premium", label: "พรีเมียม" },
-  { href: "/pricing", label: "ราคาแพ็กเกจ" },
+const footerGroups = [
+  {
+    title: "เริ่มใช้งาน",
+    links: [
+      { href: "/", label: "หน้าแรก" },
+      { href: "/about", label: "เกี่ยวกับเว็บ" },
+      { href: "/faq", label: "FAQ / คำถามที่พบบ่อย" },
+      { href: "/contact", label: "ติดต่อ / ข้อเสนอแนะ" },
+      { href: "/guide", label: "คู่มือเริ่มใช้งาน" },
+      { href: "/dashboard", label: "ภารกิจวันนี้" },
+      { href: "/dashboard/weekly", label: "แผน 7 วัน" },
+    ],
+  },
+  {
+    title: "คลังคอนเทนต์",
+    links: [
+      { href: "/hooks", label: "คลัง Hook" },
+      { href: "/search", label: "ค้นหาไอเดีย" },
+      { href: "/favorites", label: "บันทึกไว้" },
+      { href: "/captions", label: "แคปชัน" },
+      { href: "/cta", label: "CTA / คำชวนให้ทำ" },
+      { href: "/scripts", label: "สคริปต์" },
+    ],
+  },
+  {
+    title: "คุณภาพและแพ็กเกจ",
+    links: [
+      { href: "/quality", label: "มาตรฐานคุณภาพ" },
+      { href: "/quality/hooks", label: "ตรวจคุณภาพ Hook" },
+      { href: "/premium", label: "แพ็กพรีเมียม" },
+      { href: "/pricing", label: "ราคาแพ็กเกจ" },
+    ],
+  },
 ];
 
 export default function SiteFooter() {
   return (
     <footer style={footerStyle}>
       <div style={innerStyle}>
-        <section style={brandBoxStyle}>
-          <h2 style={brandTitleStyle}>Creator OS</h2>
+        <section style={brandSectionStyle}>
+          <Link href="/" style={brandLinkStyle}>
+            Creator OS
+          </Link>
 
           <p style={brandTextStyle}>
-            ระบบช่วยคนทำคอนเทนต์ ค้นหา Hook บันทึกไอเดีย
-            ตรวจคุณภาพ และต่อยอดเป็นแพ็กพรีเมียมในอนาคต
+            ระบบผู้ช่วยทำคอนเทนต์สำหรับ Creator เจ้าของเพจ เจ้าของร้าน
+            และคนที่อยากเริ่มทำคอนเทนต์โดยไม่ต้องเริ่มจากหน้าว่าง
           </p>
+
+          <div style={badgeRowStyle}>
+            <span style={badgeStyle}>Hook Library</span>
+            <span style={badgeStyle}>Dashboard</span>
+            <span style={badgeStyle}>Premium-ready</span>
+          </div>
         </section>
 
-        <section style={linkColumnStyle}>
-          <h3 style={columnTitleStyle}>เครื่องมือหลัก</h3>
+        <section style={linkGridStyle}>
+          {footerGroups.map((group) => (
+            <div key={group.title}>
+              <h3 style={groupTitleStyle}>{group.title}</h3>
 
-          {productLinks.map((item) => (
-            <Link key={item.href} href={item.href} style={linkStyle}>
-              {item.label}
-            </Link>
-          ))}
-        </section>
-
-        <section style={linkColumnStyle}>
-          <h3 style={columnTitleStyle}>คลังคอนเทนต์</h3>
-
-          {libraryLinks.map((item) => (
-            <Link key={item.href} href={item.href} style={linkStyle}>
-              {item.label}
-            </Link>
-          ))}
-        </section>
-
-        <section style={linkColumnStyle}>
-          <h3 style={columnTitleStyle}>สำหรับการขาย</h3>
-
-          {businessLinks.map((item) => (
-            <Link key={item.href} href={item.href} style={linkStyle}>
-              {item.label}
-            </Link>
+              <nav style={linkListStyle}>
+                {group.links.map((link) => (
+                  <Link key={link.href} href={link.href} style={footerLinkStyle}>
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
           ))}
         </section>
       </div>
 
-      <div style={bottomStyle}>
-        <p style={{ margin: 0 }}>
-          © Creator OS — ระบบช่วยวางแผนและสร้างคอนเทนต์สำหรับ Creator
+      <div style={bottomBarStyle}>
+        <p style={bottomTextStyle}>
+          © Creator OS — ระบบช่วยวางแผน หาไอเดีย และตรวจคุณภาพคอนเทนต์
         </p>
       </div>
     </footer>
@@ -77,56 +85,85 @@ export default function SiteFooter() {
 
 const footerStyle: CSSProperties = {
   marginTop: "48px",
-  borderTop: "1px solid #e5e7eb",
-  background: "#f8fafc",
+  background: "#111827",
+  color: "white",
 };
 
 const innerStyle: CSSProperties = {
   maxWidth: "1200px",
   margin: "0 auto",
-  padding: "32px 24px",
+  padding: "34px 24px",
   display: "grid",
-  gridTemplateColumns: "minmax(260px, 1.4fr) repeat(3, minmax(160px, 1fr))",
-  gap: "24px",
+  gridTemplateColumns: "minmax(260px,360px) minmax(0,1fr)",
+  gap: "34px",
 };
 
-const brandBoxStyle: CSSProperties = {
-  maxWidth: "420px",
+const brandSectionStyle: CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
+  gap: "12px",
 };
 
-const brandTitleStyle: CSSProperties = {
-  marginTop: 0,
-  marginBottom: "10px",
-  fontSize: "24px",
+const brandLinkStyle: CSSProperties = {
+  color: "white",
+  textDecoration: "none",
+  fontSize: "26px",
+  fontWeight: "bold",
 };
 
 const brandTextStyle: CSSProperties = {
-  color: "#555",
+  color: "#d1d5db",
   lineHeight: "1.8",
   margin: 0,
 };
 
-const linkColumnStyle: CSSProperties = {
+const badgeRowStyle: CSSProperties = {
+  display: "flex",
+  gap: "8px",
+  flexWrap: "wrap",
+};
+
+const badgeStyle: CSSProperties = {
+  display: "inline-block",
+  padding: "7px 10px",
+  borderRadius: "999px",
+  background: "#1f2937",
+  border: "1px solid #374151",
+  color: "#d1d5db",
+  fontSize: "13px",
+  fontWeight: "bold",
+};
+
+const linkGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))",
+  gap: "24px",
+};
+
+const groupTitleStyle: CSSProperties = {
+  margin: "0 0 12px",
+  fontSize: "17px",
+};
+
+const linkListStyle: CSSProperties = {
   display: "grid",
   gap: "10px",
-  alignContent: "start",
 };
 
-const columnTitleStyle: CSSProperties = {
-  margin: 0,
-  fontSize: "16px",
-};
-
-const linkStyle: CSSProperties = {
-  color: "#374151",
+const footerLinkStyle: CSSProperties = {
+  color: "#d1d5db",
   textDecoration: "none",
-  fontSize: "14px",
+  lineHeight: "1.5",
 };
 
-const bottomStyle: CSSProperties = {
+const bottomBarStyle: CSSProperties = {
+  borderTop: "1px solid #1f2937",
+  padding: "16px 24px",
+};
+
+const bottomTextStyle: CSSProperties = {
   maxWidth: "1200px",
   margin: "0 auto",
-  padding: "16px 24px 24px",
-  color: "#6b7280",
+  color: "#9ca3af",
   fontSize: "14px",
 };
