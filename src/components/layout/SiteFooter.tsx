@@ -89,6 +89,7 @@ const footerStyle: CSSProperties = {
   marginTop: "48px",
   background: "#111827",
   color: "white",
+  overflowX: "hidden",
 };
 
 const innerStyle: CSSProperties = {
@@ -96,7 +97,7 @@ const innerStyle: CSSProperties = {
   margin: "0 auto",
   padding: "34px 24px",
   display: "grid",
-  gridTemplateColumns: "minmax(260px,360px) minmax(0,1fr)",
+  gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
   gap: "34px",
 };
 
@@ -138,7 +139,7 @@ const badgeStyle: CSSProperties = {
 
 const linkGridStyle: CSSProperties = {
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))",
+  gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 180px), 1fr))",
   gap: "24px",
 };
 

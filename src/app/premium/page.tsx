@@ -244,7 +244,8 @@ export default function PremiumPage() {
 const mainStyle: CSSProperties = {
   maxWidth: "1200px",
   margin: "0 auto",
-  padding: "24px",
+  padding: "clamp(14px, 4vw, 24px)",
+  overflowX: "hidden",
 };
 
 const heroStyle: CSSProperties = {
@@ -261,7 +262,7 @@ const labelStyle: CSSProperties = {
 };
 
 const titleStyle: CSSProperties = {
-  fontSize: "46px",
+  fontSize: "clamp(34px, 8vw, 48px)",
   lineHeight: "1.12",
   margin: "12px 0",
   maxWidth: "980px",

@@ -324,11 +324,12 @@ export default function ContactPage() {
 const mainStyle: CSSProperties = {
   maxWidth: "1200px",
   margin: "0 auto",
-  padding: "24px",
+  padding: "clamp(14px, 4vw, 24px)",
+  overflowX: "hidden",
 };
 
 const heroStyle: CSSProperties = {
-  padding: "46px 24px",
+  padding: "clamp(30px, 7vw, 46px) clamp(18px, 5vw, 24px)",
   borderRadius: "28px",
   background: "#111827",
   color: "white",
@@ -341,7 +342,7 @@ const labelStyle: CSSProperties = {
 };
 
 const titleStyle: CSSProperties = {
-  fontSize: "46px",
+  fontSize: "clamp(34px, 9vw, 46px)",
   lineHeight: "1.12",
   margin: "12px 0",
   maxWidth: "980px",
@@ -425,7 +426,7 @@ const mutedTextStyle: CSSProperties = {
 
 const formGridStyle: CSSProperties = {
   display: "grid",
-  gridTemplateColumns: "minmax(0,1fr) minmax(280px,420px)",
+  gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))",
   gap: "22px",
   marginTop: "28px",
 };
@@ -499,8 +500,10 @@ const summaryBoxStyle: CSSProperties = {
   padding: "16px",
   lineHeight: "1.7",
   color: "#374151",
-  minHeight: "240px",
+  minHeight: "180px",
   overflowX: "auto",
+  maxWidth: "100%",
+  boxSizing: "border-box",
 };
 
 const tipBoxStyle: CSSProperties = {

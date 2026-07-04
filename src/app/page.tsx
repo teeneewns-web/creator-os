@@ -312,8 +312,8 @@ export default function HomePage() {
 }
 
 const heroStyle: CSSProperties = {
-  padding: "50px 24px",
-  borderRadius: "30px",
+  padding: "clamp(30px, 7vw, 50px) clamp(18px, 5vw, 24px)",
+  borderRadius: "28px",
   background: "#111827",
   color: "white",
 };
@@ -331,7 +331,7 @@ const darkLabelStyle: CSSProperties = {
 };
 
 const titleStyle: CSSProperties = {
-  fontSize: "48px",
+  fontSize: "clamp(34px, 8vw, 48px)",
   lineHeight: "1.12",
   margin: "12px 0",
   maxWidth: "980px",
@@ -427,7 +427,7 @@ const statsGridStyle: CSSProperties = {
 const statCardStyle: CSSProperties = {
   border: "1px solid #e5e7eb",
   borderRadius: "20px",
-  padding: "20px",
+  padding: "18px",
   background: "white",
 };
 
@@ -438,8 +438,8 @@ const statLabelStyle: CSSProperties = {
 };
 
 const statNumberStyle: CSSProperties = {
-  margin: "8px 0",
-  fontSize: "40px",
+  margin: "6px 0",
+  fontSize: "clamp(32px, 9vw, 40px)",
 };
 
 const mutedTextStyle: CSSProperties = {
