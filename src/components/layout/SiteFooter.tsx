@@ -12,6 +12,8 @@ const footerGroups = [
       { href: "/guide", label: "คู่มือเริ่มใช้งาน" },
       { href: "/dashboard", label: "ภารกิจวันนี้" },
       { href: "/dashboard/weekly", label: "แผน 7 วัน" },
+      { href: "/privacy", label: "นโยบายความเป็นส่วนตัว" },
+      { href: "/terms", label: "เงื่อนไขการใช้งาน" },
     ],
   },
   {

@@ -1,239 +1,331 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { useMemo, useState } from "react";
 import Link from "next/link";
-import CopyButton from "../../components/dashboard/CopyButton";
+import { useEffect,useMemo, useState } from "react";
 
-type ContactType = "feedback" | "bug" | "category" | "premium" | "other";
+type ContactType =
+  | "interest-pro"
+  | "interest-premium"
+  | "custom-pack"
+  | "new-category"
+  | "bug"
+  | "feedback"
+  | "other";
 
-const contactTypes = [
-  { value: "feedback", label: "ข้อเสนอแนะทั่วไป" },
-  { value: "bug", label: "แจ้งปัญหาการใช้งาน" },
-  { value: "category", label: "เสนอหมวดคอนเทนต์ใหม่" },
-  { value: "premium", label: "สนใจแพ็กพรีเมียม" },
-  { value: "other", label: "เรื่องอื่น ๆ" },
+const contactTypes: {
+  value: ContactType;
+  label: string;
+  description: string;
+  placeholder: string;
+}[] = [
+  {
+    value: "interest-pro",
+    label: "สนใจแพ็ก Pro",
+    description: "สำหรับผู้ใช้ที่อยากใช้ Creator OS จริงจังขึ้น",
+    placeholder:
+      "เช่น สนใจแพ็ก Pro สำหรับทำคอนเทนต์ทุกวัน อยากรู้ว่าจะมีอะไรให้ใช้บ้าง",
+  },
+  {
+    value: "interest-premium",
+    label: "สนใจแพ็กพรีเมียม",
+    description: "สำหรับผู้ใช้ที่อยากได้ Hook, CTA, แคปชัน หรือสคริปต์คัดคุณภาพ",
+    placeholder:
+      "เช่น สนใจแพ็กพรีเมียม อยากได้ Hook คุณภาพสูงสำหรับขายของออนไลน์",
+  },
+  {
+    value: "custom-pack",
+    label: "อยากได้แพ็กหมวดเฉพาะ",
+    description: "ใช้บอกว่าอยากให้ทำแพ็กสำหรับธุรกิจหรือกลุ่มเฉพาะ",
+    placeholder:
+      "เช่น อยากได้แพ็กสำหรับร้านอาหาร อสังหา ความงาม ฟิตเนส นายหน้า หรือ TikTok",
+  },
+  {
+    value: "new-category",
+    label: "อยากเสนอหมวดใหม่",
+    description: "ใช้เสนอหมวด Hook หรือคอนเทนต์ที่ยังไม่มีในระบบ",
+    placeholder:
+      "เช่น อยากให้มีหมวดแม่ค้าออนไลน์ หมวดขายคอร์ส หมวดนายหน้า หมวดท่องเที่ยว",
+  },
+  {
+    value: "bug",
+    label: "แจ้งปัญหา",
+    description: "ใช้แจ้งปุ่มกดไม่ได้ หน้าไม่ขึ้น ข้อมูลหาย หรือเว็บแสดงผลผิด",
+    placeholder:
+      "เช่น กดปุ่มแล้วไม่ไปหน้าใหม่ หน้าแสดงผลเพี้ยน หรือข้อมูลที่บันทึกไว้หาย",
+  },
+  {
+    value: "feedback",
+    label: "ข้อเสนอแนะทั่วไป",
+    description: "ใช้บอกความเห็น ความต้องการ หรือสิ่งที่อยากให้ปรับปรุง",
+    placeholder:
+      "เช่น อยากให้หน้าใช้ง่ายขึ้น อยากให้เพิ่มตัวอย่าง อยากให้คำอธิบายสั้นลง",
+  },
+  {
+    value: "other",
+    label: "อื่น ๆ",
+    description: "ใช้สำหรับเรื่องอื่นที่ไม่ตรงกับตัวเลือกด้านบน",
+    placeholder: "พิมพ์รายละเอียดที่อยากบอกทีมงานได้เลย",
+  },
 ];
 
-function getTypeLabel(value: ContactType) {
-  return contactTypes.find((item) => item.value === value)?.label || "เรื่องอื่น ๆ";
+const validContactTypeValues: ContactType[] = contactTypes.map(
+  (type) => type.value
+);
+
+function isContactType(value: string | null): value is ContactType {
+  return validContactTypeValues.includes(value as ContactType);
+}
+
+function getContactTypeLabel(value: ContactType) {
+  const item = contactTypes.find((type) => type.value === value);
+  return item?.label || "อื่น ๆ";
+}
+
+function getPlaceholder(value: ContactType) {
+  const item = contactTypes.find((type) => type.value === value);
+  return item?.placeholder || "พิมพ์รายละเอียดที่อยากบอกทีมงานได้เลย";
 }
 
 export default function ContactPage() {
   const [contactType, setContactType] = useState<ContactType>("feedback");
   const [name, setName] = useState("");
-  const [contact, setContact] = useState("");
-  const [message, setMessage] = useState("");
+  const [contactChannel, setContactChannel] = useState("");
+  const [detail, setDetail] = useState("");
+  const [copied, setCopied] = useState(false);
+  
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const type = params.get("type");
+
+    if (isContactType(type)) {
+      setContactType(type);
+    }
+  }, []);
 
   const summaryText = useMemo(() => {
     return [
-      "ข้อเสนอแนะจากผู้ใช้ Creator OS",
+      "ข้อความจากหน้า Contact / Creator OS",
       "",
-      "ประเภท: " + getTypeLabel(contactType),
-      "ชื่อ: " + (name || "-"),
-      "ช่องทางติดต่อ: " + (contact || "-"),
+      `ประเภทข้อความ: ${getContactTypeLabel(contactType)}`,
+      `ชื่อ / ชื่อเพจ: ${name || "-"}`,
+      `ช่องทางติดต่อ: ${contactChannel || "-"}`,
       "",
       "รายละเอียด:",
-      message || "-",
+      detail || "-",
     ].join("\n");
-  }, [contactType, name, contact, message]);
+  }, [contactType, name, contactChannel, detail]);
+
+  async function copyMessage() {
+    try {
+      await navigator.clipboard.writeText(summaryText);
+      setCopied(true);
+
+      window.setTimeout(() => {
+        setCopied(false);
+      }, 1800);
+    } catch {
+      setCopied(false);
+      alert("คัดลอกไม่สำเร็จ กรุณาคัดลอกข้อความจากกรอบสรุปด้วยตัวเอง");
+    }
+  }
 
   function clearForm() {
     setContactType("feedback");
     setName("");
-    setContact("");
-    setMessage("");
+    setContactChannel("");
+    setDetail("");
+    setCopied(false);
   }
 
   return (
-    <main style={{ maxWidth: "1100px", margin: "0 auto", padding: "24px" }}>
+    <main style={mainStyle}>
       <section style={heroStyle}>
         <p style={labelStyle}>ติดต่อ / ข้อเสนอแนะ</p>
 
-        <h1 style={titleStyle}>อยากเสนอหมวดใหม่ แจ้งปัญหา หรือบอกสิ่งที่ควรปรับ</h1>
+        <h1 style={titleStyle}>บอกทีมงานว่าอยากได้อะไรจาก Creator OS</h1>
 
         <p style={subtitleStyle}>
-          หน้านี้ทำไว้สำหรับรวบรวมข้อความจากผู้ใช้ เช่น อยากให้เพิ่มหมวด Hook ใหม่
-          พบปัญหาการใช้งาน อยากเสนอฟีเจอร์ หรือสนใจแพ็กพรีเมียม
+          ใช้หน้านี้สำหรับแจ้งปัญหา เสนอหมวดใหม่ สนใจแพ็ก Pro
+          สนใจแพ็กพรีเมียม หรือบอกความต้องการจริงก่อนที่ระบบจะเปิดขายเต็มรูปแบบ
         </p>
 
         <div style={buttonRowStyle}>
+          <Link href="/pricing">
+            <button style={secondaryButtonStyle}>อ่านราคาแพ็กเกจ</button>
+          </Link>
+
+          <Link href="/premium">
+            <button style={secondaryButtonStyle}>ดูแพ็กพรีเมียม</button>
+          </Link>
+
           <Link href="/faq">
             <button style={secondaryButtonStyle}>อ่าน FAQ ก่อน</button>
           </Link>
-
-          <Link href="/about">
-            <button style={secondaryButtonStyle}>เกี่ยวกับเว็บ</button>
-          </Link>
-
-          <Link href="/dashboard">
-            <button style={primaryButtonStyle}>เริ่มภารกิจวันนี้</button>
-          </Link>
         </div>
       </section>
 
-      <section style={summaryGridStyle}>
-        <article style={summaryCardStyle}>
-          <p style={summaryLabelStyle}>ใช้สำหรับ</p>
-          <h2 style={summaryTitleStyle}>รับฟังผู้ใช้</h2>
+      <section style={infoGridStyle}>
+        <article style={infoCardStyle}>
+          <h2 style={infoTitleStyle}>รับฟังผู้ใช้ก่อนขายจริง</h2>
           <p style={mutedTextStyle}>
-            ให้ผู้ใช้บอกได้ว่าอยากให้เว็บเพิ่มอะไร หรือจุดไหนยังใช้งานยาก
+            ตอนนี้หน้านี้ทำหน้าที่เก็บความต้องการก่อน เช่น คนอยากได้แพ็กไหน
+            อยากให้เพิ่มหมวดอะไร หรือมีปัญหาตรงไหน
           </p>
         </article>
 
-        <article style={summaryCardStyle}>
-          <p style={summaryLabelStyle}>ช่วยเรื่องการขาย</p>
-          <h2 style={summaryTitleStyle}>รู้ความต้องการจริง</h2>
+        <article style={infoCardStyle}>
+          <h2 style={infoTitleStyle}>ยังไม่ใช่ระบบส่งข้อความจริง</h2>
           <p style={mutedTextStyle}>
-            ถ้ามีคนเสนอหมวดหรือฟีเจอร์ซ้ำ ๆ แปลว่าอาจเป็นสิ่งที่ควรทำเป็นแพ็กขาย
-          </p>
-        </article>
-
-        <article style={summaryCardStyle}>
-          <p style={summaryLabelStyle}>สถานะตอนนี้</p>
-          <h2 style={summaryTitleStyle}>คัดลอกข้อความ</h2>
-          <p style={mutedTextStyle}>
-            ตอนนี้ยังไม่ส่งเข้าระบบหลังบ้าน ให้คัดลอกข้อความไปเก็บหรือส่งต่อก่อน
+            ตอนนี้ให้กรอกข้อมูล แล้วกดคัดลอกข้อความ เพื่อนำข้อความไปส่งต่อหรือเก็บไว้ก่อน
+            ภายหลังค่อยต่อระบบส่งอีเมลหรือฐานข้อมูลจริง
           </p>
         </article>
       </section>
 
-      <section style={sectionStyle}>
-        <div style={sectionTopRowStyle}>
-          <div>
-            <p style={labelStyle}>แบบฟอร์มข้อความ</p>
+      <section style={formGridStyle}>
+        <article style={formCardStyle}>
+          <p style={labelStyle}>แบบฟอร์มข้อความ</p>
 
-            <h2 style={{ margin: "6px 0" }}>กรอกข้อมูลที่อยากบอกทีม Creator OS</h2>
+          <h2 style={{ margin: "6px 0" }}>อยากบอกทีมงานเรื่องอะไร?</h2>
 
-            <p style={mutedTextStyle}>
-              กรอกเสร็จแล้วกดคัดลอกข้อความ เพื่อเอาไปส่งต่อ เก็บไว้
-              หรือใช้เป็นข้อมูลพัฒนาฟีเจอร์ต่อไป
-            </p>
-          </div>
-
-          <CopyButton text={summaryText} />
-        </div>
-
-        <div style={formGridStyle}>
-          <label style={fieldStyle}>
-            <span style={fieldLabelStyle}>ประเภทข้อความ</span>
+          <div style={fieldGroupStyle}>
+            <label style={labelTextStyle}>ประเภทข้อความ</label>
 
             <select
               value={contactType}
-              onChange={(event) =>
-                setContactType(event.target.value as ContactType)
-              }
-              style={inputStyle}
+              onChange={(event) => setContactType(event.target.value as ContactType)}
+              style={selectStyle}
             >
-              {contactTypes.map((item) => (
-                <option key={item.value} value={item.value}>
-                  {item.label}
+              {contactTypes.map((type) => (
+                <option key={type.value} value={type.value}>
+                  {type.label}
                 </option>
               ))}
             </select>
-          </label>
 
-          <label style={fieldStyle}>
-            <span style={fieldLabelStyle}>ชื่อหรือชื่อเพจ</span>
+            <p style={helperTextStyle}>
+              {contactTypes.find((type) => type.value === contactType)?.description}
+            </p>
+          </div>
+
+          <div style={fieldGroupStyle}>
+            <label style={labelTextStyle}>ชื่อ / ชื่อเพจ</label>
 
             <input
               value={name}
               onChange={(event) => setName(event.target.value)}
-              placeholder="เช่น เจ้าของร้านเสื้อผ้า / Creator มือใหม่"
+              placeholder="เช่น ร้านของฉัน / เพจ Creator มือใหม่ / ชื่อเล่น"
               style={inputStyle}
             />
-          </label>
+          </div>
 
-          <label style={fieldStyle}>
-            <span style={fieldLabelStyle}>ช่องทางติดต่อ</span>
+          <div style={fieldGroupStyle}>
+            <label style={labelTextStyle}>ช่องทางติดต่อ</label>
 
             <input
-              value={contact}
-              onChange={(event) => setContact(event.target.value)}
-              placeholder="เช่น อีเมล, LINE, Facebook, TikTok"
+              value={contactChannel}
+              onChange={(event) => setContactChannel(event.target.value)}
+              placeholder="เช่น อีเมล, LINE, Facebook, TikTok หรือช่องทางที่สะดวก"
               style={inputStyle}
             />
-          </label>
-        </div>
+          </div>
 
-        <label style={messageFieldStyle}>
-          <span style={fieldLabelStyle}>รายละเอียด</span>
+          <div style={fieldGroupStyle}>
+            <label style={labelTextStyle}>รายละเอียด</label>
 
-          <textarea
-            value={message}
-            onChange={(event) => setMessage(event.target.value)}
-            placeholder="เขียนสิ่งที่อยากเสนอ เช่น อยากให้เพิ่มหมวดอสังหา, หมวดแม่ค้าออนไลน์, หมวดคลิปสั้นสายตลก, หรือเจอปัญหาปุ่มกดไม่ได้..."
-            style={textareaStyle}
-          />
-        </label>
+            <textarea
+              value={detail}
+              onChange={(event) => setDetail(event.target.value)}
+              placeholder={getPlaceholder(contactType)}
+              rows={8}
+              style={textareaStyle}
+            />
+          </div>
 
-        <div style={buttonRowStyle}>
-          <CopyButton text={summaryText} />
+          <div style={buttonRowStyle}>
+            <button type="button" onClick={copyMessage} style={primaryButtonStyle}>
+              {copied ? "คัดลอกแล้ว" : "คัดลอกข้อความ"}
+            </button>
 
-          <button type="button" onClick={clearForm} style={secondaryButtonStyle}>
-            ล้างข้อความ
-          </button>
-        </div>
+            <button type="button" onClick={clearForm} style={clearButtonStyle}>
+              ล้างข้อความ
+            </button>
+          </div>
+        </article>
+
+        <article style={summaryCardStyle}>
+          <p style={labelStyle}>สรุปข้อความ</p>
+
+          <h2 style={{ margin: "6px 0" }}>ข้อความที่จะคัดลอก</h2>
+
+          <pre style={summaryBoxStyle}>{summaryText}</pre>
+
+          <div style={tipBoxStyle}>
+            <h3 style={{ marginTop: 0 }}>ตัวอย่างการใช้หน้านี้</h3>
+
+            <p style={mutedTextStyle}>
+              ถ้าผู้ใช้กดมาจากหน้า Pricing หรือ Premium ให้เลือกประเภท
+              “สนใจแพ็ก Pro”, “สนใจแพ็กพรีเมียม” หรือ “อยากได้แพ็กหมวดเฉพาะ”
+              แล้วพิมพ์สิ่งที่ต้องการ
+            </p>
+          </div>
+        </article>
       </section>
 
-      <section style={sectionStyle}>
-        <p style={labelStyle}>ตัวอย่างเรื่องที่แจ้งได้</p>
+      <section style={quickChoiceStyle}>
+        <p style={labelStyle}>เลือกเร็ว</p>
 
-        <h2 style={{ margin: "6px 0" }}>ผู้ใช้ควรส่งอะไรมาได้บ้าง</h2>
+        <h2 style={{ margin: "6px 0" }}>หัวข้อที่อยากให้ผู้ใช้ส่งเข้ามามากที่สุด</h2>
 
-        <div style={exampleGridStyle}>
-          <article style={exampleCardStyle}>
-            <h3>เสนอหมวดใหม่</h3>
-            <p>
-              เช่น Hook สำหรับอสังหา, ร้านอาหาร, นายหน้า, แม่ค้าออนไลน์,
-              คลินิกความงาม หรือคอนเทนต์สายต่างประเทศ
-            </p>
-          </article>
-
-          <article style={exampleCardStyle}>
-            <h3>แจ้งปัญหา</h3>
-            <p>
-              เช่น ปุ่มกดไม่ได้ หน้าโหลดช้า ค้นหาไม่เจอข้อมูล หรือข้อความบางส่วนอ่านยาก
-            </p>
-          </article>
-
-          <article style={exampleCardStyle}>
-            <h3>ขอฟีเจอร์</h3>
-            <p>
-              เช่น อยากให้มีระบบสร้างแผนโพสต์ 30 วัน ระบบ export หรือระบบจัดแพ็กขาย
-            </p>
-          </article>
-
-          <article style={exampleCardStyle}>
-            <h3>สนใจพรีเมียม</h3>
-            <p>
-              เช่น อยากได้ Hook คุณภาพสูงเฉพาะธุรกิจ หรือแพ็กคอนเทนต์สำหรับสายงานเฉพาะ
-            </p>
-          </article>
+        <div style={quickGridStyle}>
+          {contactTypes.map((type) => (
+            <button
+              key={type.value}
+              type="button"
+              onClick={() => setContactType(type.value)}
+              style={
+                contactType === type.value
+                  ? quickButtonActiveStyle
+                  : quickButtonStyle
+              }
+            >
+              {type.label}
+            </button>
+          ))}
         </div>
       </section>
 
       <section style={bottomCtaStyle}>
-        <h2 style={{ marginTop: 0 }}>หลังจากมีผู้ใช้จริง ค่อยต่อระบบส่งข้อความ</h2>
+        <h2 style={{ marginTop: 0 }}>ยังไม่แน่ใจว่าจะเลือกอะไร?</h2>
 
         <p style={bottomTextStyle}>
-          ตอนนี้หน้านี้ใช้สร้างความน่าเชื่อถือและเก็บรูปแบบข้อความก่อน
-          ภายหลังค่อยต่อกับอีเมล ฐานข้อมูล หรือระบบหลังบ้านได้
+          อ่านหน้า FAQ หรือหน้าเกี่ยวกับเว็บก่อน แล้วค่อยกลับมาส่งข้อเสนอแนะได้
         </p>
 
         <div style={buttonRowCenterStyle}>
-          <Link href="/pricing">
-            <button style={darkButtonStyle}>ดูราคาแพ็กเกจ</button>
+          <Link href="/faq">
+            <button style={darkButtonStyle}>อ่าน FAQ ก่อน</button>
           </Link>
 
-          <Link href="/premium">
-            <button style={darkSecondaryButtonStyle}>ดูแพ็กพรีเมียม</button>
+          <Link href="/about">
+            <button style={darkSecondaryButtonStyle}>เกี่ยวกับเว็บ</button>
+          </Link>
+
+          <Link href="/dashboard">
+            <button style={darkSecondaryButtonStyle}>เริ่มภารกิจวันนี้</button>
           </Link>
         </div>
       </section>
     </main>
   );
 }
+
+const mainStyle: CSSProperties = {
+  maxWidth: "1200px",
+  margin: "0 auto",
+  padding: "24px",
+};
 
 const heroStyle: CSSProperties = {
   padding: "46px 24px",
@@ -249,17 +341,17 @@ const labelStyle: CSSProperties = {
 };
 
 const titleStyle: CSSProperties = {
-  fontSize: "44px",
+  fontSize: "46px",
   lineHeight: "1.12",
   margin: "12px 0",
-  maxWidth: "960px",
+  maxWidth: "980px",
 };
 
 const subtitleStyle: CSSProperties = {
   color: "#d1d5db",
   fontSize: "18px",
   lineHeight: "1.8",
-  maxWidth: "850px",
+  maxWidth: "880px",
 };
 
 const buttonRowStyle: CSSProperties = {
@@ -297,74 +389,70 @@ const secondaryButtonStyle: CSSProperties = {
   fontWeight: "bold",
 };
 
-const summaryGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))",
-  gap: "16px",
-  marginTop: "22px",
-};
-
-const summaryCardStyle: CSSProperties = {
-  border: "1px solid #e5e7eb",
-  borderRadius: "20px",
-  padding: "20px",
-  background: "white",
-};
-
-const summaryLabelStyle: CSSProperties = {
-  marginTop: 0,
-  color: "#555",
+const clearButtonStyle: CSSProperties = {
+  padding: "12px 18px",
+  borderRadius: "14px",
+  border: "1px solid #ddd",
+  background: "#f8fafc",
+  color: "#111827",
+  cursor: "pointer",
   fontWeight: "bold",
 };
 
-const summaryTitleStyle: CSSProperties = {
-  margin: "8px 0",
-  fontSize: "26px",
+const infoGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))",
+  gap: "16px",
+  marginTop: "24px",
+};
+
+const infoCardStyle: CSSProperties = {
+  padding: "22px",
+  borderRadius: "22px",
+  background: "#eef2ff",
+  border: "1px solid #c7d2fe",
+};
+
+const infoTitleStyle: CSSProperties = {
+  marginTop: 0,
 };
 
 const mutedTextStyle: CSSProperties = {
-  color: "#555",
-  lineHeight: "1.7",
+  color: "#374151",
+  lineHeight: "1.8",
   margin: 0,
-};
-
-const sectionStyle: CSSProperties = {
-  marginTop: "28px",
-  padding: "24px",
-  borderRadius: "24px",
-  border: "1px solid #e5e7eb",
-  background: "white",
-};
-
-const sectionTopRowStyle: CSSProperties = {
-  display: "flex",
-  justifyContent: "space-between",
-  gap: "16px",
-  flexWrap: "wrap",
-  alignItems: "center",
 };
 
 const formGridStyle: CSSProperties = {
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))",
-  gap: "16px",
-  marginTop: "20px",
+  gridTemplateColumns: "minmax(0,1fr) minmax(280px,420px)",
+  gap: "22px",
+  marginTop: "28px",
 };
 
-const fieldStyle: CSSProperties = {
+const formCardStyle: CSSProperties = {
+  padding: "24px",
+  borderRadius: "24px",
+  background: "white",
+  border: "1px solid #e5e7eb",
+};
+
+const summaryCardStyle: CSSProperties = {
+  padding: "24px",
+  borderRadius: "24px",
+  background: "white",
+  border: "1px solid #e5e7eb",
+};
+
+const fieldGroupStyle: CSSProperties = {
   display: "grid",
   gap: "8px",
+  marginTop: "18px",
 };
 
-const messageFieldStyle: CSSProperties = {
-  display: "grid",
-  gap: "8px",
-  marginTop: "16px",
-};
-
-const fieldLabelStyle: CSSProperties = {
+const labelTextStyle: CSSProperties = {
   fontWeight: "bold",
-  color: "#374151",
+  color: "#111827",
 };
 
 const inputStyle: CSSProperties = {
@@ -373,35 +461,89 @@ const inputStyle: CSSProperties = {
   padding: "12px 14px",
   borderRadius: "14px",
   border: "1px solid #d1d5db",
-  fontSize: "16px",
+  fontSize: "15px",
+};
+
+const selectStyle: CSSProperties = {
+  width: "100%",
+  boxSizing: "border-box",
+  padding: "12px 14px",
+  borderRadius: "14px",
+  border: "1px solid #d1d5db",
+  fontSize: "15px",
+  background: "white",
 };
 
 const textareaStyle: CSSProperties = {
   width: "100%",
   boxSizing: "border-box",
-  minHeight: "170px",
-  padding: "14px 16px",
-  borderRadius: "16px",
+  padding: "12px 14px",
+  borderRadius: "14px",
   border: "1px solid #d1d5db",
-  fontSize: "16px",
+  fontSize: "15px",
   lineHeight: "1.7",
   resize: "vertical",
 };
 
-const exampleGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(230px,1fr))",
-  gap: "16px",
-  marginTop: "20px",
+const helperTextStyle: CSSProperties = {
+  color: "#6b7280",
+  lineHeight: "1.6",
+  margin: 0,
 };
 
-const exampleCardStyle: CSSProperties = {
-  padding: "20px",
-  borderRadius: "20px",
+const summaryBoxStyle: CSSProperties = {
+  whiteSpace: "pre-wrap",
   background: "#f8fafc",
   border: "1px solid #e5e7eb",
+  borderRadius: "18px",
+  padding: "16px",
+  lineHeight: "1.7",
   color: "#374151",
-  lineHeight: "1.8",
+  minHeight: "240px",
+  overflowX: "auto",
+};
+
+const tipBoxStyle: CSSProperties = {
+  marginTop: "16px",
+  padding: "16px",
+  borderRadius: "18px",
+  background: "#eef2ff",
+  border: "1px solid #c7d2fe",
+};
+
+const quickChoiceStyle: CSSProperties = {
+  marginTop: "28px",
+  padding: "24px",
+  borderRadius: "24px",
+  background: "white",
+  border: "1px solid #e5e7eb",
+};
+
+const quickGridStyle: CSSProperties = {
+  display: "flex",
+  flexWrap: "wrap",
+  gap: "10px",
+  marginTop: "18px",
+};
+
+const quickButtonStyle: CSSProperties = {
+  padding: "10px 14px",
+  borderRadius: "999px",
+  border: "1px solid #d1d5db",
+  background: "#f8fafc",
+  color: "#111827",
+  cursor: "pointer",
+  fontWeight: "bold",
+};
+
+const quickButtonActiveStyle: CSSProperties = {
+  padding: "10px 14px",
+  borderRadius: "999px",
+  border: "1px solid #4f46e5",
+  background: "#4f46e5",
+  color: "white",
+  cursor: "pointer",
+  fontWeight: "bold",
 };
 
 const bottomCtaStyle: CSSProperties = {

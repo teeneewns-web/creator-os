@@ -1,331 +1,281 @@
 import type { CSSProperties } from "react";
-import fs from "fs";
-import path from "path";
 import Link from "next/link";
-import { hookCategoryList } from "../../data/hooks/hookCategories";
-import {
-  auditHookQuality,
-  type HookQualityAudit,
-  type RawHookItem,
-} from "../../lib/content/auditHookQuality";
 
-type PremiumCategorySummary = {
-  slug: string;
-  icon: string;
+type Plan = {
+  name: string;
   label: string;
-  title: string;
+  price: string;
+  description: string;
+  bestFor: string;
+  features: string[];
+  ctaText: string;
   href: string;
-  total: number;
-  premiumReady: number;
-  pro: number;
-  weak: number;
-  averageScore: number;
+  highlight?: boolean;
 };
 
-function loadHookFile(slug: string) {
-  const filePath = path.join(
-    process.cwd(),
-    "src",
-    "data",
-    "hooks",
-    slug + ".json"
-  );
+const plans: Plan[] = [
+  {
+    name: "ใช้ฟรี",
+    label: "Free",
+    price: "0 บาท",
+    description:
+      "เหมาะสำหรับคนที่อยากลองใช้ Creator OS ก่อน ยังไม่ต้องจ่ายเงิน",
+    bestFor: "มือใหม่ / คนที่อยากทดลองระบบ",
+    features: [
+      "เปิดดูตัวอย่าง Hook และคอนเทนต์พื้นฐาน",
+      "ใช้หน้า ภารกิจวันนี้ เพื่อเริ่มทำงาน",
+      "ค้นหาไอเดียบางส่วน",
+      "บันทึกไอเดียไว้ใช้ต่อ",
+      "เหมาะสำหรับทดลองว่าเว็บช่วยงานได้ไหม",
+    ],
+    ctaText: "เริ่มใช้ฟรี",
+    href: "/dashboard",
+  },
+  {
+    name: "Pro",
+    label: "สำหรับใช้งานจริง",
+    price: "เริ่มต้นในอนาคต",
+    description:
+      "เหมาะสำหรับ Creator หรือเจ้าของเพจที่ต้องทำคอนเทนต์ต่อเนื่อง และอยากประหยัดเวลา",
+    bestFor: "Creator / เจ้าของเพจ / ฟรีแลนซ์",
+    features: [
+      "เข้าถึง Hook และไอเดียคุณภาพมากขึ้น",
+      "มีหมวดคอนเทนต์ที่ใช้งานจริงได้มากกว่า",
+      "เหมาะกับการทำโพสต์และคลิปสม่ำเสมอ",
+      "ใช้เป็นระบบช่วยคิดงานประจำวัน",
+      "เหมาะสำหรับคนที่เริ่มใช้เว็บเพื่อทำงานจริง",
+    ],
+    ctaText: "สนใจแพ็ก Pro",
+    href: "/contact?type=interest-pro",
+    highlight: true,
+  },
+  {
+    name: "พรีเมียม",
+    label: "Premium",
+    price: "สำหรับแพ็กคุณภาพสูง",
+    description:
+      "เหมาะสำหรับคนที่ต้องการ Hook, CTA, แคปชัน หรือสคริปต์ที่คัดคุณภาพสูงกว่า",
+    bestFor: "คนขายของ / ทีมคอนเทนต์ / คนที่ต้องการแพ็กเฉพาะทาง",
+    features: [
+      "คัดเฉพาะเนื้อหาระดับ Premium-ready",
+      "เหมาะกับการทำแพ็กขายหรือใช้งานจริงจัง",
+      "มีไอเดียเจาะกลุ่มเป้าหมายมากขึ้น",
+      "เหมาะกับหมวดเฉพาะ เช่น ร้านค้า อสังหา ความงาม การเงิน",
+      "ต่อยอดเป็นระบบสมาชิกหรือแพ็กเฉพาะธุรกิจได้",
+    ],
+    ctaText: "สนใจแพ็กพรีเมียม",
+    href: "/contact?type=interest-premium",
+  },
+];
 
-  if (!fs.existsSync(filePath)) {
-    return [];
+const compareRows = [
+  {
+    title: "เหมาะกับใคร",
+    free: "คนเริ่มต้น",
+    pro: "คนใช้งานจริง",
+    premium: "คนที่ต้องการของคัดคุณภาพ",
+  },
+  {
+    title: "คุณภาพ Hook",
+    free: "พื้นฐาน",
+    pro: "ใช้งานจริงได้มากขึ้น",
+    premium: "คัดระดับสูง",
+  },
+  {
+    title: "การค้นหาไอเดีย",
+    free: "ใช้ได้บางส่วน",
+    pro: "สะดวกขึ้น",
+    premium: "เจาะลึกและเฉพาะทาง",
+  },
+  {
+    title: "เหมาะกับการขายของ",
+    free: "พอทดลองได้",
+    pro: "เหมาะกับงานจริง",
+    premium: "เหมาะกับแพ็กขายจริง",
+  },
+  {
+    title: "เป้าหมาย",
+    free: "ทดลองระบบ",
+    pro: "ประหยัดเวลาทำคอนเทนต์",
+    premium: "ใช้ข้อมูลคุณภาพสูงกว่า",
+  },
+];
+
+function getPlanStyle(plan: Plan): CSSProperties {
+  if (plan.highlight) {
+    return {
+      ...planCardStyle,
+      border: "2px solid #4f46e5",
+      background: "#eef2ff",
+      transform: "translateY(-6px)",
+    };
   }
 
-  const fileContent = fs.readFileSync(filePath, "utf8");
-  const hooks: RawHookItem[] = JSON.parse(fileContent);
-
-  return hooks;
+  return planCardStyle;
 }
 
-function getAverageScore(items: HookQualityAudit[]) {
-  if (items.length === 0) return 0;
-
-  const total = items.reduce((sum, item) => sum + item.score, 0);
-
-  return Math.round(total / items.length);
-}
-
-function createPremiumSummaries() {
-  const summaries: PremiumCategorySummary[] = hookCategoryList.map((category) => {
-    const hooks = loadHookFile(category.slug);
-
-    const auditedItems = hooks.map((item, index) => {
-      return auditHookQuality(item, index + 1);
-    });
-
-    const premiumReady = auditedItems.filter(
-      (item) => item.level === "premium-ready"
-    ).length;
-
-    const pro = auditedItems.filter((item) => item.level === "pro").length;
-
-    const weak = auditedItems.filter(
-      (item) => item.level === "free" || item.level === "needs-rewrite"
-    ).length;
-
-    return {
-      slug: category.slug,
-      icon: category.icon,
-      label: category.label,
-      title: category.title,
-      href: category.href,
-      total: auditedItems.length,
-      premiumReady,
-      pro,
-      weak,
-      averageScore: getAverageScore(auditedItems),
-    };
-  });
-
-  return summaries;
-}
-
-function getTotal(
-  categories: PremiumCategorySummary[],
-  key: keyof Pick<
-    PremiumCategorySummary,
-    "total" | "premiumReady" | "pro" | "weak"
-  >
-) {
-  return categories.reduce((sum, category) => sum + category[key], 0);
-}
-
-function getPercent(value: number, total: number) {
-  if (total === 0) return 0;
-
-  return Math.round((value / total) * 100);
-}
-
-export default function PremiumPage() {
-  const categories = createPremiumSummaries();
-
-  const totalHooks = getTotal(categories, "total");
-  const premiumReady = getTotal(categories, "premiumReady");
-  const pro = getTotal(categories, "pro");
-  const weak = getTotal(categories, "weak");
-
-  const sellableTotal = premiumReady + pro;
-
-  const topCategories = [...categories]
-    .sort((a, b) => b.premiumReady + b.pro - (a.premiumReady + a.pro))
-    .slice(0, 6);
-
+export default function PricingPage() {
   return (
     <main style={{ maxWidth: "1200px", margin: "0 auto", padding: "24px" }}>
       <section style={heroStyle}>
-        <p style={labelStyle}>แพ็กพรีเมียม</p>
+        <p style={labelStyle}>ราคาแพ็กเกจ</p>
 
         <h1 style={titleStyle}>
-          แพ็กสำหรับคนทำคอนเทนต์ที่อยากได้ไอเดียพร้อมใช้ ไม่เสียเวลาคิดเอง
+          เริ่มใช้ฟรีก่อน แล้วค่อยอัปเกรดเมื่อเห็นว่าช่วยงานได้จริง
         </h1>
 
         <p style={subtitleStyle}>
-          Creator OS ไม่ได้เป็นแค่คลังข้อความ แต่มีระบบช่วยคัดคุณภาพ
-          แยก Hook ที่พร้อมใช้งานจริง ออกจาก Hook ที่ควรปรับก่อน
-          เพื่อให้ผู้ใช้เลือกไอเดียได้ง่ายขึ้น ประหยัดเวลา และนำไปใช้กับงานจริงได้เร็วขึ้น
+          Creator OS วางโครงสร้างให้มีทั้งแบบใช้ฟรี แบบ Pro และแบบพรีเมียม
+          เพื่อให้ผู้ใช้ทดลองก่อน แล้วค่อยเลือกแพ็กที่เหมาะกับการทำคอนเทนต์จริง
         </p>
 
         <div style={buttonRowStyle}>
-          <Link href="/pricing">
-            <button style={primaryButtonStyle}>ดูราคาแพ็กเกจ</button>
+          <Link href="/dashboard">
+            <button style={primaryButtonStyle}>เริ่มใช้ฟรี</button>
           </Link>
 
-          <Link href="/hooks">
-            <button style={secondaryButtonStyle}>ดูคลัง Hook</button>
+          <Link href="/contact?type=interest-premium">
+            <button style={secondaryButtonStyle}>สนใจแพ็ก / ติดต่อ</button>
           </Link>
 
-          <Link href="/quality/hooks">
-            <button style={secondaryButtonStyle}>ดูระบบตรวจคุณภาพ</button>
+          <Link href="/premium">
+            <button style={secondaryButtonStyle}>ดูหน้า Premium</button>
           </Link>
         </div>
       </section>
 
-      <section style={summaryGridStyle}>
-        <article style={summaryCardStyle}>
-          <p style={summaryLabelStyle}>Hook ทั้งหมดในระบบ</p>
-          <h2 style={summaryNumberStyle}>{totalHooks}</h2>
-          <p style={mutedTextStyle}>รวมทุกหมวดที่มีข้อมูลในคลัง</p>
-        </article>
+      <section style={noticeStyle}>
+        <h2 style={{ marginTop: 0 }}>สถานะตอนนี้</h2>
 
-        <article style={summaryCardStyle}>
-          <p style={summaryLabelStyle}>พร้อมใช้เชิงสินค้า</p>
-          <h2 style={summaryNumberStyle}>{sellableTotal}</h2>
-          <p style={mutedTextStyle}>
-            ระดับพรีเมียม + ระดับ Pro รวม {getPercent(sellableTotal, totalHooks)}%
-          </p>
-        </article>
+        <p style={noticeTextStyle}>
+          ตอนนี้หน้านี้ใช้เป็นโครงสร้างการขายก่อน ยังไม่ต้องต่อระบบชำระเงินจริง
+          ให้ใช้เพื่ออธิบายคุณค่า แยกแพ็ก และพาผู้สนใจไปหน้า ติดต่อ / ข้อเสนอแนะ ก่อน
+        </p>
+      </section>
 
-        <article style={summaryCardStyle}>
-          <p style={summaryLabelStyle}>พร้อมพรีเมียม</p>
-          <h2 style={summaryNumberStyle}>{premiumReady}</h2>
-          <p style={mutedTextStyle}>
-            Hook ที่คะแนนสูงและเหมาะนำไปทำแพ็กขายมากที่สุด
-          </p>
-        </article>
+      <section style={planGridStyle}>
+        {plans.map((plan) => (
+          <article key={plan.name} style={getPlanStyle(plan)}>
+            {plan.highlight ? (
+              <span style={popularBadgeStyle}>แนะนำสำหรับเริ่มขาย</span>
+            ) : (
+              <span style={normalBadgeStyle}>{plan.label}</span>
+            )}
 
-        <article style={summaryCardStyle}>
-          <p style={summaryLabelStyle}>ควรปรับก่อนขาย</p>
-          <h2 style={summaryNumberStyle}>{weak}</h2>
-          <p style={mutedTextStyle}>
-            ระบบแยกไว้เพื่อไม่ให้เอาของอ่อนมาขายปนกับของดี
-          </p>
-        </article>
+            <h2 style={planNameStyle}>{plan.name}</h2>
+
+            <p style={priceStyle}>{plan.price}</p>
+
+            <p style={descriptionStyle}>{plan.description}</p>
+
+            <div style={bestForBoxStyle}>
+              <p style={bestForLabelStyle}>เหมาะกับ</p>
+              <p style={bestForTextStyle}>{plan.bestFor}</p>
+            </div>
+
+            <div style={featureListStyle}>
+              {plan.features.map((feature) => (
+                <div key={feature} style={featureItemStyle}>
+                  <span style={checkStyle}>✓</span>
+                  <p style={featureTextStyle}>{feature}</p>
+                </div>
+              ))}
+            </div>
+
+            <Link href={plan.href}>
+              <button
+                style={plan.highlight ? primaryButtonFullStyle : secondaryButtonFullStyle}
+              >
+                {plan.ctaText}
+              </button>
+            </Link>
+          </article>
+        ))}
       </section>
 
       <section style={sectionStyle}>
-        <div style={sectionTopRowStyle}>
-          <div>
-            <p style={labelStyle}>เหตุผลที่ควรมีแพ็กพรีเมียม</p>
+        <p style={labelStyle}>เปรียบเทียบแพ็ก</p>
 
-            <h2 style={{ margin: "6px 0" }}>
-              ทำไมคนถึงควรจ่ายเงินให้แพ็กนี้
-            </h2>
-          </div>
+        <h2 style={{ margin: "6px 0" }}>Free / Pro / Premium ต่างกันยังไง</h2>
 
-          <Link href="/pricing">
-            <button style={smallButtonStyle}>ไปหน้าราคา</button>
-          </Link>
-        </div>
+        <div style={tableWrapStyle}>
+          <table style={tableStyle}>
+            <thead>
+              <tr>
+                <th style={thStyle}>หัวข้อ</th>
+                <th style={thStyle}>ใช้ฟรี</th>
+                <th style={thStyle}>Pro</th>
+                <th style={thStyle}>Premium</th>
+              </tr>
+            </thead>
 
-        <div style={valueGridStyle}>
-          <article style={valueCardStyle}>
-            <h3 style={valueTitleStyle}>ประหยัดเวลาคิด Hook</h3>
-            <p style={valueTextStyle}>
-              ผู้ใช้ไม่ต้องเริ่มจากหน้าว่าง แต่เลือกจาก Hook ที่จัดหมวด
-              และตรวจคุณภาพแล้ว ทำให้เริ่มเขียนโพสต์หรือทำคลิปได้เร็วขึ้น
-            </p>
-          </article>
-
-          <article style={valueCardStyle}>
-            <h3 style={valueTitleStyle}>แยกของดีออกจากของทั่วไป</h3>
-            <p style={valueTextStyle}>
-              ระบบแบ่งระดับเป็น พร้อมพรีเมียม, Pro, Free และควรเขียนใหม่
-              ทำให้ผู้ใช้รู้ว่าอันไหนควรใช้จริง อันไหนควรปรับก่อน
-            </p>
-          </article>
-
-          <article style={valueCardStyle}>
-            <h3 style={valueTitleStyle}>เหมาะกับ Creator หลายสาย</h3>
-            <p style={valueTextStyle}>
-              รองรับหลายหมวด เช่น ความงาม การเงิน เกม AI อาหาร ท่องเที่ยว
-              ฟิตเนส และสามารถเพิ่มหมวดใหม่ได้เรื่อย ๆ
-            </p>
-          </article>
-
-          <article style={valueCardStyle}>
-            <h3 style={valueTitleStyle}>ต่อยอดเป็นระบบทำงานรายวัน</h3>
-            <p style={valueTextStyle}>
-              Hook สามารถนำไปใช้ต่อกับภารกิจวันนี้ แคปชัน CTA และสคริปต์
-              เพื่อสร้างขั้นตอนทำคอนเทนต์ที่ใช้งานจริง
-            </p>
-          </article>
+            <tbody>
+              {compareRows.map((row) => (
+                <tr key={row.title}>
+                  <td style={tdTitleStyle}>{row.title}</td>
+                  <td style={tdStyle}>{row.free}</td>
+                  <td style={tdStyle}>{row.pro}</td>
+                  <td style={tdStyle}>{row.premium}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
 
       <section style={sectionStyle}>
-        <p style={labelStyle}>หมวดที่เหมาะทำแพ็กขายก่อน</p>
+        <p style={labelStyle}>วิธีขายที่แนะนำ</p>
 
-        <h2 style={{ margin: "6px 0" }}>
-          หมวดที่มีไอเดียพร้อมใช้มากที่สุด
-        </h2>
+        <h2 style={{ margin: "6px 0" }}>ยังไม่ต้องรีบต่อระบบจ่ายเงิน</h2>
 
-        <p style={mutedTextStyle}>
-          ระบบเรียงจากจำนวน Hook ระดับพร้อมพรีเมียมและระดับ Pro
-          เพื่อดูว่าหมวดไหนเหมาะนำไปทำแพ็กขายก่อน
+        <div style={sellGridStyle}>
+          <article style={sellCardStyle}>
+            <h3>1. ให้ใช้ฟรีก่อน</h3>
+            <p>
+              ให้ผู้ใช้ลองเปิดคลัง Hook ใช้ Dashboard และบันทึกไอเดียก่อน
+              เพื่อให้รู้สึกว่าเว็บช่วยประหยัดเวลาได้จริง
+            </p>
+          </article>
+
+          <article style={sellCardStyle}>
+            <h3>2. ดูว่าคนสนใจหมวดไหน</h3>
+            <p>
+              ถ้าผู้ใช้ขอหมวดซ้ำ ๆ เช่น ขายของออนไลน์ อสังหา ความงาม
+              หรือ TikTok ให้เอาหมวดนั้นไปทำเป็นแพ็กพรีเมียมก่อน
+            </p>
+          </article>
+
+          <article style={sellCardStyle}>
+            <h3>3. เปิดรับผู้สนใจก่อน</h3>
+            <p>
+              ใช้หน้า Contact ให้คนแจ้งว่าสนใจแพ็กอะไร
+              แล้วค่อยตัดสินใจว่าจะทำระบบจ่ายเงินจริงหรือขายแบบส่งไฟล์ก่อน
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section style={bottomCtaStyle}>
+        <h2 style={{ marginTop: 0 }}>สนใจแพ็ก Pro หรือ Premium?</h2>
+
+        <p style={bottomTextStyle}>
+          ตอนนี้สามารถใช้หน้า Contact เพื่อรับรายชื่อคนสนใจ
+          รับข้อเสนอหมวดใหม่ และดูว่าผู้ใช้ต้องการแพ็กแบบไหนก่อนเริ่มขายจริง
         </p>
 
-        <div style={categoryGridStyle}>
-          {topCategories.map((category) => {
-            const sellable = category.premiumReady + category.pro;
+        <div style={buttonRowCenterStyle}>
+          <Link href="/contact">
+            <button style={darkButtonStyle}>ติดต่อ / สนใจแพ็ก</button>
+          </Link>
 
-            return (
-              <article key={category.slug} style={categoryCardStyle}>
-                <div style={categoryTopRowStyle}>
-                  <div>
-                    <p style={categoryIconStyle}>{category.icon}</p>
-                    <h3 style={categoryTitleStyle}>{category.label}</h3>
-                  </div>
+          <Link href="/premium">
+            <button style={darkSecondaryButtonStyle}>ดูแพ็กพรีเมียม</button>
+          </Link>
 
-                  <span style={scoreBadgeStyle}>{category.averageScore}/100</span>
-                </div>
-
-                <p style={mutedTextStyle}>{category.title}</p>
-
-                <div style={statGridStyle}>
-                  <div style={statBoxStyle}>
-                    <strong>{category.total}</strong>
-                    <span>ทั้งหมด</span>
-                  </div>
-
-                  <div style={statBoxStyle}>
-                    <strong>{category.premiumReady}</strong>
-                    <span>พรีเมียม</span>
-                  </div>
-
-                  <div style={statBoxStyle}>
-                    <strong>{category.pro}</strong>
-                    <span>Pro</span>
-                  </div>
-
-                  <div style={statBoxStyle}>
-                    <strong>{sellable}</strong>
-                    <span>พร้อมใช้</span>
-                  </div>
-                </div>
-
-                <div style={buttonRowStyle}>
-                  <Link href={category.href}>
-                    <button style={primaryButtonStyle}>เปิดหมวดนี้</button>
-                  </Link>
-
-                  <Link href="/search">
-                    <button style={secondaryButtonStyle}>ค้นหาเพิ่ม</button>
-                  </Link>
-                </div>
-              </article>
-            );
-          })}
+          <Link href="/guide">
+            <button style={darkSecondaryButtonStyle}>ดูคู่มือเริ่มใช้งาน</button>
+          </Link>
         </div>
-      </section>
-
-      <section style={pricingTeaserStyle}>
-        <div>
-          <p style={darkLabelStyle}>โครงสร้างแพ็กที่แนะนำ</p>
-
-          <h2 style={{ margin: "8px 0", fontSize: "32px" }}>
-            เริ่มขายแบบง่าย: ทดลองฟรี + แพ็ก Pro + แพ็กพรีเมียม
-          </h2>
-
-          <p style={darkTextStyle}>
-            เปิดให้ใช้ฟรีบางส่วนเพื่อให้คนเห็นคุณค่า แล้วล็อก Hook คุณภาพสูง
-            แม่แบบการใช้งาน ขั้นตอนทำงาน และแพ็กเฉพาะหมวดไว้ในแพ็กจ่ายเงิน
-          </p>
-        </div>
-
-        <div style={offerGridStyle}>
-          <article style={offerCardStyle}>
-            <h3>ใช้ฟรี</h3>
-            <p>ให้ลองใช้ Hook พื้นฐานบางส่วน</p>
-          </article>
-
-          <article style={offerCardStyle}>
-            <h3>Pro</h3>
-            <p>เข้าถึง Hook ระดับ Pro และเครื่องมือค้นหา</p>
-          </article>
-
-          <article style={offerCardStyle}>
-            <h3>พรีเมียม</h3>
-            <p>เข้าถึง Hook พร้อมพรีเมียม แพ็กเฉพาะหมวด และระบบช่วยคัดคุณภาพ</p>
-          </article>
-        </div>
-
-        <Link href="/pricing">
-          <button style={darkButtonStyle}>ไปจัดราคาแพ็กเกจ</button>
-        </Link>
       </section>
     </main>
   );
@@ -344,12 +294,6 @@ const labelStyle: CSSProperties = {
   marginTop: 0,
 };
 
-const darkLabelStyle: CSSProperties = {
-  color: "#a5b4fc",
-  fontWeight: "bold",
-  marginTop: 0,
-};
-
 const titleStyle: CSSProperties = {
   fontSize: "46px",
   lineHeight: "1.12",
@@ -361,11 +305,19 @@ const subtitleStyle: CSSProperties = {
   color: "#d1d5db",
   fontSize: "18px",
   lineHeight: "1.8",
-  maxWidth: "880px",
+  maxWidth: "860px",
 };
 
 const buttonRowStyle: CSSProperties = {
   display: "flex",
+  gap: "10px",
+  flexWrap: "wrap",
+  marginTop: "18px",
+};
+
+const buttonRowCenterStyle: CSSProperties = {
+  display: "flex",
+  justifyContent: "center",
   gap: "10px",
   flexWrap: "wrap",
   marginTop: "18px",
@@ -391,182 +343,228 @@ const secondaryButtonStyle: CSSProperties = {
   fontWeight: "bold",
 };
 
-const summaryGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
-  gap: "16px",
-  marginTop: "22px",
+const noticeStyle: CSSProperties = {
+  marginTop: "24px",
+  padding: "22px",
+  borderRadius: "22px",
+  background: "#eef2ff",
+  border: "1px solid #c7d2fe",
 };
 
-const summaryCardStyle: CSSProperties = {
-  border: "1px solid #e5e7eb",
-  borderRadius: "20px",
-  padding: "20px",
-  background: "white",
-};
-
-const summaryLabelStyle: CSSProperties = {
-  marginTop: 0,
-  color: "#555",
-  fontWeight: "bold",
-};
-
-const summaryNumberStyle: CSSProperties = {
-  margin: "8px 0",
-  fontSize: "38px",
-};
-
-const mutedTextStyle: CSSProperties = {
-  color: "#555",
-  lineHeight: "1.7",
+const noticeTextStyle: CSSProperties = {
+  color: "#374151",
+  lineHeight: "1.8",
   margin: 0,
 };
 
-const sectionStyle: CSSProperties = {
-  marginTop: "28px",
+const planGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
+  gap: "18px",
+  marginTop: "30px",
+};
+
+const planCardStyle: CSSProperties = {
   padding: "24px",
   borderRadius: "24px",
   border: "1px solid #e5e7eb",
   background: "white",
 };
 
-const sectionTopRowStyle: CSSProperties = {
-  display: "flex",
-  justifyContent: "space-between",
-  gap: "16px",
-  flexWrap: "wrap",
-  alignItems: "center",
-};
-
-const smallButtonStyle: CSSProperties = {
-  padding: "10px 14px",
-  borderRadius: "12px",
-  border: "1px solid #ddd",
-  background: "#f8fafc",
-  cursor: "pointer",
-  fontWeight: "bold",
-};
-
-const valueGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))",
-  gap: "16px",
-  marginTop: "20px",
-};
-
-const valueCardStyle: CSSProperties = {
-  padding: "20px",
-  borderRadius: "20px",
-  background: "#f8fafc",
-  border: "1px solid #e5e7eb",
-};
-
-const valueTitleStyle: CSSProperties = {
-  marginTop: 0,
-  fontSize: "21px",
-};
-
-const valueTextStyle: CSSProperties = {
-  color: "#555",
-  lineHeight: "1.8",
-  marginBottom: 0,
-};
-
-const categoryGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
-  gap: "18px",
-  marginTop: "20px",
-};
-
-const categoryCardStyle: CSSProperties = {
-  border: "1px solid #e5e7eb",
-  borderRadius: "22px",
-  padding: "20px",
-  background: "#f8fafc",
-};
-
-const categoryTopRowStyle: CSSProperties = {
-  display: "flex",
-  justifyContent: "space-between",
-  gap: "12px",
-  alignItems: "flex-start",
-};
-
-const categoryIconStyle: CSSProperties = {
-  fontSize: "30px",
-  margin: "0 0 8px",
-};
-
-const categoryTitleStyle: CSSProperties = {
-  margin: 0,
-  fontSize: "24px",
-};
-
-const scoreBadgeStyle: CSSProperties = {
+const popularBadgeStyle: CSSProperties = {
   display: "inline-block",
   padding: "7px 11px",
   borderRadius: "999px",
-  background: "#eef2ff",
+  background: "#4f46e5",
+  color: "white",
+  fontWeight: "bold",
+  fontSize: "13px",
+};
+
+const normalBadgeStyle: CSSProperties = {
+  display: "inline-block",
+  padding: "7px 11px",
+  borderRadius: "999px",
+  background: "#f8fafc",
   color: "#4f46e5",
   border: "1px solid #c7d2fe",
   fontWeight: "bold",
   fontSize: "13px",
 };
 
-const statGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(4,1fr)",
-  gap: "8px",
-  marginTop: "14px",
+const planNameStyle: CSSProperties = {
+  fontSize: "30px",
+  margin: "16px 0 8px",
 };
 
-const statBoxStyle: CSSProperties = {
-  padding: "10px",
-  borderRadius: "14px",
-  background: "white",
-  display: "grid",
-  gap: "4px",
-  fontSize: "13px",
+const priceStyle: CSSProperties = {
+  fontSize: "26px",
+  fontWeight: "bold",
+  color: "#111827",
+  margin: "0 0 12px",
+};
+
+const descriptionStyle: CSSProperties = {
   color: "#555",
+  lineHeight: "1.8",
 };
 
-const pricingTeaserStyle: CSSProperties = {
+const bestForBoxStyle: CSSProperties = {
+  padding: "14px",
+  borderRadius: "16px",
+  background: "#f8fafc",
+  border: "1px solid #e5e7eb",
+  marginTop: "16px",
+};
+
+const bestForLabelStyle: CSSProperties = {
+  margin: "0 0 6px",
+  color: "#4f46e5",
+  fontWeight: "bold",
+};
+
+const bestForTextStyle: CSSProperties = {
+  margin: 0,
+  color: "#374151",
+};
+
+const featureListStyle: CSSProperties = {
+  display: "grid",
+  gap: "10px",
+  marginTop: "18px",
+};
+
+const featureItemStyle: CSSProperties = {
+  display: "flex",
+  gap: "10px",
+  alignItems: "flex-start",
+};
+
+const checkStyle: CSSProperties = {
+  color: "#4f46e5",
+  fontWeight: "bold",
+};
+
+const featureTextStyle: CSSProperties = {
+  margin: 0,
+  color: "#374151",
+  lineHeight: "1.6",
+};
+
+const primaryButtonFullStyle: CSSProperties = {
+  width: "100%",
+  marginTop: "22px",
+  padding: "12px 18px",
+  borderRadius: "14px",
+  border: "1px solid #4f46e5",
+  background: "#4f46e5",
+  color: "white",
+  cursor: "pointer",
+  fontWeight: "bold",
+};
+
+const secondaryButtonFullStyle: CSSProperties = {
+  width: "100%",
+  marginTop: "22px",
+  padding: "12px 18px",
+  borderRadius: "14px",
+  border: "1px solid #c7d2fe",
+  background: "white",
+  color: "#111827",
+  cursor: "pointer",
+  fontWeight: "bold",
+};
+
+const sectionStyle: CSSProperties = {
+  marginTop: "30px",
+  padding: "24px",
+  borderRadius: "24px",
+  border: "1px solid #e5e7eb",
+  background: "white",
+};
+
+const tableWrapStyle: CSSProperties = {
+  overflowX: "auto",
+  marginTop: "20px",
+};
+
+const tableStyle: CSSProperties = {
+  width: "100%",
+  borderCollapse: "collapse",
+  minWidth: "720px",
+};
+
+const thStyle: CSSProperties = {
+  textAlign: "left",
+  padding: "14px",
+  background: "#eef2ff",
+  border: "1px solid #c7d2fe",
+  color: "#111827",
+};
+
+const tdTitleStyle: CSSProperties = {
+  padding: "14px",
+  border: "1px solid #e5e7eb",
+  fontWeight: "bold",
+  color: "#111827",
+};
+
+const tdStyle: CSSProperties = {
+  padding: "14px",
+  border: "1px solid #e5e7eb",
+  color: "#374151",
+  lineHeight: "1.6",
+};
+
+const sellGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))",
+  gap: "16px",
+  marginTop: "20px",
+};
+
+const sellCardStyle: CSSProperties = {
+  padding: "20px",
+  borderRadius: "20px",
+  background: "#f8fafc",
+  border: "1px solid #e5e7eb",
+  color: "#374151",
+  lineHeight: "1.8",
+};
+
+const bottomCtaStyle: CSSProperties = {
   marginTop: "34px",
   padding: "30px 24px",
   borderRadius: "28px",
   background: "#111827",
   color: "white",
+  textAlign: "center",
 };
 
-const darkTextStyle: CSSProperties = {
+const bottomTextStyle: CSSProperties = {
   color: "#d1d5db",
   lineHeight: "1.8",
   fontSize: "17px",
-  maxWidth: "860px",
-};
-
-const offerGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
-  gap: "14px",
-  marginTop: "20px",
-};
-
-const offerCardStyle: CSSProperties = {
-  padding: "18px",
-  borderRadius: "18px",
-  background: "#1f2937",
-  border: "1px solid #374151",
+  maxWidth: "760px",
+  margin: "0 auto",
 };
 
 const darkButtonStyle: CSSProperties = {
-  marginTop: "18px",
   padding: "12px 18px",
   borderRadius: "14px",
   border: "1px solid white",
   background: "white",
   color: "#111827",
+  cursor: "pointer",
+  fontWeight: "bold",
+};
+
+const darkSecondaryButtonStyle: CSSProperties = {
+  padding: "12px 18px",
+  borderRadius: "14px",
+  border: "1px solid #4b5563",
+  background: "#1f2937",
+  color: "white",
   cursor: "pointer",
   fontWeight: "bold",
 };
