@@ -264,7 +264,7 @@ export default function PricingPage() {
         </p>
 
         <div style={buttonRowCenterStyle}>
-          <Link href="/contact">
+          <Link href="/contact?type=interest-premium">
             <button style={darkButtonStyle}>ติดต่อ / สนใจแพ็ก</button>
           </Link>
 

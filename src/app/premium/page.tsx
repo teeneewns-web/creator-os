@@ -224,7 +224,7 @@ export default function PremiumPage() {
         </p>
 
         <div style={buttonRowCenterStyle}>
-          <Link href="/contact">
+         <Link href="/contact?type=interest-premium">
             <button style={darkButtonStyle}>แจ้งความต้องการแพ็ก</button>
           </Link>
 
