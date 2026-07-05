@@ -142,6 +142,9 @@ export default function PricingPage() {
             <button style={secondaryButtonStyle}>ดูหน้า Premium</button>
           </Link>
         </div>
+        <Link href="/samples">
+  <button style={secondaryButtonStyle}>ดูตัวอย่างแพ็ก</button>
+</Link>
       </section>
 
       <section style={noticeStyle}>

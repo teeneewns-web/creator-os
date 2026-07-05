@@ -88,6 +88,10 @@ export default function PremiumPage() {
             <button style={secondaryButtonStyle}>ดูราคาแพ็กเกจ</button>
           </Link>
 
+          <Link href="/samples">
+  <button style={secondaryButtonStyle}>ดูตัวอย่างแพ็ก</button>
+</Link>
+
           <Link href="/quality/hooks">
             <button style={secondaryButtonStyle}>ดูคุณภาพ Hook</button>
           </Link>

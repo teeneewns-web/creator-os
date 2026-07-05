@@ -10,6 +10,7 @@ const footerGroups = [
       { href: "/faq", label: "FAQ / คำถามที่พบบ่อย" },
       { href: "/contact", label: "ติดต่อ / ข้อเสนอแนะ" },
       { href: "/guide", label: "คู่มือเริ่มใช้งาน" },
+      { href: "/roadmap", label: "Roadmap / แผนพัฒนาต่อ" },
       { href: "/dashboard", label: "ภารกิจวันนี้" },
       { href: "/dashboard/weekly", label: "แผน 7 วัน" },
       { href: "/privacy", label: "นโยบายความเป็นส่วนตัว" },
@@ -32,8 +33,10 @@ const footerGroups = [
     links: [
       { href: "/quality", label: "มาตรฐานคุณภาพ" },
       { href: "/quality/hooks", label: "ตรวจคุณภาพ Hook" },
+      { href: "/samples", label: "ตัวอย่างแพ็ก / Samples" },
       { href: "/premium", label: "แพ็กพรีเมียม" },
       { href: "/pricing", label: "ราคาแพ็กเกจ" },
+      
     ],
   },
 ];

@@ -101,6 +101,9 @@ export default function HomePage() {
             <button style={secondaryButtonStyle}>ค้นหาไอเดีย</button>
           </Link>
         </div>
+        <Link href="/samples">
+  <button style={secondaryButtonStyle}>ดูตัวอย่างแพ็ก</button>
+</Link>
       </section>
 
       <section style={quickStartStyle}>
