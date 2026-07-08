@@ -1,67 +1,38 @@
 [
   {
-    "id": "food-001",
-    "hook": "99% ของร้านอาหารพลาดเรื่องนี้",
-    "category": "Hook",
-    "industry": "Food",
-    "emotion": "Curiosity",
-    "goal": "Stop Scroll",
-    "platform": ["TikTok", "Facebook", "Reels"],
-    "tags": ["ร้านอาหาร", "การตลาด", "ไวรัล"],
+    "id": "food-0001",
+    "title": "ลูกค้าอาจตัดสินร้านก่อนชิมอาหาร",
+    "hook": "อาหารอร่อยอย่างเดียว อาจยังไม่พอให้ลูกค้าตัดสินใจเข้าร้าน",
+
+    "category": "hook",
+    "industry": "food",
+    "tier": "premium",
+
+    "score": 94,
+    "platform": ["TikTok", "Reels", "Shorts"],
+    "goal": "สร้างความสนใจและความน่าเชื่อถือ",
+    "emotion": "curiosity",
     "difficulty": "easy",
-    "premiumScore": 95,
-    "example": "99% ของร้านอาหารพลาดเรื่องนี้ ทำให้ยอดขายหายไปทุกวัน"
-  },
-  {
-    "id": "food-002",
-    "hook": "ก่อนเปิดร้านวันนี้ ต้องเช็กสิ่งนี้ก่อน",
-    "category": "Hook",
-    "industry": "Food",
-    "emotion": "Urgency",
-    "goal": "Attention",
-    "platform": ["TikTok", "Facebook"],
-    "tags": ["ร้านอาหาร"],
-    "difficulty": "easy",
-    "premiumScore": 93,
-    "example": "ก่อนเปิดร้านวันนี้ ต้องเช็กสิ่งนี้ก่อน ถ้าไม่อยากเสียลูกค้า"
-  },
-  {
-    "id": "food-003",
-    "hook": "ลูกค้าไม่ได้ซื้อเพราะรสชาติอย่างเดียว",
-    "category": "Hook",
-    "industry": "Food",
-    "emotion": "Surprise",
-    "goal": "Engagement",
-    "platform": ["TikTok", "YouTube"],
-    "tags": ["จิตวิทยา", "ร้านอาหาร"],
-    "difficulty": "medium",
-    "premiumScore": 96,
-    "example": "ลูกค้าไม่ได้ซื้อเพราะรสชาติอย่างเดียว แต่เพราะสิ่งนี้"
-  },
-  {
-    "id": "food-004",
-    "hook": "ร้านเล็กก็ขายดีได้ ถ้ารู้เทคนิคนี้",
-    "category": "Hook",
-    "industry": "Food",
-    "emotion": "Hope",
-    "goal": "Click",
-    "platform": ["Facebook", "Reels"],
-    "tags": ["ร้านเล็ก"],
-    "difficulty": "easy",
-    "premiumScore": 92,
-    "example": "ร้านเล็กก็ขายดีได้ ถ้ารู้เทคนิคนี้"
-  },
-  {
-    "id": "food-005",
-    "hook": "หยุดโพสต์อาหารแบบเดิม ถ้าอยากยอดพุ่ง",
-    "category": "Hook",
-    "industry": "Food",
-    "emotion": "Warning",
-    "goal": "Stop Scroll",
-    "platform": ["TikTok", "Facebook"],
-    "tags": ["คอนเทนต์อาหาร"],
-    "difficulty": "medium",
-    "premiumScore": 97,
-    "example": "หยุดโพสต์อาหารแบบเดิม ถ้าอยากยอดพุ่ง"
+
+    "why": "ประโยคนี้ท้าทายความเชื่อเดิมว่าอาหารอร่อยคือปัจจัยเดียว และเปิดช่องให้ผู้ชมอยากรู้ว่าปัจจัยอื่นคืออะไร",
+
+    "script": "หลายร้านให้ความสำคัญกับรสชาติเป็นอันดับแรก ซึ่งเป็นเรื่องถูกต้อง แต่ก่อนลูกค้าจะได้ชิม เขามักเห็นภาพอาหาร หน้าร้าน ราคา รีวิว และความสะอาดก่อน ลองเช็กว่าร้านของคุณสื่อสารสิ่งเหล่านี้ชัดพอหรือยัง",
+
+    "cta": "ลองเลือกหนึ่งจุดของร้านที่ลูกค้าเห็นก่อนชิม แล้วปรับให้ดีขึ้นในวันนี้",
+
+    "keywords": [
+      "ร้านอาหาร",
+      "คอนเทนต์อาหาร",
+      "ประสบการณ์ลูกค้า",
+      "การตลาดร้านอาหาร"
+    ],
+
+    "abTest": {
+      "a": "อาหารอร่อยอย่างเดียว อาจยังไม่พอให้ลูกค้าตัดสินใจเข้าร้าน",
+      "b": "ก่อนลูกค้าจะชิมอาหาร เขาตัดสินร้านคุณจากอะไร?"
+    },
+
+    "status": "reviewed",
+    "version": "1.0.0"
   }
 ]
