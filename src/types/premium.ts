@@ -1,6 +1,11 @@
 export type PremiumDifficulty = "easy" | "medium" | "advanced";
+
 export type PremiumTier = "premium";
-export type PremiumStatus = "draft" | "reviewed" | "published";
+
+export type PremiumStatus =
+  | "draft"
+  | "reviewed"
+  | "published";
 
 export interface PremiumHook {
   id: string;
