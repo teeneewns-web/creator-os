@@ -9,8 +9,9 @@ import type {
   PremiumScript,
   PremiumScriptDifficulty,
 } from "../../types/premium-script";
+import type { PremiumCaption } from "../../types/premium-caption";
 
-type LibraryMode = "hooks" | "scripts";
+type LibraryMode = "hooks" | "scripts" | "captions";
 
 type LibraryItem =
   | {
@@ -20,11 +21,16 @@ type LibraryItem =
   | {
       kind: "script";
       data: PremiumScript;
+    }
+  | {
+      kind: "caption";
+      data: PremiumCaption;
     };
 
 type PremiumLibraryClientProps = {
   hooks: PremiumHook[];
   scripts: PremiumScript[];
+  captions: PremiumCaption[];
 };
 
 type CopyHandler = (
@@ -69,6 +75,20 @@ const FORMAT_NAMES: Record<string, string> = {
   live: "ไลฟ์",
 };
 
+const CAPTION_PURPOSE_NAMES: Record<string, string> = {
+  engagement: "สร้างการมีส่วนร่วม",
+  education: "ให้ความรู้",
+  sales: "สนับสนุนการขาย",
+  storytelling: "เล่าเรื่อง",
+  community: "สร้างชุมชน",
+};
+
+const CAPTION_LENGTH_NAMES: Record<string, string> = {
+  short: "สั้น",
+  medium: "ปานกลาง",
+  long: "ยาว",
+};
+
 function getIndustryName(industry: string): string {
   return INDUSTRY_NAMES[industry] || industry;
 }
@@ -85,6 +105,14 @@ function getDifficultyName(
 
 function getFormatName(format: string): string {
   return FORMAT_NAMES[format] || format;
+}
+
+function getCaptionPurposeName(purpose: string): string {
+  return CAPTION_PURPOSE_NAMES[purpose] || purpose;
+}
+
+function getCaptionLengthName(length: string): string {
+  return CAPTION_LENGTH_NAMES[length] || length;
 }
 
 function copyWithFallback(text: string): boolean {
@@ -213,6 +241,76 @@ function createScriptFullContent(item: PremiumScript): string {
     ...sections,
     "CTA",
     item.cta,
+    "",
+    "หมายเหตุ",
+    ...item.notes.map(
+      (note, index) =>
+        String(index + 1) + ". " + note
+    ),
+    "",
+    "A/B TEST",
+    "A: " + item.abTest.a,
+    "B: " + item.abTest.b,
+    "",
+    "KEYWORDS",
+    item.keywords.join(", "),
+    "",
+    "รหัสรายการ",
+    item.id,
+    "",
+    "Version",
+    item.version,
+  ].join("\n");
+}
+
+function createCaptionFullContent(
+  item: PremiumCaption
+): string {
+  return [
+    item.title,
+    "",
+    "ประเภท",
+    "Premium Caption",
+    "",
+    "OPENING",
+    item.opening,
+    "",
+    "CAPTION",
+    item.caption,
+    "",
+    "หมวดธุรกิจ",
+    getIndustryName(item.industry),
+    "",
+    "เป้าหมาย",
+    item.goal,
+    "",
+    "กลุ่มผู้ชม",
+    item.audience,
+    "",
+    "โทน",
+    item.tone,
+    "",
+    "วัตถุประสงค์",
+    getCaptionPurposeName(item.purpose),
+    "",
+    "ความยาว",
+    getCaptionLengthName(item.length),
+    "",
+    "ระดับ",
+    getDifficultyName(item.difficulty),
+    "",
+    "แพลตฟอร์ม",
+    item.platform.join(", "),
+    "",
+    "CTA",
+    item.cta,
+    "",
+    "HASHTAGS",
+    item.hashtags
+      .map((hashtag) =>
+        hashtag.startsWith("#") ? hashtag : "#" + hashtag
+      )
+      .join(" "),
     "",
     "หมายเหตุ",
     ...item.notes.map(
@@ -855,9 +953,273 @@ function ScriptCard({
   );
 }
 
+function CaptionCard({
+  item,
+  index,
+  isExpanded,
+  copiedKey,
+  onToggle,
+  onCopy,
+}: {
+  item: PremiumCaption;
+  index: number;
+  isExpanded: boolean;
+  copiedKey: string | null;
+  onToggle: () => void;
+  onCopy: CopyHandler;
+}) {
+  const openingCopyKey =
+    "caption-" + item.id + "-opening";
+  const fullCopyKey =
+    "caption-" + item.id + "-full";
+
+  return (
+    <article className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-rose-200 hover:shadow-xl">
+      <CardHeader
+        index={index}
+        title={item.title}
+        industry={item.industry}
+        status={item.status}
+        score={item.score}
+        typeLabel="Premium Caption"
+      />
+
+      <div className="p-5 sm:p-7">
+        <div className="rounded-2xl bg-gradient-to-br from-slate-950 via-rose-950 to-fuchsia-950 p-5 text-white shadow-lg sm:p-6">
+          <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-rose-300">
+            Caption Opening
+          </p>
+
+          <p className="mt-3 text-xl font-black leading-relaxed sm:text-2xl">
+            {item.opening}
+          </p>
+
+          <button
+            type="button"
+            onClick={() =>
+              void onCopy(
+                item.opening,
+                openingCopyKey,
+                "คัดลอกประโยคเปิดแคปชันเรียบร้อยแล้ว"
+              )
+            }
+            className="mt-5 rounded-xl border border-white/15 bg-white/10 px-4 py-2.5 text-sm font-extrabold text-white transition hover:bg-white/20"
+          >
+            {copiedKey === openingCopyKey
+              ? "คัดลอกแล้ว ✓"
+              : "คัดลอกประโยคเปิด"}
+          </button>
+        </div>
+
+        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              กลุ่มผู้ชม
+            </p>
+            <p className="mt-2 text-sm font-bold leading-6 text-slate-800">
+              {item.audience}
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              โทน
+            </p>
+            <p className="mt-2 text-sm font-bold leading-6 text-slate-800">
+              {item.tone}
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              วัตถุประสงค์
+            </p>
+            <p className="mt-2 text-sm font-bold leading-6 text-slate-800">
+              {getCaptionPurposeName(item.purpose)}
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              ความยาว
+            </p>
+            <p className="mt-2 text-sm font-bold leading-6 text-slate-800">
+              {getCaptionLengthName(item.length)}
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              ระดับ
+            </p>
+            <p className="mt-2 text-sm font-bold leading-6 text-slate-800">
+              {getDifficultyName(item.difficulty)}
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+          <button
+            type="button"
+            aria-expanded={isExpanded}
+            onClick={onToggle}
+            className="flex-1 rounded-xl border border-slate-200 bg-white px-5 py-3.5 text-sm font-extrabold text-slate-800 transition hover:border-rose-300 hover:bg-rose-50 hover:text-rose-700"
+          >
+            {isExpanded
+              ? "ซ่อนรายละเอียด"
+              : "ดู Caption ฉบับเต็ม"}
+          </button>
+
+          <button
+            type="button"
+            onClick={() =>
+              void onCopy(
+                createCaptionFullContent(item),
+                fullCopyKey,
+                "คัดลอก Premium Caption ทั้งชุดแล้ว"
+              )
+            }
+            className="flex-1 rounded-xl bg-rose-600 px-5 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-rose-600/20 transition hover:bg-rose-700 active:scale-[0.99]"
+          >
+            {copiedKey === fullCopyKey
+              ? "คัดลอกทั้งชุดแล้ว ✓"
+              : "คัดลอก Caption ทั้งชุด"}
+          </button>
+        </div>
+
+        {isExpanded && (
+          <div className="mt-7 border-t border-slate-100 pt-7">
+            <section className="rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-rose-600">
+                Caption Goal
+              </p>
+              <h3 className="mt-2 text-lg font-black text-slate-950">
+                เป้าหมายของแคปชัน
+              </h3>
+              <p className="mt-3 text-base leading-8 text-slate-600">
+                {item.goal}
+              </p>
+            </section>
+
+            <section className="mt-5 rounded-2xl border border-rose-100 bg-rose-50 p-5 sm:p-6">
+              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-rose-600">
+                Ready-to-use Caption
+              </p>
+              <h3 className="mt-2 text-lg font-black text-rose-950">
+                แคปชันพร้อมใช้
+              </h3>
+              <p className="mt-3 whitespace-pre-line text-base leading-8 text-rose-950">
+                {item.caption}
+              </p>
+            </section>
+
+            <section className="mt-5 rounded-2xl border border-fuchsia-100 bg-fuchsia-50 p-5 sm:p-6">
+              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-fuchsia-600">
+                Call to Action
+              </p>
+              <h3 className="mt-2 text-lg font-black text-fuchsia-950">
+                CTA พร้อมใช้
+              </h3>
+              <p className="mt-3 text-base leading-8 text-fuchsia-900">
+                {item.cta}
+              </p>
+            </section>
+
+            <section className="mt-5 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
+              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">
+                Hashtags
+              </p>
+              <h3 className="mt-2 text-lg font-black text-slate-950">
+                แฮชแท็กที่แนะนำ
+              </h3>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {item.hashtags.map((hashtag, hashtagIndex) => (
+                  <span
+                    key={
+                      item.id +
+                      "-hashtag-" +
+                      hashtagIndex
+                    }
+                    className="rounded-full bg-rose-50 px-3 py-1.5 text-xs font-bold text-rose-700"
+                  >
+                    {hashtag.startsWith("#")
+                      ? hashtag
+                      : "#" + hashtag}
+                  </span>
+                ))}
+              </div>
+            </section>
+
+            <section className="mt-5 rounded-2xl border border-amber-100 bg-amber-50 p-5 sm:p-6">
+              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-amber-700">
+                Notes
+              </p>
+              <h3 className="mt-2 text-lg font-black text-amber-950">
+                หมายเหตุสำคัญ
+              </h3>
+              <div className="mt-3 grid gap-3">
+                {item.notes.map((note, noteIndex) => (
+                  <div
+                    key={
+                      item.id +
+                      "-note-" +
+                      noteIndex
+                    }
+                    className="flex items-start gap-3 text-sm leading-7 text-amber-900"
+                  >
+                    <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-amber-500" />
+                    <p>{note}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="mt-6">
+              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">
+                Testing Options
+              </p>
+              <h3 className="mt-1 text-lg font-black text-slate-950">
+                ตัวเลือก A/B Test
+              </h3>
+
+              <div className="mt-4 grid gap-4 md:grid-cols-2">
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-rose-600 text-sm font-black text-white">
+                    A
+                  </span>
+                  <p className="mt-4 text-base leading-8 text-slate-700">
+                    {item.abTest.a}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-950 text-sm font-black text-white">
+                    B
+                  </span>
+                  <p className="mt-4 text-base leading-8 text-slate-700">
+                    {item.abTest.b}
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <MetadataSection
+              id={item.id}
+              version={item.version}
+              platforms={item.platform}
+              keywords={item.keywords}
+            />
+          </div>
+        )}
+      </div>
+    </article>
+  );
+}
+
 export default function PremiumLibraryClient({
   hooks,
   scripts,
+  captions,
 }: PremiumLibraryClientProps) {
   const [libraryMode, setLibraryMode] =
     useState<LibraryMode>("hooks");
@@ -889,6 +1251,12 @@ export default function PremiumLibraryClient({
       .sort((a, b) => b.score - a.score);
   }, [scripts]);
 
+  const availableCaptions = useMemo(() => {
+    return captions
+      .filter((item) => item.status !== "draft")
+      .sort((a, b) => b.score - a.score);
+  }, [captions]);
+
   const currentItems = useMemo<LibraryItem[]>(() => {
     if (libraryMode === "hooks") {
       return availableHooks.map((item) => ({
@@ -897,14 +1265,22 @@ export default function PremiumLibraryClient({
       }));
     }
 
-    return availableScripts.map((item) => ({
-      kind: "script",
+    if (libraryMode === "scripts") {
+      return availableScripts.map((item) => ({
+        kind: "script",
+        data: item,
+      }));
+    }
+
+    return availableCaptions.map((item) => ({
+      kind: "caption",
       data: item,
     }));
   }, [
     libraryMode,
     availableHooks,
     availableScripts,
+    availableCaptions,
   ]);
 
   const industries = useMemo(() => {
@@ -944,7 +1320,6 @@ export default function PremiumLibraryClient({
 
       const commonText = [
         item.title,
-        item.hook,
         item.category,
         item.industry,
         getIndustryName(item.industry),
@@ -956,28 +1331,46 @@ export default function PremiumLibraryClient({
         ...item.keywords,
       ];
 
-      const specificText =
-        entry.kind === "hook"
-          ? [
-              entry.data.emotion,
-              entry.data.why,
-              entry.data.script,
+      let specificText: string[];
+
+      if (entry.kind === "hook") {
+        specificText = [
+          entry.data.hook,
+          entry.data.emotion,
+          entry.data.why,
+          entry.data.script,
+        ];
+      } else if (entry.kind === "script") {
+        specificText = [
+          entry.data.hook,
+          entry.data.audience,
+          entry.data.tone,
+          entry.data.format,
+          getFormatName(entry.data.format),
+          entry.data.duration,
+          ...entry.data.notes,
+          ...entry.data.sections.flatMap(
+            (section) => [
+              section.label,
+              section.text,
+              section.visual || "",
             ]
-          : [
-              entry.data.audience,
-              entry.data.tone,
-              entry.data.format,
-              getFormatName(entry.data.format),
-              entry.data.duration,
-              ...entry.data.notes,
-              ...entry.data.sections.flatMap(
-                (section) => [
-                  section.label,
-                  section.text,
-                  section.visual || "",
-                ]
-              ),
-            ];
+          ),
+        ];
+      } else {
+        specificText = [
+          entry.data.opening,
+          entry.data.caption,
+          entry.data.audience,
+          entry.data.tone,
+          entry.data.purpose,
+          getCaptionPurposeName(entry.data.purpose),
+          entry.data.length,
+          getCaptionLengthName(entry.data.length),
+          ...entry.data.hashtags,
+          ...entry.data.notes,
+        ];
+      }
 
       const searchableText = [
         ...commonText,
@@ -1090,7 +1483,9 @@ export default function PremiumLibraryClient({
     selectedDifficulty !== "all";
 
   const totalAssets =
-    availableHooks.length + availableScripts.length;
+    availableHooks.length +
+    availableScripts.length +
+    availableCaptions.length;
 
   return (
     <main className="min-h-screen bg-slate-100 px-4 py-8 text-slate-950 sm:px-6 sm:py-10 lg:px-8">
@@ -1124,14 +1519,14 @@ export default function PremiumLibraryClient({
               </h1>
 
               <p className="mt-5 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">
-                คลัง Hook และ Script ระดับพรีเมียม
+                คลัง Hook, Script และ Caption ระดับพรีเมียม
                 พร้อมใช้งานสำหรับสร้างคอนเทนต์
-                ตั้งแต่ประโยคเปิด โครงเรื่อง CTA
+                ตั้งแต่ประโยคเปิด โครงเรื่อง แคปชัน CTA
                 แนวทางภาพ และตัวเลือก A/B Test
               </p>
             </div>
 
-            <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-5">
               <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
                 <p className="text-2xl font-black text-white">
                   {totalAssets}
@@ -1164,6 +1559,16 @@ export default function PremiumLibraryClient({
 
               <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
                 <p className="text-2xl font-black text-white">
+                  {availableCaptions.length}
+                </p>
+
+                <p className="mt-1 text-sm font-medium text-slate-300">
+                  Premium Captions
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
+                <p className="text-2xl font-black text-white">
                   {industries.length}
                 </p>
 
@@ -1176,7 +1581,7 @@ export default function PremiumLibraryClient({
         </header>
 
         <section className="mt-6 rounded-[1.75rem] border border-slate-200 bg-white p-3 shadow-lg">
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid gap-3 md:grid-cols-3">
             <button
               type="button"
               onClick={() => changeLibraryMode("hooks")}
@@ -1228,6 +1633,33 @@ export default function PremiumLibraryClient({
                 พร้อมโครงเรื่อง ภาพประกอบ CTA และหมายเหตุ
               </span>
             </button>
+
+            <button
+              type="button"
+              onClick={() =>
+                changeLibraryMode("captions")
+              }
+              className={
+                libraryMode === "captions"
+                  ? "rounded-2xl bg-rose-600 px-5 py-4 text-left text-white shadow-lg shadow-rose-600/20"
+                  : "rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-left text-slate-700 transition hover:border-rose-200 hover:bg-rose-50"
+              }
+            >
+              <span className="block text-lg font-black">
+                Premium Captions
+              </span>
+
+              <span
+                className={
+                  libraryMode === "captions"
+                    ? "mt-1 block text-sm text-rose-100"
+                    : "mt-1 block text-sm text-slate-500"
+                }
+              >
+                {availableCaptions.length} รายการ
+                พร้อมประโยคเปิด เนื้อหา CTA แฮชแท็ก และ A/B Test
+              </span>
+            </button>
           </div>
         </section>
 
@@ -1240,7 +1672,9 @@ export default function PremiumLibraryClient({
               ค้นหา{" "}
               {libraryMode === "hooks"
                 ? "Premium Hook"
-                : "Premium Script"}
+                : libraryMode === "scripts"
+                  ? "Premium Script"
+                  : "Premium Caption"}
             </label>
 
             <div className="relative">
@@ -1250,7 +1684,9 @@ export default function PremiumLibraryClient({
                 placeholder={
                   libraryMode === "hooks"
                     ? "ค้นหา Hook, Script, เป้าหมาย หรือ Keyword"
-                    : "ค้นหาชื่อ Script, กลุ่มผู้ชม, เนื้อหา หรือ Keyword"
+                    : libraryMode === "scripts"
+                      ? "ค้นหาชื่อ Script, กลุ่มผู้ชม, เนื้อหา หรือ Keyword"
+                      : "ค้นหาชื่อ Caption, ประโยคเปิด, เนื้อหา, แฮชแท็ก หรือ Keyword"
                 }
                 value={searchQuery}
                 onChange={(event) =>
@@ -1413,8 +1849,26 @@ export default function PremiumLibraryClient({
                 );
               }
 
+              if (entry.kind === "script") {
+                return (
+                  <ScriptCard
+                    key={itemKey}
+                    item={entry.data}
+                    index={index}
+                    isExpanded={expandedItems.includes(
+                      itemKey
+                    )}
+                    copiedKey={copiedKey}
+                    onToggle={() =>
+                      toggleExpanded(itemKey)
+                    }
+                    onCopy={handleCopy}
+                  />
+                );
+              }
+
               return (
-                <ScriptCard
+                <CaptionCard
                   key={itemKey}
                   item={entry.data}
                   index={index}
@@ -1470,19 +1924,3 @@ export default function PremiumLibraryClient({
     </main>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

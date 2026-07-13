@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { premiumHooks } from "../../data/premium/hooks";
 import { premiumScripts } from "../../data/premium/scripts";
+import { premiumCaptions } from "../../data/premium/captions";
 import { isValidPremiumSession } from "../../lib/premium-access";
 import PremiumLibraryClient from "./PremiumLibraryClient";
 
@@ -20,6 +21,7 @@ export default async function PremiumLibraryPage() {
     <PremiumLibraryClient
       hooks={premiumHooks}
       scripts={premiumScripts}
+      captions={premiumCaptions}
     />
   );
 }
