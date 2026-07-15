@@ -10,8 +10,12 @@ import type {
   PremiumScriptDifficulty,
 } from "../../types/premium-script";
 import type { PremiumCaption } from "../../types/premium-caption";
+import type {
+  PremiumCta,
+  PremiumCtaDifficulty,
+} from "../../types/premium-cta";
 
-type LibraryMode = "hooks" | "scripts" | "captions";
+type LibraryMode = "hooks" | "scripts" | "captions" | "ctas";
 
 type LibraryItem =
   | {
@@ -25,12 +29,17 @@ type LibraryItem =
   | {
       kind: "caption";
       data: PremiumCaption;
+    }
+  | {
+      kind: "cta";
+      data: PremiumCta;
     };
 
 type PremiumLibraryClientProps = {
   hooks: PremiumHook[];
   scripts: PremiumScript[];
   captions: PremiumCaption[];
+  ctas: PremiumCta[];
 };
 
 type CopyHandler = (
@@ -54,7 +63,9 @@ const INDUSTRY_NAMES: Record<string, string> = {
 };
 
 const DIFFICULTY_NAMES: Record<
-  PremiumDifficulty | PremiumScriptDifficulty,
+  | PremiumDifficulty
+  | PremiumScriptDifficulty
+  | PremiumCtaDifficulty,
   string
 > = {
   easy: "เริ่มต้นง่าย",
@@ -89,6 +100,23 @@ const CAPTION_LENGTH_NAMES: Record<string, string> = {
   long: "ยาว",
 };
 
+const CTA_PURPOSE_NAMES: Record<string, string> = {
+  engagement: "สร้างการมีส่วนร่วม",
+  education: "กระตุ้นการเรียนรู้",
+  sales: "สนับสนุนการขาย",
+  "lead-generation": "เก็บรายชื่อผู้สนใจ",
+  traffic: "เพิ่มการเข้าชม",
+  community: "สร้างชุมชน",
+};
+
+const CTA_PLACEMENT_NAMES: Record<string, string> = {
+  "caption-end": "ท้ายแคปชัน",
+  "video-end": "ท้ายวิดีโอ",
+  "mid-content": "กลางเนื้อหา",
+  "pinned-comment": "ความคิดเห็นปักหมุด",
+  bio: "หน้าโปรไฟล์หรือ Bio",
+};
+
 function getIndustryName(industry: string): string {
   return INDUSTRY_NAMES[industry] || industry;
 }
@@ -97,8 +125,12 @@ function getStatusName(status: string): string {
   return STATUS_NAMES[status] || status;
 }
 
+
 function getDifficultyName(
-  difficulty: PremiumDifficulty | PremiumScriptDifficulty
+  difficulty:
+    | PremiumDifficulty
+    | PremiumScriptDifficulty
+    | PremiumCtaDifficulty
 ): string {
   return DIFFICULTY_NAMES[difficulty] || difficulty;
 }
@@ -113,6 +145,14 @@ function getCaptionPurposeName(purpose: string): string {
 
 function getCaptionLengthName(length: string): string {
   return CAPTION_LENGTH_NAMES[length] || length;
+}
+
+function getCtaPurposeName(purpose: string): string {
+  return CTA_PURPOSE_NAMES[purpose] || purpose;
+}
+
+function getCtaPlacementName(placement: string): string {
+  return CTA_PLACEMENT_NAMES[placement] || placement;
 }
 
 function copyWithFallback(text: string): boolean {
@@ -332,6 +372,64 @@ function createCaptionFullContent(
     item.version,
   ].join("\n");
 }
+
+function createCtaFullContent(item: PremiumCta): string {
+  return [
+    item.title,
+    "",
+    "ประเภท",
+    "Premium CTA",
+    "",
+    "CTA",
+    item.cta,
+    "",
+    "หมวดธุรกิจ",
+    getIndustryName(item.industry),
+    "",
+    "เป้าหมาย",
+    item.goal,
+    "",
+    "กลุ่มผู้ชม",
+    item.audience,
+    "",
+    "โทน",
+    item.tone,
+    "",
+    "วัตถุประสงค์",
+    getCtaPurposeName(item.purpose),
+    "",
+    "ตำแหน่งแนะนำ",
+    getCtaPlacementName(item.placement),
+    "",
+    "ระดับ",
+    getDifficultyName(item.difficulty),
+    "",
+    "แพลตฟอร์ม",
+    item.platform.join(", "),
+    "",
+    "บริบทการใช้งาน",
+    item.context,
+    "",
+    "หมายเหตุ",
+    ...item.notes.map(
+      (note, index) =>
+        String(index + 1) + ". " + note
+    ),
+    "",
+    "A/B TEST",
+    "A: " + item.abTest.a,
+    "B: " + item.abTest.b,
+    "",
+    "KEYWORDS",
+    item.keywords.join(", "),
+    "",
+    "รหัสรายการ",
+    item.id,
+    "",
+    "Version",
+    item.version,
+  ].join("\n");
+} 
 
 function MetadataSection({
   id,
@@ -1216,12 +1314,267 @@ function CaptionCard({
   );
 }
 
+function CtaCard({
+  item,
+  index,
+  isExpanded,
+  copiedKey,
+  onToggle,
+  onCopy,
+}: {
+  item: PremiumCta;
+  index: number;
+  isExpanded: boolean;
+  copiedKey: string | null;
+  onToggle: () => void;
+  onCopy: CopyHandler;
+}) {
+  const ctaCopyKey = "cta-" + item.id + "-cta";
+  const fullCopyKey = "cta-" + item.id + "-full";
+
+  return (
+    <article className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-xl">
+      <CardHeader
+        index={index}
+        title={item.title}
+        industry={item.industry}
+        status={item.status}
+        score={item.score}
+        typeLabel="Premium CTA"
+      />
+
+      <div className="p-5 sm:p-7">
+        <div className="rounded-2xl bg-gradient-to-br from-slate-950 via-emerald-950 to-teal-950 p-5 text-white shadow-lg sm:p-6">
+          <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-emerald-300">
+            Call to Action พร้อมใช้
+          </p>
+
+          <p className="mt-3 text-xl font-black leading-relaxed sm:text-2xl">
+            {item.cta}
+          </p>
+
+          <button
+            type="button"
+            onClick={() =>
+              void onCopy(
+                item.cta,
+                ctaCopyKey,
+                "คัดลอก CTA เรียบร้อยแล้ว"
+              )
+            }
+            className="mt-5 rounded-xl border border-white/15 bg-white/10 px-4 py-2.5 text-sm font-extrabold text-white transition hover:bg-white/20"
+          >
+            {copiedKey === ctaCopyKey
+              ? "คัดลอกแล้ว ✓"
+              : "คัดลอกเฉพาะ CTA"}
+          </button>
+        </div>
+
+        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              กลุ่มผู้ชม
+            </p>
+
+            <p className="mt-2 text-sm font-bold leading-6 text-slate-800">
+              {item.audience}
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              วัตถุประสงค์
+            </p>
+
+            <p className="mt-2 text-sm font-bold leading-6 text-slate-800">
+              {getCtaPurposeName(item.purpose)}
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              ตำแหน่งแนะนำ
+            </p>
+
+            <p className="mt-2 text-sm font-bold leading-6 text-slate-800">
+              {getCtaPlacementName(item.placement)}
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              ระดับ
+            </p>
+
+            <p className="mt-2 text-sm font-bold leading-6 text-slate-800">
+              {getDifficultyName(item.difficulty)}
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+          <button
+            type="button"
+            aria-expanded={isExpanded}
+            onClick={onToggle}
+            className="flex-1 rounded-xl border border-slate-200 bg-white px-5 py-3.5 text-sm font-extrabold text-slate-800 transition hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700"
+          >
+            {isExpanded
+              ? "ซ่อนรายละเอียด"
+              : "ดูรายละเอียด CTA ทั้งหมด"}
+          </button>
+
+          <button
+            type="button"
+            onClick={() =>
+              void onCopy(
+                createCtaFullContent(item),
+                fullCopyKey,
+                "คัดลอก Premium CTA ทั้งชุดแล้ว"
+              )
+            }
+            className="flex-1 rounded-xl bg-emerald-600 px-5 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-emerald-600/20 transition hover:bg-emerald-700 active:scale-[0.99]"
+          >
+            {copiedKey === fullCopyKey
+              ? "คัดลอกทั้งชุดแล้ว ✓"
+              : "คัดลอก CTA ทั้งชุด"}
+          </button>
+        </div>
+
+        {isExpanded && (
+          <div className="mt-7 border-t border-slate-100 pt-7">
+            <div className="grid gap-5 lg:grid-cols-2">
+              <section className="rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+                <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-emerald-600">
+                  CTA Goal
+                </p>
+
+                <h3 className="mt-2 text-lg font-black text-slate-950">
+                  เป้าหมายของ CTA
+                </h3>
+
+                <p className="mt-3 text-base leading-8 text-slate-600">
+                  {item.goal}
+                </p>
+              </section>
+
+              <section className="rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+                <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-emerald-600">
+                  Audience and Tone
+                </p>
+
+                <h3 className="mt-2 text-lg font-black text-slate-950">
+                  กลุ่มผู้ชมและน้ำเสียง
+                </h3>
+
+                <p className="mt-3 text-base leading-8 text-slate-600">
+                  <strong className="text-slate-900">
+                    กลุ่มผู้ชม:
+                  </strong>{" "}
+                  {item.audience}
+                </p>
+
+                <p className="mt-2 text-base leading-8 text-slate-600">
+                  <strong className="text-slate-900">
+                    โทน:
+                  </strong>{" "}
+                  {item.tone}
+                </p>
+              </section>
+            </div>
+
+            <section className="mt-5 rounded-2xl border border-emerald-100 bg-emerald-50 p-5 sm:p-6">
+              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-emerald-600">
+                Usage Context
+              </p>
+
+              <h3 className="mt-2 text-lg font-black text-emerald-950">
+                บริบทการใช้งาน
+              </h3>
+
+              <p className="mt-3 text-base leading-8 text-emerald-900">
+                {item.context}
+              </p>
+            </section>
+
+            <section className="mt-5 rounded-2xl border border-amber-100 bg-amber-50 p-5 sm:p-6">
+              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-amber-700">
+                Notes
+              </p>
+
+              <h3 className="mt-2 text-lg font-black text-amber-950">
+                หมายเหตุสำคัญ
+              </h3>
+
+              <div className="mt-3 grid gap-3">
+                {item.notes.map((note, noteIndex) => (
+                  <div
+                    key={
+                      item.id +
+                      "-note-" +
+                      noteIndex
+                    }
+                    className="flex items-start gap-3 text-sm leading-7 text-amber-900"
+                  >
+                    <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-amber-500" />
+
+                    <p>{note}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="mt-6">
+              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">
+                Testing Options
+              </p>
+
+              <h3 className="mt-1 text-lg font-black text-slate-950">
+                ตัวเลือก A/B Test
+              </h3>
+
+              <div className="mt-4 grid gap-4 md:grid-cols-2">
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-sm font-black text-white">
+                    A
+                  </span>
+
+                  <p className="mt-4 text-base leading-8 text-slate-700">
+                    {item.abTest.a}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-950 text-sm font-black text-white">
+                    B
+                  </span>
+
+                  <p className="mt-4 text-base leading-8 text-slate-700">
+                    {item.abTest.b}
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <MetadataSection
+              id={item.id}
+              version={item.version}
+              platforms={item.platform}
+              keywords={item.keywords}
+            />
+          </div>
+        )}
+      </div>
+    </article>
+  );
+}
 export default function PremiumLibraryClient({
   hooks,
   scripts,
   captions,
+  ctas,
 }: PremiumLibraryClientProps) {
-  const [libraryMode, setLibraryMode] =
+ const [libraryMode, setLibraryMode] =
     useState<LibraryMode>("hooks");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedIndustry, setSelectedIndustry] =
@@ -1257,10 +1610,23 @@ export default function PremiumLibraryClient({
       .sort((a, b) => b.score - a.score);
   }, [captions]);
 
+  const availableCtas = useMemo(() => {
+    return ctas
+      .filter((item) => item.status !== "draft")
+      .sort((a, b) => b.score - a.score);
+  }, [ctas]);
+
   const currentItems = useMemo<LibraryItem[]>(() => {
     if (libraryMode === "hooks") {
       return availableHooks.map((item) => ({
         kind: "hook",
+        data: item,
+      }));
+    }
+
+    if (libraryMode === "ctas") {
+      return availableCtas.map((item) => ({
+        kind: "cta",
         data: item,
       }));
     }
@@ -1272,6 +1638,18 @@ export default function PremiumLibraryClient({
       }));
     }
 
+    if (libraryMode === "captions") {
+      return availableCaptions.map((item) => ({
+        kind: "caption",
+        data: item,
+      }));
+    }
+
+    return availableCtas.map((item) => ({
+      kind: "cta",
+      data: item,
+    }));
+
     return availableCaptions.map((item) => ({
       kind: "caption",
       data: item,
@@ -1281,6 +1659,7 @@ export default function PremiumLibraryClient({
     availableHooks,
     availableScripts,
     availableCaptions,
+    availableCtas,
   ]);
 
   const industries = useMemo(() => {
@@ -1357,7 +1736,7 @@ export default function PremiumLibraryClient({
             ]
           ),
         ];
-      } else {
+      } else if (entry.kind === "caption") {
         specificText = [
           entry.data.opening,
           entry.data.caption,
@@ -1368,6 +1747,15 @@ export default function PremiumLibraryClient({
           entry.data.length,
           getCaptionLengthName(entry.data.length),
           ...entry.data.hashtags,
+          ...entry.data.notes,
+        ];
+      } else {
+        specificText = [
+          entry.data.audience,
+          entry.data.tone,
+          entry.data.purpose,
+          entry.data.placement,
+          entry.data.context,
           ...entry.data.notes,
         ];
       }
@@ -1485,7 +1873,8 @@ export default function PremiumLibraryClient({
   const totalAssets =
     availableHooks.length +
     availableScripts.length +
-    availableCaptions.length;
+    availableCaptions.length +
+    availableCtas.length;
 
   return (
     <main className="min-h-screen bg-slate-100 px-4 py-8 text-slate-950 sm:px-6 sm:py-10 lg:px-8">
@@ -1519,14 +1908,14 @@ export default function PremiumLibraryClient({
               </h1>
 
               <p className="mt-5 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">
-                คลัง Hook, Script และ Caption ระดับพรีเมียม
-                พร้อมใช้งานสำหรับสร้างคอนเทนต์
-                ตั้งแต่ประโยคเปิด โครงเรื่อง แคปชัน CTA
-                แนวทางภาพ และตัวเลือก A/B Test
+               คลัง Hook, Script, Caption และ CTA ระดับพรีเมียม
+พร้อมใช้งานสำหรับสร้างคอนเทนต์
+ตั้งแต่ประโยคเปิด โครงเรื่อง แคปชัน
+คำกระตุ้นให้ลงมือทำ แนวทางภาพ และตัวเลือก A/B Test
               </p>
             </div>
 
-            <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-5">
+             <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
               <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
                 <p className="text-2xl font-black text-white">
                   {totalAssets}
@@ -1568,6 +1957,16 @@ export default function PremiumLibraryClient({
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
+  <p className="text-2xl font-black text-white">
+    {availableCtas.length}
+  </p>
+
+  <p className="mt-1 text-sm font-medium text-slate-300">
+    Premium CTAs
+  </p>
+</div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
                 <p className="text-2xl font-black text-white">
                   {industries.length}
                 </p>
@@ -1581,7 +1980,7 @@ export default function PremiumLibraryClient({
         </header>
 
         <section className="mt-6 rounded-[1.75rem] border border-slate-200 bg-white p-3 shadow-lg">
-          <div className="grid gap-3 md:grid-cols-3">
+          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
             <button
               type="button"
               onClick={() => changeLibraryMode("hooks")}
@@ -1660,6 +2059,15 @@ export default function PremiumLibraryClient({
                 พร้อมประโยคเปิด เนื้อหา CTA แฮชแท็ก และ A/B Test
               </span>
             </button>
+            placeholder={
+  libraryMode === "hooks"
+    ? "ค้นหา Hook, Script, เป้าหมาย หรือ Keyword"
+    : libraryMode === "scripts"
+      ? "ค้นหาชื่อ Script, กลุ่มผู้ชม, เนื้อหา หรือ Keyword"
+      : libraryMode === "captions"
+        ? "ค้นหาชื่อ Caption, ประโยคเปิด, เนื้อหา, แฮชแท็ก หรือ Keyword"
+        : "ค้นหาชื่อ CTA, เป้าหมาย, กลุ่มผู้ชม, บริบท หรือ Keyword"
+}
           </div>
         </section>
 
@@ -1670,24 +2078,29 @@ export default function PremiumLibraryClient({
               className="mb-2 block text-sm font-extrabold text-slate-800"
             >
               ค้นหา{" "}
-              {libraryMode === "hooks"
-                ? "Premium Hook"
-                : libraryMode === "scripts"
-                  ? "Premium Script"
-                  : "Premium Caption"}
+             {libraryMode === "hooks"
+  ? "Premium Hook"
+  : libraryMode === "scripts"
+    ? "Premium Script"
+    : libraryMode === "captions"
+      ? "Premium Caption"
+      : "Premium CTA"}
             </label>
 
             <div className="relative">
               <input
                 id="premium-search"
                 type="search"
+             
                 placeholder={
-                  libraryMode === "hooks"
-                    ? "ค้นหา Hook, Script, เป้าหมาย หรือ Keyword"
-                    : libraryMode === "scripts"
-                      ? "ค้นหาชื่อ Script, กลุ่มผู้ชม, เนื้อหา หรือ Keyword"
-                      : "ค้นหาชื่อ Caption, ประโยคเปิด, เนื้อหา, แฮชแท็ก หรือ Keyword"
-                }
+  libraryMode === "hooks"
+    ? "ค้นหา Hook, Script, เป้าหมาย หรือ Keyword"
+    : libraryMode === "scripts"
+      ? "ค้นหาชื่อ Script, กลุ่มผู้ชม, เนื้อหา หรือ Keyword"
+      : libraryMode === "captions"
+        ? "ค้นหาชื่อ Caption, ประโยคเปิด, เนื้อหา, แฮชแท็ก หรือ Keyword"
+        : "ค้นหาชื่อ CTA, เป้าหมาย, กลุ่มผู้ชม, บริบท หรือ Keyword"
+}
                 value={searchQuery}
                 onChange={(event) =>
                   setSearchQuery(event.target.value)
@@ -1867,8 +2280,26 @@ export default function PremiumLibraryClient({
                 );
               }
 
-              return (
-                <CaptionCard
+             if (entry.kind === "caption") {
+                return (
+                  <CaptionCard
+                    key={itemKey}
+                    item={entry.data}
+                    index={index}
+                    isExpanded={expandedItems.includes(
+                      itemKey
+                    )}
+                    copiedKey={copiedKey}
+                    onToggle={() =>
+                      toggleExpanded(itemKey)
+                    }
+                    onCopy={handleCopy}
+                  />
+                );
+              }
+
+             return (
+                <CtaCard
                   key={itemKey}
                   item={entry.data}
                   index={index}
@@ -1882,6 +2313,7 @@ export default function PremiumLibraryClient({
                   onCopy={handleCopy}
                 />
               );
+              
             })}
           </section>
         ) : (
