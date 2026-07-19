@@ -1616,51 +1616,39 @@ export default function PremiumLibraryClient({
       .sort((a, b) => b.score - a.score);
   }, [ctas]);
 
-  const currentItems = useMemo<LibraryItem[]>(() => {
-    if (libraryMode === "hooks") {
-      return availableHooks.map((item) => ({
-        kind: "hook",
-        data: item,
-      }));
-    }
-
-    if (libraryMode === "ctas") {
-      return availableCtas.map((item) => ({
-        kind: "cta",
-        data: item,
-      }));
-    }
-
-    if (libraryMode === "scripts") {
-      return availableScripts.map((item) => ({
-        kind: "script",
-        data: item,
-      }));
-    }
-
-    if (libraryMode === "captions") {
-      return availableCaptions.map((item) => ({
-        kind: "caption",
-        data: item,
-      }));
-    }
-
-    return availableCtas.map((item) => ({
-      kind: "cta",
+ const currentItems = useMemo<LibraryItem[]>(() => {
+  if (libraryMode === "hooks") {
+    return availableHooks.map((item) => ({
+      kind: "hook",
       data: item,
     }));
+  }
 
+  if (libraryMode === "scripts") {
+    return availableScripts.map((item) => ({
+      kind: "script",
+      data: item,
+    }));
+  }
+
+  if (libraryMode === "captions") {
     return availableCaptions.map((item) => ({
       kind: "caption",
       data: item,
     }));
-  }, [
-    libraryMode,
-    availableHooks,
-    availableScripts,
-    availableCaptions,
-    availableCtas,
-  ]);
+  }
+
+  return availableCtas.map((item) => ({
+    kind: "cta",
+    data: item,
+  }));
+}, [
+  libraryMode,
+  availableHooks,
+  availableScripts,
+  availableCaptions,
+  availableCtas,
+]);
 
   const industries = useMemo(() => {
     const values = Array.from(
@@ -1750,15 +1738,17 @@ export default function PremiumLibraryClient({
           ...entry.data.notes,
         ];
       } else {
-        specificText = [
-          entry.data.audience,
-          entry.data.tone,
-          entry.data.purpose,
-          entry.data.placement,
-          entry.data.context,
-          ...entry.data.notes,
-        ];
-      }
+  specificText = [
+    entry.data.audience,
+    entry.data.tone,
+    entry.data.purpose,
+    getCtaPurposeName(entry.data.purpose),
+    entry.data.placement,
+    getCtaPlacementName(entry.data.placement),
+    entry.data.context,
+    ...entry.data.notes,
+  ];
+}
 
       const searchableText = [
         ...commonText,
@@ -1980,96 +1970,112 @@ export default function PremiumLibraryClient({
         </header>
 
         <section className="mt-6 rounded-[1.75rem] border border-slate-200 bg-white p-3 shadow-lg">
-          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-            <button
-              type="button"
-              onClick={() => changeLibraryMode("hooks")}
-              className={
-                libraryMode === "hooks"
-                  ? "rounded-2xl bg-indigo-600 px-5 py-4 text-left text-white shadow-lg shadow-indigo-600/20"
-                  : "rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-left text-slate-700 transition hover:border-indigo-200 hover:bg-indigo-50"
-              }
-            >
-              <span className="block text-lg font-black">
-                Premium Hooks
-              </span>
+  <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+    <button
+      type="button"
+      onClick={() => changeLibraryMode("hooks")}
+      className={
+        libraryMode === "hooks"
+          ? "rounded-2xl bg-indigo-600 px-5 py-4 text-left text-white shadow-lg shadow-indigo-600/20"
+          : "rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-left text-slate-700 transition hover:border-indigo-200 hover:bg-indigo-50"
+      }
+    >
+      <span className="block text-lg font-black">
+        Premium Hooks
+      </span>
 
-              <span
-                className={
-                  libraryMode === "hooks"
-                    ? "mt-1 block text-sm text-indigo-100"
-                    : "mt-1 block text-sm text-slate-500"
-                }
-              >
-                {availableHooks.length} รายการ
-                พร้อม Hook, Script, CTA และ A/B Test
-              </span>
-            </button>
+      <span
+        className={
+          libraryMode === "hooks"
+            ? "mt-1 block text-sm text-indigo-100"
+            : "mt-1 block text-sm text-slate-500"
+        }
+      >
+        {availableHooks.length} รายการ
+        พร้อม Hook, Script, CTA และ A/B Test
+      </span>
+    </button>
 
-            <button
-              type="button"
-              onClick={() =>
-                changeLibraryMode("scripts")
-              }
-              className={
-                libraryMode === "scripts"
-                  ? "rounded-2xl bg-purple-600 px-5 py-4 text-left text-white shadow-lg shadow-purple-600/20"
-                  : "rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-left text-slate-700 transition hover:border-purple-200 hover:bg-purple-50"
-              }
-            >
-              <span className="block text-lg font-black">
-                Premium Scripts
-              </span>
+    <button
+      type="button"
+      onClick={() =>
+        changeLibraryMode("scripts")
+      }
+      className={
+        libraryMode === "scripts"
+          ? "rounded-2xl bg-purple-600 px-5 py-4 text-left text-white shadow-lg shadow-purple-600/20"
+          : "rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-left text-slate-700 transition hover:border-purple-200 hover:bg-purple-50"
+      }
+    >
+      <span className="block text-lg font-black">
+        Premium Scripts
+      </span>
 
-              <span
-                className={
-                  libraryMode === "scripts"
-                    ? "mt-1 block text-sm text-purple-100"
-                    : "mt-1 block text-sm text-slate-500"
-                }
-              >
-                {availableScripts.length} รายการ
-                พร้อมโครงเรื่อง ภาพประกอบ CTA และหมายเหตุ
-              </span>
-            </button>
+      <span
+        className={
+          libraryMode === "scripts"
+            ? "mt-1 block text-sm text-purple-100"
+            : "mt-1 block text-sm text-slate-500"
+        }
+      >
+        {availableScripts.length} รายการ
+        พร้อมโครงเรื่อง ภาพประกอบ CTA และหมายเหตุ
+      </span>
+    </button>
 
-            <button
-              type="button"
-              onClick={() =>
-                changeLibraryMode("captions")
-              }
-              className={
-                libraryMode === "captions"
-                  ? "rounded-2xl bg-rose-600 px-5 py-4 text-left text-white shadow-lg shadow-rose-600/20"
-                  : "rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-left text-slate-700 transition hover:border-rose-200 hover:bg-rose-50"
-              }
-            >
-              <span className="block text-lg font-black">
-                Premium Captions
-              </span>
+    <button
+      type="button"
+      onClick={() =>
+        changeLibraryMode("captions")
+      }
+      className={
+        libraryMode === "captions"
+          ? "rounded-2xl bg-rose-600 px-5 py-4 text-left text-white shadow-lg shadow-rose-600/20"
+          : "rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-left text-slate-700 transition hover:border-rose-200 hover:bg-rose-50"
+      }
+    >
+      <span className="block text-lg font-black">
+        Premium Captions
+      </span>
 
-              <span
-                className={
-                  libraryMode === "captions"
-                    ? "mt-1 block text-sm text-rose-100"
-                    : "mt-1 block text-sm text-slate-500"
-                }
-              >
-                {availableCaptions.length} รายการ
-                พร้อมประโยคเปิด เนื้อหา CTA แฮชแท็ก และ A/B Test
-              </span>
-            </button>
-            placeholder={
-  libraryMode === "hooks"
-    ? "ค้นหา Hook, Script, เป้าหมาย หรือ Keyword"
-    : libraryMode === "scripts"
-      ? "ค้นหาชื่อ Script, กลุ่มผู้ชม, เนื้อหา หรือ Keyword"
-      : libraryMode === "captions"
-        ? "ค้นหาชื่อ Caption, ประโยคเปิด, เนื้อหา, แฮชแท็ก หรือ Keyword"
-        : "ค้นหาชื่อ CTA, เป้าหมาย, กลุ่มผู้ชม, บริบท หรือ Keyword"
-}
-          </div>
-        </section>
+      <span
+        className={
+          libraryMode === "captions"
+            ? "mt-1 block text-sm text-rose-100"
+            : "mt-1 block text-sm text-slate-500"
+        }
+      >
+        {availableCaptions.length} รายการ
+        พร้อมประโยคเปิด เนื้อหา CTA แฮชแท็ก และ A/B Test
+      </span>
+    </button>
+
+    <button
+      type="button"
+      onClick={() => changeLibraryMode("ctas")}
+      className={
+        libraryMode === "ctas"
+          ? "rounded-2xl bg-emerald-600 px-5 py-4 text-left text-white shadow-lg shadow-emerald-600/20"
+          : "rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-left text-slate-700 transition hover:border-emerald-200 hover:bg-emerald-50"
+      }
+    >
+      <span className="block text-lg font-black">
+        Premium CTAs
+      </span>
+
+      <span
+        className={
+          libraryMode === "ctas"
+            ? "mt-1 block text-sm text-emerald-100"
+            : "mt-1 block text-sm text-slate-500"
+        }
+      >
+        {availableCtas.length} รายการ
+        พร้อมบริบท ตำแหน่งแนะนำ หมายเหตุ และ A/B Test
+      </span>
+    </button>
+  </div>
+</section>
 
         <section className="mt-6 rounded-[1.75rem] border border-slate-200 bg-white p-5 shadow-lg sm:p-7">
           <div>
