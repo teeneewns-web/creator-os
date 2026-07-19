@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type {
   PremiumDifficulty,
   PremiumHook,
@@ -16,6 +16,8 @@ import type {
 } from "../../types/premium-cta";
 
 type LibraryMode = "hooks" | "scripts" | "captions" | "ctas";
+
+const ITEMS_PER_PAGE = 20;
 
 type LibraryItem =
   | {
@@ -1591,6 +1593,8 @@ export default function PremiumLibraryClient({
   >(null);
   const [toastMessage, setToastMessage] =
     useState("");
+    const [visibleCount, setVisibleCount] =
+  useState(ITEMS_PER_PAGE);
 
   const availableHooks = useMemo(() => {
     return hooks
@@ -1787,6 +1791,27 @@ export default function PremiumLibraryClient({
     selectedPlatform,
     selectedDifficulty,
   ]);
+
+  useEffect(() => {
+  setVisibleCount(ITEMS_PER_PAGE);
+}, [
+  libraryMode,
+  searchQuery,
+  selectedIndustry,
+  selectedPlatform,
+  selectedDifficulty,
+]);
+
+const displayedItems = filteredItems.slice(
+  0,
+  visibleCount
+);
+
+const hasMoreItems =
+  visibleCount < filteredItems.length;
+
+const remainingItems =
+  filteredItems.length - visibleCount;
 
   function showToast(message: string) {
     setToastMessage(message);
@@ -2246,7 +2271,7 @@ export default function PremiumLibraryClient({
 
         {filteredItems.length > 0 ? (
           <section className="mt-7 grid gap-6">
-            {filteredItems.map((entry, index) => {
+            {displayedItems.map((entry, index) => {
               const itemKey =
                 entry.kind + "-" + entry.data.id;
 
@@ -2320,7 +2345,34 @@ export default function PremiumLibraryClient({
                 />
               );
               
-            })}
+           })}
+
+            {hasMoreItems && (
+              <div className="pt-2 text-center">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setVisibleCount(
+                      (currentCount) =>
+                        currentCount + ITEMS_PER_PAGE
+                    )
+                  }
+                  className="rounded-2xl bg-slate-950 px-7 py-4 text-sm font-extrabold text-white shadow-lg transition hover:bg-indigo-700 active:scale-[0.99]"
+                >
+                  โหลดเพิ่มอีก{" "}
+                  {Math.min(
+                    ITEMS_PER_PAGE,
+                    remainingItems
+                  )}{" "}
+                  รายการ
+                </button>
+
+                <p className="mt-3 text-xs text-slate-500">
+                  กำลังแสดง {displayedItems.length} จาก{" "}
+                  {filteredItems.length} รายการ
+                </p>
+              </div>
+            )}
           </section>
         ) : (
           <section className="mt-7 rounded-[1.75rem] border border-dashed border-slate-300 bg-white px-5 py-20 text-center shadow-sm">
