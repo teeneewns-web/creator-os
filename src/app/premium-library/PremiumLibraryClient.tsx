@@ -14,9 +14,15 @@ import type {
   PremiumCta,
   PremiumCtaDifficulty,
 } from "../../types/premium-cta";
+import type { PremiumIdea } from "../../types/premium-idea";
 
-type LibraryMode = "hooks" | "scripts" | "captions" | "ctas";
-
+type LibraryMode =
+  | "hooks"
+  | "scripts"
+  | "captions"
+  | "ctas"
+  | "ideas";
+  
 const ITEMS_PER_PAGE = 20;
 
 type LibraryItem =
@@ -35,6 +41,10 @@ type LibraryItem =
   | {
       kind: "cta";
       data: PremiumCta;
+    }
+  | {
+      kind: "idea";
+      data: PremiumIdea;
     };
 
 type PremiumLibraryClientProps = {
@@ -42,6 +52,7 @@ type PremiumLibraryClientProps = {
   scripts: PremiumScript[];
   captions: PremiumCaption[];
   ctas: PremiumCta[];
+  ideas: PremiumIdea[];
 };
 
 type CopyHandler = (
@@ -119,6 +130,23 @@ const CTA_PLACEMENT_NAMES: Record<string, string> = {
   bio: "หน้าโปรไฟล์หรือ Bio",
 };
 
+const IDEA_FORMAT_NAMES: Record<string, string> = {
+  "short-video": "วิดีโอสั้น",
+  "long-video": "วิดีโอแบบยาว",
+  carousel: "คารูเซล",
+  live: "ไลฟ์",
+  post: "โพสต์",
+};
+
+const IDEA_PURPOSE_NAMES: Record<string, string> = {
+  awareness: "สร้างการรับรู้",
+  education: "ให้ความรู้",
+  engagement: "สร้างการมีส่วนร่วม",
+  sales: "สนับสนุนการขาย",
+  community: "สร้างชุมชน",
+  authority: "สร้างความน่าเชื่อถือ",
+};
+
 function getIndustryName(industry: string): string {
   return INDUSTRY_NAMES[industry] || industry;
 }
@@ -155,6 +183,14 @@ function getCtaPurposeName(purpose: string): string {
 
 function getCtaPlacementName(placement: string): string {
   return CTA_PLACEMENT_NAMES[placement] || placement;
+}
+
+function getIdeaFormatName(format: string): string {
+  return IDEA_FORMAT_NAMES[format] || format;
+}
+
+function getIdeaPurposeName(purpose: string): string {
+  return IDEA_PURPOSE_NAMES[purpose] || purpose;
 }
 
 function copyWithFallback(text: string): boolean {
@@ -207,7 +243,7 @@ function createHookFullContent(item: PremiumHook): string {
     "SCRIPT",
     item.script,
     "",
-    "CTA",
+    "cta", 
     item.cta,
     "",
     "A/B TEST",
@@ -1575,6 +1611,7 @@ export default function PremiumLibraryClient({
   scripts,
   captions,
   ctas,
+  ideas,
 }: PremiumLibraryClientProps) {
  const [libraryMode, setLibraryMode] =
     useState<LibraryMode>("hooks");
@@ -1620,7 +1657,13 @@ export default function PremiumLibraryClient({
       .sort((a, b) => b.score - a.score);
   }, [ctas]);
 
- const currentItems = useMemo<LibraryItem[]>(() => {
+  const availableIdeas = useMemo(() => {
+    return ideas
+      .filter((item) => item.status !== "draft")
+      .sort((a, b) => b.score - a.score);
+  }, [ideas]);
+
+  const currentItems = useMemo<LibraryItem[]>(() => {
   if (libraryMode === "hooks") {
     return availableHooks.map((item) => ({
       kind: "hook",
@@ -1642,16 +1685,24 @@ export default function PremiumLibraryClient({
     }));
   }
 
-  return availableCtas.map((item) => ({
-    kind: "cta",
-    data: item,
-  }));
+ if (libraryMode === "ctas") {
+return availableCtas.map((item) => ({
+  kind: "cta" as const,
+  data: item,
+}));
+}
+
+return availableIdeas.map((item) => ({
+  kind: "idea",
+  data: item,
+}));
 }, [
   libraryMode,
   availableHooks,
   availableScripts,
   availableCaptions,
   availableCtas,
+  availableIdeas
 ]);
 
   const industries = useMemo(() => {
@@ -1695,7 +1746,7 @@ export default function PremiumLibraryClient({
         item.industry,
         getIndustryName(item.industry),
         item.goal,
-        item.cta,
+        "cta" in item ? item.cta : "",
         item.abTest.a,
         item.abTest.b,
         ...item.platform,
@@ -1741,7 +1792,8 @@ export default function PremiumLibraryClient({
           ...entry.data.hashtags,
           ...entry.data.notes,
         ];
-      } else {
+
+      } else if (entry.kind === "cta") {
   specificText = [
     entry.data.audience,
     entry.data.tone,
@@ -1752,8 +1804,22 @@ export default function PremiumLibraryClient({
     entry.data.context,
     ...entry.data.notes,
   ];
+} else {
+  specificText = [
+    entry.data.audience,
+    entry.data.tone,
+    entry.data.format,
+    getIdeaFormatName(entry.data.format),
+    entry.data.purpose,
+    getIdeaPurposeName(entry.data.purpose),
+    entry.data.idea,
+    entry.data.angle,
+    entry.data.whyItWorks,
+    entry.data.contentPrompt,
+    ...entry.data.executionSteps,
+    ...entry.data.notes,
+  ];
 }
-
       const searchableText = [
         ...commonText,
         ...specificText,
@@ -1889,7 +1955,8 @@ const remainingItems =
     availableHooks.length +
     availableScripts.length +
     availableCaptions.length +
-    availableCtas.length;
+    availableCtas.length +
+    availableIdeas.length;
 
   return (
     <main className="min-h-screen bg-slate-100 px-4 py-8 text-slate-950 sm:px-6 sm:py-10 lg:px-8">
@@ -2115,7 +2182,9 @@ const remainingItems =
     ? "Premium Script"
     : libraryMode === "captions"
       ? "Premium Caption"
-      : "Premium CTA"}
+      : libraryMode === "ctas"
+        ? "Premium CTA"
+        : "Premium Idea"}
             </label>
 
             <div className="relative">
@@ -2123,14 +2192,16 @@ const remainingItems =
                 id="premium-search"
                 type="search"
              
-                placeholder={
+         placeholder={
   libraryMode === "hooks"
     ? "ค้นหา Hook, Script, เป้าหมาย หรือ Keyword"
     : libraryMode === "scripts"
       ? "ค้นหาชื่อ Script, กลุ่มผู้ชม, เนื้อหา หรือ Keyword"
       : libraryMode === "captions"
         ? "ค้นหาชื่อ Caption, ประโยคเปิด, เนื้อหา, แฮชแท็ก หรือ Keyword"
-        : "ค้นหาชื่อ CTA, เป้าหมาย, กลุ่มผู้ชม, บริบท หรือ Keyword"
+        : libraryMode === "ctas"
+          ? "ค้นหาชื่อ CTA, เป้าหมาย, กลุ่มผู้ชม, บริบท หรือ Keyword"
+          : "ค้นหาไอเดีย มุมเล่า ขั้นตอน กลุ่มผู้ชม หรือ Keyword"
 }
                 value={searchQuery}
                 onChange={(event) =>
@@ -2271,81 +2342,68 @@ const remainingItems =
 
         {filteredItems.length > 0 ? (
           <section className="mt-7 grid gap-6">
-            {displayedItems.map((entry, index) => {
-              const itemKey =
-                entry.kind + "-" + entry.data.id;
+          {displayedItems.map((entry, index) => {
+  const itemKey =
+    entry.kind + "-" + entry.data.id;
 
-              if (entry.kind === "hook") {
-                return (
-                  <HookCard
-                    key={itemKey}
-                    item={entry.data}
-                    index={index}
-                    isExpanded={expandedItems.includes(
-                      itemKey
-                    )}
-                    copiedKey={copiedKey}
-                    onToggle={() =>
-                      toggleExpanded(itemKey)
-                    }
-                    onCopy={handleCopy}
-                  />
-                );
-              }
+  if (entry.kind === "hook") {
+    return (
+      <HookCard
+        key={itemKey}
+        item={entry.data}
+        index={index}
+        isExpanded={expandedItems.includes(itemKey)}
+        copiedKey={copiedKey}
+        onToggle={() => toggleExpanded(itemKey)}
+        onCopy={handleCopy}
+      />
+    );
+  }
 
-              if (entry.kind === "script") {
-                return (
-                  <ScriptCard
-                    key={itemKey}
-                    item={entry.data}
-                    index={index}
-                    isExpanded={expandedItems.includes(
-                      itemKey
-                    )}
-                    copiedKey={copiedKey}
-                    onToggle={() =>
-                      toggleExpanded(itemKey)
-                    }
-                    onCopy={handleCopy}
-                  />
-                );
-              }
+  if (entry.kind === "script") {
+    return (
+      <ScriptCard
+        key={itemKey}
+        item={entry.data}
+        index={index}
+        isExpanded={expandedItems.includes(itemKey)}
+        copiedKey={copiedKey}
+        onToggle={() => toggleExpanded(itemKey)}
+        onCopy={handleCopy}
+      />
+    );
+  }
 
-             if (entry.kind === "caption") {
-                return (
-                  <CaptionCard
-                    key={itemKey}
-                    item={entry.data}
-                    index={index}
-                    isExpanded={expandedItems.includes(
-                      itemKey
-                    )}
-                    copiedKey={copiedKey}
-                    onToggle={() =>
-                      toggleExpanded(itemKey)
-                    }
-                    onCopy={handleCopy}
-                  />
-                );
-              }
+  if (entry.kind === "caption") {
+    return (
+      <CaptionCard
+        key={itemKey}
+        item={entry.data}
+        index={index}
+        isExpanded={expandedItems.includes(itemKey)}
+        copiedKey={copiedKey}
+        onToggle={() => toggleExpanded(itemKey)}
+        onCopy={handleCopy}
+      />
+    );
+  }
 
-             return (
-                <CtaCard
-                  key={itemKey}
-                  item={entry.data}
-                  index={index}
-                  isExpanded={expandedItems.includes(
-                    itemKey
-                  )}
-                  copiedKey={copiedKey}
-                  onToggle={() =>
-                    toggleExpanded(itemKey)
-                  }
-                  onCopy={handleCopy}
-                />
-              );
-              
-           })}
+  if (entry.kind === "cta") {
+    return (
+      <CtaCard
+        key={itemKey}
+        item={entry.data}
+        index={index}
+        isExpanded={expandedItems.includes(itemKey)}
+        copiedKey={copiedKey}
+        onToggle={() => toggleExpanded(itemKey)}
+        onCopy={handleCopy}
+      />
+    );
+  }
+
+  return null;
+})}
 
             {hasMoreItems && (
               <div className="pt-2 text-center">

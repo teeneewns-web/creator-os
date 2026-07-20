@@ -1,13 +1,38 @@
 {
-  "generatedAt": "2026-07-11T12:13:33.591Z",
+  "generatedAt": "2026-07-19T15:10:49.599Z",
   "summary": {
     "premiumFiles": 10,
-    "premiumAssets": 120,
+    "premiumAssets": 200,
     "freeHooksCompared": 2540,
     "errors": 0,
-    "warnings": 0,
+    "warnings": 4,
     "passed": true
   },
   "errors": [],
-  "warnings": []
+  "warnings": [
+    {
+      "file": "src\\data\\premium\\hooks\\shopping.json",
+      "index": 1,
+      "id": "shopping-0002",
+      "issue": "พบคำรับประกันผลลัพธ์"
+    },
+    {
+      "file": "src\\data\\premium\\hooks\\shopping.json",
+      "index": 12,
+      "id": "shopping-0013",
+      "issue": "พบคำรับประกันผลลัพธ์"
+    },
+    {
+      "file": "src\\data\\premium\\hooks\\shopping.json",
+      "index": 14,
+      "id": "shopping-0015",
+      "issue": "พบคำรับประกันผลลัพธ์"
+    },
+    {
+      "file": "src\\data\\premium\\hooks\\shopping.json",
+      "index": 17,
+      "id": "shopping-0018",
+      "issue": "พบคำรับประกันผลลัพธ์"
+    }
+  ]
 }
