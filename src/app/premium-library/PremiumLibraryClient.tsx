@@ -1352,6 +1352,205 @@ function CaptionCard({
   );
 }
 
+function IdeaCard({
+  item,
+  index,
+  isExpanded,
+  copiedKey,
+  onToggle,
+  onCopy,
+}: {
+  item: PremiumIdea;
+  index: number;
+  isExpanded: boolean;
+  copiedKey: string | null;
+  onToggle: () => void;
+  onCopy: CopyHandler;
+}) {
+  const ideaCopyKey = "idea-" + item.id + "-idea";
+  const fullCopyKey = "idea-" + item.id + "-full";
+
+  const fullContent = [
+    item.title,
+    "",
+    "ไอเดียคอนเทนต์:",
+    item.idea,
+    "",
+    "มุมเล่า:",
+    item.angle,
+    "",
+    "เหตุผลที่น่าสนใจ:",
+    item.whyItWorks,
+    "",
+    "คำสั่งสร้างคอนเทนต์:",
+    item.contentPrompt,
+    "",
+    "ขั้นตอนการทำ:",
+    ...item.executionSteps.map(
+      (step, stepIndex) =>
+        `${stepIndex + 1}. ${step}`
+    ),
+    "",
+    "หมายเหตุ:",
+    ...item.notes,
+  ].join("\n");
+
+  return (
+    <article className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-violet-200 hover:shadow-xl">
+      <CardHeader
+        index={index}
+        title={item.title}
+        industry={item.industry}
+        status={item.status}
+        score={item.score}
+        typeLabel="Premium Idea"
+      />
+
+      <div className="p-5 sm:p-7">
+        <div className="rounded-2xl bg-gradient-to-br from-slate-950 via-violet-950 to-fuchsia-950 p-5 text-white shadow-lg sm:p-6">
+          <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-violet-300">
+            Content Idea
+          </p>
+
+          <p className="mt-3 text-xl font-black leading-relaxed sm:text-2xl">
+            {item.idea}
+          </p>
+
+          <button
+            type="button"
+            onClick={() =>
+              void onCopy(
+                item.idea,
+                ideaCopyKey,
+                "คัดลอกไอเดียเรียบร้อยแล้ว"
+              )
+            }
+            className="mt-5 rounded-xl bg-white px-4 py-2 text-sm font-black text-violet-950 transition hover:bg-violet-100"
+          >
+            {copiedKey === ideaCopyKey
+              ? "คัดลอกแล้ว"
+              : "คัดลอกไอเดีย"}
+          </button>
+        </div>
+
+        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-black uppercase tracking-wider text-slate-500">
+              รูปแบบ
+            </p>
+
+            <p className="mt-2 font-bold text-slate-900">
+              {getIdeaFormatName(item.format)}
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-black uppercase tracking-wider text-slate-500">
+              จุดประสงค์
+            </p>
+
+            <p className="mt-2 font-bold text-slate-900">
+              {getIdeaPurposeName(item.purpose)}
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-5 rounded-2xl border border-violet-100 bg-violet-50 p-5">
+          <p className="text-sm font-black text-violet-950">
+            มุมเล่า
+          </p>
+
+          <p className="mt-2 leading-relaxed text-slate-700">
+            {item.angle}
+          </p>
+        </div>
+
+        {isExpanded && (
+          <div className="mt-5 space-y-4">
+            <div className="rounded-2xl border border-slate-200 p-5">
+              <p className="font-black text-slate-900">
+                ทำไมไอเดียนี้จึงน่าสนใจ
+              </p>
+
+              <p className="mt-2 leading-relaxed text-slate-600">
+                {item.whyItWorks}
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-slate-200 p-5">
+              <p className="font-black text-slate-900">
+                Content Prompt
+              </p>
+
+              <p className="mt-2 whitespace-pre-line leading-relaxed text-slate-600">
+                {item.contentPrompt}
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-slate-200 p-5">
+              <p className="font-black text-slate-900">
+                ขั้นตอนการทำ
+              </p>
+
+              <ol className="mt-3 space-y-2 text-slate-600">
+                {item.executionSteps.map(
+                  (step, stepIndex) => (
+                    <li key={stepIndex}>
+                      {stepIndex + 1}. {step}
+                    </li>
+                  )
+                )}
+              </ol>
+            </div>
+
+            {item.notes.length > 0 && (
+              <div className="rounded-2xl border border-slate-200 p-5">
+                <p className="font-black text-slate-900">
+                  หมายเหตุ
+                </p>
+
+                <ul className="mt-3 space-y-2 text-slate-600">
+                  {item.notes.map((note, noteIndex) => (
+                    <li key={noteIndex}>
+                      • {note}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <button
+              type="button"
+              onClick={() =>
+                void onCopy(
+                  fullContent,
+                  fullCopyKey,
+                  "คัดลอกข้อมูลไอเดียทั้งหมดแล้ว"
+                )
+              }
+              className="w-full rounded-xl bg-violet-600 px-5 py-3 font-black text-white transition hover:bg-violet-700"
+            >
+              {copiedKey === fullCopyKey
+                ? "คัดลอกทั้งหมดแล้ว"
+                : "คัดลอกข้อมูลทั้งหมด"}
+            </button>
+          </div>
+        )}
+
+        <button
+          type="button"
+          onClick={onToggle}
+          className="mt-5 w-full rounded-xl border border-slate-200 px-5 py-3 font-black text-slate-700 transition hover:bg-slate-50"
+        >
+          {isExpanded
+            ? "ซ่อนรายละเอียด"
+            : "ดูรายละเอียดเพิ่มเติม"}
+        </button>
+      </div>
+    </article>
+  );
+}
+
 function CtaCard({
   item,
   index,
@@ -2166,6 +2365,30 @@ const remainingItems =
         พร้อมบริบท ตำแหน่งแนะนำ หมายเหตุ และ A/B Test
       </span>
     </button>
+    <button
+  type="button"
+  onClick={() => changeLibraryMode("ideas")}
+  className={
+    libraryMode === "ideas"
+      ? "rounded-2xl bg-violet-600 px-5 py-4 text-left text-white shadow-lg shadow-violet-600/20"
+      : "rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-left text-slate-700 transition hover:border-violet-200 hover:bg-violet-50"
+  }
+>
+  <span className="block text-lg font-black">
+    Premium Ideas
+  </span>
+
+  <span
+    className={
+      libraryMode === "ideas"
+        ? "mt-1 block text-sm text-violet-100"
+        : "mt-1 block text-sm text-slate-500"
+    }
+  >
+    {availableIdeas.length} รายการ
+    พร้อมแนวคิดคอนเทนต์ เป้าหมาย และวิธีนำไปใช้
+  </span>
+</button>
   </div>
 </section>
 
@@ -2402,6 +2625,19 @@ const remainingItems =
     );
   }
 
+  if (entry.kind === "idea") {
+  return (
+    <IdeaCard
+      key={itemKey}
+      item={entry.data}
+      index={index}
+      isExpanded={expandedItems.includes(itemKey)}
+      copiedKey={copiedKey}
+      onToggle={() => toggleExpanded(itemKey)}
+      onCopy={handleCopy}
+    />
+  );
+}
   return null;
 })}
 
