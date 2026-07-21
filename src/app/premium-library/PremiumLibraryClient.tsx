@@ -1367,32 +1367,77 @@ function IdeaCard({
   onToggle: () => void;
   onCopy: CopyHandler;
 }) {
-  const ideaCopyKey = "idea-" + item.id + "-idea";
-  const fullCopyKey = "idea-" + item.id + "-full";
+  const ideaCopyKey =
+    "idea-" + item.id + "-idea";
+  const fullCopyKey =
+    "idea-" + item.id + "-full";
 
   const fullContent = [
     item.title,
     "",
-    "ไอเดียคอนเทนต์:",
+    "ประเภท",
+    "Premium Idea",
+    "",
+    "CONTENT IDEA",
     item.idea,
     "",
-    "มุมเล่า:",
+    "หมวดธุรกิจ",
+    getIndustryName(item.industry),
+    "",
+    "เป้าหมาย",
+    item.goal,
+    "",
+    "กลุ่มผู้ชม",
+    item.audience,
+    "",
+    "โทน",
+    item.tone,
+    "",
+    "รูปแบบ",
+    getIdeaFormatName(item.format),
+    "",
+    "วัตถุประสงค์",
+    getIdeaPurposeName(item.purpose),
+    "",
+    "ระดับ",
+    getDifficultyName(item.difficulty),
+    "",
+    "แพลตฟอร์ม",
+    item.platform.join(", "),
+    "",
+    "มุมเล่า",
     item.angle,
     "",
-    "เหตุผลที่น่าสนใจ:",
+    "เหตุผลที่ไอเดียนี้น่าสนใจ",
     item.whyItWorks,
     "",
-    "คำสั่งสร้างคอนเทนต์:",
+    "CONTENT PROMPT",
     item.contentPrompt,
     "",
-    "ขั้นตอนการทำ:",
+    "ขั้นตอนการทำ",
     ...item.executionSteps.map(
       (step, stepIndex) =>
-        `${stepIndex + 1}. ${step}`
+        String(stepIndex + 1) + ". " + step
     ),
     "",
-    "หมายเหตุ:",
-    ...item.notes,
+    "หมายเหตุ",
+    ...item.notes.map(
+      (note, noteIndex) =>
+        String(noteIndex + 1) + ". " + note
+    ),
+    "",
+    "A/B TEST",
+    "A: " + item.abTest.a,
+    "B: " + item.abTest.b,
+    "",
+    "KEYWORDS",
+    item.keywords.join(", "),
+    "",
+    "รหัสรายการ",
+    item.id,
+    "",
+    "Version",
+    item.version,
   ].join("\n");
 
   return (
@@ -1409,7 +1454,7 @@ function IdeaCard({
       <div className="p-5 sm:p-7">
         <div className="rounded-2xl bg-gradient-to-br from-slate-950 via-violet-950 to-fuchsia-950 p-5 text-white shadow-lg sm:p-6">
           <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-violet-300">
-            Content Idea
+            Content Idea พร้อมใช้
           </p>
 
           <p className="mt-3 text-xl font-black leading-relaxed sm:text-2xl">
@@ -1425,127 +1470,259 @@ function IdeaCard({
                 "คัดลอกไอเดียเรียบร้อยแล้ว"
               )
             }
-            className="mt-5 rounded-xl bg-white px-4 py-2 text-sm font-black text-violet-950 transition hover:bg-violet-100"
+            className="mt-5 rounded-xl border border-white/15 bg-white/10 px-4 py-2.5 text-sm font-extrabold text-white transition hover:bg-white/20"
           >
             {copiedKey === ideaCopyKey
-              ? "คัดลอกแล้ว"
-              : "คัดลอกไอเดีย"}
+              ? "คัดลอกแล้ว ✓"
+              : "คัดลอกเฉพาะไอเดีย"}
           </button>
         </div>
 
-        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-            <p className="text-xs font-black uppercase tracking-wider text-slate-500">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              กลุ่มผู้ชม
+            </p>
+
+            <p className="mt-2 text-sm font-bold leading-6 text-slate-800">
+              {item.audience}
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              โทน
+            </p>
+
+            <p className="mt-2 text-sm font-bold leading-6 text-slate-800">
+              {item.tone}
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
               รูปแบบ
             </p>
 
-            <p className="mt-2 font-bold text-slate-900">
+            <p className="mt-2 text-sm font-bold leading-6 text-slate-800">
               {getIdeaFormatName(item.format)}
             </p>
           </div>
 
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-            <p className="text-xs font-black uppercase tracking-wider text-slate-500">
-              จุดประสงค์
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              วัตถุประสงค์
             </p>
 
-            <p className="mt-2 font-bold text-slate-900">
+            <p className="mt-2 text-sm font-bold leading-6 text-slate-800">
               {getIdeaPurposeName(item.purpose)}
             </p>
           </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              ระดับ
+            </p>
+
+            <p className="mt-2 text-sm font-bold leading-6 text-slate-800">
+              {getDifficultyName(item.difficulty)}
+            </p>
+          </div>
         </div>
 
-        <div className="mt-5 rounded-2xl border border-violet-100 bg-violet-50 p-5">
-          <p className="text-sm font-black text-violet-950">
-            มุมเล่า
+        <section className="mt-5 rounded-2xl border border-violet-100 bg-violet-50 p-5 sm:p-6">
+          <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-violet-600">
+            Content Goal
           </p>
 
-          <p className="mt-2 leading-relaxed text-slate-700">
-            {item.angle}
+          <h3 className="mt-2 text-lg font-black text-violet-950">
+            เป้าหมายของไอเดียนี้
+          </h3>
+
+          <p className="mt-3 text-base leading-8 text-violet-900">
+            {item.goal}
           </p>
+        </section>
+
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+          <button
+            type="button"
+            aria-expanded={isExpanded}
+            onClick={onToggle}
+            className="flex-1 rounded-xl border border-slate-200 bg-white px-5 py-3.5 text-sm font-extrabold text-slate-800 transition hover:border-violet-300 hover:bg-violet-50 hover:text-violet-700"
+          >
+            {isExpanded
+              ? "ซ่อนรายละเอียด"
+              : "ดูวิธีนำไอเดียไปใช้ทั้งหมด"}
+          </button>
+
+          <button
+            type="button"
+            onClick={() =>
+              void onCopy(
+                fullContent,
+                fullCopyKey,
+                "คัดลอก Premium Idea ทั้งชุดแล้ว"
+              )
+            }
+            className="flex-1 rounded-xl bg-violet-600 px-5 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-violet-600/20 transition hover:bg-violet-700 active:scale-[0.99]"
+          >
+            {copiedKey === fullCopyKey
+              ? "คัดลอกทั้งชุดแล้ว ✓"
+              : "คัดลอกไอเดียทั้งชุด"}
+          </button>
         </div>
 
         {isExpanded && (
-          <div className="mt-5 space-y-4">
-            <div className="rounded-2xl border border-slate-200 p-5">
-              <p className="font-black text-slate-900">
-                ทำไมไอเดียนี้จึงน่าสนใจ
-              </p>
-
-              <p className="mt-2 leading-relaxed text-slate-600">
-                {item.whyItWorks}
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-slate-200 p-5">
-              <p className="font-black text-slate-900">
-                Content Prompt
-              </p>
-
-              <p className="mt-2 whitespace-pre-line leading-relaxed text-slate-600">
-                {item.contentPrompt}
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-slate-200 p-5">
-              <p className="font-black text-slate-900">
-                ขั้นตอนการทำ
-              </p>
-
-              <ol className="mt-3 space-y-2 text-slate-600">
-                {item.executionSteps.map(
-                  (step, stepIndex) => (
-                    <li key={stepIndex}>
-                      {stepIndex + 1}. {step}
-                    </li>
-                  )
-                )}
-              </ol>
-            </div>
-
-            {item.notes.length > 0 && (
-              <div className="rounded-2xl border border-slate-200 p-5">
-                <p className="font-black text-slate-900">
-                  หมายเหตุ
+          <div className="mt-7 border-t border-slate-100 pt-7">
+            <div className="grid gap-5 lg:grid-cols-2">
+              <section className="rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+                <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-violet-600">
+                  Content Angle
                 </p>
 
-                <ul className="mt-3 space-y-2 text-slate-600">
-                  {item.notes.map((note, noteIndex) => (
-                    <li key={noteIndex}>
-                      • {note}
-                    </li>
-                  ))}
-                </ul>
+                <h3 className="mt-2 text-lg font-black text-slate-950">
+                  มุมเล่าที่แนะนำ
+                </h3>
+
+                <p className="mt-3 text-base leading-8 text-slate-600">
+                  {item.angle}
+                </p>
+              </section>
+
+              <section className="rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+                <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-violet-600">
+                  Strategy
+                </p>
+
+                <h3 className="mt-2 text-lg font-black text-slate-950">
+                  ทำไมไอเดียนี้จึงน่าสนใจ
+                </h3>
+
+                <p className="mt-3 text-base leading-8 text-slate-600">
+                  {item.whyItWorks}
+                </p>
+              </section>
+            </div>
+
+            <section className="mt-5 rounded-2xl border border-fuchsia-100 bg-fuchsia-50 p-5 sm:p-6">
+              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-fuchsia-600">
+                Ready-to-use Prompt
+              </p>
+
+              <h3 className="mt-2 text-lg font-black text-fuchsia-950">
+                Content Prompt พร้อมใช้
+              </h3>
+
+              <p className="mt-3 whitespace-pre-line text-base leading-8 text-fuchsia-900">
+                {item.contentPrompt}
+              </p>
+            </section>
+
+            <section className="mt-5">
+              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-violet-600">
+                Execution Plan
+              </p>
+
+              <h3 className="mt-1 text-xl font-black text-slate-950">
+                ขั้นตอนนำไอเดียไปสร้างคอนเทนต์
+              </h3>
+
+              <div className="mt-4 grid gap-4">
+                {item.executionSteps.map(
+                  (step, stepIndex) => (
+                    <div
+                      key={
+                        item.id +
+                        "-execution-" +
+                        stepIndex
+                      }
+                      className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5"
+                    >
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-violet-600 text-sm font-black text-white">
+                        {stepIndex + 1}
+                      </span>
+
+                      <p className="pt-1 text-base leading-8 text-slate-600">
+                        {step}
+                      </p>
+                    </div>
+                  )
+                )}
               </div>
+            </section>
+
+            {item.notes.length > 0 && (
+              <section className="mt-5 rounded-2xl border border-amber-100 bg-amber-50 p-5 sm:p-6">
+                <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-amber-700">
+                  Notes
+                </p>
+
+                <h3 className="mt-2 text-lg font-black text-amber-950">
+                  หมายเหตุสำคัญ
+                </h3>
+
+                <div className="mt-3 grid gap-3">
+                  {item.notes.map(
+                    (note, noteIndex) => (
+                      <div
+                        key={
+                          item.id +
+                          "-note-" +
+                          noteIndex
+                        }
+                        className="flex items-start gap-3 text-sm leading-7 text-amber-900"
+                      >
+                        <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-amber-500" />
+
+                        <p>{note}</p>
+                      </div>
+                    )
+                  )}
+                </div>
+              </section>
             )}
 
-            <button
-              type="button"
-              onClick={() =>
-                void onCopy(
-                  fullContent,
-                  fullCopyKey,
-                  "คัดลอกข้อมูลไอเดียทั้งหมดแล้ว"
-                )
-              }
-              className="w-full rounded-xl bg-violet-600 px-5 py-3 font-black text-white transition hover:bg-violet-700"
-            >
-              {copiedKey === fullCopyKey
-                ? "คัดลอกทั้งหมดแล้ว"
-                : "คัดลอกข้อมูลทั้งหมด"}
-            </button>
+            <section className="mt-6">
+              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">
+                Testing Options
+              </p>
+
+              <h3 className="mt-1 text-lg font-black text-slate-950">
+                ตัวเลือก A/B Test
+              </h3>
+
+              <div className="mt-4 grid gap-4 md:grid-cols-2">
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-violet-600 text-sm font-black text-white">
+                    A
+                  </span>
+
+                  <p className="mt-4 text-base leading-8 text-slate-700">
+                    {item.abTest.a}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-950 text-sm font-black text-white">
+                    B
+                  </span>
+
+                  <p className="mt-4 text-base leading-8 text-slate-700">
+                    {item.abTest.b}
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <MetadataSection
+              id={item.id}
+              version={item.version}
+              platforms={item.platform}
+              keywords={item.keywords}
+            />
           </div>
         )}
-
-        <button
-          type="button"
-          onClick={onToggle}
-          className="mt-5 w-full rounded-xl border border-slate-200 px-5 py-3 font-black text-slate-700 transition hover:bg-slate-50"
-        >
-          {isExpanded
-            ? "ซ่อนรายละเอียด"
-            : "ดูรายละเอียดเพิ่มเติม"}
-        </button>
       </div>
     </article>
   );
@@ -1861,6 +2038,33 @@ export default function PremiumLibraryClient({
       .filter((item) => item.status !== "draft")
       .sort((a, b) => b.score - a.score);
   }, [ideas]);
+
+  const allIndustries = useMemo(() => {
+  const values = new Set(
+    [
+      ...availableHooks,
+      ...availableScripts,
+      ...availableCaptions,
+      ...availableCtas,
+      ...availableIdeas,
+    ]
+      .map((item) => item.industry)
+      .filter(Boolean)
+  );
+
+  return Array.from(values).sort((a, b) =>
+    getIndustryName(a).localeCompare(
+      getIndustryName(b),
+      "th"
+    )
+  );
+}, [
+  availableHooks,
+  availableScripts,
+  availableCaptions,
+  availableCtas,
+  availableIdeas,
+]);
 
   const currentItems = useMemo<LibraryItem[]>(() => {
   if (libraryMode === "hooks") {
@@ -2188,15 +2392,14 @@ const remainingItems =
                 Premium Content Library
               </h1>
 
-              <p className="mt-5 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">
-               คลัง Hook, Script, Caption และ CTA ระดับพรีเมียม
-พร้อมใช้งานสำหรับสร้างคอนเทนต์
-ตั้งแต่ประโยคเปิด โครงเรื่อง แคปชัน
-คำกระตุ้นให้ลงมือทำ แนวทางภาพ และตัวเลือก A/B Test
-              </p>
-            </div>
+             <p className="mt-5 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">
+  คลังไอเดีย Hook, Script, Caption และ CTA
+  ระดับพรีเมียมที่พร้อมนำไปสร้างคอนเทนต์จริง
+  ครบตั้งแต่แนวคิด ประโยคเปิด โครงเรื่อง แคปชัน
+  คำกระตุ้นให้ลงมือทำ แนวทางการผลิต และตัวเลือก A/B Test
+</p>
 
-             <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
+             <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4 xl:grid-cols-7"></div>
               <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
                 <p className="text-2xl font-black text-white">
                   {totalAssets}
@@ -2216,6 +2419,16 @@ const remainingItems =
                   Premium Hooks
                 </p>
               </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
+  <p className="text-2xl font-black text-white">
+    {availableIdeas.length}
+  </p>
+
+  <p className="mt-1 text-sm font-medium text-slate-300">
+    Premium Ideas
+  </p>
+</div>
 
               <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
                 <p className="text-2xl font-black text-white">
@@ -2249,7 +2462,7 @@ const remainingItems =
 
               <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
                 <p className="text-2xl font-black text-white">
-                  {industries.length}
+                  {allIndustries.length}
                 </p>
 
                 <p className="mt-1 text-sm font-medium text-slate-300">
@@ -2261,7 +2474,7 @@ const remainingItems =
         </header>
 
         <section className="mt-6 rounded-[1.75rem] border border-slate-200 bg-white p-3 shadow-lg">
-  <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+   <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-5">
     <button
       type="button"
       onClick={() => changeLibraryMode("hooks")}
