@@ -3,228 +3,143 @@
 import type { CSSProperties } from "react";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+
 import CopyButton from "../../../components/dashboard/CopyButton";
+import { facebookBagSamplePlan } from "../../../data/weekly-plans/facebook-bag-sample";
 
-type WeeklyTask = {
-  id: string;
-  title: string;
-  description: string;
-};
+import type {
+  ContentGoal,
+  ContentPlatform,
+  ContentTaskStatus,
+  PlanIntensity,
+  WeeklyContentDay,
+  WeeklyContentPlan,
+} from "../../../types/weekly-content-plan";
 
-type WeeklyMission = {
-  day: number;
-  title: string;
-  goal: string;
-  output: string;
-  tasks: WeeklyTask[];
-};
+import { generateWeeklyContentPlan } from "../../../lib/generate-weekly-content-plan";
+import type { PlanRequest } from "../../../types/plan-request";
 
-type WeeklyState = {
+type WeeklyPageState = {
   selectedDay: number;
-  completedTaskIds: string[];
+  statuses: Record<string, ContentTaskStatus>;
   notes: Record<string, string>;
 };
 
-const STORAGE_KEY = "creator-os-weekly-plan-thai";
+const REQUEST_STORAGE_KEY = "creator-os-plan-request-v1";
+const STATE_STORAGE_PREFIX = "creator-os-weekly-plan-state";
 
-const weeklyMissions: WeeklyMission[] = [
+const PLATFORM_LABELS: Record<ContentPlatform, string> = {
+  facebook: "Facebook",
+  tiktok: "TikTok",
+  "facebook-and-tiktok": "Facebook และ TikTok",
+};
+
+const GOAL_LABELS: Record<ContentGoal, string> = {
+  sell: "ขายสินค้า",
+  grow: "เพิ่มผู้ติดตาม",
+  engagement: "เพิ่มการมีส่วนร่วม",
+  trust: "สร้างความน่าเชื่อถือ",
+  promote: "โปรโมตร้านหรือบริการ",
+};
+
+const INTENSITY_LABELS: Record<PlanIntensity, string> = {
+  light: "แผนเบา",
+  standard: "แผนมาตรฐาน",
+  growth: "แผนเต็ม",
+};
+
+function getStateStorageKey(planId: string) {
+  return `${STATE_STORAGE_PREFIX}:${planId}`;
+}
+
+function readPlanRequest(): PlanRequest | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const raw = window.localStorage.getItem(
+    REQUEST_STORAGE_KEY
+  );
+
+  if (!raw) {
+    return null;
+  }
+
+  try {
+    const request = JSON.parse(raw) as PlanRequest;
+
+    if (
+      !request.productOrService?.trim() ||
+      !request.goal ||
+      !request.platform
+    ) {
+      return null;
+    }
+
+    return request;
+  } catch {
+    return null;
+  }
+}
+
+const STATUS_OPTIONS: Array<{
+  value: ContentTaskStatus;
+  label: string;
+  progress: number;
+}> = [
   {
-    day: 1,
-    title: "ตั้งหลักคอนเทนต์",
-    goal: "รู้ว่าจะทำคอนเทนต์เรื่องอะไร ทำเพื่อใคร และต้องการผลลัพธ์แบบไหน",
-    output: "ได้หัวข้อหลัก 1 เรื่อง + กลุ่มเป้าหมาย 1 กลุ่ม",
-    tasks: [
-      {
-        id: "week-day-1-task-1",
-        title: "เลือกกลุ่มเป้าหมาย",
-        description:
-          "ระบุให้ชัดว่าคอนเทนต์นี้พูดกับใคร เช่น มือใหม่ เจ้าของร้าน คนขายของออนไลน์ หรือ Creator",
-      },
-      {
-        id: "week-day-1-task-2",
-        title: "เลือกปัญหาหลัก",
-        description:
-          "เลือกปัญหาที่คนกลุ่มนั้นเจอจริง 1 เรื่อง เพื่อใช้เป็นแกนของคอนเทนต์",
-      },
-      {
-        id: "week-day-1-task-3",
-        title: "เขียนเป้าหมายคอนเทนต์",
-        description:
-          "สรุปว่าโพสต์หรือคลิปนี้ต้องการให้คนดูรู้สึก เข้าใจ หรือทำอะไรต่อ",
-      },
-    ],
+    value: "not-started",
+    label: "ยังไม่เริ่ม",
+    progress: 0,
   },
   {
-    day: 2,
-    title: "หา Hook ที่ทำให้คนหยุดดู",
-    goal: "เลือกประโยคเปิดที่ทำให้คนสนใจในช่วงแรก",
-    output: "ได้ Hook อย่างน้อย 5 ข้อ และเลือกข้อที่ดีที่สุด 1 ข้อ",
-    tasks: [
-      {
-        id: "week-day-2-task-1",
-        title: "เปิดคลัง Hook",
-        description: "เลือกหมวดที่เกี่ยวกับหัวข้อของคุณ แล้วดู Hook หลายรูปแบบ",
-      },
-      {
-        id: "week-day-2-task-2",
-        title: "คัด Hook 5 ข้อ",
-        description:
-          "เลือก Hook ที่เกี่ยวกับปัญหาหรือความอยากรู้ของกลุ่มเป้าหมาย",
-      },
-      {
-        id: "week-day-2-task-3",
-        title: "เลือก Hook ที่ดีที่สุด",
-        description:
-          "เลือกข้อที่เจาะจุดเจ็บหรือความสงสัยมากที่สุด แล้วบันทึกไว้",
-      },
-    ],
+    value: "preparing",
+    label: "กำลังเตรียม",
+    progress: 20,
   },
   {
-    day: 3,
-    title: "ต่อ Hook เป็นโพสต์หรือคลิป",
-    goal: "เปลี่ยน Hook ให้กลายเป็นคอนเทนต์ที่ใช้งานจริงได้",
-    output: "ได้ร่างโพสต์หรือสคริปต์คลิปสั้น 1 ชิ้น",
-    tasks: [
-      {
-        id: "week-day-3-task-1",
-        title: "เขียนเนื้อหากลาง",
-        description:
-          "อธิบายปัญหา เหตุผล หรือขั้นตอนที่เกี่ยวข้องกับ Hook ที่เลือกไว้",
-      },
-      {
-        id: "week-day-3-task-2",
-        title: "เพิ่มตัวอย่างจริง",
-        description:
-          "ใส่สถานการณ์หรือตัวอย่าง เพื่อให้คนดูรู้สึกว่าเนื้อหานี้เกี่ยวกับเขา",
-      },
-      {
-        id: "week-day-3-task-3",
-        title: "ทำให้เนื้อหาอ่านง่าย",
-        description:
-          "ตัดคำที่กว้างเกินไป และเว้นจังหวะให้อ่านหรือพูดในคลิปได้ง่าย",
-      },
-    ],
+    value: "ready-to-film",
+    label: "พร้อมถ่าย",
+    progress: 40,
   },
   {
-    day: 4,
-    title: "ใส่ CTA ให้ตรงเป้าหมาย",
-    goal: "ทำให้คอนเทนต์มีคำชวนให้คนดูทำบางอย่างต่อ",
-    output: "ได้ CTA ที่ตรงกับเป้าหมาย 1–3 แบบ",
-    tasks: [
-      {
-        id: "week-day-4-task-1",
-        title: "เลือกเป้าหมายของโพสต์",
-        description:
-          "เลือกว่าจะให้คนดูติดตาม บันทึก แชร์ ทักแชต คลิก หรือซื้อสินค้า",
-      },
-      {
-        id: "week-day-4-task-2",
-        title: "เลือก CTA",
-        description:
-          "เปิดหน้า CTA แล้วเลือกคำชวนให้ทำที่เหมาะกับเป้าหมายของคอนเทนต์",
-      },
-      {
-        id: "week-day-4-task-3",
-        title: "ใส่ CTA ท้ายคอนเทนต์",
-        description:
-          "ต่อท้ายโพสต์หรือสคริปต์ให้เป็นธรรมชาติ ไม่ยัดเยียดเกินไป",
-      },
-    ],
+    value: "filmed",
+    label: "ถ่ายแล้ว",
+    progress: 55,
   },
   {
-    day: 5,
-    title: "ตรวจคุณภาพก่อนใช้จริง",
-    goal: "แยกให้ได้ว่าเนื้อหาพร้อมใช้หรือควรปรับก่อนโพสต์",
-    output: "ได้เวอร์ชันที่ปรับดีขึ้น 1 เวอร์ชัน",
-    tasks: [
-      {
-        id: "week-day-5-task-1",
-        title: "ตรวจ Hook",
-        description:
-          "เปิดหน้าตรวจคุณภาพ Hook แล้วดูว่าข้อความควรแก้จุดไหนบ้าง",
-      },
-      {
-        id: "week-day-5-task-2",
-        title: "เพิ่มความเฉพาะเจาะจง",
-        description:
-          "เพิ่มกลุ่มเป้าหมาย ปัญหา สถานการณ์ หรือผลลัพธ์ให้ชัดขึ้น",
-      },
-      {
-        id: "week-day-5-task-3",
-        title: "ตัดประโยคอ่อน",
-        description:
-          "ลบประโยคที่กว้างเกินไป หรือฟังดูเหมือนข้อความทั่วไปที่ไม่มีจุดขาย",
-      },
-    ],
+    value: "editing",
+    label: "กำลังตัดต่อ",
+    progress: 70,
   },
   {
-    day: 6,
-    title: "เตรียมโพสต์จริง",
-    goal: "จัดข้อความให้พร้อมลงแพลตฟอร์มที่เลือก",
-    output: "ได้คอนเทนต์เวอร์ชันพร้อมโพสต์ 1 ชิ้น",
-    tasks: [
-      {
-        id: "week-day-6-task-1",
-        title: "เลือกแพลตฟอร์ม",
-        description:
-          "เลือกว่าจะใช้กับ TikTok, Reels, Shorts, Facebook หรือโพสต์ขาย",
-      },
-      {
-        id: "week-day-6-task-2",
-        title: "ปรับความยาวให้เหมาะ",
-        description:
-          "ถ้าเป็นคลิปให้กระชับ ถ้าเป็นโพสต์ให้แบ่งบรรทัดอ่านง่าย",
-      },
-      {
-        id: "week-day-6-task-3",
-        title: "เตรียมแคปชัน",
-        description:
-          "เปิดหน้าแคปชัน แล้วเลือกหรือปรับข้อความให้เข้ากับคอนเทนต์นี้",
-      },
-    ],
+    value: "ready-to-post",
+    label: "พร้อมโพสต์",
+    progress: 85,
   },
   {
-    day: 7,
-    title: "สรุปผลและวางแผนต่อ",
-    goal: "รู้ว่าอะไรทำได้ดี อะไรควรปรับ และสัปดาห์หน้าควรทำอะไรต่อ",
-    output: "ได้บทเรียน 1 ชุด + หัวข้อใหม่ 3–5 หัวข้อ",
-    tasks: [
-      {
-        id: "week-day-7-task-1",
-        title: "ทบทวนงานทั้งสัปดาห์",
-        description:
-          "ดู Hook, โพสต์, CTA และสคริปต์ที่ทำมา แล้วเลือกสิ่งที่ดีที่สุด",
-      },
-      {
-        id: "week-day-7-task-2",
-        title: "เขียนสิ่งที่ได้เรียนรู้",
-        description:
-          "สรุปว่าสิ่งไหนเวิร์ก สิ่งไหนควรปรับ และจุดไหนที่ยังติดขัด",
-      },
-      {
-        id: "week-day-7-task-3",
-        title: "วางหัวข้อสัปดาห์หน้า",
-        description:
-          "เขียนหัวข้อใหม่ 3–5 หัวข้อ เพื่อใช้เริ่มทำงานต่อในรอบถัดไป",
-      },
-    ],
+    value: "posted",
+    label: "โพสต์แล้ว",
+    progress: 100,
   },
 ];
 
-function getInitialState(): WeeklyState {
+function getInitialState(): WeeklyPageState {
   return {
     selectedDay: 1,
-    completedTaskIds: [],
+    statuses: {},
     notes: {},
   };
 }
 
-function readState() {
+function readState(planId: string): WeeklyPageState {
   if (typeof window === "undefined") {
     return getInitialState();
   }
 
-  const raw = window.localStorage.getItem(STORAGE_KEY);
+  const raw = window.localStorage.getItem(
+    getStateStorageKey(planId)
+  );
 
   if (!raw) {
     return getInitialState();
@@ -233,319 +148,799 @@ function readState() {
   try {
     return {
       ...getInitialState(),
-      ...(JSON.parse(raw) as WeeklyState),
+      ...(JSON.parse(raw) as WeeklyPageState),
     };
   } catch {
     return getInitialState();
   }
 }
 
-function writeState(state: WeeklyState) {
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+function writeState(
+  planId: string,
+  state: WeeklyPageState
+) {
+  window.localStorage.setItem(
+    getStateStorageKey(planId),
+    JSON.stringify(state)
+  );
+} 
+
+function getStatusLabel(status: ContentTaskStatus) {
+  return (
+    STATUS_OPTIONS.find((item) => item.value === status)?.label ||
+    "ยังไม่เริ่ม"
+  );
 }
 
-function getAllTasks() {
-  return weeklyMissions.flatMap((mission) => mission.tasks);
+function getStatusProgress(status: ContentTaskStatus) {
+  return (
+    STATUS_OPTIONS.find((item) => item.value === status)?.progress || 0
+  );
+}
+
+function getDayStatus(
+  day: WeeklyContentDay,
+  statuses: Record<string, ContentTaskStatus>
+) {
+  return statuses[String(day.day)] || day.status;
+}
+
+function formatList(items: string[]) {
+  return items.map((item, index) => `${index + 1}. ${item}`).join("\n");
+}
+
+function getDayCopyText(day: WeeklyContentDay) {
+  return [
+    `แผนคอนเทนต์ วันที่ ${day.day}`,
+    `ช่วงของแผน: ${day.stage}`,
+    `หัวข้อ: ${day.title}`,
+    `เป้าหมาย: ${day.objective}`,
+    "",
+    `หลักการที่ใช้: ${day.marketingPrinciple.title}`,
+    day.marketingPrinciple.explanation,
+    "",
+    `รูปแบบ: ${day.format}`,
+    `เวลาโพสต์: ${day.publishTime}`,
+    `เวลาที่ใช้โดยประมาณ: ${day.estimatedMinutes} นาที`,
+    "",
+    `หัวข้อเนื้อหา: ${day.topic}`,
+    "",
+    "ประโยคเปิด:",
+    day.hook,
+    "",
+    "บทพูดหรือเนื้อหา:",
+    day.script,
+    "",
+    "ลำดับการถ่าย:",
+    formatList(day.shotList),
+    "",
+    "ข้อความบนหน้าจอ:",
+    formatList(day.onScreenTexts),
+    "",
+    "แคปชัน:",
+    day.caption,
+    "",
+    `คำชวนให้ทำต่อ: ${day.cta}`,
+    "",
+    `แฮชแท็ก: ${day.hashtags.join(" ")}`,
+    "",
+    "สิ่งที่ต้องเตรียม:",
+    formatList(day.preparation),
+    "",
+    `แผนสำรอง: ${day.fallback.title}`,
+    formatList(day.fallback.instructions),
+    day.fallback.caption
+      ? `\nแคปชันแผนสำรอง:\n${day.fallback.caption}`
+      : "",
+    "",
+    "หลังโพสต์ต้องทำอะไร:",
+    formatList(day.afterPosting),
+    "",
+    "ตัวอย่างตอบความคิดเห็น:",
+    formatList(day.replyExamples),
+    "",
+    "ตัวชี้วัดที่ควรดู:",
+    formatList(day.metrics),
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
+ function getWeeklyCopyText(
+  plan: WeeklyContentPlan
+) {
+
+  const daysText = plan.days
+    .map((day) => getDayCopyText(day))
+    .join("\n\n------------------------------\n\n");
+
+  return [
+    plan.title,
+    "",
+    `สินค้า: ${plan.productOrService}`,
+    `กลุ่มลูกค้า: ${plan.audience}`,
+    `เป้าหมายทั้งสัปดาห์: ${plan.weeklyObjective}`,
+    "",
+    "จุดเด่นสินค้า:",
+    formatList(plan.productHighlights),
+    "",
+    "เหตุผลของแผน:",
+    plan.strategyExplanation,
+    "",
+    daysText,
+  ].join("\n");
 }
 
 export default function WeeklyDashboardPage() {
-  const [state, setState] = useState<WeeklyState>(getInitialState);
+  const [plan, setPlan] =
+    useState<WeeklyContentPlan>(
+      facebookBagSamplePlan
+    );
+
+  const [state, setState] =
+    useState<WeeklyPageState>(getInitialState);
+
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    setState(readState());
+    const request = readPlanRequest();
+
+    const nextPlan = request
+      ? generateWeeklyContentPlan(request)
+      : facebookBagSamplePlan;
+
+    setPlan(nextPlan);
+    setState(readState(nextPlan.id));
     setHydrated(true);
   }, []);
 
   useEffect(() => {
     if (!hydrated) return;
 
-    writeState(state);
-  }, [hydrated, state]);
+    writeState(plan.id, state);
+  }, [hydrated, plan.id, state]);
 
-  const selectedMission =
-    weeklyMissions.find((mission) => mission.day === state.selectedDay) ||
-    weeklyMissions[0];
+  const selectedDay =
+    plan.days.find((day) => day.day === state.selectedDay) ||
+    plan.days[0];
 
-  const allTasks = useMemo(() => getAllTasks(), []);
-
-  const completedAllTasks = allTasks.filter((task) =>
-    state.completedTaskIds.includes(task.id)
-  );
-
-  const weeklyProgress =
-    allTasks.length === 0
-      ? 0
-      : Math.round((completedAllTasks.length / allTasks.length) * 100);
-
-  const completedDays = weeklyMissions.filter((mission) => {
-    return mission.tasks.every((task) =>
-      state.completedTaskIds.includes(task.id)
-    );
-  }).length;
-
-  const selectedDayCompletedTasks = selectedMission.tasks.filter((task) =>
-    state.completedTaskIds.includes(task.id)
+  const selectedStatus = getDayStatus(
+    selectedDay,
+    state.statuses
   );
 
   const selectedDayProgress =
-    selectedMission.tasks.length === 0
-      ? 0
-      : Math.round(
-          (selectedDayCompletedTasks.length / selectedMission.tasks.length) *
-            100
-        );
+    getStatusProgress(selectedStatus);
 
-  const selectedNote = state.notes[String(selectedMission.day)] || "";
+  const weeklyProgress = useMemo(() => {
+    if (plan.days.length === 0) return 0;
 
-  function updateState(nextState: Partial<WeeklyState>) {
-    setState((current) => {
-      return {
-        ...current,
-        ...nextState,
-      };
-    });
+    const total = plan.days.reduce((sum, day) => {
+      const status = getDayStatus(day, state.statuses);
+
+      return sum + getStatusProgress(status);
+    }, 0);
+
+    return Math.round(total / plan.days.length);
+  }, [plan.days, state.statuses]);
+
+  const postedDays = plan.days.filter((day) => {
+    return getDayStatus(day, state.statuses) === "posted";
+  }).length;
+
+  const selectedNote =
+    state.notes[String(selectedDay.day)] || "";
+
+  function updateState(nextState: Partial<WeeklyPageState>) {
+    setState((current) => ({
+      ...current,
+      ...nextState,
+    }));
   }
 
-  function toggleTask(taskId: string) {
-    const exists = state.completedTaskIds.includes(taskId);
-
-    if (exists) {
-      updateState({
-        completedTaskIds: state.completedTaskIds.filter((id) => id !== taskId),
-      });
-
-      return;
-    }
-
+  function updateStatus(
+    day: number,
+    status: ContentTaskStatus
+  ) {
     updateState({
-      completedTaskIds: [...state.completedTaskIds, taskId],
+      statuses: {
+        ...state.statuses,
+        [String(day)]: status,
+      },
     });
   }
 
-  function updateNote(day: number, value: string) {
+  function updateNote(day: number, note: string) {
     updateState({
       notes: {
         ...state.notes,
-        [String(day)]: value,
+        [String(day)]: note,
       },
     });
   }
 
   function resetWeek() {
-    updateState({
-      completedTaskIds: [],
-      notes: {},
-      selectedDay: 1,
-    });
-  }
+    const confirmed = window.confirm(
+      "ต้องการล้างสถานะและบันทึกของแผนนี้ทั้งหมดหรือไม่?"
+    );
 
-  function getDayProgress(mission: WeeklyMission) {
-    const completed = mission.tasks.filter((task) =>
-      state.completedTaskIds.includes(task.id)
-    ).length;
+    if (!confirmed) return;
 
-    if (mission.tasks.length === 0) return 0;
-
-    return Math.round((completed / mission.tasks.length) * 100);
-  }
-
-  function getWeeklySummaryText() {
-    const noteLines = weeklyMissions
-      .map((mission) => {
-        const note = state.notes[String(mission.day)] || "";
-
-        return `วันที่ ${mission.day}: ${mission.title}\n${note || "- ยังไม่มีบันทึก"}`;
-      })
-      .join("\n\n");
-
-    return `สรุปแผน 7 วัน Creator OS\nความคืบหน้ารวม: ${weeklyProgress}%\nทำครบแล้ว: ${completedDays}/7 วัน\n\n${noteLines}`;
+    setState(getInitialState());
   }
 
   return (
-    <main style={{ maxWidth: "1100px", margin: "0 auto", padding: "24px" }}>
+    <main style={pageStyle}>
       <section style={heroStyle}>
-        <p style={labelStyle}>แผน 7 วัน</p>
-
-        <h1 style={titleStyle}>วางระบบทำคอนเทนต์ให้ครบใน 1 สัปดาห์</h1>
-
-        <p style={subtitleStyle}>
-          ใช้หน้านี้ดูภาพรวมทั้งสัปดาห์ ตั้งแต่เลือกกลุ่มเป้าหมาย หา Hook
-          เขียนคอนเทนต์ ใส่ CTA ตรวจคุณภาพ เตรียมโพสต์ และสรุปผลเพื่อต่อยอด
+        <p style={heroLabelStyle}>
+          แผนคอนเทนต์พร้อมทำ 7 วัน
         </p>
 
-        <div style={buttonRowStyle}>
-          <Link href="/dashboard">
-            <button style={primaryButtonStyle}>กลับไปภารกิจวันนี้</button>
-          </Link>
+        <h1 style={heroTitleStyle}>{plan.title}</h1>
 
-          <Link href="/hooks">
-            <button style={secondaryButtonStyle}>เปิดคลัง Hook</button>
-          </Link>
+        <p style={heroSubtitleStyle}>
+          ระบบจัดหัวข้อ บทพูด ลำดับการถ่าย แคปชัน
+          และงานหลังโพสต์ไว้ให้แล้ว
+          คุณเพียงเลือกวันและลงมือทำตามแผน
+        </p>
 
-          <Link href="/search">
-            <button style={secondaryButtonStyle}>ค้นหาไอเดีย</button>
-          </Link>
-        </div>
+       <div style={heroTagRowStyle}>
+  <span style={heroTagStyle}>
+    {PLATFORM_LABELS[plan.platform]}
+  </span>
+
+  <span style={heroTagStyle}>
+    เป้าหมาย: {GOAL_LABELS[plan.goal]}
+  </span>
+
+  <span style={heroTagStyle}>
+    {INTENSITY_LABELS[plan.intensity]}
+  </span>
+
+  <span style={heroTagStyle}>7 วัน</span>
+</div>
+
+
+                <div style={buttonRowStyle}>
+  <Link href="/start">
+    <button type="button" style={createPlanButtonStyle}>
+      สร้างแผนใหม่
+    </button>
+  </Link>
+
+  <Link href="/dashboard">
+    <button type="button" style={primaryButtonStyle}>
+      กลับหน้า Dashboard
+    </button>
+  </Link>
+
+  <CopyButton text={getWeeklyCopyText(plan)} />
+</div>
       </section>
 
-      <section style={summaryGridStyle}>
-        <article style={summaryCardStyle}>
-          <p style={summaryLabelStyle}>ความคืบหน้าทั้งสัปดาห์</p>
-          <h2 style={summaryNumberStyle}>{weeklyProgress}%</h2>
-          <p style={mutedTextStyle}>
-            ทำแล้ว {completedAllTasks.length} จากทั้งหมด {allTasks.length} งาน
+      <section style={overviewSectionStyle}>
+        <div style={sectionHeadingRowStyle}>
+          <div>
+            <p style={sectionLabelStyle}>ภาพรวมแผน</p>
+
+            <h2 style={sectionTitleStyle}>
+              สิ่งที่ระบบวางไว้ให้คุณ
+            </h2>
+          </div>
+        </div>
+
+        <div style={summaryGridStyle}>
+          <article style={summaryCardStyle}>
+            <p style={summaryLabelStyle}>
+              ความคืบหน้าทั้งสัปดาห์
+            </p>
+
+            <h3 style={summaryNumberStyle}>
+              {weeklyProgress}%
+            </h3>
+
+            <div style={progressOuterStyle}>
+              <div
+                style={{
+                  ...progressInnerStyle,
+                  width: `${weeklyProgress}%`,
+                }}
+              />
+            </div>
+          </article>
+
+          <article style={summaryCardStyle}>
+            <p style={summaryLabelStyle}>โพสต์แล้ว</p>
+
+            <h3 style={summaryNumberStyle}>
+              {postedDays}/7
+            </h3>
+
+            <p style={mutedTextStyle}>
+              จำนวนวันที่ทำจนถึงขั้นโพสต์แล้ว
+            </p>
+          </article>
+
+          <article style={summaryCardStyle}>
+            <p style={summaryLabelStyle}>วันที่กำลังดู</p>
+
+            <h3 style={summaryNumberStyle}>
+              วันที่ {selectedDay.day}
+            </h3>
+
+            <p style={mutedTextStyle}>
+              {getStatusLabel(selectedStatus)}
+            </p>
+          </article>
+        </div>
+
+        <div style={planInfoGridStyle}>
+          <article style={infoCardStyle}>
+            <p style={infoLabelStyle}>สินค้า</p>
+            <p style={infoTextStyle}>
+              {plan.productOrService}
+            </p>
+          </article>
+
+          <article style={infoCardStyle}>
+            <p style={infoLabelStyle}>กลุ่มลูกค้า</p>
+            <p style={infoTextStyle}>{plan.audience}</p>
+          </article>
+
+          <article style={infoCardStyle}>
+            <p style={infoLabelStyle}>
+              เป้าหมายทั้งสัปดาห์
+            </p>
+            <p style={infoTextStyle}>
+              {plan.weeklyObjective}
+            </p>
+          </article>
+        </div>
+
+        <article style={strategyCardStyle}>
+          <p style={strategyLabelStyle}>
+            ทำไมแผนจึงเรียงแบบนี้?
+          </p>
+
+          <p style={strategyTextStyle}>
+            {plan.strategyExplanation}
           </p>
         </article>
 
-        <article style={summaryCardStyle}>
-          <p style={summaryLabelStyle}>วันที่ทำครบแล้ว</p>
-          <h2 style={summaryNumberStyle}>{completedDays}/7</h2>
-          <p style={mutedTextStyle}>นับวันที่ภารกิจย่อยครบทั้งหมด</p>
-        </article>
+        <article style={highlightCardStyle}>
+          <p style={infoLabelStyle}>จุดเด่นสินค้าที่ใช้ในแผน</p>
 
-        <article style={summaryCardStyle}>
-          <p style={summaryLabelStyle}>วันที่เลือกอยู่</p>
-          <h2 style={summaryNumberStyle}>วันที่ {selectedMission.day}</h2>
-          <p style={mutedTextStyle}>{selectedMission.title}</p>
+          <ul style={listStyle}>
+            {plan.productHighlights.map((highlight) => (
+              <li key={highlight} style={listItemStyle}>
+                {highlight}
+              </li>
+            ))}
+          </ul>
         </article>
       </section>
 
-      <section style={progressSectionStyle}>
-        <div style={sectionTopRowStyle}>
+      <section style={daySelectorSectionStyle}>
+        <div style={sectionHeadingRowStyle}>
           <div>
-            <p style={labelStyle}>ภาพรวมแผน</p>
+            <p style={sectionLabelStyle}>ตาราง 7 วัน</p>
 
-            <h2 style={{ margin: "6px 0" }}>เลือกวันที่ต้องการทำงาน</h2>
+            <h2 style={sectionTitleStyle}>
+              เลือกวันที่ต้องการลงมือทำ
+            </h2>
           </div>
-
-          <CopyButton text={getWeeklySummaryText()} />
         </div>
 
-        <div style={weekGridStyle}>
-          {weeklyMissions.map((mission) => {
-            const progress = getDayProgress(mission);
-            const active = state.selectedDay === mission.day;
+        <div style={dayGridStyle}>
+          {plan.days.map((day) => {
+            const status = getDayStatus(
+              day,
+              state.statuses
+            );
+
+            const progress = getStatusProgress(status);
+            const active = selectedDay.day === day.day;
 
             return (
               <button
-                key={mission.day}
+                key={day.day}
                 type="button"
-                onClick={() => updateState({ selectedDay: mission.day })}
-                style={active ? activeDayCardStyle : dayCardStyle}
+                onClick={() =>
+                  updateState({ selectedDay: day.day })
+                }
+                style={
+                  active
+                    ? activeDayCardStyle
+                    : dayCardStyle
+                }
               >
                 <div style={dayTopRowStyle}>
-                  <span style={dayBadgeStyle}>วันที่ {mission.day}</span>
-                  <strong>{progress}%</strong>
+                  <span style={dayBadgeStyle}>
+                    วันที่ {day.day}
+                  </span>
+
+                  <span style={statusBadgeStyle}>
+                    {getStatusLabel(status)}
+                  </span>
                 </div>
 
-                <h3 style={dayTitleStyle}>{mission.title}</h3>
+                <p style={dayStageStyle}>{day.stage}</p>
 
-                <p style={dayGoalStyle}>{mission.goal}</p>
+                <h3 style={dayTitleStyle}>{day.title}</h3>
 
                 <div style={progressOuterStyle}>
                   <div
                     style={{
                       ...progressInnerStyle,
-                      width: progress + "%",
+                      width: `${progress}%`,
                     }}
                   />
                 </div>
+
+                <p style={dayProgressTextStyle}>
+                  ความคืบหน้า {progress}%
+                </p>
               </button>
             );
           })}
         </div>
       </section>
 
-      <section style={missionBoxStyle}>
-        <div style={missionTopRowStyle}>
-          <div>
-            <p style={labelStyle}>วันที่ {selectedMission.day}</p>
+      <section style={contentSectionStyle}>
+        <div style={dayHeroStyle}>
+          <div style={{ flex: 1 }}>
+            <p style={sectionLabelStyle}>
+              วันที่ {selectedDay.day} · {selectedDay.stage}
+            </p>
 
-            <h2 style={{ margin: "6px 0" }}>{selectedMission.title}</h2>
-
-            <p style={mutedTextStyle}>{selectedMission.goal}</p>
-          </div>
-
-          <div style={progressBoxStyle}>
-            <p style={progressLabelStyle}>วันนี้</p>
-            <strong style={progressNumberStyle}>{selectedDayProgress}%</strong>
-          </div>
-        </div>
-
-        <div style={outputBoxStyle}>
-          <p style={outputLabelStyle}>ผลลัพธ์ที่ควรได้วันนี้</p>
-          <p style={outputTextStyle}>{selectedMission.output}</p>
-        </div>
-
-        <div style={taskGridStyle}>
-          {selectedMission.tasks.map((task) => {
-            const completed = state.completedTaskIds.includes(task.id);
-
-            return (
-              <article
-                key={task.id}
-                style={completed ? completedTaskCardStyle : taskCardStyle}
-              >
-                <h3 style={{ marginTop: 0 }}>{task.title}</h3>
-
-                <p style={taskDescriptionStyle}>{task.description}</p>
-
-                <button
-                  type="button"
-                  onClick={() => toggleTask(task.id)}
-                  style={completed ? doneButtonStyle : taskButtonStyle}
-                >
-                  {completed ? "ทำแล้ว" : "ทำเสร็จแล้วกดตรงนี้"}
-                </button>
-              </article>
-            );
-          })}
-        </div>
-      </section>
-
-      <section style={sectionStyle}>
-        <div style={sectionTopRowStyle}>
-          <div>
-            <p style={labelStyle}>บันทึกประจำวัน</p>
-
-            <h2 style={{ margin: "6px 0" }}>
-              เขียนสิ่งที่ทำได้หรือสิ่งที่ควรปรับ
+            <h2 style={selectedDayTitleStyle}>
+              {selectedDay.title}
             </h2>
+
+            <p style={selectedDayObjectiveStyle}>
+              {selectedDay.objective}
+            </p>
           </div>
 
-          <CopyButton text={selectedNote} />
+          <div style={dayProgressBoxStyle}>
+            <p style={dayProgressLabelStyle}>ความคืบหน้า</p>
+
+            <strong style={dayProgressNumberStyle}>
+              {selectedDayProgress}%
+            </strong>
+          </div>
         </div>
 
-        <textarea
-          value={selectedNote}
-          onChange={(event) =>
-            updateNote(selectedMission.day, event.target.value)
-          }
-          placeholder="บันทึกของวันนี้ เช่น ได้ Hook อะไรบ้าง เขียนโพสต์ได้ไหม ติดตรงไหน และพรุ่งนี้ควรทำอะไรต่อ..."
-          style={textareaStyle}
-        />
+        <div style={statusControlStyle}>
+          <label
+            htmlFor="content-status"
+            style={statusLabelStyle}
+          >
+            สถานะงานวันนี้
+          </label>
+
+          <select
+            id="content-status"
+            value={selectedStatus}
+            onChange={(event) =>
+              updateStatus(
+                selectedDay.day,
+                event.target.value as ContentTaskStatus
+              )
+            }
+            style={selectStyle}
+          >
+            {STATUS_OPTIONS.map((option) => (
+              <option
+                key={option.value}
+                value={option.value}
+              >
+                {option.label}
+              </option>
+            ))}
+          </select>
+
+          <CopyButton text={getDayCopyText(selectedDay)} />
+        </div>
+
+        <div style={quickInfoGridStyle}>
+          <article style={quickInfoCardStyle}>
+            <p style={quickInfoLabelStyle}>รูปแบบ</p>
+            <strong>{selectedDay.format}</strong>
+          </article>
+
+          <article style={quickInfoCardStyle}>
+            <p style={quickInfoLabelStyle}>เวลาโพสต์</p>
+            <strong>{selectedDay.publishTime}</strong>
+          </article>
+
+          <article style={quickInfoCardStyle}>
+            <p style={quickInfoLabelStyle}>เวลาที่ใช้</p>
+            <strong>
+              ประมาณ {selectedDay.estimatedMinutes} นาที
+            </strong>
+          </article>
+        </div>
+
+        <article style={principleCardStyle}>
+          <p style={principleLabelStyle}>
+            หลักการที่ใช้
+          </p>
+
+          <h3 style={principleTitleStyle}>
+            {selectedDay.marketingPrinciple.title}
+          </h3>
+
+          <p style={principleTextStyle}>
+            {selectedDay.marketingPrinciple.explanation}
+          </p>
+        </article>
+
+        <div style={twoColumnGridStyle}>
+          <article style={contentCardStyle}>
+            <div style={cardHeadingRowStyle}>
+              <h3 style={cardTitleStyle}>หัวข้อคอนเทนต์</h3>
+              <CopyButton text={selectedDay.topic} />
+            </div>
+
+            <p style={largeContentTextStyle}>
+              {selectedDay.topic}
+            </p>
+          </article>
+
+          <article style={contentCardStyle}>
+            <div style={cardHeadingRowStyle}>
+              <h3 style={cardTitleStyle}>
+                ประโยคเปิดคลิปหรือโพสต์
+              </h3>
+
+              <CopyButton text={selectedDay.hook} />
+            </div>
+
+            <p style={largeContentTextStyle}>
+              {selectedDay.hook}
+            </p>
+          </article>
+        </div>
+
+        <article style={contentCardStyle}>
+          <div style={cardHeadingRowStyle}>
+            <h3 style={cardTitleStyle}>
+              บทพูดหรือเนื้อหาพร้อมใช้
+            </h3>
+
+            <CopyButton text={selectedDay.script} />
+          </div>
+
+          <p style={scriptTextStyle}>
+            {selectedDay.script}
+          </p>
+        </article>
+
+        <div style={twoColumnGridStyle}>
+          <article style={contentCardStyle}>
+            <h3 style={cardTitleStyle}>ลำดับการถ่าย</h3>
+
+            <ol style={listStyle}>
+              {selectedDay.shotList.map((shot) => (
+                <li key={shot} style={listItemStyle}>
+                  {shot}
+                </li>
+              ))}
+            </ol>
+          </article>
+
+          <article style={contentCardStyle}>
+            <h3 style={cardTitleStyle}>
+              ข้อความที่ขึ้นบนหน้าจอ
+            </h3>
+
+            <ul style={listStyle}>
+              {selectedDay.onScreenTexts.map((text) => (
+                <li key={text} style={listItemStyle}>
+                  {text}
+                </li>
+              ))}
+            </ul>
+          </article>
+        </div>
+
+        <article style={contentCardStyle}>
+          <div style={cardHeadingRowStyle}>
+            <h3 style={cardTitleStyle}>แคปชันพร้อมโพสต์</h3>
+
+            <CopyButton text={selectedDay.caption} />
+          </div>
+
+          <p style={preserveLineTextStyle}>
+            {selectedDay.caption}
+          </p>
+        </article>
+
+        <div style={twoColumnGridStyle}>
+          <article style={contentCardStyle}>
+            <div style={cardHeadingRowStyle}>
+              <h3 style={cardTitleStyle}>
+                คำชวนให้คนทำต่อ
+              </h3>
+
+              <CopyButton text={selectedDay.cta} />
+            </div>
+
+            <p style={largeContentTextStyle}>
+              {selectedDay.cta}
+            </p>
+          </article>
+
+          <article style={contentCardStyle}>
+            <div style={cardHeadingRowStyle}>
+              <h3 style={cardTitleStyle}>แฮชแท็ก</h3>
+
+              <CopyButton
+                text={selectedDay.hashtags.join(" ")}
+              />
+            </div>
+
+            <div style={hashtagRowStyle}>
+              {selectedDay.hashtags.map((hashtag) => (
+                <span
+                  key={hashtag}
+                  style={hashtagStyle}
+                >
+                  {hashtag}
+                </span>
+              ))}
+            </div>
+          </article>
+        </div>
+
+        <article style={contentCardStyle}>
+          <h3 style={cardTitleStyle}>สิ่งที่ต้องเตรียม</h3>
+
+          <ul style={listStyle}>
+            {selectedDay.preparation.map((item) => (
+              <li key={item} style={listItemStyle}>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </article>
+
+        <article style={fallbackCardStyle}>
+          <p style={fallbackLabelStyle}>
+            วันนี้ทำรูปแบบหลักไม่ได้?
+          </p>
+
+          <h3 style={fallbackTitleStyle}>
+            แผนสำรอง: {selectedDay.fallback.title}
+          </h3>
+
+          <p style={mutedTextStyle}>
+            ระบบเปลี่ยนงานให้ทำได้ง่ายขึ้น
+            โดยยังรักษาเป้าหมายของวันนี้ไว้
+          </p>
+
+          <ol style={listStyle}>
+            {selectedDay.fallback.instructions.map(
+              (instruction) => (
+                <li
+                  key={instruction}
+                  style={listItemStyle}
+                >
+                  {instruction}
+                </li>
+              )
+            )}
+          </ol>
+
+          {selectedDay.fallback.caption ? (
+            <div style={fallbackCaptionStyle}>
+              <div style={cardHeadingRowStyle}>
+                <strong>แคปชันสำหรับแผนสำรอง</strong>
+
+                <CopyButton
+                  text={selectedDay.fallback.caption}
+                />
+              </div>
+
+              <p style={preserveLineTextStyle}>
+                {selectedDay.fallback.caption}
+              </p>
+            </div>
+          ) : null}
+        </article>
+
+        <div style={twoColumnGridStyle}>
+          <article style={contentCardStyle}>
+            <h3 style={cardTitleStyle}>
+              หลังโพสต์ต้องทำอะไร
+            </h3>
+
+            <ol style={listStyle}>
+              {selectedDay.afterPosting.map((item) => (
+                <li key={item} style={listItemStyle}>
+                  {item}
+                </li>
+              ))}
+            </ol>
+          </article>
+
+          <article style={contentCardStyle}>
+            <h3 style={cardTitleStyle}>
+              ตัวอย่างตอบความคิดเห็น
+            </h3>
+
+            <ul style={listStyle}>
+              {selectedDay.replyExamples.map((reply) => (
+                <li key={reply} style={listItemStyle}>
+                  “{reply}”
+                </li>
+              ))}
+            </ul>
+          </article>
+        </div>
+
+        <article style={metricsCardStyle}>
+          <p style={metricsLabelStyle}>
+            ตัวชี้วัดที่ควรดู
+          </p>
+
+          <div style={metricsGridStyle}>
+            {selectedDay.metrics.map((metric) => (
+              <div key={metric} style={metricItemStyle}>
+                {metric}
+              </div>
+            ))}
+          </div>
+        </article>
+
+        <article style={noteCardStyle}>
+          <div style={cardHeadingRowStyle}>
+            <div>
+              <p style={sectionLabelStyle}>บันทึกของวันนี้</p>
+
+              <h3 style={cardTitleStyle}>
+                จดผลลัพธ์หรือสิ่งที่ต้องปรับ
+              </h3>
+            </div>
+
+            <CopyButton text={selectedNote} />
+          </div>
+
+          <textarea
+            value={selectedNote}
+            onChange={(event) =>
+              updateNote(
+                selectedDay.day,
+                event.target.value
+              )
+            }
+            placeholder="ตัวอย่าง: คนถามเรื่องขนาดมากที่สุด คลิปช่วงแรกยาวเกินไป หรือควรถ่ายมุมด้านในเพิ่ม..."
+            style={textareaStyle}
+          />
+        </article>
       </section>
 
-      <section style={bottomCtaStyle}>
-        <h2 style={{ marginTop: 0 }}>จบแผน 7 วันแล้วทำอะไรต่อ?</h2>
+      <section style={bottomSectionStyle}>
+        <h2 style={bottomTitleStyle}>
+          แผนนี้พร้อมให้ผู้ใช้ลงมือทำแล้ว
+        </h2>
 
         <p style={bottomTextStyle}>
-          เมื่อทำครบ 7 วัน ให้คัด Hook และคอนเทนต์ที่ดีที่สุดเก็บไว้
-          แล้วนำไปต่อยอดเป็นโพสต์ คลิป แพ็กคอนเทนต์ หรือระบบขายพรีเมียมต่อได้
+          เปิดทีละวัน เตรียมของตามรายการ
+          ใช้บทพูดและแคปชันที่ระบบจัดไว้
+          จากนั้นบันทึกสถานะและผลลัพธ์หลังโพสต์
         </p>
 
         <div style={buttonRowCenterStyle}>
-          <Link href="/favorites">
-            <button style={darkButtonStyle}>ดูไอเดียที่บันทึกไว้</button>
-          </Link>
+        <CopyButton text={getWeeklyCopyText(plan)} />
 
-          <Link href="/quality/hooks">
-            <button style={darkSecondaryButtonStyle}>ตรวจคุณภาพ Hook</button>
-          </Link>
-
-          <button type="button" onClick={resetWeek} style={darkSecondaryButtonStyle}>
-            เริ่มแผนใหม่
+          <button
+            type="button"
+            onClick={resetWeek}
+            style={resetButtonStyle}
+          >
+            ล้างสถานะและเริ่มใหม่
           </button>
         </div>
       </section>
@@ -553,335 +948,610 @@ export default function WeeklyDashboardPage() {
   );
 }
 
+const pageStyle: CSSProperties = {
+  maxWidth: "1160px",
+  margin: "0 auto",
+  padding: "24px",
+};
+
 const heroStyle: CSSProperties = {
-  padding: "42px 24px",
-  borderRadius: "24px",
-  background: "#111827",
+  padding: "40px 24px",
+  borderRadius: "28px",
+  background:
+    "linear-gradient(135deg, #111827 0%, #312e81 55%, #4f46e5 100%)",
   color: "white",
 };
 
-const labelStyle: CSSProperties = {
-  color: "#4f46e5",
-  fontWeight: "bold",
-  marginTop: 0,
+const heroLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#c7d2fe",
+  fontWeight: 800,
 };
 
-const titleStyle: CSSProperties = {
-  fontSize: "42px",
-  lineHeight: "1.15",
+const heroTitleStyle: CSSProperties = {
   margin: "12px 0",
+  fontSize: "clamp(32px, 6vw, 50px)",
+  lineHeight: 1.15,
 };
 
-const subtitleStyle: CSSProperties = {
-  color: "#d1d5db",
+const heroSubtitleStyle: CSSProperties = {
+  maxWidth: "820px",
+  margin: 0,
+  color: "#e0e7ff",
   fontSize: "18px",
-  lineHeight: "1.8",
-  maxWidth: "860px",
+  lineHeight: 1.8,
+};
+
+const heroTagRowStyle: CSSProperties = {
+  display: "flex",
+  flexWrap: "wrap",
+  gap: "10px",
+  marginTop: "22px",
+};
+
+const heroTagStyle: CSSProperties = {
+  padding: "7px 11px",
+  borderRadius: "999px",
+  border: "1px solid rgba(255,255,255,0.25)",
+  background: "rgba(255,255,255,0.12)",
+  fontSize: "14px",
+  fontWeight: 700,
 };
 
 const buttonRowStyle: CSSProperties = {
   display: "flex",
-  gap: "10px",
   flexWrap: "wrap",
-  marginTop: "18px",
+  gap: "12px",
+  alignItems: "center",
+  marginTop: "28px",
+};
+
+const createPlanButtonStyle: CSSProperties = {
+  padding: "12px 20px",
+  borderRadius: "14px",
+  border: "1px solid #ffffff",
+  background: "#ffffff",
+  color: "#312e81",
+  cursor: "pointer",
+  fontWeight: 800,
+  boxShadow: "0 8px 20px rgba(15, 23, 42, 0.18)",
 };
 
 const buttonRowCenterStyle: CSSProperties = {
   display: "flex",
+  flexWrap: "wrap",
   justifyContent: "center",
   gap: "10px",
-  flexWrap: "wrap",
-  marginTop: "18px",
+  marginTop: "20px",
 };
 
 const primaryButtonStyle: CSSProperties = {
-  padding: "12px 18px",
-  borderRadius: "14px",
-  border: "1px solid #4f46e5",
-  background: "#4f46e5",
-  color: "white",
-  cursor: "pointer",
-  fontWeight: "bold",
-};
-
-const secondaryButtonStyle: CSSProperties = {
-  padding: "12px 18px",
-  borderRadius: "14px",
-  border: "1px solid #c7d2fe",
-  background: "white",
-  color: "#111827",
-  cursor: "pointer",
-  fontWeight: "bold",
-};
-
-const summaryGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
-  gap: "16px",
-  marginTop: "22px",
-};
-
-const summaryCardStyle: CSSProperties = {
-  border: "1px solid #e5e7eb",
-  borderRadius: "20px",
-  padding: "20px",
-  background: "white",
-};
-
-const summaryLabelStyle: CSSProperties = {
-  marginTop: 0,
-  color: "#555",
-  fontWeight: "bold",
-};
-
-const summaryNumberStyle: CSSProperties = {
-  margin: "8px 0",
-  fontSize: "38px",
-};
-
-const mutedTextStyle: CSSProperties = {
-  color: "#555",
-  lineHeight: "1.7",
-  margin: 0,
-};
-
-const progressSectionStyle: CSSProperties = {
-  marginTop: "24px",
-  padding: "24px",
-  borderRadius: "24px",
-  border: "1px solid #e5e7eb",
-  background: "white",
-};
-
-const sectionTopRowStyle: CSSProperties = {
-  display: "flex",
-  justifyContent: "space-between",
-  gap: "16px",
-  flexWrap: "wrap",
-  alignItems: "center",
-};
-
-const weekGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(230px,1fr))",
-  gap: "14px",
-  marginTop: "20px",
-};
-
-const dayCardStyle: CSSProperties = {
-  textAlign: "left",
-  padding: "18px",
-  borderRadius: "18px",
-  border: "1px solid #e5e7eb",
-  background: "#f8fafc",
-  cursor: "pointer",
-};
-
-const activeDayCardStyle: CSSProperties = {
-  textAlign: "left",
-  padding: "18px",
-  borderRadius: "18px",
-  border: "2px solid #4f46e5",
-  background: "#eef2ff",
-  cursor: "pointer",
-};
-
-const dayTopRowStyle: CSSProperties = {
-  display: "flex",
-  justifyContent: "space-between",
-  gap: "10px",
-  alignItems: "center",
-};
-
-const dayBadgeStyle: CSSProperties = {
-  padding: "6px 10px",
-  borderRadius: "999px",
-  background: "white",
-  border: "1px solid #e5e7eb",
-  color: "#4f46e5",
-  fontWeight: "bold",
-  fontSize: "13px",
-};
-
-const dayTitleStyle: CSSProperties = {
-  margin: "12px 0 8px",
-};
-
-const dayGoalStyle: CSSProperties = {
-  color: "#555",
-  lineHeight: "1.6",
-  margin: 0,
-};
-
-const progressOuterStyle: CSSProperties = {
-  height: "9px",
-  borderRadius: "999px",
-  background: "#e5e7eb",
-  overflow: "hidden",
-  marginTop: "14px",
-};
-
-const progressInnerStyle: CSSProperties = {
-  height: "100%",
-  borderRadius: "999px",
-  background: "#4f46e5",
-};
-
-const missionBoxStyle: CSSProperties = {
-  marginTop: "24px",
-  padding: "24px",
-  borderRadius: "24px",
-  border: "1px solid #e5e7eb",
-  background: "white",
-};
-
-const missionTopRowStyle: CSSProperties = {
-  display: "flex",
-  justifyContent: "space-between",
-  gap: "16px",
-  flexWrap: "wrap",
-};
-
-const progressBoxStyle: CSSProperties = {
-  padding: "14px",
-  borderRadius: "18px",
-  background: "#eef2ff",
-  minWidth: "150px",
-};
-
-const progressLabelStyle: CSSProperties = {
-  margin: 0,
-  color: "#4f46e5",
-  fontWeight: "bold",
-};
-
-const progressNumberStyle: CSSProperties = {
-  display: "block",
-  fontSize: "34px",
-  marginTop: "4px",
-};
-
-const outputBoxStyle: CSSProperties = {
-  padding: "16px",
-  borderRadius: "18px",
-  background: "#eef2ff",
-  border: "1px solid #c7d2fe",
-  marginTop: "18px",
-};
-
-const outputLabelStyle: CSSProperties = {
-  margin: "0 0 8px",
-  color: "#4f46e5",
-  fontWeight: "bold",
-};
-
-const outputTextStyle: CSSProperties = {
-  margin: 0,
-  color: "#111827",
-  lineHeight: "1.7",
-  fontSize: "18px",
-};
-
-const taskGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))",
-  gap: "16px",
-  marginTop: "20px",
-};
-
-const taskCardStyle: CSSProperties = {
-  padding: "18px",
-  borderRadius: "18px",
-  border: "1px solid #e5e7eb",
-  background: "#f8fafc",
-};
-
-const completedTaskCardStyle: CSSProperties = {
-  padding: "18px",
-  borderRadius: "18px",
-  border: "1px solid #a7f3d0",
-  background: "#ecfdf5",
-};
-
-const taskDescriptionStyle: CSSProperties = {
-  color: "#555",
-  lineHeight: "1.7",
-};
-
-const taskButtonStyle: CSSProperties = {
-  padding: "10px 14px",
-  borderRadius: "12px",
-  border: "1px solid #4f46e5",
-  background: "#4f46e5",
-  color: "white",
-  cursor: "pointer",
-  fontWeight: "bold",
-};
-
-const doneButtonStyle: CSSProperties = {
-  padding: "10px 14px",
-  borderRadius: "12px",
-  border: "1px solid #047857",
-  background: "#047857",
-  color: "white",
-  cursor: "pointer",
-  fontWeight: "bold",
-};
-
-const sectionStyle: CSSProperties = {
-  marginTop: "24px",
-  padding: "24px",
-  borderRadius: "24px",
-  border: "1px solid #e5e7eb",
-  background: "white",
-};
-
-const textareaStyle: CSSProperties = {
-  width: "100%",
-  boxSizing: "border-box",
-  minHeight: "150px",
-  marginTop: "16px",
-  padding: "14px 16px",
-  borderRadius: "16px",
-  border: "1px solid #d1d5db",
-  fontSize: "16px",
-  lineHeight: "1.7",
-  resize: "vertical",
-};
-
-const bottomCtaStyle: CSSProperties = {
-  marginTop: "30px",
-  padding: "30px 24px",
-  borderRadius: "28px",
-  background: "#111827",
-  color: "white",
-  textAlign: "center",
-};
-
-const bottomTextStyle: CSSProperties = {
-  color: "#d1d5db",
-  lineHeight: "1.8",
-  fontSize: "17px",
-  maxWidth: "760px",
-  margin: "0 auto",
-};
-
-const darkButtonStyle: CSSProperties = {
   padding: "12px 18px",
   borderRadius: "14px",
   border: "1px solid white",
   background: "white",
   color: "#111827",
   cursor: "pointer",
-  fontWeight: "bold",
+  fontWeight: 800,
 };
 
-const darkSecondaryButtonStyle: CSSProperties = {
+const overviewSectionStyle: CSSProperties = {
+  marginTop: "24px",
+  padding: "24px",
+  border: "1px solid #e5e7eb",
+  borderRadius: "24px",
+  background: "white",
+};
+
+const sectionHeadingRowStyle: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  flexWrap: "wrap",
+  gap: "14px",
+};
+
+const sectionLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#4f46e5",
+  fontWeight: 800,
+};
+
+const sectionTitleStyle: CSSProperties = {
+  margin: "6px 0 0",
+  fontSize: "28px",
+};
+
+const summaryGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns:
+    "repeat(auto-fit, minmax(210px, 1fr))",
+  gap: "14px",
+  marginTop: "20px",
+};
+
+const summaryCardStyle: CSSProperties = {
+  padding: "20px",
+  border: "1px solid #e5e7eb",
+  borderRadius: "20px",
+  background: "#f8fafc",
+};
+
+const summaryLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#475569",
+  fontWeight: 700,
+};
+
+const summaryNumberStyle: CSSProperties = {
+  margin: "8px 0",
+  fontSize: "38px",
+  color: "#111827",
+};
+
+const progressOuterStyle: CSSProperties = {
+  width: "100%",
+  height: "9px",
+  marginTop: "12px",
+  borderRadius: "999px",
+  overflow: "hidden",
+  background: "#e5e7eb",
+};
+
+const progressInnerStyle: CSSProperties = {
+  height: "100%",
+  borderRadius: "999px",
+  background: "#4f46e5",
+  transition: "width 0.2s ease",
+};
+
+const mutedTextStyle: CSSProperties = {
+  margin: 0,
+  color: "#475569",
+  lineHeight: 1.7,
+};
+
+const planInfoGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns:
+    "repeat(auto-fit, minmax(240px, 1fr))",
+  gap: "14px",
+  marginTop: "18px",
+};
+
+const infoCardStyle: CSSProperties = {
+  padding: "18px",
+  borderRadius: "18px",
+  border: "1px solid #e5e7eb",
+};
+
+const infoLabelStyle: CSSProperties = {
+  margin: "0 0 7px",
+  color: "#4f46e5",
+  fontWeight: 800,
+};
+
+const infoTextStyle: CSSProperties = {
+  margin: 0,
+  color: "#111827",
+  lineHeight: 1.7,
+};
+
+const strategyCardStyle: CSSProperties = {
+  marginTop: "18px",
+  padding: "20px",
+  borderRadius: "20px",
+  border: "1px solid #c7d2fe",
+  background: "#eef2ff",
+};
+
+const strategyLabelStyle: CSSProperties = {
+  margin: "0 0 8px",
+  color: "#4338ca",
+  fontWeight: 800,
+};
+
+const strategyTextStyle: CSSProperties = {
+  margin: 0,
+  color: "#312e81",
+  lineHeight: 1.8,
+};
+
+const highlightCardStyle: CSSProperties = {
+  marginTop: "18px",
+  padding: "20px",
+  borderRadius: "20px",
+  border: "1px solid #e5e7eb",
+  background: "#f8fafc",
+};
+
+const daySelectorSectionStyle: CSSProperties = {
+  marginTop: "24px",
+  padding: "24px",
+  border: "1px solid #e5e7eb",
+  borderRadius: "24px",
+  background: "white",
+};
+
+const dayGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns:
+    "repeat(auto-fit, minmax(230px, 1fr))",
+  gap: "14px",
+  marginTop: "20px",
+};
+
+const dayCardStyle: CSSProperties = {
+  padding: "18px",
+  textAlign: "left",
+  border: "1px solid #e5e7eb",
+  borderRadius: "18px",
+  background: "#f8fafc",
+  cursor: "pointer",
+};
+
+const activeDayCardStyle: CSSProperties = {
+  padding: "18px",
+  textAlign: "left",
+  border: "2px solid #4f46e5",
+  borderRadius: "18px",
+  background: "#eef2ff",
+  cursor: "pointer",
+};
+
+const dayTopRowStyle: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: "8px",
+  flexWrap: "wrap",
+};
+
+const dayBadgeStyle: CSSProperties = {
+  padding: "6px 10px",
+  borderRadius: "999px",
+  background: "white",
+  border: "1px solid #c7d2fe",
+  color: "#4338ca",
+  fontWeight: 800,
+  fontSize: "13px",
+};
+
+const statusBadgeStyle: CSSProperties = {
+  padding: "6px 10px",
+  borderRadius: "999px",
+  background: "#e2e8f0",
+  color: "#334155",
+  fontWeight: 700,
+  fontSize: "12px",
+};
+
+const dayStageStyle: CSSProperties = {
+  margin: "14px 0 5px",
+  color: "#4f46e5",
+  fontWeight: 800,
+  fontSize: "14px",
+};
+
+const dayTitleStyle: CSSProperties = {
+  margin: 0,
+  minHeight: "52px",
+  color: "#111827",
+  lineHeight: 1.45,
+};
+
+const dayProgressTextStyle: CSSProperties = {
+  margin: "8px 0 0",
+  color: "#64748b",
+  fontSize: "13px",
+};
+
+const contentSectionStyle: CSSProperties = {
+  marginTop: "24px",
+  padding: "24px",
+  border: "1px solid #e5e7eb",
+  borderRadius: "24px",
+  background: "white",
+};
+
+const dayHeroStyle: CSSProperties = {
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "flex-start",
+  gap: "18px",
+  flexWrap: "wrap",
+};
+
+const selectedDayTitleStyle: CSSProperties = {
+  margin: "7px 0",
+  fontSize: "32px",
+  lineHeight: 1.3,
+};
+
+const selectedDayObjectiveStyle: CSSProperties = {
+  maxWidth: "820px",
+  margin: 0,
+  color: "#475569",
+  fontSize: "17px",
+  lineHeight: 1.8,
+};
+
+const dayProgressBoxStyle: CSSProperties = {
+  minWidth: "150px",
+  padding: "16px",
+  borderRadius: "18px",
+  background: "#eef2ff",
+};
+
+const dayProgressLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#4338ca",
+  fontWeight: 800,
+};
+
+const dayProgressNumberStyle: CSSProperties = {
+  display: "block",
+  marginTop: "4px",
+  color: "#312e81",
+  fontSize: "34px",
+};
+
+const statusControlStyle: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  flexWrap: "wrap",
+  gap: "10px",
+  marginTop: "20px",
+  padding: "16px",
+  borderRadius: "18px",
+  border: "1px solid #e5e7eb",
+  background: "#f8fafc",
+};
+
+const statusLabelStyle: CSSProperties = {
+  color: "#111827",
+  fontWeight: 800,
+};
+
+const selectStyle: CSSProperties = {
+  minHeight: "42px",
+  padding: "8px 12px",
+  borderRadius: "12px",
+  border: "1px solid #cbd5e1",
+  background: "white",
+  fontSize: "15px",
+  cursor: "pointer",
+};
+
+const quickInfoGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns:
+    "repeat(auto-fit, minmax(190px, 1fr))",
+  gap: "12px",
+  marginTop: "18px",
+};
+
+const quickInfoCardStyle: CSSProperties = {
+  padding: "16px",
+  borderRadius: "16px",
+  border: "1px solid #e5e7eb",
+  background: "#f8fafc",
+};
+
+const quickInfoLabelStyle: CSSProperties = {
+  margin: "0 0 6px",
+  color: "#64748b",
+  fontWeight: 700,
+};
+
+const principleCardStyle: CSSProperties = {
+  marginTop: "18px",
+  padding: "20px",
+  borderRadius: "20px",
+  border: "1px solid #fde68a",
+  background: "#fffbeb",
+};
+
+const principleLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#92400e",
+  fontWeight: 800,
+};
+
+const principleTitleStyle: CSSProperties = {
+  margin: "8px 0",
+  color: "#78350f",
+};
+
+const principleTextStyle: CSSProperties = {
+  margin: 0,
+  color: "#78350f",
+  lineHeight: 1.8,
+};
+
+const twoColumnGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns:
+    "repeat(auto-fit, minmax(290px, 1fr))",
+  gap: "16px",
+  marginTop: "18px",
+};
+
+const contentCardStyle: CSSProperties = {
+  marginTop: "18px",
+  padding: "20px",
+  borderRadius: "20px",
+  border: "1px solid #e5e7eb",
+  background: "white",
+};
+
+const cardHeadingRowStyle: CSSProperties = {
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  flexWrap: "wrap",
+  gap: "10px",
+};
+
+const cardTitleStyle: CSSProperties = {
+  margin: 0,
+  color: "#111827",
+};
+
+const largeContentTextStyle: CSSProperties = {
+  margin: "14px 0 0",
+  color: "#111827",
+  fontSize: "18px",
+  lineHeight: 1.8,
+};
+
+const scriptTextStyle: CSSProperties = {
+  margin: "14px 0 0",
+  color: "#334155",
+  fontSize: "17px",
+  lineHeight: 1.9,
+};
+
+const preserveLineTextStyle: CSSProperties = {
+  margin: "14px 0 0",
+  color: "#334155",
+  lineHeight: 1.8,
+  whiteSpace: "pre-line",
+};
+
+const listStyle: CSSProperties = {
+  margin: "14px 0 0",
+  paddingLeft: "22px",
+};
+
+const listItemStyle: CSSProperties = {
+  marginBottom: "9px",
+  color: "#334155",
+  lineHeight: 1.7,
+};
+
+const hashtagRowStyle: CSSProperties = {
+  display: "flex",
+  flexWrap: "wrap",
+  gap: "8px",
+  marginTop: "14px",
+};
+
+const hashtagStyle: CSSProperties = {
+  padding: "7px 10px",
+  borderRadius: "999px",
+  background: "#eef2ff",
+  color: "#4338ca",
+  fontWeight: 700,
+  fontSize: "14px",
+};
+
+const fallbackCardStyle: CSSProperties = {
+  marginTop: "18px",
+  padding: "22px",
+  borderRadius: "22px",
+  border: "1px solid #fed7aa",
+  background: "#fff7ed",
+};
+
+const fallbackLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#c2410c",
+  fontWeight: 800,
+};
+
+const fallbackTitleStyle: CSSProperties = {
+  margin: "8px 0",
+  color: "#9a3412",
+};
+
+const fallbackCaptionStyle: CSSProperties = {
+  marginTop: "16px",
+  padding: "16px",
+  borderRadius: "16px",
+  background: "white",
+  border: "1px solid #fed7aa",
+};
+
+const metricsCardStyle: CSSProperties = {
+  marginTop: "18px",
+  padding: "20px",
+  borderRadius: "20px",
+  border: "1px solid #bbf7d0",
+  background: "#f0fdf4",
+};
+
+const metricsLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#166534",
+  fontWeight: 800,
+};
+
+const metricsGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns:
+    "repeat(auto-fit, minmax(190px, 1fr))",
+  gap: "10px",
+  marginTop: "14px",
+};
+
+const metricItemStyle: CSSProperties = {
+  padding: "12px",
+  borderRadius: "14px",
+  background: "white",
+  border: "1px solid #bbf7d0",
+  color: "#166534",
+  fontWeight: 700,
+};
+
+const noteCardStyle: CSSProperties = {
+  marginTop: "18px",
+  padding: "20px",
+  borderRadius: "20px",
+  border: "1px solid #e5e7eb",
+  background: "#f8fafc",
+};
+
+const textareaStyle: CSSProperties = {
+  width: "100%",
+  minHeight: "150px",
+  marginTop: "16px",
+  padding: "14px 16px",
+  boxSizing: "border-box",
+  borderRadius: "16px",
+  border: "1px solid #cbd5e1",
+  background: "white",
+  fontSize: "16px",
+  lineHeight: 1.7,
+  resize: "vertical",
+};
+
+const bottomSectionStyle: CSSProperties = {
+  marginTop: "28px",
+  padding: "30px 24px",
+  borderRadius: "26px",
+  background: "#111827",
+  color: "white",
+  textAlign: "center",
+};
+
+const bottomTitleStyle: CSSProperties = {
+  margin: 0,
+};
+
+const bottomTextStyle: CSSProperties = {
+  maxWidth: "760px",
+  margin: "12px auto 0",
+  color: "#cbd5e1",
+  lineHeight: 1.8,
+};
+
+const resetButtonStyle: CSSProperties = {
   padding: "12px 18px",
   borderRadius: "14px",
   border: "1px solid #4b5563",
   background: "#1f2937",
   color: "white",
   cursor: "pointer",
-  fontWeight: "bold",
+  fontWeight: 800,
 };

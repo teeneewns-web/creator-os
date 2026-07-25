@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
+
 import { hookCategoryList } from "../data/hooks/hookCategories";
 import {
   auditHookQuality,
@@ -23,7 +24,7 @@ function loadHookFile(slug: string) {
     "src",
     "data",
     "hooks",
-    slug + ".json"
+    `${slug}.json`
   );
 
   if (!fs.existsSync(filePath)) {
@@ -32,6 +33,7 @@ function loadHookFile(slug: string) {
 
   try {
     const fileContent = fs.readFileSync(filePath, "utf8");
+
     return JSON.parse(fileContent) as RawHookItem[];
   } catch {
     return [];
@@ -71,242 +73,530 @@ function getHomeStats(): HomeStats {
   return stats;
 }
 
+const weeklyDeliverables = [
+  "เป้าหมายและเหตุผลของคอนเทนต์แต่ละวัน",
+  "หัวข้อและประโยคเปิดพร้อมใช้",
+  "บทพูดหรือข้อความโพสต์ฉบับเต็ม",
+  "ลำดับการถ่ายและข้อความบนหน้าจอ",
+  "แคปชัน คำชวน และแฮชแท็ก",
+  "รายการสิ่งที่ต้องเตรียม",
+  "แผนสำรองเมื่อถ่ายคลิปไม่ได้",
+  "งานหลังโพสต์และตัวอย่างตอบความคิดเห็น",
+  "ตัวชี้วัดที่ควรบันทึก",
+];
+
+const audienceGroups = [
+  {
+    title: "ผู้ขายออนไลน์",
+    description:
+      "คนที่มีสินค้าแต่ไม่รู้ว่าแต่ละวันควรโพสต์หรือถ่ายอะไร",
+  },
+  {
+    title: "TikTok Affiliate",
+    description:
+      "คนที่ต้องการหัวข้อ บทพูด และลำดับการถ่ายสำหรับคลิปขายสินค้า",
+  },
+  {
+    title: "ร้านและธุรกิจขนาดเล็ก",
+    description:
+      "เจ้าของร้านที่ต้องทำคอนเทนต์เองและไม่มีทีมการตลาด",
+  },
+  {
+    title: "คนที่ไม่ถนัดพูดหน้ากล้อง",
+    description:
+      "ระบบปรับแผนเป็นพากย์เสียง ถ่ายเฉพาะสินค้า ภาพ หรือข้อความได้",
+  },
+];
+
+const dayFlow = [
+  {
+    day: "วันที่ 1",
+    title: "เริ่มจากปัญหาของลูกค้า",
+    description:
+      "สร้างความเกี่ยวข้องและเปิดพื้นที่ให้ผู้ชมแสดงความคิดเห็น",
+  },
+  {
+    day: "วันที่ 2",
+    title: "แสดงจุดเด่นหรือการใช้งาน",
+    description:
+      "ช่วยให้ผู้ชมเห็นรายละเอียดแทนการกล่าวอ้างเพียงอย่างเดียว",
+  },
+  {
+    day: "วันที่ 3",
+    title: "ให้ข้อมูลก่อนตัดสินใจ",
+    description:
+      "อธิบายสิ่งที่ลูกค้าควรตรวจหรือเปรียบเทียบ",
+  },
+  {
+    day: "วันที่ 4",
+    title: "ตอบข้อสงสัยสำคัญ",
+    description:
+      "ลดความลังเลด้วยคำตอบที่ตรงไปตรงมาและตรวจสอบได้",
+  },
+  {
+    day: "วันที่ 5",
+    title: "สร้างความน่าเชื่อถือ",
+    description:
+      "บอกทั้งกลุ่มที่เหมาะและข้อจำกัดที่ควรรู้",
+  },
+  {
+    day: "วันที่ 6",
+    title: "เชื่อมกับสถานการณ์จริง",
+    description:
+      "ช่วยให้ผู้ชมเห็นภาพว่าจะนำสินค้าไปใช้ในชีวิตอย่างไร",
+  },
+  {
+    day: "วันที่ 7",
+    title: "สรุปและพาไปขั้นต่อไป",
+    description:
+      "รวบรวมข้อมูลสำคัญก่อนชวนดูรายละเอียดหรือสอบถาม",
+  },
+];
+
 export default function HomePage() {
   const stats = getHomeStats();
 
   return (
-    <main style={{ maxWidth: "1200px", margin: "0 auto", padding: "24px" }}>
+    <main style={pageStyle}>
       <section style={heroStyle}>
-        <p style={labelStyle}>Creator OS</p>
+        <div style={heroContentStyle}>
+          <p style={heroLabelStyle}>
+            Creator OS · แผนคอนเทนต์ภาษาไทย
+          </p>
 
-        <h1 style={titleStyle}>
-          ระบบผู้ช่วยทำคอนเทนต์ ให้รู้ว่าวันนี้ควรเริ่มจากอะไร
-        </h1>
+          <h1 style={heroTitleStyle}>
+            กรอกข้อมูลสินค้าเพียงครั้งเดียว
+            แล้วรับแผนคอนเทนต์พร้อมทำครบ 7 วัน
+          </h1>
 
-        <p style={subtitleStyle}>
-          รวมเครื่องมือสำหรับหา Hook, ค้นหาไอเดีย, เขียนแคปชัน, เลือก CTA,
-          ทำสคริปต์, บันทึกไอเดีย, ตรวจคุณภาพ และวางแผนทำคอนเทนต์แบบรายวัน
-        </p>
+          <p style={heroSubtitleStyle}>
+            ระบบจัดหัวข้อ ประโยคเปิด บทพูด ลำดับการถ่าย
+            แคปชัน คำชวน แผนสำรอง และงานหลังโพสต์ให้ครบ
+            โดยไม่ต้องเขียน Prompt หรือประกอบเนื้อหาเอง
+          </p>
 
-        <div style={buttonRowStyle}>
-          <Link href="/dashboard">
-            <button style={primaryButtonStyle}>เริ่มภารกิจวันนี้</button>
-          </Link>
+          <div style={heroTagRowStyle}>
+            <span style={heroTagStyle}>ภาษาไทยเข้าใจง่าย</span>
+            <span style={heroTagStyle}>Facebook และ TikTok</span>
+            <span style={heroTagStyle}>ปรับตามเวลาที่มี</span>
+            <span style={heroTagStyle}>ทำแบบไม่ออกหน้าได้</span>
+          </div>
 
-          <Link href="/guide">
-            <button style={secondaryButtonStyle}>ดูคู่มือเริ่มใช้งาน</button>
-          </Link>
+          <div style={buttonRowStyle}>
+            <Link href="/start" style={primaryLinkStyle}>
+              สร้างแผนของฉัน
+            </Link>
 
-          <Link href="/search">
-            <button style={secondaryButtonStyle}>ค้นหาไอเดีย</button>
+            <Link
+              href="/dashboard/weekly"
+              style={secondaryDarkLinkStyle}
+            >
+              ดูตัวอย่างแผน 7 วัน
+            </Link>
+
+            <Link href="/pricing" style={secondaryDarkLinkStyle}>
+              ดูราคาและรูปแบบการใช้งาน
+            </Link>
+          </div>
+
+          <p style={heroNoteStyle}>
+            เวลาที่แนะนำเป็นช่วงเริ่มต้นสำหรับทดลอง
+            ระบบไม่รับประกันยอดขายหรือการเป็นไวรัล
+          </p>
+        </div>
+
+        <div style={heroPreviewStyle}>
+          <p style={previewLabelStyle}>สิ่งที่ได้รับในแต่ละวัน</p>
+
+          <div style={previewItemStyle}>
+            <span style={previewNumberStyle}>1</span>
+            <div>
+              <strong>วันนี้ต้องทำอะไร</strong>
+              <p style={previewTextStyle}>
+                เป้าหมาย หัวข้อ และรูปแบบคอนเทนต์
+              </p>
+            </div>
+          </div>
+
+          <div style={previewItemStyle}>
+            <span style={previewNumberStyle}>2</span>
+            <div>
+              <strong>ต้องพูดและถ่ายอย่างไร</strong>
+              <p style={previewTextStyle}>
+                บทพูด ลำดับการถ่าย และข้อความบนจอ
+              </p>
+            </div>
+          </div>
+
+          <div style={previewItemStyle}>
+            <span style={previewNumberStyle}>3</span>
+            <div>
+              <strong>โพสต์แล้วทำอะไรต่อ</strong>
+              <p style={previewTextStyle}>
+                วิธีตอบความคิดเห็นและตัวชี้วัดที่ควรดู
+              </p>
+            </div>
+          </div>
+
+          <Link href="/start" style={previewLinkStyle}>
+            เริ่มตอบคำถาม 3 ขั้นตอน →
           </Link>
         </div>
-        <Link href="/samples">
-  <button style={secondaryButtonStyle}>ดูตัวอย่างแพ็ก</button>
-</Link>
       </section>
 
-      <section style={quickStartStyle}>
+      <section style={problemSectionStyle}>
         <div>
-          <p style={labelStyle}>เริ่มตรงไหนดี?</p>
+          <p style={labelStyle}>ปัญหาที่ระบบช่วยแก้</p>
 
-          <h2 style={{ margin: "6px 0" }}>ถ้าเพิ่งเข้าเว็บครั้งแรก ให้เริ่มจาก 3 จุดนี้</h2>
+          <h2 style={sectionTitleStyle}>
+            ไม่ต้องเปิดหลายหน้าแล้วประกอบคอนเทนต์เอง
+          </h2>
+
+          <p style={sectionTextStyle}>
+            เครื่องมือ AI ทั่วไปอาจช่วยเขียนได้
+            แต่ผู้ใช้ยังต้องรู้ว่าจะถามอะไร เลือกคำตอบไหน
+            และนำหลายส่วนมาประกอบเป็นงานจริงด้วยตัวเอง
+          </p>
         </div>
 
-        <div style={quickGridStyle}>
-          <Link href="/guide" style={quickCardStyle}>
-            <span style={quickNumberStyle}>1</span>
-            <h3>อ่านคู่มือ</h3>
-            <p>รู้ลำดับการใช้งานว่าเข้ามาแล้วควรกดอะไรต่อ</p>
-          </Link>
+        <div style={problemGridStyle}>
+          <article style={oldWayCardStyle}>
+            <p style={oldWayLabelStyle}>วิธีเดิม</p>
 
-          <Link href="/dashboard" style={quickCardStyle}>
-            <span style={quickNumberStyle}>2</span>
-            <h3>ทำภารกิจวันนี้</h3>
-            <p>เลือกเวลา 15, 30 หรือ 60 นาที แล้วทำตามขั้นตอน</p>
-          </Link>
+            <ul style={plainListStyle}>
+              <li>คิดหัวข้อเอง</li>
+              <li>ค้นหา Hook เอง</li>
+              <li>เขียน Prompt เอง</li>
+              <li>ประกอบบทพูดและแคปชันเอง</li>
+              <li>คิดแผนสำรองเองเมื่อถ่ายไม่ได้</li>
+              <li>ไม่รู้ว่าหลังโพสต์ควรดูอะไร</li>
+            </ul>
+          </article>
 
-          <Link href="/hooks" style={quickCardStyle}>
-            <span style={quickNumberStyle}>3</span>
-            <h3>เลือก Hook</h3>
-            <p>หาไอเดียประโยคเปิดสำหรับโพสต์หรือคลิป</p>
+          <article style={newWayCardStyle}>
+            <p style={newWayLabelStyle}>Creator OS</p>
+
+            <ul style={plainListStyle}>
+              <li>กรอกข้อมูลสินค้าเพียงครั้งเดียว</li>
+              <li>เลือกว่าอยากขาย เพิ่มผู้ติดตาม หรือสร้างความน่าเชื่อถือ</li>
+              <li>ระบุเวลาที่มีและสิ่งที่ทำได้</li>
+              <li>รับแผนพร้อมทำครบ 7 วัน</li>
+              <li>เปิดทีละวันแล้วทำตามได้ทันที</li>
+              <li>บันทึกสถานะและผลลัพธ์ของแต่ละวันได้</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section style={sectionStyle}>
+        <div style={centerHeadingStyle}>
+          <p style={labelStyle}>ใช้งานอย่างไร</p>
+
+          <h2 style={sectionTitleStyle}>
+            จากข้อมูลสินค้าไปเป็นแผนพร้อมทำใน 3 ขั้นตอน
+          </h2>
+        </div>
+
+        <div style={threeStepGridStyle}>
+          <article style={stepCardStyle}>
+            <span style={stepNumberStyle}>1</span>
+
+            <h3 style={cardTitleStyle}>บอกข้อมูลสินค้า</h3>
+
+            <p style={cardTextStyle}>
+              ระบุสิ่งที่ขาย จุดเด่น กลุ่มลูกค้า
+              ข้อสงสัย และสิ่งที่ห้ามกล่าวอ้าง
+            </p>
+          </article>
+
+          <article style={stepCardStyle}>
+            <span style={stepNumberStyle}>2</span>
+
+            <h3 style={cardTitleStyle}>
+              เลือกเป้าหมายและความพร้อม
+            </h3>
+
+            <p style={cardTextStyle}>
+              เลือกแพลตฟอร์ม เวลาที่มี
+              และบอกว่าถ่ายสินค้า พากย์เสียง
+              หรือออกหน้ากล้องได้หรือไม่
+            </p>
+          </article>
+
+          <article style={stepCardStyle}>
+            <span style={stepNumberStyle}>3</span>
+
+            <h3 style={cardTitleStyle}>
+              รับแผนคอนเทนต์ 7 วัน
+            </h3>
+
+            <p style={cardTextStyle}>
+              ระบบจัดลำดับเนื้อหาและรายละเอียดพร้อมใช้
+              โดยปรับให้ตรงกับข้อมูลที่กรอก
+            </p>
+          </article>
+        </div>
+
+        <div style={centerButtonStyle}>
+          <Link href="/start" style={primaryLinkStyle}>
+            เริ่มสร้างแผน
           </Link>
         </div>
       </section>
 
-      <section style={statsGridStyle}>
-        <article style={statCardStyle}>
-          <p style={statLabelStyle}>Hook ทั้งหมด</p>
-          <h2 style={statNumberStyle}>{stats.totalHooks}</h2>
-          <p style={mutedTextStyle}>จากทุกหมวดในคลัง Hook</p>
-        </article>
+      <section style={deliverableSectionStyle}>
+        <div style={deliverableIntroStyle}>
+          <p style={lightLabelStyle}>ไม่ใช่เพียงรายชื่อไอเดีย</p>
 
-        <article style={statCardStyle}>
-          <p style={statLabelStyle}>หมวดทั้งหมด</p>
-          <h2 style={statNumberStyle}>{stats.categoryCount}</h2>
-          <p style={mutedTextStyle}>แยกตามประเภทคอนเทนต์</p>
-        </article>
+          <h2 style={lightTitleStyle}>
+            แต่เป็นรายละเอียดที่นำไปทำต่อได้จริง
+          </h2>
 
-        <article style={statCardStyle}>
-          <p style={statLabelStyle}>พร้อมพรีเมียม</p>
-          <h2 style={statNumberStyle}>{stats.premiumReady}</h2>
-          <p style={mutedTextStyle}>Hook ที่เหมาะเก็บไว้ในแพ็กคุณภาพสูง</p>
-        </article>
+          <p style={lightTextStyle}>
+            ทุกวันมีทั้งส่วนที่ต้องเตรียม
+            เนื้อหาที่พร้อมใช้ และงานติดตามผลหลังโพสต์
+          </p>
 
-        <article style={statCardStyle}>
-          <p style={statLabelStyle}>ควรปรับก่อนใช้</p>
-          <h2 style={statNumberStyle}>{stats.needsRewrite}</h2>
-          <p style={mutedTextStyle}>รายการที่ควรตรวจหรือเขียนใหม่</p>
-        </article>
+          <Link
+            href="/dashboard/weekly"
+            style={whiteLinkStyle}
+          >
+            เปิดดูตัวอย่างแผนจริง
+          </Link>
+        </div>
+
+        <div style={deliverableGridStyle}>
+          {weeklyDeliverables.map((item) => (
+            <div key={item} style={deliverableItemStyle}>
+              <span style={checkStyle}>✓</span>
+              <span>{item}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section style={sectionStyle}>
+        <div style={centerHeadingStyle}>
+          <p style={labelStyle}>เหมาะกับใคร</p>
+
+          <h2 style={sectionTitleStyle}>
+            ออกแบบสำหรับคนที่ต้องทำคอนเทนต์เอง
+          </h2>
+        </div>
+
+        <div style={audienceGridStyle}>
+          {audienceGroups.map((group) => (
+            <article key={group.title} style={audienceCardStyle}>
+              <h3 style={cardTitleStyle}>{group.title}</h3>
+
+              <p style={cardTextStyle}>{group.description}</p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section style={sectionStyle}>
         <div style={sectionTopRowStyle}>
           <div>
-            <p style={labelStyle}>เครื่องมือหลัก</p>
+            <p style={labelStyle}>ตัวอย่างลำดับ 7 วัน</p>
 
-            <h2 style={{ margin: "6px 0" }}>สิ่งที่ผู้ใช้ทำได้ใน Creator OS</h2>
+            <h2 style={sectionTitleStyle}>
+              ไม่โพสต์ขายซ้ำแบบเดิมทุกวัน
+            </h2>
+
+            <p style={sectionTextStyle}>
+              ระบบเรียงเนื้อหาให้ผู้ชมค่อย ๆ เข้าใจ
+              เห็นประโยชน์ ลดความลังเล
+              และรู้ว่าควรทำอะไรต่อ
+            </p>
           </div>
 
-          <Link href="/about">
-            <button style={smallButtonStyle}>เกี่ยวกับเว็บ</button>
+          <Link
+            href="/dashboard/weekly"
+            style={outlineLinkStyle}
+          >
+            ดูรายละเอียดทุกวัน
           </Link>
         </div>
 
-        <div style={toolGridStyle}>
-          <Link href="/hooks" style={toolCardStyle}>
-            <h3>คลัง Hook</h3>
-            <p>เลือกประโยคเปิดสำหรับโพสต์ คลิป หรือคอนเทนต์ขายของ</p>
-          </Link>
+        <div style={dayGridStyle}>
+          {dayFlow.map((item) => (
+            <article key={item.day} style={dayCardStyle}>
+              <p style={dayLabelStyle}>{item.day}</p>
 
-          <Link href="/search" style={toolCardStyle}>
-            <h3>ค้นหาไอเดีย</h3>
-            <p>ค้นหา Hook, แคปชัน, CTA และสคริปต์จากหลายแหล่งในที่เดียว</p>
-          </Link>
+              <h3 style={dayTitleStyle}>{item.title}</h3>
 
-          <Link href="/favorites" style={toolCardStyle}>
-            <h3>บันทึกไว้</h3>
-            <p>เก็บไอเดียที่ชอบไว้กลับมาใช้ต่อภายหลัง</p>
-          </Link>
-
-          <Link href="/dashboard" style={toolCardStyle}>
-            <h3>ภารกิจวันนี้</h3>
-            <p>เปลี่ยนไอเดียให้กลายเป็นงานที่ทำเสร็จจริงในแต่ละวัน</p>
-          </Link>
-
-          <Link href="/dashboard/weekly" style={toolCardStyle}>
-            <h3>แผน 7 วัน</h3>
-            <p>วางระบบทำคอนเทนต์ต่อเนื่องทั้งสัปดาห์</p>
-          </Link>
-
-          <Link href="/quality/hooks" style={toolCardStyle}>
-            <h3>ตรวจคุณภาพ Hook</h3>
-            <p>ดูว่า Hook ไหนพร้อมใช้ พร้อมขาย หรือควรเขียนใหม่</p>
-          </Link>
+              <p style={cardTextStyle}>{item.description}</p>
+            </article>
+          ))}
         </div>
       </section>
 
-      <section style={sectionStyle}>
-        <p style={labelStyle}>คลังคอนเทนต์</p>
-
-        <h2 style={{ margin: "6px 0" }}>ต่อยอดจาก Hook ไปเป็นคอนเทนต์จริง</h2>
-
-        <div style={contentGridStyle}>
-          <Link href="/captions" style={contentCardStyle}>
-            <h3>แคปชัน</h3>
-            <p>ข้อความสำหรับโพสต์ขายของ โพสต์ให้ความรู้ หรือโพสต์สร้างตัวตน</p>
-          </Link>
-
-          <Link href="/cta" style={contentCardStyle}>
-            <h3>CTA / คำชวนให้ทำ</h3>
-            <p>คำชวนให้ติดตาม บันทึก ทักแชต คลิก สมัคร หรือซื้อสินค้า</p>
-          </Link>
-
-          <Link href="/scripts" style={contentCardStyle}>
-            <h3>สคริปต์</h3>
-            <p>โครงเรื่องสำหรับคลิปสั้น วิดีโอสอน หรือคอนเทนต์เล่าเรื่อง</p>
-          </Link>
-        </div>
-      </section>
-
-      <section style={sectionStyle}>
-        <p style={labelStyle}>หน้าใหม่สำหรับผู้ใช้</p>
-
-        <h2 style={{ margin: "6px 0" }}>ช่วยให้เว็บดูน่าเชื่อถือและใช้งานง่ายขึ้น</h2>
-
-        <div style={trustGridStyle}>
-          <Link href="/guide" style={trustCardStyle}>
-            <h3>คู่มือเริ่มใช้งาน</h3>
-            <p>บอกผู้ใช้ใหม่ว่าเข้ามาแล้วควรกดอะไรเป็นลำดับแรก</p>
-          </Link>
-
-          <Link href="/about" style={trustCardStyle}>
-            <h3>เกี่ยวกับเว็บ</h3>
-            <p>อธิบายว่า Creator OS คืออะไร เหมาะกับใคร และช่วยอะไร</p>
-          </Link>
-
-          <Link href="/faq" style={trustCardStyle}>
-            <h3>FAQ / คำถามที่พบบ่อย</h3>
-            <p>ตอบข้อสงสัยก่อนเริ่มใช้งานหรือก่อนตัดสินใจจ่ายเงิน</p>
-          </Link>
-
-          <Link href="/contact" style={trustCardStyle}>
-            <h3>ติดต่อ / ข้อเสนอแนะ</h3>
-            <p>ให้ผู้ใช้เสนอหมวดใหม่ แจ้งปัญหา หรือบอกฟีเจอร์ที่อยากได้</p>
-          </Link>
-        </div>
-      </section>
-
-      <section style={premiumSectionStyle}>
+      <section style={trustSectionStyle}>
         <div>
-          <p style={darkLabelStyle}>ต่อยอดเป็นสินค้า</p>
+          <p style={labelStyle}>ควบคุมความน่าเชื่อถือ</p>
 
-          <h2 style={darkTitleStyle}>พร้อมพัฒนาเป็นระบบ Free / Pro / Premium</h2>
+          <h2 style={sectionTitleStyle}>
+            ใช้ข้อมูลจริงที่ผู้ใช้ระบุเป็นหลัก
+          </h2>
+
+          <p style={sectionTextStyle}>
+            ผู้ใช้สามารถระบุสิ่งที่ห้ามพูด
+            หรือคำกล่าวอ้างที่ยังไม่มีหลักฐานได้
+            ระบบจึงมีข้อมูลสำหรับหลีกเลี่ยงข้อความเกินจริง
+          </p>
+        </div>
+
+        <div style={trustPointsStyle}>
+          <div style={trustPointStyle}>
+            <strong>ไม่รับประกันไวรัลหรือยอดขาย</strong>
+            <p style={smallMutedTextStyle}>
+              ผลลัพธ์ขึ้นอยู่กับสินค้า คุณภาพการผลิต
+              ผู้ชม และการทดลองจริง
+            </p>
+          </div>
+
+          <div style={trustPointStyle}>
+            <strong>เวลาโพสต์เป็นจุดเริ่มต้นทดลอง</strong>
+            <p style={smallMutedTextStyle}>
+              ควรปรับตามข้อมูลผู้ชมและผลลัพธ์ของบัญชีจริง
+            </p>
+          </div>
+
+          <div style={trustPointStyle}>
+            <strong>มีแผนสำรองทุกวัน</strong>
+            <p style={smallMutedTextStyle}>
+              เมื่อถ่ายคลิปไม่ได้
+              ระบบเปลี่ยนเป็นภาพ ข้อความ หรือ Carousel ได้
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section style={engineSectionStyle}>
+        <div>
+          <p style={darkLabelStyle}>ระบบเบื้องหลัง</p>
+
+          <h2 style={darkTitleStyle}>
+            คลังเดิมยังทำหน้าที่เป็นเครื่องยนต์ของแผน
+          </h2>
 
           <p style={darkTextStyle}>
-            เมื่อผู้ใช้เริ่มเห็นคุณค่า สามารถต่อยอดเป็นแพ็กพรีเมียม,
-            ระบบสมาชิก, แพ็ก Hook เฉพาะหมวด หรือเครื่องมือช่วยทำคอนเทนต์ขั้นสูงได้
+            Hook แคปชัน CTA สคริปต์ และคลังพรีเมียม
+            ไม่ได้หายไป แต่ถูกนำมาใช้เป็นฐานข้อมูลและโหมดขั้นสูง
+            แทนการบังคับให้ผู้ใช้ใหม่เลือกทุกอย่างด้วยตัวเอง
           </p>
 
           <div style={buttonRowStyle}>
-            <Link href="/pricing">
-              <button style={darkButtonStyle}>ดูราคาแพ็กเกจ</button>
+            <Link
+              href="/premium-library"
+              style={whiteLinkStyle}
+            >
+              เปิดคลังพรีเมียม
             </Link>
 
-            <Link href="/premium">
-              <button style={darkSecondaryButtonStyle}>ดูแพ็กพรีเมียม</button>
+            <Link
+              href="/hooks"
+              style={secondaryDarkLinkStyle}
+            >
+              เปิดคลัง Hook
+            </Link>
+
+            <Link
+              href="/search"
+              style={secondaryDarkLinkStyle}
+            >
+              ค้นหาเนื้อหา
             </Link>
           </div>
         </div>
 
-        <div style={premiumBoxStyle}>
-          <p style={premiumBoxLabelStyle}>สถานะคุณภาพ Hook</p>
+        <div style={statsGridStyle}>
+          <article style={darkStatCardStyle}>
+            <p style={darkStatLabelStyle}>Hook ในระบบ</p>
+            <strong style={darkStatNumberStyle}>
+              {stats.totalHooks}
+            </strong>
+          </article>
 
-          <h3 style={premiumBoxNumberStyle}>
-            {stats.premiumReady + stats.pro}
-          </h3>
+          <article style={darkStatCardStyle}>
+            <p style={darkStatLabelStyle}>หมวด Hook</p>
+            <strong style={darkStatNumberStyle}>
+              {stats.categoryCount}
+            </strong>
+          </article>
 
-          <p style={darkTextStyle}>
-            รายการระดับ Premium-ready และ Pro ที่สามารถนำไปต่อยอดเป็นแพ็กขายได้
+          <article style={darkStatCardStyle}>
+            <p style={darkStatLabelStyle}>
+              ระดับ Pro และ Premium-ready
+            </p>
+            <strong style={darkStatNumberStyle}>
+              {stats.pro + stats.premiumReady}
+            </strong>
+          </article>
+        </div>
+      </section>
+
+      <section style={betaSectionStyle}>
+        <div>
+          <p style={betaLabelStyle}>Paid Beta</p>
+
+          <h2 style={betaTitleStyle}>
+            เริ่มด้วยแผน 7 วันสำหรับสินค้า 1 รายการ
+          </h2>
+
+          <p style={betaTextStyle}>
+            รุ่นเริ่มต้นเน้นคุณภาพมากกว่าการสร้างจำนวนมาก
+            ข้อมูลจากระบบสามารถนำมาตรวจและปรับก่อนส่งมอบ
+            เพื่อเรียนรู้ว่าลูกค้าใช้ส่วนใดจริงและต้องการแก้ตรงไหน
           </p>
+        </div>
+
+        <div style={betaBoxStyle}>
+          <p style={betaBoxLabelStyle}>
+            ขอบเขตสินค้ารุ่นเริ่มต้น
+          </p>
+
+          <ul style={plainListStyle}>
+            <li>สินค้า บริการ หรือหัวข้อหลัก 1 รายการ</li>
+            <li>เป้าหมายหลัก 1 เป้าหมาย</li>
+            <li>แพลตฟอร์มหลักตามที่เลือก</li>
+            <li>แผนพร้อมทำ 7 วัน</li>
+            <li>มีแผนสำรองทุกวัน</li>
+          </ul>
+
+          <Link href="/pricing" style={primaryLinkStyle}>
+            ดูรายละเอียดราคา
+          </Link>
         </div>
       </section>
 
       <section style={bottomCtaStyle}>
-        <h2 style={{ marginTop: 0 }}>เริ่มใช้งานจากหน้าเดียวก่อน</h2>
+        <p style={bottomLabelStyle}>
+          เริ่มจากข้อมูลของคุณ
+        </p>
+
+        <h2 style={bottomTitleStyle}>
+          เปลี่ยนสินค้าหนึ่งรายการ
+          ให้เป็นแผนคอนเทนต์พร้อมทำทั้งสัปดาห์
+        </h2>
 
         <p style={bottomTextStyle}>
-          ถ้ายังไม่รู้จะเริ่มตรงไหน ให้ไปที่หน้า ภารกิจวันนี้
-          แล้วทำตามขั้นตอน ระบบจะพาไปใช้เครื่องมืออื่นตามลำดับ
+          ตอบคำถามสั้น ๆ 3 ขั้นตอน
+          ระบบจะจัดสิ่งที่ต้องโพสต์ พูด ถ่าย
+          และติดตามผลให้ครบ
         </p>
 
         <div style={buttonRowCenterStyle}>
-          <Link href="/dashboard">
-            <button style={darkButtonStyle}>เริ่มภารกิจวันนี้</button>
+          <Link href="/start" style={whiteLinkStyle}>
+            สร้างแผนของฉัน
           </Link>
 
-          <Link href="/guide">
-            <button style={darkSecondaryButtonStyle}>ดูคู่มือ</button>
+          <Link
+            href="/dashboard/weekly"
+            style={secondaryDarkLinkStyle}
+          >
+            ดูตัวอย่างก่อน
           </Link>
         </div>
       </section>
@@ -314,297 +604,596 @@ export default function HomePage() {
   );
 }
 
+const pageStyle: CSSProperties = {
+  maxWidth: "1200px",
+  margin: "0 auto",
+  padding: "24px",
+};
+
 const heroStyle: CSSProperties = {
-  padding: "clamp(30px, 7vw, 50px) clamp(18px, 5vw, 24px)",
-  borderRadius: "28px",
-  background: "#111827",
+  display: "grid",
+  gridTemplateColumns:
+    "repeat(auto-fit, minmax(min(100%, 360px), 1fr))",
+  gap: "28px",
+  alignItems: "center",
+  padding: "clamp(30px, 6vw, 54px) clamp(20px, 5vw, 34px)",
+  borderRadius: "30px",
+  background:
+    "linear-gradient(135deg, #111827 0%, #312e81 55%, #4f46e5 100%)",
   color: "white",
 };
 
-const labelStyle: CSSProperties = {
-  color: "#4f46e5",
-  fontWeight: "bold",
-  marginTop: 0,
+const heroContentStyle: CSSProperties = {
+  minWidth: 0,
 };
 
-const darkLabelStyle: CSSProperties = {
-  color: "#a5b4fc",
-  fontWeight: "bold",
-  marginTop: 0,
+const heroLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#c7d2fe",
+  fontWeight: 800,
 };
 
-const titleStyle: CSSProperties = {
-  fontSize: "clamp(34px, 8vw, 48px)",
-  lineHeight: "1.12",
+const heroTitleStyle: CSSProperties = {
+  maxWidth: "800px",
   margin: "12px 0",
-  maxWidth: "980px",
+  fontSize: "clamp(36px, 7vw, 58px)",
+  lineHeight: 1.12,
 };
 
-const subtitleStyle: CSSProperties = {
-  color: "#d1d5db",
+const heroSubtitleStyle: CSSProperties = {
+  maxWidth: "760px",
+  margin: 0,
+  color: "#e0e7ff",
   fontSize: "18px",
-  lineHeight: "1.8",
-  maxWidth: "880px",
+  lineHeight: 1.8,
+};
+
+const heroTagRowStyle: CSSProperties = {
+  display: "flex",
+  flexWrap: "wrap",
+  gap: "8px",
+  marginTop: "20px",
+};
+
+const heroTagStyle: CSSProperties = {
+  padding: "7px 11px",
+  borderRadius: "999px",
+  border: "1px solid rgba(255,255,255,0.25)",
+  background: "rgba(255,255,255,0.1)",
+  color: "#eef2ff",
+  fontSize: "14px",
+  fontWeight: 700,
 };
 
 const buttonRowStyle: CSSProperties = {
   display: "flex",
-  gap: "10px",
   flexWrap: "wrap",
-  marginTop: "18px",
+  gap: "10px",
+  marginTop: "22px",
 };
 
 const buttonRowCenterStyle: CSSProperties = {
   display: "flex",
   justifyContent: "center",
-  gap: "10px",
   flexWrap: "wrap",
-  marginTop: "18px",
-};
-
-const primaryButtonStyle: CSSProperties = {
-  padding: "12px 18px",
-  borderRadius: "14px",
-  border: "1px solid #4f46e5",
-  background: "#4f46e5",
-  color: "white",
-  cursor: "pointer",
-  fontWeight: "bold",
-};
-
-const secondaryButtonStyle: CSSProperties = {
-  padding: "12px 18px",
-  borderRadius: "14px",
-  border: "1px solid #c7d2fe",
-  background: "white",
-  color: "#111827",
-  cursor: "pointer",
-  fontWeight: "bold",
-};
-
-const quickStartStyle: CSSProperties = {
-  marginTop: "24px",
-  padding: "24px",
-  borderRadius: "24px",
-  border: "1px solid #e5e7eb",
-  background: "white",
-};
-
-const quickGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(230px,1fr))",
-  gap: "16px",
-  marginTop: "18px",
-};
-
-const quickCardStyle: CSSProperties = {
-  display: "block",
-  padding: "20px",
-  borderRadius: "20px",
-  background: "#eef2ff",
-  border: "1px solid #c7d2fe",
-  color: "#111827",
-  textDecoration: "none",
-  lineHeight: "1.7",
-};
-
-const quickNumberStyle: CSSProperties = {
-  width: "34px",
-  height: "34px",
-  borderRadius: "999px",
-  background: "#4f46e5",
-  color: "white",
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center",
-  fontWeight: "bold",
-};
-
-const statsGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(210px,1fr))",
-  gap: "16px",
+  gap: "10px",
   marginTop: "22px",
 };
 
-const statCardStyle: CSSProperties = {
+const primaryLinkStyle: CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minHeight: "46px",
+  padding: "0 18px",
+  borderRadius: "14px",
+  background: "#4f46e5",
+  border: "1px solid #4f46e5",
+  color: "white",
+  textDecoration: "none",
+  fontWeight: 800,
+};
+
+const secondaryDarkLinkStyle: CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minHeight: "46px",
+  padding: "0 18px",
+  borderRadius: "14px",
+  background: "rgba(255,255,255,0.08)",
+  border: "1px solid rgba(255,255,255,0.35)",
+  color: "white",
+  textDecoration: "none",
+  fontWeight: 800,
+};
+
+const whiteLinkStyle: CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minHeight: "46px",
+  padding: "0 18px",
+  borderRadius: "14px",
+  background: "white",
+  border: "1px solid white",
+  color: "#111827",
+  textDecoration: "none",
+  fontWeight: 800,
+};
+
+const outlineLinkStyle: CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minHeight: "42px",
+  padding: "0 15px",
+  borderRadius: "13px",
+  background: "white",
+  border: "1px solid #c7d2fe",
+  color: "#4338ca",
+  textDecoration: "none",
+  fontWeight: 800,
+};
+
+const heroNoteStyle: CSSProperties = {
+  margin: "16px 0 0",
+  color: "#cbd5e1",
+  fontSize: "14px",
+  lineHeight: 1.6,
+};
+
+const heroPreviewStyle: CSSProperties = {
+  minWidth: 0,
+  padding: "22px",
+  borderRadius: "24px",
+  border: "1px solid rgba(255,255,255,0.22)",
+  background: "rgba(255,255,255,0.1)",
+  backdropFilter: "blur(10px)",
+};
+
+const previewLabelStyle: CSSProperties = {
+  margin: "0 0 16px",
+  color: "#c7d2fe",
+  fontWeight: 800,
+};
+
+const previewItemStyle: CSSProperties = {
+  display: "flex",
+  alignItems: "flex-start",
+  gap: "12px",
+  marginTop: "12px",
+  padding: "14px",
+  borderRadius: "16px",
+  background: "rgba(17,24,39,0.35)",
+};
+
+const previewNumberStyle: CSSProperties = {
+  display: "inline-flex",
+  flexShrink: 0,
+  width: "30px",
+  height: "30px",
+  alignItems: "center",
+  justifyContent: "center",
+  borderRadius: "999px",
+  background: "white",
+  color: "#312e81",
+  fontWeight: 900,
+};
+
+const previewTextStyle: CSSProperties = {
+  margin: "5px 0 0",
+  color: "#dbeafe",
+  lineHeight: 1.6,
+};
+
+const previewLinkStyle: CSSProperties = {
+  display: "inline-block",
+  marginTop: "18px",
+  color: "white",
+  fontWeight: 800,
+  textDecoration: "none",
+};
+
+const problemSectionStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns:
+    "repeat(auto-fit, minmax(min(100%, 340px), 1fr))",
+  gap: "24px",
+  alignItems: "start",
+  marginTop: "26px",
+  padding: "26px",
+  borderRadius: "26px",
   border: "1px solid #e5e7eb",
-  borderRadius: "20px",
-  padding: "18px",
   background: "white",
 };
 
-const statLabelStyle: CSSProperties = {
-  marginTop: 0,
-  color: "#555",
-  fontWeight: "bold",
-};
-
-const statNumberStyle: CSSProperties = {
-  margin: "6px 0",
-  fontSize: "clamp(32px, 9vw, 40px)",
-};
-
-const mutedTextStyle: CSSProperties = {
-  color: "#555",
-  lineHeight: "1.7",
+const labelStyle: CSSProperties = {
   margin: 0,
+  color: "#4f46e5",
+  fontWeight: 800,
+};
+
+const sectionTitleStyle: CSSProperties = {
+  margin: "8px 0",
+  fontSize: "clamp(28px, 5vw, 38px)",
+  lineHeight: 1.25,
+};
+
+const sectionTextStyle: CSSProperties = {
+  margin: 0,
+  color: "#475569",
+  fontSize: "17px",
+  lineHeight: 1.8,
+};
+
+const problemGridStyle: CSSProperties = {
+  display: "grid",
+  gap: "14px",
+};
+
+const oldWayCardStyle: CSSProperties = {
+  padding: "20px",
+  borderRadius: "20px",
+  border: "1px solid #fecaca",
+  background: "#fef2f2",
+};
+
+const newWayCardStyle: CSSProperties = {
+  padding: "20px",
+  borderRadius: "20px",
+  border: "1px solid #bbf7d0",
+  background: "#f0fdf4",
+};
+
+const oldWayLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#b91c1c",
+  fontWeight: 900,
+};
+
+const newWayLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#047857",
+  fontWeight: 900,
+};
+
+const plainListStyle: CSSProperties = {
+  margin: "14px 0 0",
+  paddingLeft: "22px",
+  color: "#334155",
+  lineHeight: 1.9,
 };
 
 const sectionStyle: CSSProperties = {
-  marginTop: "28px",
-  padding: "24px",
-  borderRadius: "24px",
+  marginTop: "26px",
+  padding: "26px",
+  borderRadius: "26px",
   border: "1px solid #e5e7eb",
   background: "white",
+};
+
+const centerHeadingStyle: CSSProperties = {
+  maxWidth: "780px",
+  margin: "0 auto",
+  textAlign: "center",
+};
+
+const threeStepGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns:
+    "repeat(auto-fit, minmax(230px, 1fr))",
+  gap: "16px",
+  marginTop: "24px",
+};
+
+const stepCardStyle: CSSProperties = {
+  padding: "22px",
+  borderRadius: "21px",
+  border: "1px solid #c7d2fe",
+  background: "#eef2ff",
+};
+
+const stepNumberStyle: CSSProperties = {
+  display: "inline-flex",
+  width: "38px",
+  height: "38px",
+  alignItems: "center",
+  justifyContent: "center",
+  borderRadius: "999px",
+  background: "#4f46e5",
+  color: "white",
+  fontWeight: 900,
+};
+
+const cardTitleStyle: CSSProperties = {
+  margin: "14px 0 7px",
+  color: "#111827",
+};
+
+const cardTextStyle: CSSProperties = {
+  margin: 0,
+  color: "#475569",
+  lineHeight: 1.75,
+};
+
+const centerButtonStyle: CSSProperties = {
+  display: "flex",
+  justifyContent: "center",
+  marginTop: "22px",
+};
+
+const deliverableSectionStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns:
+    "repeat(auto-fit, minmax(min(100%, 340px), 1fr))",
+  gap: "24px",
+  alignItems: "center",
+  marginTop: "30px",
+  padding: "30px 26px",
+  borderRadius: "28px",
+  background: "#111827",
+  color: "white",
+};
+
+const deliverableIntroStyle: CSSProperties = {
+  minWidth: 0,
+};
+
+const lightLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#a5b4fc",
+  fontWeight: 800,
+};
+
+const lightTitleStyle: CSSProperties = {
+  margin: "9px 0",
+  fontSize: "clamp(30px, 5vw, 40px)",
+  lineHeight: 1.25,
+};
+
+const lightTextStyle: CSSProperties = {
+  margin: "0 0 18px",
+  color: "#d1d5db",
+  lineHeight: 1.8,
+  fontSize: "17px",
+};
+
+const deliverableGridStyle: CSSProperties = {
+  display: "grid",
+  gap: "10px",
+};
+
+const deliverableItemStyle: CSSProperties = {
+  display: "flex",
+  alignItems: "flex-start",
+  gap: "10px",
+  padding: "12px 14px",
+  borderRadius: "14px",
+  background: "#1f2937",
+  border: "1px solid #374151",
+  color: "#e5e7eb",
+  lineHeight: 1.6,
+};
+
+const checkStyle: CSSProperties = {
+  color: "#86efac",
+  fontWeight: 900,
+};
+
+const audienceGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns:
+    "repeat(auto-fit, minmax(230px, 1fr))",
+  gap: "15px",
+  marginTop: "22px",
+};
+
+const audienceCardStyle: CSSProperties = {
+  padding: "21px",
+  borderRadius: "20px",
+  border: "1px solid #e5e7eb",
+  background: "#f8fafc",
 };
 
 const sectionTopRowStyle: CSSProperties = {
   display: "flex",
   justifyContent: "space-between",
-  gap: "16px",
-  flexWrap: "wrap",
   alignItems: "center",
-};
-
-const smallButtonStyle: CSSProperties = {
-  padding: "10px 14px",
-  borderRadius: "12px",
-  border: "1px solid #ddd",
-  background: "#f8fafc",
-  cursor: "pointer",
-  fontWeight: "bold",
-};
-
-const toolGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))",
+  flexWrap: "wrap",
   gap: "16px",
-  marginTop: "20px",
 };
 
-const toolCardStyle: CSSProperties = {
-  display: "block",
-  padding: "20px",
-  borderRadius: "20px",
-  background: "#f8fafc",
+const dayGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns:
+    "repeat(auto-fit, minmax(230px, 1fr))",
+  gap: "14px",
+  marginTop: "22px",
+};
+
+const dayCardStyle: CSSProperties = {
+  padding: "19px",
+  borderRadius: "19px",
   border: "1px solid #e5e7eb",
-  color: "#374151",
-  textDecoration: "none",
-  lineHeight: "1.8",
-};
-
-const contentGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))",
-  gap: "16px",
-  marginTop: "20px",
-};
-
-const contentCardStyle: CSSProperties = {
-  display: "block",
-  padding: "20px",
-  borderRadius: "20px",
   background: "#f8fafc",
-  border: "1px solid #e5e7eb",
-  color: "#374151",
-  textDecoration: "none",
-  lineHeight: "1.8",
 };
 
-const trustGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(230px,1fr))",
-  gap: "16px",
-  marginTop: "20px",
+const dayLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#4f46e5",
+  fontWeight: 900,
 };
 
-const trustCardStyle: CSSProperties = {
-  display: "block",
-  padding: "20px",
-  borderRadius: "20px",
-  background: "#eef2ff",
-  border: "1px solid #c7d2fe",
+const dayTitleStyle: CSSProperties = {
+  margin: "7px 0",
   color: "#111827",
-  textDecoration: "none",
-  lineHeight: "1.8",
+  lineHeight: 1.45,
 };
 
-const premiumSectionStyle: CSSProperties = {
-  marginTop: "34px",
-  padding: "30px 24px",
+const trustSectionStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns:
+    "repeat(auto-fit, minmax(min(100%, 330px), 1fr))",
+  gap: "22px",
+  marginTop: "26px",
+  padding: "26px",
+  borderRadius: "26px",
+  border: "1px solid #fde68a",
+  background: "#fffbeb",
+};
+
+const trustPointsStyle: CSSProperties = {
+  display: "grid",
+  gap: "12px",
+};
+
+const trustPointStyle: CSSProperties = {
+  padding: "16px",
+  borderRadius: "16px",
+  border: "1px solid #fde68a",
+  background: "white",
+  color: "#78350f",
+};
+
+const smallMutedTextStyle: CSSProperties = {
+  margin: "6px 0 0",
+  color: "#64748b",
+  lineHeight: 1.65,
+};
+
+const engineSectionStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns:
+    "repeat(auto-fit, minmax(min(100%, 340px), 1fr))",
+  gap: "24px",
+  alignItems: "center",
+  marginTop: "30px",
+  padding: "30px 26px",
   borderRadius: "28px",
   background: "#111827",
   color: "white",
-  display: "grid",
-  gridTemplateColumns: "minmax(0,1fr) minmax(240px,320px)",
-  gap: "24px",
-  alignItems: "center",
+};
+
+const darkLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#a5b4fc",
+  fontWeight: 800,
 };
 
 const darkTitleStyle: CSSProperties = {
-  fontSize: "34px",
-  lineHeight: "1.2",
-  margin: "10px 0",
+  margin: "9px 0",
+  fontSize: "clamp(30px, 5vw, 40px)",
+  lineHeight: 1.25,
 };
 
 const darkTextStyle: CSSProperties = {
+  margin: 0,
   color: "#d1d5db",
-  lineHeight: "1.8",
   fontSize: "17px",
+  lineHeight: 1.8,
 };
 
-const premiumBoxStyle: CSSProperties = {
-  padding: "20px",
-  borderRadius: "22px",
-  background: "#1f2937",
+const statsGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns:
+    "repeat(auto-fit, minmax(160px, 1fr))",
+  gap: "12px",
+};
+
+const darkStatCardStyle: CSSProperties = {
+  padding: "19px",
+  borderRadius: "18px",
   border: "1px solid #374151",
+  background: "#1f2937",
 };
 
-const premiumBoxLabelStyle: CSSProperties = {
-  marginTop: 0,
-  color: "#a5b4fc",
-  fontWeight: "bold",
+const darkStatLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#cbd5e1",
+  lineHeight: 1.5,
 };
 
-const premiumBoxNumberStyle: CSSProperties = {
-  fontSize: "44px",
-  margin: "10px 0",
+const darkStatNumberStyle: CSSProperties = {
+  display: "block",
+  marginTop: "8px",
+  color: "white",
+  fontSize: "38px",
+};
+
+const betaSectionStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns:
+    "repeat(auto-fit, minmax(min(100%, 330px), 1fr))",
+  gap: "22px",
+  alignItems: "center",
+  marginTop: "26px",
+  padding: "28px",
+  borderRadius: "28px",
+  border: "1px solid #bbf7d0",
+  background: "#f0fdf4",
+};
+
+const betaLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#047857",
+  fontWeight: 900,
+};
+
+const betaTitleStyle: CSSProperties = {
+  margin: "8px 0",
+  color: "#14532d",
+  fontSize: "clamp(28px, 5vw, 38px)",
+  lineHeight: 1.3,
+};
+
+const betaTextStyle: CSSProperties = {
+  margin: 0,
+  color: "#166534",
+  fontSize: "17px",
+  lineHeight: 1.8,
+};
+
+const betaBoxStyle: CSSProperties = {
+  padding: "21px",
+  borderRadius: "20px",
+  border: "1px solid #bbf7d0",
+  background: "white",
+};
+
+const betaBoxLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#047857",
+  fontWeight: 900,
 };
 
 const bottomCtaStyle: CSSProperties = {
-  marginTop: "34px",
-  padding: "30px 24px",
-  borderRadius: "28px",
-  background: "#111827",
+  marginTop: "30px",
+  padding: "38px 26px",
+  borderRadius: "30px",
+  background:
+    "linear-gradient(135deg, #312e81 0%, #4f46e5 100%)",
   color: "white",
   textAlign: "center",
 };
 
+const bottomLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#c7d2fe",
+  fontWeight: 800,
+};
+
+const bottomTitleStyle: CSSProperties = {
+  maxWidth: "800px",
+  margin: "10px auto",
+  fontSize: "clamp(30px, 6vw, 44px)",
+  lineHeight: 1.25,
+};
+
 const bottomTextStyle: CSSProperties = {
-  color: "#d1d5db",
-  lineHeight: "1.8",
-  fontSize: "17px",
-  maxWidth: "760px",
+  maxWidth: "720px",
   margin: "0 auto",
-};
-
-const darkButtonStyle: CSSProperties = {
-  padding: "12px 18px",
-  borderRadius: "14px",
-  border: "1px solid white",
-  background: "white",
-  color: "#111827",
-  cursor: "pointer",
-  fontWeight: "bold",
-};
-
-const darkSecondaryButtonStyle: CSSProperties = {
-  padding: "12px 18px",
-  borderRadius: "14px",
-  border: "1px solid #4b5563",
-  background: "#1f2937",
-  color: "white",
-  cursor: "pointer",
-  fontWeight: "bold",
+  color: "#e0e7ff",
+  fontSize: "17px",
+  lineHeight: 1.8,
 };
