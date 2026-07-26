@@ -37,9 +37,9 @@ const pricingOptions: PricingOption[] = [
     href: "/start",
   },
   {
-    name: "แผนพร้อมขาย Paid Beta",
+    name: "แผนคอนเทนต์ 7 วัน Paid Beta",
     label: "แนะนำสำหรับใช้งานจริง",
-    price: "299 บาท / 1 แผน",
+    price: "149 บาท / 1 แผน",
     description:
       "ระบบสร้างร่างแผน 7 วัน และมีคนตรวจความเหมาะสม ความชัดเจน และข้อความก่อนนำไปใช้งาน",
     bestFor:
@@ -59,9 +59,9 @@ const pricingOptions: PricingOption[] = [
       "ขอแก้ไขได้ 1 รอบ",
     ],
     note:
-      "เป็นราคา Beta สำหรับทดลองตลาด ราคาและรายละเอียดอาจปรับหลังได้รับผลตอบรับจากผู้ใช้จริง",
-    ctaText: "สมัครเข้าร่วม Paid Beta",
-    href: "/contact?type=paid-beta",
+  "ราคาเปิดตัว 149 บาทสำหรับ 90 วันแรก หลังจากจบช่วงเปิดตัว ราคาพื้นฐานจะปรับเป็น 299 บาท โดยอาจเปลี่ยนตามผลตอบรับจากผู้ใช้จริง",
+    ctaText: "ซื้อแผน 149 บาท",
+    href: "/checkout",
     highlight: true,
   },
 ];
@@ -168,10 +168,10 @@ export default function PricingPage() {
           </Link>
 
           <Link
-            href="/contact?type=paid-beta"
+            href="/checkout"
             style={darkOutlineLinkStyle}
           >
-            สมัคร Paid Beta
+            ซื้อราคาเปิดตัว 149 บาท
           </Link>
 
           <Link
@@ -199,10 +199,10 @@ export default function PricingPage() {
         </div>
 
         <Link
-          href="/contact?type=paid-beta"
+          href="/checkout"
           style={greenLinkStyle}
         >
-          ติดต่อเข้าร่วม Beta
+          ชำระราคาเปิดตัว 149 บาท
         </Link>
       </section>
 
@@ -293,7 +293,7 @@ export default function PricingPage() {
                 <th style={thTitleStyle}>รายละเอียด</th>
                 <th style={thStyle}>ทดลองอัตโนมัติ</th>
                 <th style={highlightedThStyle}>
-                  Paid Beta 299 บาท
+                  Paid Beta 149 บาท
                 </th>
               </tr>
             </thead>
@@ -489,7 +489,7 @@ export default function PricingPage() {
             href="/contact?type=paid-beta"
             style={darkOutlineLinkStyle}
           >
-            สมัคร Paid Beta 299 บาท
+            ซื้อ Paid Beta 149 บาท
           </Link>
         </div>
       </section>

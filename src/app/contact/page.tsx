@@ -45,7 +45,7 @@ const contactTypes: Array<{
 }> = [
   {
     value: "paid-beta",
-    label: "สมัคร Paid Beta 299 บาท",
+    label: "สมัคร Paid Beta 149 บาท",
     description:
       "สำหรับผู้ที่ต้องการแผนคอนเทนต์ 7 วันที่มีคนตรวจและแก้ไขได้ 1 รอบ",
     placeholder:
@@ -270,7 +270,7 @@ export default function ContactPage() {
     if (isPaidBeta) {
       return [
         "ใบสมัคร Paid Beta — Creator OS",
-        "ราคา: 299 บาท / 1 แผน",
+        "ราคา: 149 บาท / 1 แผน",
         "",
         `ชื่อ / ชื่อเพจ: ${name || "-"}`,
         `ช่องทางติดต่อ: ${contactChannel || "-"}`,
@@ -466,7 +466,7 @@ export default function ContactPage() {
 
         <h1 style={titleStyle}>
           {isPaidBeta
-            ? "สมัครแผนคอนเทนต์ Paid Beta 299 บาท"
+            ? "สมัครแผนคอนเทนต์ Paid Beta 149 บาท"
             : "แจ้งปัญหา ข้อเสนอแนะ หรือสอบถามข้อมูล"}
         </h1>
 
@@ -505,7 +505,7 @@ export default function ContactPage() {
             </p>
 
             <h2 style={betaNoticeTitleStyle}>
-              299 บาท สำหรับแผนคอนเทนต์ 7 วัน
+              149 บาท สำหรับแผนคอนเทนต์ 7 วัน
             </h2>
 
             <p style={betaNoticeTextStyle}>
