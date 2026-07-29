@@ -182,6 +182,7 @@ export default function CheckoutClient({
         : "ไม่ได้ระบุ";
 
     return [
+         "[CREATOR_OS_ORDER]",
       "ข้อมูลคำสั่งซื้อ Creator OS Paid Beta",
       "",
       `รหัสคำสั่งซื้อ: ${orderId}`,

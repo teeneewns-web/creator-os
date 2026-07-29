@@ -859,7 +859,7 @@ export default function StartPage() {
               onClick={createPlan}
               style={createButtonStyle}
             >
-              สร้างแผนพร้อมทำ 7 วัน
+              ไปตรวจข้อมูลและชำระเงิน
             </button>
           )}
         </div>
