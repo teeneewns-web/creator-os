@@ -365,7 +365,7 @@ export default function StartPage() {
       JSON.stringify(request)
     );
 
-    router.push("/dashboard/weekly");
+    router.push("/checkout");
   }
 
   function resetForm() {
