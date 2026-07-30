@@ -159,90 +159,55 @@ export default function HomePage() {
   return (
     <main style={pageStyle}>
       <section style={heroStyle}>
-        <div style={heroContentStyle}>
-          <p style={heroLabelStyle}>
-            Creator OS · แผนคอนเทนต์ภาษาไทย
-          </p>
+  <div style={heroContentStyle}>
+    <p style={heroLabelStyle}>
+      Creator OS · แผนคอนเทนต์ภาษาไทย
+    </p>
 
-          <h1 style={heroTitleStyle}>
-            กรอกข้อมูลสินค้าเพียงครั้งเดียว
-            แล้วรับแผนคอนเทนต์พร้อมทำครบ 7 วัน
-          </h1>
+    <h1 style={heroTitleStyle}>
+      สร้างแผนคอนเทนต์
+      พร้อมโพสต์ครบ 7 วัน
+    </h1>
 
-          <p style={heroSubtitleStyle}>
-            ระบบจัดหัวข้อ ประโยคเปิด บทพูด ลำดับการถ่าย
-            แคปชัน คำชวน แผนสำรอง และงานหลังโพสต์ให้ครบ
-            โดยไม่ต้องเขียน Prompt หรือประกอบเนื้อหาเอง
-          </p>
+    <p style={heroSubtitleStyle}>
+      กรอกข้อมูลสินค้าเพียงครั้งเดียว
+      รับหัวข้อ บทพูด ลำดับการถ่าย
+      แคปชัน และงานหลังโพสต์ครบ
+    </p>
 
-          <div style={heroTagRowStyle}>
-            <span style={heroTagStyle}>ภาษาไทยเข้าใจง่าย</span>
-            <span style={heroTagStyle}>Facebook และ TikTok</span>
-            <span style={heroTagStyle}>ปรับตามเวลาที่มี</span>
-            <span style={heroTagStyle}>ทำแบบไม่ออกหน้าได้</span>
-          </div>
+    <div style={heroTagRowStyle}>
+      <span style={heroTagStyle}>
+        ✓ Facebook และ TikTok
+      </span>
 
-          <div style={buttonRowStyle}>
-            <Link href="/start" style={primaryLinkStyle}>
-              สร้างแผนของฉัน
-            </Link>
+      <span style={heroTagStyle}>
+        ✓ ทำแบบไม่ออกหน้าได้
+      </span>
 
-            <Link
-              href="/dashboard/weekly"
-              style={secondaryDarkLinkStyle}
-            >
-              ดูตัวอย่างแผน 7 วัน
-            </Link>
+      <span style={heroTagStyle}>
+        ✓ ปรับตามเวลาที่มี
+      </span>
+    </div>
 
-            <Link href="/pricing" style={secondaryDarkLinkStyle}>
-              ดูราคาและรูปแบบการใช้งาน
-            </Link>
-          </div>
+    <div style={heroButtonRowStyle}>
+      <Link href="/start" style={heroPrimaryLinkStyle}>
+        เริ่มสร้างแผน 149 บาท
+      </Link>
 
-          <p style={heroNoteStyle}>
-            เวลาที่แนะนำเป็นช่วงเริ่มต้นสำหรับทดลอง
-            ระบบไม่รับประกันยอดขายหรือการเป็นไวรัล
-          </p>
-        </div>
+      <Link
+        href="/dashboard/weekly"
+        style={heroSecondaryLinkStyle}
+      >
+        ดูตัวอย่างแผน
+      </Link>
+    </div>
 
-        <div style={heroPreviewStyle}>
-          <p style={previewLabelStyle}>สิ่งที่ได้รับในแต่ละวัน</p>
-
-          <div style={previewItemStyle}>
-            <span style={previewNumberStyle}>1</span>
-            <div>
-              <strong>วันนี้ต้องทำอะไร</strong>
-              <p style={previewTextStyle}>
-                เป้าหมาย หัวข้อ และรูปแบบคอนเทนต์
-              </p>
-            </div>
-          </div>
-
-          <div style={previewItemStyle}>
-            <span style={previewNumberStyle}>2</span>
-            <div>
-              <strong>ต้องพูดและถ่ายอย่างไร</strong>
-              <p style={previewTextStyle}>
-                บทพูด ลำดับการถ่าย และข้อความบนจอ
-              </p>
-            </div>
-          </div>
-
-          <div style={previewItemStyle}>
-            <span style={previewNumberStyle}>3</span>
-            <div>
-              <strong>โพสต์แล้วทำอะไรต่อ</strong>
-              <p style={previewTextStyle}>
-                วิธีตอบความคิดเห็นและตัวชี้วัดที่ควรดู
-              </p>
-            </div>
-          </div>
-
-          <Link href="/start" style={previewLinkStyle}>
-            เริ่มตอบคำถาม 3 ขั้นตอน →
-          </Link>
-        </div>
-      </section>
+    <p style={heroNoteStyle}>
+      ตรวจข้อมูลโดยทีมงานและส่งผ่าน LINE
+      ภายใน 1–2 วันทำการ
+    </p>
+  </div>
+</section>
 
       <section style={problemSectionStyle}>
         <div>
@@ -607,17 +572,12 @@ export default function HomePage() {
 const pageStyle: CSSProperties = {
   maxWidth: "1200px",
   margin: "0 auto",
-  padding: "24px",
+  padding: "16px",
 };
 
 const heroStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns:
-    "repeat(auto-fit, minmax(min(100%, 360px), 1fr))",
-  gap: "28px",
-  alignItems: "center",
-  padding: "clamp(30px, 6vw, 54px) clamp(20px, 5vw, 34px)",
-  borderRadius: "30px",
+  padding: "clamp(24px, 6vw, 48px)",
+  borderRadius: "24px",
   background:
     "linear-gradient(135deg, #111827 0%, #312e81 55%, #4f46e5 100%)",
   color: "white",
@@ -634,18 +594,19 @@ const heroLabelStyle: CSSProperties = {
 };
 
 const heroTitleStyle: CSSProperties = {
-  maxWidth: "800px",
+  maxWidth: "760px",
   margin: "12px 0",
-  fontSize: "clamp(36px, 7vw, 58px)",
+  fontSize: "clamp(32px, 8vw, 50px)",
   lineHeight: 1.12,
+  letterSpacing: "-0.02em",
 };
 
 const heroSubtitleStyle: CSSProperties = {
-  maxWidth: "760px",
+  maxWidth: "680px",
   margin: 0,
   color: "#e0e7ff",
-  fontSize: "18px",
-  lineHeight: 1.8,
+  fontSize: "16px",
+  lineHeight: 1.65,
 };
 
 const heroTagRowStyle: CSSProperties = {
@@ -670,6 +631,45 @@ const buttonRowStyle: CSSProperties = {
   flexWrap: "wrap",
   gap: "10px",
   marginTop: "22px",
+};
+
+const heroButtonRowStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns:
+    "repeat(auto-fit, minmax(220px, 1fr))",
+  gap: "10px",
+  maxWidth: "620px",
+  marginTop: "20px",
+};
+
+const heroPrimaryLinkStyle: CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minHeight: "52px",
+  padding: "0 18px",
+  borderRadius: "14px",
+  background: "#ffffff",
+  border: "1px solid #ffffff",
+  color: "#312e81",
+  textDecoration: "none",
+  fontSize: "17px",
+  fontWeight: 800,
+};
+
+const heroSecondaryLinkStyle: CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minHeight: "52px",
+  padding: "0 18px",
+  borderRadius: "14px",
+  background: "rgba(255,255,255,0.08)",
+  border: "1px solid rgba(255,255,255,0.35)",
+  color: "white",
+  textDecoration: "none",
+  fontSize: "16px",
+  fontWeight: 800,
 };
 
 const buttonRowCenterStyle: CSSProperties = {
