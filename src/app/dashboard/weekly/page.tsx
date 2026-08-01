@@ -17,7 +17,7 @@ import type {
 } from "../../../types/weekly-content-plan";
 
 import { generateWeeklyContentPlan } from "../../../lib/generate-weekly-content-plan";
-import type { PlanRequest } from "../../../types/plan-request";
+import type { PlanRequest, PlanType } from "../../../types/plan-request";
 
 type WeeklyPageState = {
   selectedDay: number;
@@ -47,6 +47,63 @@ const INTENSITY_LABELS: Record<PlanIntensity, string> = {
   standard: "แผนมาตรฐาน",
   growth: "แผนเต็ม",
 };
+
+const PLAN_TYPE_LABELS: Record<PlanType, string> = {
+  product: "สินค้า / Affiliate",
+  service: "บริการ / โปรโมตร้าน",
+  creator: "เพจ / ครีเอเตอร์",
+};
+
+type WeeklyPlanCopy = {
+  subject: string;
+  audience: string;
+  highlights: string;
+};
+
+function getWeeklyPlanCopy(
+  planType: PlanType
+): WeeklyPlanCopy {
+  if (planType === "service") {
+    return {
+      subject: "บริการหรือร้าน",
+      audience: "กลุ่มลูกค้า",
+      highlights: "จุดเด่นหรือขั้นตอนบริการที่ใช้ในแผน",
+    };
+  }
+
+  if (planType === "creator") {
+    return {
+      subject: "หัวข้อเพจหรือคอนเทนต์",
+      audience: "กลุ่มผู้ชม",
+      highlights: "จุดเด่น ประสบการณ์ หรือแนวทางที่ใช้ในแผน",
+    };
+  }
+
+  return {
+    subject: "สินค้า",
+    audience: "กลุ่มลูกค้า",
+    highlights: "จุดเด่นสินค้าที่ใช้ในแผน",
+  };
+}
+
+function getGoalLabel(
+  goal: ContentGoal,
+  planType: PlanType
+) {
+  if (goal === "sell" && planType === "service") {
+    return "เพิ่มยอดสอบถามหรือยอดจอง";
+  }
+
+  if (goal === "sell" && planType === "creator") {
+    return "เปลี่ยนผู้ชมเป็นผู้ติดตามหรือลูกค้า";
+  }
+
+  if (goal === "promote" && planType === "creator") {
+    return "โปรโมตเพจ ผลงาน หรือข้อเสนอ";
+  }
+
+  return GOAL_LABELS[goal];
+}
 
 function getStateStorageKey(planId: string) {
   return `${STATE_STORAGE_PREFIX}:${planId}`;
@@ -249,6 +306,7 @@ function getDayCopyText(day: WeeklyContentDay) {
  function getWeeklyCopyText(
   plan: WeeklyContentPlan
 ) {
+  const copy = getWeeklyPlanCopy(plan.planType);
 
   const daysText = plan.days
     .map((day) => getDayCopyText(day))
@@ -257,15 +315,26 @@ function getDayCopyText(day: WeeklyContentDay) {
   return [
     plan.title,
     "",
-    `สินค้า: ${plan.productOrService}`,
-    `กลุ่มลูกค้า: ${plan.audience}`,
+    `${copy.subject}: ${plan.productOrService}`,
+    `${copy.audience}: ${plan.audience}`,
     `เป้าหมายทั้งสัปดาห์: ${plan.weeklyObjective}`,
     "",
-    "จุดเด่นสินค้า:",
+    `${copy.highlights}:`,
     formatList(plan.productHighlights),
     "",
     "เหตุผลของแผน:",
     plan.strategyExplanation,
+    "",
+    plan.platformGuidance.title + ":",
+    plan.platformGuidance.explanation,
+    "",
+    "สิ่งที่ควรทำบนแพลตฟอร์ม:",
+    formatList(plan.platformGuidance.actions),
+    "",
+    "ตัวเลขที่ควรดู:",
+    formatList(plan.platformGuidance.measurements),
+    "",
+    `ข้อควรระวัง: ${plan.platformGuidance.caution}`,
     "",
     daysText,
   ].join("\n");
@@ -299,6 +368,8 @@ export default function WeeklyDashboardPage() {
 
     writeState(plan.id, state);
   }, [hydrated, plan.id, state]);
+
+  const planCopy = getWeeklyPlanCopy(plan.planType);
 
   const selectedDay =
     plan.days.find((day) => day.day === state.selectedDay) ||
@@ -390,7 +461,11 @@ export default function WeeklyDashboardPage() {
   </span>
 
   <span style={heroTagStyle}>
-    เป้าหมาย: {GOAL_LABELS[plan.goal]}
+    {PLAN_TYPE_LABELS[plan.planType]}
+  </span>
+
+  <span style={heroTagStyle}>
+    เป้าหมาย: {getGoalLabel(plan.goal, plan.planType)}
   </span>
 
   <span style={heroTagStyle}>
@@ -476,14 +551,14 @@ export default function WeeklyDashboardPage() {
 
         <div style={planInfoGridStyle}>
           <article style={infoCardStyle}>
-            <p style={infoLabelStyle}>สินค้า</p>
+            <p style={infoLabelStyle}>{planCopy.subject}</p>
             <p style={infoTextStyle}>
               {plan.productOrService}
             </p>
           </article>
 
           <article style={infoCardStyle}>
-            <p style={infoLabelStyle}>กลุ่มลูกค้า</p>
+            <p style={infoLabelStyle}>{planCopy.audience}</p>
             <p style={infoTextStyle}>{plan.audience}</p>
           </article>
 
@@ -507,8 +582,51 @@ export default function WeeklyDashboardPage() {
           </p>
         </article>
 
+        <article style={platformGuideCardStyle}>
+          <p style={platformGuideLabelStyle}>
+            {plan.platformGuidance.title}
+          </p>
+
+          <p style={platformGuideTextStyle}>
+            {plan.platformGuidance.explanation}
+          </p>
+
+          <div style={platformGuideGridStyle}>
+            <div>
+              <p style={platformGuideHeadingStyle}>
+                สิ่งที่ควรทำเป็นประจำ
+              </p>
+              <ul style={listStyle}>
+                {plan.platformGuidance.actions.map((item) => (
+                  <li key={item} style={listItemStyle}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <p style={platformGuideHeadingStyle}>
+                ตัวเลขที่ควรดู
+              </p>
+              <ul style={listStyle}>
+                {plan.platformGuidance.measurements.map((item) => (
+                  <li key={item} style={listItemStyle}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <p style={platformCautionStyle}>
+            <strong>ข้อควรระวัง:</strong>{" "}
+            {plan.platformGuidance.caution}
+          </p>
+        </article>
+
         <article style={highlightCardStyle}>
-          <p style={infoLabelStyle}>จุดเด่นสินค้าที่ใช้ในแผน</p>
+          <p style={infoLabelStyle}>{planCopy.highlights}</p>
 
           <ul style={listStyle}>
             {plan.productHighlights.map((highlight) => (
@@ -1155,6 +1273,48 @@ const strategyTextStyle: CSSProperties = {
   margin: 0,
   color: "#312e81",
   lineHeight: 1.8,
+};
+
+const platformGuideCardStyle: CSSProperties = {
+  marginTop: "16px",
+  padding: "22px",
+  border: "1px solid #bae6fd",
+  borderRadius: "20px",
+  background: "#f0f9ff",
+};
+
+const platformGuideLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#0369a1",
+  fontWeight: 900,
+};
+
+const platformGuideTextStyle: CSSProperties = {
+  margin: "10px 0 0",
+  color: "#0f172a",
+  lineHeight: 1.8,
+};
+
+const platformGuideGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+  gap: "18px",
+  marginTop: "16px",
+};
+
+const platformGuideHeadingStyle: CSSProperties = {
+  margin: "0 0 8px",
+  color: "#0c4a6e",
+  fontWeight: 800,
+};
+
+const platformCautionStyle: CSSProperties = {
+  margin: "16px 0 0",
+  padding: "12px 14px",
+  borderRadius: "14px",
+  background: "#ffffff",
+  color: "#334155",
+  lineHeight: 1.7,
 };
 
 const highlightCardStyle: CSSProperties = {

@@ -1,3 +1,5 @@
+import type { PlanType } from "./plan-request";
+
 export type ContentPlatform =
   | "facebook"
   | "tiktok"
@@ -80,9 +82,20 @@ export type WeeklyContentDay = {
   status: ContentTaskStatus;
 };
 
+
+export type PlatformGuidance = {
+  title: string;
+  explanation: string;
+  actions: string[];
+  measurements: string[];
+  caution: string;
+};
+
 export type WeeklyContentPlan = {
   id: string;
   title: string;
+
+  planType: PlanType;
 
   productOrService: string;
   productHighlights: string[];
@@ -94,6 +107,8 @@ export type WeeklyContentPlan = {
 
   weeklyObjective: string;
   strategyExplanation: string;
+
+  platformGuidance: PlatformGuidance;
 
   createdAt: string;
   days: WeeklyContentDay[];
