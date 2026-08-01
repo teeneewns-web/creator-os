@@ -1,3 +1,8 @@
+export type PlanType =
+  | "product"
+  | "service"
+  | "creator";
+
 export type ContentGoal =
   | "sell"
   | "grow"
@@ -25,6 +30,8 @@ export type ContentCapability =
   | "no-media";
 
 export type PlanRequest = {
+  planType: PlanType | "";
+
   productOrService: string;
   productHighlights: string;
   audience: string;

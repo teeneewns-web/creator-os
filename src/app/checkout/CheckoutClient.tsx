@@ -13,6 +13,7 @@ import type {
   ContentPlatform,
   DailyTime,
   PlanRequest,
+  PlanType,
 } from "../../types/plan-request";
 
 const REQUEST_STORAGE_KEY =
@@ -25,12 +26,72 @@ const LINE_PAYMENT_URL =
   "https://line.me/R/oaMessage/%40857xezqh/?" +
   encodeURIComponent("แจ้งชำระเงิน");
 
+const planTypeLabels: Record<PlanType, string> = {
+  product: "แผนขายสินค้า / Affiliate",
+  service: "แผนขายบริการ / โปรโมตร้าน",
+  creator: "แผนสร้างเพจ / ครีเอเตอร์",
+};
+
+function getPlanTypeLabel(
+  planType: PlanRequest["planType"]
+) {
+  return planType
+    ? planTypeLabels[planType]
+    : "ไม่ได้ระบุ";
+}
+
+function getCheckoutCopy(
+  planType: PlanRequest["planType"]
+) {
+  if (planType === "product") {
+    return {
+      item: "สินค้า",
+      highlights: "จุดเด่นสินค้า",
+      audience: "กลุ่มลูกค้า",
+      concerns: "ข้อกังวลของลูกค้า",
+      details: "ราคา โปรโมชั่น และวิธีสั่งซื้อ",
+      prohibited: "สิ่งที่ห้ามกล่าวอ้าง",
+    };
+  }
+
+  if (planType === "service") {
+    return {
+      item: "บริการหรือร้าน",
+      highlights: "จุดเด่นหรือขั้นตอนบริการ",
+      audience: "กลุ่มลูกค้า",
+      concerns: "ข้อกังวลของลูกค้า",
+      details: "ราคา พื้นที่บริการ และช่องทางจอง",
+      prohibited: "ข้อมูลที่ห้ามเปิดเผย",
+    };
+  }
+
+  if (planType === "creator") {
+    return {
+      item: "หัวข้อเพจหรือคอนเทนต์",
+      highlights: "จุดเด่นหรือแนวทางของเพจ",
+      audience: "กลุ่มผู้ชม",
+      concerns: "ความสนใจหรือปัญหาของผู้ชม",
+      details: "สิ่งที่ต้องการโปรโมตหรือชวนทำต่อ",
+      prohibited: "เรื่องที่ไม่ต้องการเปิดเผย",
+    };
+  }
+
+  return {
+    item: "สินค้า บริการ หรือหัวข้อ",
+    highlights: "จุดเด่น",
+    audience: "กลุ่มเป้าหมาย",
+    concerns: "ข้อกังวลหรือความสนใจ",
+    details: "รายละเอียดเพิ่มเติม",
+    prohibited: "สิ่งที่ห้ามกล่าวหรือเปิดเผย",
+  };
+}
+
 const goalLabels: Record<ContentGoal, string> = {
   sell: "เพิ่มยอดขาย",
   grow: "เพิ่มผู้ติดตาม",
   engagement: "เพิ่มการมีส่วนร่วม",
   trust: "สร้างความน่าเชื่อถือ",
-  promote: "โปรโมตสินค้า/แคมเปญ",
+  promote: "โปรโมตร้าน บริการ หรือผลงาน",
 };
 
 const platformLabels: Record<
@@ -81,7 +142,7 @@ function createOrderId() {
     String(now.getFullYear()).slice(-2),
     String(now.getMonth() + 1).padStart(2, "0"),
     String(now.getDate()).padStart(2, "0"),
-  ].join("");
+  ].join("\n");
 
   const randomPart = Math.random()
     .toString(36)
@@ -171,38 +232,41 @@ export default function CheckoutClient({
   const orderSummary = useMemo(() => {
     if (!request || !orderId) return "";
 
+    const checkoutCopy =
+      getCheckoutCopy(request.planType);
+
     const capabilities =
       request.capabilities.length > 0
         ? request.capabilities
-            .map(
-              (item) =>
-                capabilityLabels[item]
-            )
+            .map((item) => capabilityLabels[item])
             .join(", ")
         : "ไม่ได้ระบุ";
 
     return [
-         "[CREATOR_OS_ORDER]",
+      "[CREATOR_OS_ORDER]",
       "ข้อมูลคำสั่งซื้อ Creator OS Paid Beta",
       "",
       `รหัสคำสั่งซื้อ: ${orderId}`,
       `ยอดชำระ: ${packagePrice} บาท`,
-      `สินค้า/บริการ: ${valueOrDash(
+      `ประเภทแผน: ${getPlanTypeLabel(
+        request.planType
+      )}`,
+      `${checkoutCopy.item}: ${valueOrDash(
         request.productOrService
       )}`,
-      `จุดเด่น: ${valueOrDash(
+      `${checkoutCopy.highlights}: ${valueOrDash(
         request.productHighlights
       )}`,
-      `กลุ่มลูกค้า: ${valueOrDash(
+      `${checkoutCopy.audience}: ${valueOrDash(
         request.audience
       )}`,
-      `ข้อกังวลของลูกค้า: ${valueOrDash(
+      `${checkoutCopy.concerns}: ${valueOrDash(
         request.customerConcerns
       )}`,
-      `โปรโมชัน: ${valueOrDash(
+      `${checkoutCopy.details}: ${valueOrDash(
         request.promotionDetails
       )}`,
-      `คำที่ห้ามกล่าว: ${valueOrDash(
+      `${checkoutCopy.prohibited}: ${valueOrDash(
         request.prohibitedClaims
       )}`,
       `เป้าหมาย: ${
@@ -289,7 +353,7 @@ export default function CheckoutClient({
           </h1>
 
           <p style={descriptionStyle}>
-            กรุณากรอกข้อมูลสินค้าและความต้องการ
+            กรุณาเลือกประเภทแผนและกรอกข้อมูล
             ก่อนเข้าสู่หน้าชำระเงิน
           </p>
 
@@ -307,6 +371,9 @@ export default function CheckoutClient({
           .map((item) => capabilityLabels[item])
           .join(", ")
       : "ไม่ได้ระบุ";
+
+  const checkoutCopy =
+    getCheckoutCopy(request.planType);
 
   return (
     <main style={pageStyle}>
@@ -345,22 +412,48 @@ export default function CheckoutClient({
 
           <div style={summaryGridStyle}>
             <SummaryItem
-              label="สินค้า/บริการ"
+              label="ประเภทแผน"
+              value={getPlanTypeLabel(request.planType)}
+            />
+
+            <SummaryItem
+              label={checkoutCopy.item}
               value={valueOrDash(
                 request.productOrService
               )}
             />
 
             <SummaryItem
-              label="จุดเด่น"
+              label={checkoutCopy.highlights}
               value={valueOrDash(
                 request.productHighlights
               )}
             />
 
             <SummaryItem
-              label="กลุ่มลูกค้า"
+              label={checkoutCopy.audience}
               value={valueOrDash(request.audience)}
+            />
+
+            <SummaryItem
+              label={checkoutCopy.concerns}
+              value={valueOrDash(
+                request.customerConcerns
+              )}
+            />
+
+            <SummaryItem
+              label={checkoutCopy.details}
+              value={valueOrDash(
+                request.promotionDetails
+              )}
+            />
+
+            <SummaryItem
+              label={checkoutCopy.prohibited}
+              value={valueOrDash(
+                request.prohibitedClaims
+              )}
             />
 
             <SummaryItem
@@ -397,13 +490,6 @@ export default function CheckoutClient({
             <SummaryItem
               label="ความสามารถในการผลิต"
               value={capabilities}
-            />
-
-            <SummaryItem
-              label="โปรโมชัน"
-              value={valueOrDash(
-                request.promotionDetails
-              )}
             />
           </div>
 
@@ -522,6 +608,7 @@ export default function CheckoutClient({
     </main>
   );
 }
+
 
 function SummaryItem({
   label,

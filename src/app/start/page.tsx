@@ -9,13 +9,133 @@ import type {
   ContentPlatform,
   DailyTime,
   PlanRequest,
+  PlanType,
 } from "../../types/plan-request";
-
 
 type FormErrors = Partial<Record<keyof PlanRequest, string>>;
 
 const DRAFT_STORAGE_KEY = "creator-os-start-draft-v1";
 const REQUEST_STORAGE_KEY = "creator-os-plan-request-v1";
+
+const PLAN_TYPE_OPTIONS: Array<{
+  value: PlanType;
+  title: string;
+  description: string;
+}> = [
+  {
+    value: "product",
+    title: "ขายสินค้า / Affiliate",
+    description:
+      "สำหรับเจ้าของสินค้า ร้านค้าออนไลน์ ตัวแทนจำหน่าย และ TikTok Affiliate",
+  },
+  {
+    value: "service",
+    title: "ขายบริการ / โปรโมตร้าน",
+    description:
+      "สำหรับร้านค้า ธุรกิจท้องถิ่น ฟรีแลนซ์ ช่าง และผู้ให้บริการ",
+  },
+  {
+    value: "creator",
+    title: "สร้างเพจ / เป็นครีเอเตอร์",
+    description:
+      "สำหรับเพจให้ความรู้ รีวิว เล่าเรื่อง บันเทิง หรือสร้างตัวตน โดยไม่จำเป็นต้องมีสินค้า",
+  },
+];
+
+const STEP_ONE_COPY: Record<
+  PlanType,
+  {
+    itemLabel: string;
+    itemPlaceholder: string;
+    audienceLabel: string;
+    audiencePlaceholder: string;
+    highlightsLabel: string;
+    highlightsPlaceholder: string;
+    concernsLabel: string;
+    concernsPlaceholder: string;
+    detailsLabel: string;
+    detailsPlaceholder: string;
+    prohibitedLabel: string;
+    prohibitedPlaceholder: string;
+  }
+> = {
+  product: {
+    itemLabel: "คุณขายสินค้าอะไร?",
+    itemPlaceholder:
+      "ตัวอย่าง: กระเป๋าใบใหญ่สำหรับใส่ของประจำวัน",
+    audienceLabel: "กลุ่มลูกค้าหลักคือใคร?",
+    audiencePlaceholder:
+      "ตัวอย่าง: คนทำงาน นักศึกษา และคนที่ต้องพกของหลายชิ้น",
+    highlightsLabel: "จุดเด่นของสินค้า",
+    highlightsPlaceholder:
+      "ตัวอย่าง:\nใส่ของได้หลายชิ้น\nหูหิ้วเสริมความแข็งแรง\nเหมาะกับการใช้งานประจำวัน",
+    concernsLabel:
+      "ลูกค้ามักสงสัยหรือลังเลเรื่องอะไร?",
+    concernsPlaceholder:
+      "ตัวอย่าง:\nขนาดจริงใหญ่แค่ไหน\nใส่ของได้มากเพียงใด\nแข็งแรงหรือไม่",
+    detailsLabel:
+      "ราคา โปรโมชั่น และวิธีสั่งซื้อ",
+    detailsPlaceholder:
+      "ตัวอย่าง: ราคา 199 บาท สั่งซื้อผ่านตะกร้า TikTok",
+    prohibitedLabel:
+      "สิ่งที่ห้ามพูดหรือห้ามกล่าวอ้าง",
+    prohibitedPlaceholder:
+      "ตัวอย่าง: ห้ามระบุน้ำหนักสูงสุด เพราะยังไม่มีผลทดสอบ",
+  },
+
+  service: {
+    itemLabel: "คุณให้บริการอะไร?",
+    itemPlaceholder:
+      "ตัวอย่าง: บริการตัดผมชายและออกแบบทรงผม",
+    audienceLabel:
+      "ลูกค้าหลักของบริการคือใคร?",
+    audiencePlaceholder:
+      "ตัวอย่าง: ผู้ชายวัยทำงานในเชียงใหม่",
+    highlightsLabel:
+      "จุดเด่น ขั้นตอน หรือความแตกต่างของบริการ",
+    highlightsPlaceholder:
+      "ตัวอย่าง:\nให้คำแนะนำก่อนตัด\nจองคิวได้\nดูแลโดยช่างที่มีประสบการณ์",
+    concernsLabel:
+      "ลูกค้ามักกังวลหรือถามเรื่องอะไร?",
+    concernsPlaceholder:
+      "ตัวอย่าง:\nใช้เวลานานไหม\nราคาเท่าไร\nต้องจองล่วงหน้าหรือไม่",
+    detailsLabel:
+      "ราคา พื้นที่บริการ และช่องทางจอง",
+    detailsPlaceholder:
+      "ตัวอย่าง: เริ่มต้น 250 บาท ให้บริการในเชียงใหม่ จองผ่าน LINE",
+    prohibitedLabel:
+      "ข้อมูลที่ห้ามพูดหรือไม่ต้องการเปิดเผย",
+    prohibitedPlaceholder:
+      "ตัวอย่าง: ห้ามเปิดเผยข้อมูลส่วนตัวของลูกค้า",
+  },
+
+  creator: {
+    itemLabel:
+      "เพจหรือคอนเทนต์ของคุณเกี่ยวกับเรื่องอะไร?",
+    itemPlaceholder:
+      "ตัวอย่าง: เพจสอนทำอาหารง่าย ๆ สำหรับคนอยู่หอ",
+    audienceLabel:
+      "ต้องการทำคอนเทนต์ให้ใครดู?",
+    audiencePlaceholder:
+      "ตัวอย่าง: นักศึกษาและคนทำงานที่มีเวลาทำอาหารน้อย",
+    highlightsLabel:
+      "จุดเด่น ประสบการณ์ หรือแนวทางของเพจ",
+    highlightsPlaceholder:
+      "ตัวอย่าง:\nเมนูทำง่าย\nใช้อุปกรณ์น้อย\nงบไม่เกิน 100 บาท",
+    concernsLabel:
+      "ผู้ชมสนใจ มีปัญหา หรืออยากรู้อะไร?",
+    concernsPlaceholder:
+      "ตัวอย่าง:\nไม่มีครัว\nมีเวลาน้อย\nอยากประหยัดค่าอาหาร",
+    detailsLabel:
+      "เรื่องที่ต้องการโปรโมตหรือชวนผู้ชมทำต่อ",
+    detailsPlaceholder:
+      "ตัวอย่าง: ชวนติดตาม แสดงความคิดเห็น หรือเสนอหัวข้อที่อยากดู",
+    prohibitedLabel:
+      "เรื่องที่ไม่ต้องการเปิดเผยหรือไม่ต้องการพูด",
+    prohibitedPlaceholder:
+      "ตัวอย่าง: ไม่เปิดเผยสถานที่พักและข้อมูลส่วนตัว",
+  },
+};
 
 const GOAL_OPTIONS: Array<{
   value: ContentGoal;
@@ -140,8 +260,111 @@ const CAPABILITY_OPTIONS: Array<{
   },
 ];
 
+function getGoalOptions(
+  planType: PlanRequest["planType"]
+): Array<{
+  value: ContentGoal;
+  title: string;
+  description: string;
+}> {
+  if (planType === "creator") {
+    return GOAL_OPTIONS.filter(
+      (option) => option.value !== "sell"
+    ).map((option) =>
+      option.value === "promote"
+        ? {
+            ...option,
+            title: "โปรโมตผลงานหรือกิจกรรม",
+            description:
+              "ทำให้คนรู้จักผลงาน กิจกรรม ช่องทาง หรือสิ่งที่ต้องการผลักดัน",
+          }
+        : option
+    );
+  }
+
+  if (planType === "service") {
+    return GOAL_OPTIONS.map((option) => {
+      if (option.value === "sell") {
+        return {
+          ...option,
+          title: "เพิ่มลูกค้าหรือการจอง",
+          description:
+            "ช่วยให้คนเข้าใจบริการ ลดความลังเล และติดต่อหรือจองคิว",
+        };
+      }
+
+      if (option.value === "promote") {
+        return {
+          ...option,
+          title: "โปรโมตร้านหรือบริการ",
+          description:
+            "ทำให้คนรู้จักร้าน บริการ โปรโมชั่น หรือกิจกรรมที่กำลังจัด",
+        };
+      }
+
+      return option;
+    });
+  }
+
+  return GOAL_OPTIONS.map((option) =>
+    option.value === "promote"
+      ? {
+          ...option,
+          title: "โปรโมตสินค้า หรือแคมเปญ",
+          description:
+            "ทำให้คนรู้จักสินค้า โปรโมชั่น หรือแคมเปญที่กำลังจัด",
+        }
+      : option
+  );
+}
+
+function getCapabilityOptions(
+  planType: PlanRequest["planType"]
+): Array<{
+  value: ContentCapability;
+  title: string;
+}> {
+  return CAPABILITY_OPTIONS.map((option) => {
+    if (option.value === "film-product") {
+      if (planType === "service") {
+        return {
+          ...option,
+          title: "ถ่ายร้าน ผลงาน หรือขั้นตอนบริการได้",
+        };
+      }
+
+      if (planType === "creator") {
+        return {
+          ...option,
+          title: "ถ่ายวิดีโอประกอบเนื้อหาได้",
+        };
+      }
+    }
+
+    if (option.value === "image-only") {
+      if (planType === "service") {
+        return {
+          ...option,
+          title: "ใช้ภาพร้านหรือภาพผลงานเป็นหลัก",
+        };
+      }
+
+      if (planType === "creator") {
+        return {
+          ...option,
+          title: "ใช้ภาพหรือกราฟิกเป็นหลัก",
+        };
+      }
+    }
+
+    return option;
+  });
+}
+
+
 function getInitialForm(): PlanRequest {
   return {
+    planType: "",
     productOrService: "",
     productHighlights: "",
     audience: "",
@@ -187,29 +410,36 @@ function validateStep(
   const errors: FormErrors = {};
 
   if (step === 1) {
+    if (!form.planType) {
+      errors.planType =
+        "กรุณาเลือกประเภทแผนที่ต้องการ";
+    }
+
     if (!form.productOrService.trim()) {
       errors.productOrService =
-        "กรุณาระบุว่าคุณขายหรือทำอะไร";
+        "กรุณาระบุว่าคุณขาย ทำบริการ หรือสร้างเนื้อหาเกี่ยวกับอะไร";
     }
 
     if (!form.productHighlights.trim()) {
       errors.productHighlights =
-        "กรุณาระบุจุดเด่นอย่างน้อย 1 ข้อ";
+        "กรุณาระบุจุดเด่นหรือแนวทางหลักอย่างน้อย 1 ข้อ";
     }
 
     if (!form.audience.trim()) {
       errors.audience =
-        "กรุณาระบุกลุ่มลูกค้าหลัก";
+        "กรุณาระบุกลุ่มผู้ชมหลัก";
     }
   }
 
   if (step === 2) {
     if (!form.goal) {
-      errors.goal = "กรุณาเลือกเป้าหมายหลัก";
+      errors.goal =
+        "กรุณาเลือกเป้าหมายหลัก";
     }
 
     if (!form.platform) {
-      errors.platform = "กรุณาเลือกแพลตฟอร์ม";
+      errors.platform =
+        "กรุณาเลือกแพลตฟอร์ม";
     }
 
     if (!form.dailyTime) {
@@ -238,6 +468,24 @@ export default function StartPage() {
     useState<PlanRequest>(getInitialForm);
   const [errors, setErrors] = useState<FormErrors>({});
   const [hydrated, setHydrated] = useState(false);
+
+  const selectedPlanType: PlanType | null =
+    form.planType === "product" ||
+    form.planType === "service" ||
+    form.planType === "creator"
+      ? form.planType
+      : null;
+
+  const stepOneCopy = selectedPlanType
+    ? STEP_ONE_COPY[selectedPlanType]
+    : null;
+
+  const availableGoalOptions = getGoalOptions(
+    form.planType
+  );
+
+  const availableCapabilityOptions =
+    getCapabilityOptions(form.planType);
 
   useEffect(() => {
     setForm(readDraft());
@@ -269,6 +517,20 @@ export default function StartPage() {
     setErrors((current) => ({
       ...current,
       [field]: undefined,
+    }));
+  }
+
+  function selectPlanType(planType: PlanType) {
+    setForm((current) => ({
+      ...current,
+      planType,
+      goal: "",
+    }));
+
+    setErrors((current) => ({
+      ...current,
+      planType: undefined,
+      goal: undefined,
     }));
   }
 
@@ -332,6 +594,7 @@ export default function StartPage() {
       setErrors(allErrors);
 
       if (
+        stepOneErrors.planType ||
         stepOneErrors.productOrService ||
         stepOneErrors.productHighlights ||
         stepOneErrors.audience
@@ -432,7 +695,7 @@ export default function StartPage() {
             <span style={stepNumberStyle}>{item}</span>
 
             <span>
-              {item === 1 && "ข้อมูลสินค้า"}
+              {item === 1 && "ประเภทและข้อมูล"}
               {item === 2 && "เป้าหมายและความพร้อม"}
               {item === 3 && "ตรวจข้อมูล"}
             </span>
@@ -446,128 +709,155 @@ export default function StartPage() {
             <p style={sectionLabelStyle}>ขั้นที่ 1</p>
 
             <h2 style={sectionTitleStyle}>
-              บอกข้อมูลสินค้า ธุรกิจ หรือบริการ
+              เลือกประเภทแผน แล้วบอกข้อมูลของคุณ
             </h2>
 
             <p style={sectionDescriptionStyle}>
-              ระบบจะใช้เฉพาะข้อมูลที่คุณให้
-              และไม่ควรแต่งคุณสมบัติสินค้าเพิ่มเติมเอง
+              คำถามจะเปลี่ยนให้เหมาะกับสินค้า
+              บริการ หรือครีเอเตอร์ที่คุณเลือก
             </p>
           </div>
 
-          <div style={fieldGridStyle}>
-            <Field
-              label="คุณขายหรือทำอะไร?"
-              required
-              error={errors.productOrService}
-            >
-              <input
-                value={form.productOrService}
-                onChange={(event) =>
-                  updateField(
-                    "productOrService",
-                    event.target.value
-                  )
-                }
-                placeholder="ตัวอย่าง: กระเป๋าใบใหญ่สำหรับใส่ของประจำวัน"
-                style={inputStyle}
-              />
-            </Field>
-
-            <Field
-              label="กลุ่มลูกค้าหลักคือใคร?"
-              required
-              error={errors.audience}
-            >
-              <input
-                value={form.audience}
-                onChange={(event) =>
-                  updateField(
-                    "audience",
-                    event.target.value
-                  )
-                }
-                placeholder="ตัวอย่าง: คนทำงาน นักศึกษา และคนที่ต้องพกของหลายชิ้น"
-                style={inputStyle}
-              />
-            </Field>
-          </div>
-
-          <Field
-            label="จุดเด่นของสินค้าหรือบริการ"
-            required
-            error={errors.productHighlights}
-            helpText="เขียนแยกบรรทัดได้ ระบบจะนำไปใช้เป็นข้อมูลหลักของแผน"
+          <ChoiceSection
+            title="คุณต้องการสร้างแผนแบบไหน?"
+            error={errors.planType}
           >
-            <textarea
-              value={form.productHighlights}
-              onChange={(event) =>
-                updateField(
-                  "productHighlights",
-                  event.target.value
-                )
-              }
-              placeholder={
-                "ตัวอย่าง:\nใส่ของได้หลายชิ้น\nหูหิ้วมีสายสลิงช่วยเสริมการรับแรง\nเหมาะกับการใช้งานประจำวัน"
-              }
-              style={textareaStyle}
-            />
-          </Field>
-
-          <Field
-            label="ลูกค้ามักสงสัยหรือกังวลเรื่องอะไร?"
-            helpText="เว้นว่างได้ แต่ข้อมูลนี้ช่วยให้ระบบสร้างคอนเทนต์ตอบข้อสงสัยได้ตรงขึ้น"
-          >
-            <textarea
-              value={form.customerConcerns}
-              onChange={(event) =>
-                updateField(
-                  "customerConcerns",
-                  event.target.value
-                )
-              }
-              placeholder={
-                "ตัวอย่าง:\nกลัวขนาดไม่ตรงกับที่คิด\nไม่แน่ใจว่าใส่ของได้มากแค่ไหน\nกังวลเรื่องความแข็งแรง"
-              }
-              style={textareaStyle}
-            />
-          </Field>
-
-          <div style={fieldGridStyle}>
-            <Field
-              label="ราคา โปรโมชั่น หรือรายละเอียดที่ต้องกล่าวถึง"
-              helpText="เว้นว่างได้"
-            >
-              <textarea
-                value={form.promotionDetails}
-                onChange={(event) =>
-                  updateField(
-                    "promotionDetails",
-                    event.target.value
-                  )
+            {PLAN_TYPE_OPTIONS.map((option) => (
+              <ChoiceCard
+                key={option.value}
+                selected={form.planType === option.value}
+                title={option.title}
+                description={option.description}
+                onClick={() =>
+                  selectPlanType(option.value)
                 }
-                placeholder="ตัวอย่าง: มีส่วนลดช่วงเปิดตัว หรือให้ตรวจรายละเอียดราคาที่หน้าสินค้า"
-                style={smallTextareaStyle}
               />
-            </Field>
+            ))}
+          </ChoiceSection>
 
-            <Field
-              label="สิ่งที่ห้ามพูดหรือไม่ต้องการให้กล่าวอ้าง"
-              helpText="ช่วยป้องกันข้อความเกินจริง"
-            >
-              <textarea
-                value={form.prohibitedClaims}
-                onChange={(event) =>
-                  updateField(
-                    "prohibitedClaims",
-                    event.target.value
-                  )
-                }
-                placeholder="ตัวอย่าง: ห้ามระบุน้ำหนักสูงสุด เพราะยังไม่มีผลทดสอบ"
-                style={smallTextareaStyle}
-              />
-            </Field>
-          </div>
+          {stepOneCopy ? (
+            <>
+              <div style={fieldGridStyle}>
+                <Field
+                  label={stepOneCopy.itemLabel}
+                  required
+                  error={errors.productOrService}
+                >
+                  <input
+                    value={form.productOrService}
+                    onChange={(event) =>
+                      updateField(
+                        "productOrService",
+                        event.target.value
+                      )
+                    }
+                    placeholder={stepOneCopy.itemPlaceholder}
+                    style={inputStyle}
+                  />
+                </Field>
+
+                <Field
+                  label={stepOneCopy.audienceLabel}
+                  required
+                  error={errors.audience}
+                >
+                  <input
+                    value={form.audience}
+                    onChange={(event) =>
+                      updateField(
+                        "audience",
+                        event.target.value
+                      )
+                    }
+                    placeholder={
+                      stepOneCopy.audiencePlaceholder
+                    }
+                    style={inputStyle}
+                  />
+                </Field>
+              </div>
+
+              <Field
+                label={stepOneCopy.highlightsLabel}
+                required
+                error={errors.productHighlights}
+                helpText="เขียนแยกบรรทัดได้ ระบบจะใช้ข้อมูลนี้เป็นพื้นฐานของแผน"
+              >
+                <textarea
+                  value={form.productHighlights}
+                  onChange={(event) =>
+                    updateField(
+                      "productHighlights",
+                      event.target.value
+                    )
+                  }
+                  placeholder={
+                    stepOneCopy.highlightsPlaceholder
+                  }
+                  style={textareaStyle}
+                />
+              </Field>
+
+              <Field
+                label={stepOneCopy.concernsLabel}
+                helpText="เว้นว่างได้ แต่ข้อมูลนี้ช่วยให้แผนตรงกับผู้ชมมากขึ้น"
+              >
+                <textarea
+                  value={form.customerConcerns}
+                  onChange={(event) =>
+                    updateField(
+                      "customerConcerns",
+                      event.target.value
+                    )
+                  }
+                  placeholder={
+                    stepOneCopy.concernsPlaceholder
+                  }
+                  style={textareaStyle}
+                />
+              </Field>
+
+              <div style={fieldGridStyle}>
+                <Field
+                  label={stepOneCopy.detailsLabel}
+                  helpText="เว้นว่างได้"
+                >
+                  <textarea
+                    value={form.promotionDetails}
+                    onChange={(event) =>
+                      updateField(
+                        "promotionDetails",
+                        event.target.value
+                      )
+                    }
+                    placeholder={
+                      stepOneCopy.detailsPlaceholder
+                    }
+                    style={smallTextareaStyle}
+                  />
+                </Field>
+
+                <Field
+                  label={stepOneCopy.prohibitedLabel}
+                  helpText="ช่วยป้องกันข้อมูลเกินจริงหรือข้อมูลที่ไม่ควรเปิดเผย"
+                >
+                  <textarea
+                    value={form.prohibitedClaims}
+                    onChange={(event) =>
+                      updateField(
+                        "prohibitedClaims",
+                        event.target.value
+                      )
+                    }
+                    placeholder={
+                      stepOneCopy.prohibitedPlaceholder
+                    }
+                    style={smallTextareaStyle}
+                  />
+                </Field>
+              </div>
+            </>
+          ) : null}
         </section>
       ) : null}
 
@@ -590,7 +880,7 @@ export default function StartPage() {
             title="เป้าหมายหลักของคุณ"
             error={errors.goal}
           >
-            {GOAL_OPTIONS.map((option) => (
+            {availableGoalOptions.map((option) => (
               <ChoiceCard
                 key={option.value}
                 selected={form.goal === option.value}
@@ -610,16 +900,11 @@ export default function StartPage() {
             {PLATFORM_OPTIONS.map((option) => (
               <ChoiceCard
                 key={option.value}
-                selected={
-                  form.platform === option.value
-                }
+                selected={form.platform === option.value}
                 title={option.title}
                 description={option.description}
                 onClick={() =>
-                  updateField(
-                    "platform",
-                    option.value
-                  )
+                  updateField("platform", option.value)
                 }
               />
             ))}
@@ -632,16 +917,11 @@ export default function StartPage() {
             {TIME_OPTIONS.map((option) => (
               <ChoiceCard
                 key={option.value}
-                selected={
-                  form.dailyTime === option.value
-                }
+                selected={form.dailyTime === option.value}
                 title={option.title}
                 description={option.description}
                 onClick={() =>
-                  updateField(
-                    "dailyTime",
-                    option.value
-                  )
+                  updateField("dailyTime", option.value)
                 }
               />
             ))}
@@ -664,11 +944,9 @@ export default function StartPage() {
             ) : null}
 
             <div style={capabilityGridStyle}>
-              {CAPABILITY_OPTIONS.map((option) => {
+              {availableCapabilityOptions.map((option) => {
                 const selected =
-                  form.capabilities.includes(
-                    option.value
-                  );
+                  form.capabilities.includes(option.value);
 
                 return (
                   <button
@@ -713,19 +991,39 @@ export default function StartPage() {
 
           <div style={summaryGridStyle}>
             <SummaryCard
-              label="สินค้า ธุรกิจ หรือบริการ"
+              label="ประเภทแผน"
+              value={
+                PLAN_TYPE_OPTIONS.find(
+                  (option) =>
+                    option.value === form.planType
+                )?.title || "-"
+              }
+            />
+
+            <SummaryCard
+              label={
+                stepOneCopy?.itemLabel.replace(
+                  /\?$/,
+                  ""
+                ) || "หัวข้อหลัก"
+              }
               value={form.productOrService}
             />
 
             <SummaryCard
-              label="กลุ่มลูกค้า"
+              label={
+                stepOneCopy?.audienceLabel.replace(
+                  /\?$/,
+                  ""
+                ) || "กลุ่มเป้าหมาย"
+              }
               value={form.audience}
             />
 
             <SummaryCard
               label="เป้าหมาย"
               value={
-                GOAL_OPTIONS.find(
+                availableGoalOptions.find(
                   (option) =>
                     option.value === form.goal
                 )?.title || "-"
@@ -758,7 +1056,7 @@ export default function StartPage() {
                 form.capabilities
                   .map(
                     (capability) =>
-                      CAPABILITY_OPTIONS.find(
+                      availableCapabilityOptions.find(
                         (option) =>
                           option.value === capability
                       )?.title
@@ -771,7 +1069,8 @@ export default function StartPage() {
 
           <article style={largeSummaryCardStyle}>
             <p style={summaryLabelStyle}>
-              จุดเด่นที่ระบบจะใช้
+              {stepOneCopy?.highlightsLabel ||
+                "จุดเด่นหรือแนวทางหลัก"}
             </p>
 
             <p style={preserveTextStyle}>
@@ -781,12 +1080,35 @@ export default function StartPage() {
 
           <article style={largeSummaryCardStyle}>
             <p style={summaryLabelStyle}>
-              ข้อสงสัยหรือความกังวลของลูกค้า
+              {stepOneCopy?.concernsLabel ||
+                "ข้อกังวลหรือความสนใจของกลุ่มเป้าหมาย"}
             </p>
 
             <p style={preserveTextStyle}>
               {form.customerConcerns ||
-                "ยังไม่ได้ระบุ ระบบจะใช้แนวคำถามทั่วไปที่ไม่แต่งข้อมูลสินค้า"}
+                "ยังไม่ได้ระบุ ระบบจะใช้แนวคำถามทั่วไปโดยไม่แต่งข้อมูลเพิ่มเติม"}
+            </p>
+          </article>
+
+          <article style={largeSummaryCardStyle}>
+            <p style={summaryLabelStyle}>
+              {stepOneCopy?.detailsLabel ||
+                "รายละเอียดเพิ่มเติม"}
+            </p>
+
+            <p style={preserveTextStyle}>
+              {form.promotionDetails || "ไม่ได้ระบุ"}
+            </p>
+          </article>
+
+          <article style={largeSummaryCardStyle}>
+            <p style={summaryLabelStyle}>
+              {stepOneCopy?.prohibitedLabel ||
+                "สิ่งที่ห้ามกล่าวหรือเปิดเผย"}
+            </p>
+
+            <p style={preserveTextStyle}>
+              {form.prohibitedClaims || "ไม่ได้ระบุ"}
             </p>
           </article>
 
