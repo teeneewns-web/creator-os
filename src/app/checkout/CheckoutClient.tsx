@@ -124,6 +124,7 @@ const capabilityLabels: Record<
 
 type SavedOrder = {
   orderId: string;
+  accessKey: string;
   requestCreatedAt: string;
   createdAt: string;
 };
@@ -185,7 +186,10 @@ export default function CheckoutClient({
   >(undefined);
 
   const [orderId, setOrderId] = useState("");
+  const [accessKey, setAccessKey] = useState("");
   const [confirmed, setConfirmed] = useState(false);
+  const [savingOrder, setSavingOrder] = useState(false);
+  const [orderError, setOrderError] = useState("");
   const [copyMessage, setCopyMessage] = useState("");
 
   useEffect(() => {
@@ -219,9 +223,11 @@ export default function CheckoutClient({
 
       if (
         parsedOrder.requestCreatedAt ===
-        parsedRequest.createdAt
+          parsedRequest.createdAt &&
+        parsedOrder.accessKey
       ) {
         setOrderId(parsedOrder.orderId);
+        setAccessKey(parsedOrder.accessKey);
         setConfirmed(true);
       }
     } catch {
@@ -290,25 +296,66 @@ export default function CheckoutClient({
     ].join("\n");
   }, [orderId, packagePrice, request]);
 
-  function confirmOrder() {
-    if (!request) return;
+  async function confirmOrder() {
+    if (!request || savingOrder) return;
 
-    const newOrderId =
-      orderId || createOrderId();
+    const newOrderId = orderId || createOrderId();
+    const newAccessKey =
+      accessKey || window.crypto.randomUUID();
 
-    const savedOrder: SavedOrder = {
-      orderId: newOrderId,
-      requestCreatedAt: request.createdAt,
-      createdAt: new Date().toISOString(),
-    };
+    setSavingOrder(true);
+    setOrderError("");
 
-    window.localStorage.setItem(
-      ORDER_STORAGE_KEY,
-      JSON.stringify(savedOrder)
-    );
+    try {
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          orderId: newOrderId,
+          accessKey: newAccessKey,
+          amount: packagePrice,
+          request,
+        }),
+      });
 
-    setOrderId(newOrderId);
-    setConfirmed(true);
+      const data = (await response.json()) as {
+        ok: boolean;
+        message?: string;
+      };
+
+      if (!response.ok || !data.ok) {
+        throw new Error(
+          data.message ||
+            "บันทึกคำสั่งซื้อไม่สำเร็จ กรุณาลองใหม่"
+        );
+      }
+
+      const savedOrder: SavedOrder = {
+        orderId: newOrderId,
+        accessKey: newAccessKey,
+        requestCreatedAt: request.createdAt,
+        createdAt: new Date().toISOString(),
+      };
+
+      window.localStorage.setItem(
+        ORDER_STORAGE_KEY,
+        JSON.stringify(savedOrder)
+      );
+
+      setOrderId(newOrderId);
+      setAccessKey(newAccessKey);
+      setConfirmed(true);
+    } catch (error) {
+      setOrderError(
+        error instanceof Error
+          ? error.message
+          : "บันทึกคำสั่งซื้อไม่สำเร็จ กรุณาลองใหม่"
+      );
+    } finally {
+      setSavingOrder(false);
+    }
   }
 
   function copyOrderSummary() {
@@ -503,11 +550,24 @@ export default function CheckoutClient({
 
               <button
                 type="button"
-                onClick={confirmOrder}
-                style={primaryButtonStyle}
+                onClick={() => void confirmOrder()}
+                disabled={savingOrder}
+                style={{
+                  ...primaryButtonStyle,
+                  opacity: savingOrder ? 0.65 : 1,
+                  cursor: savingOrder ? "wait" : "pointer",
+                }}
               >
-                ยืนยันข้อมูลและไปชำระเงิน
+                {savingOrder
+                  ? "กำลังสร้างคำสั่งซื้อ..."
+                  : "ยืนยันข้อมูลและไปชำระเงิน"}
               </button>
+
+              {orderError && (
+                <p style={orderErrorStyle}>
+                  {orderError}
+                </p>
+              )}
             </div>
           )}
         </article>
@@ -598,10 +658,21 @@ export default function CheckoutClient({
             </p>
 
             <div style={timeBoxStyle}>
-              ตรวจยอดภายใน 24 ชั่วโมง
-              และจัดทำแผนภายใน 1–2 วันทำการ
-              หลังยืนยันการชำระเงิน
+              หลังตรวจยอดและกดอนุมัติ
+              ระบบจะเปิดแผนคอนเทนต์ 7 วัน
+              ให้ใช้งานบนเว็บไซต์ทันที
             </div>
+
+            {accessKey && (
+              <Link
+                href={`/order/${encodeURIComponent(
+                  orderId
+                )}?key=${encodeURIComponent(accessKey)}`}
+                style={statusButtonStyle}
+              >
+                ตรวจสอบสถานะและเปิดแผน 7 วัน
+              </Link>
+            )}
           </article>
         )}
       </section>
@@ -875,5 +946,30 @@ const timeBoxStyle: CSSProperties = {
   background: "#f0fdf4",
   color: "#166534",
   lineHeight: 1.7,
+  fontWeight: 700,
+};
+
+const statusButtonStyle: CSSProperties = {
+  display: "flex",
+  width: "100%",
+  minHeight: "50px",
+  alignItems: "center",
+  justifyContent: "center",
+  marginTop: "12px",
+  padding: "0 18px",
+  borderRadius: "14px",
+  background: "#312e81",
+  color: "white",
+  textDecoration: "none",
+  fontWeight: 900,
+};
+
+const orderErrorStyle: CSSProperties = {
+  margin: "12px 0 0",
+  padding: "12px 14px",
+  borderRadius: "12px",
+  background: "#fef2f2",
+  color: "#b91c1c",
+  lineHeight: 1.6,
   fontWeight: 700,
 };

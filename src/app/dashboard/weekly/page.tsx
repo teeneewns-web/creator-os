@@ -25,6 +25,20 @@ type WeeklyPageState = {
   notes: Record<string, string>;
 };
 
+type PlanAccessState =
+  | "loading"
+  | "approved"
+  | "pending"
+  | "locked"
+  | "error";
+
+type OrderStatusResponse = {
+  ok: boolean;
+  status?: "pending" | "approved";
+  request?: PlanRequest | null;
+  message?: string;
+};
+
 const REQUEST_STORAGE_KEY = "creator-os-plan-request-v1";
 const STATE_STORAGE_PREFIX = "creator-os-weekly-plan-state";
 
@@ -350,24 +364,106 @@ export default function WeeklyDashboardPage() {
     useState<WeeklyPageState>(getInitialState);
 
   const [hydrated, setHydrated] = useState(false);
+  const [accessState, setAccessState] =
+    useState<PlanAccessState>("loading");
+  const [accessMessage, setAccessMessage] = useState(
+    "กำลังตรวจสอบสิทธิ์การใช้งานแผน 7 วัน..."
+  );
+  const [statusHref, setStatusHref] = useState("/checkout");
 
   useEffect(() => {
-    const request = readPlanRequest();
+    let cancelled = false;
 
-    const nextPlan = request
-      ? generateWeeklyContentPlan(request)
-      : facebookBagSamplePlan;
+    async function loadApprovedPlan() {
+      const searchParams = new URLSearchParams(
+        window.location.search
+      );
 
-    setPlan(nextPlan);
-    setState(readState(nextPlan.id));
-    setHydrated(true);
+      const orderId = searchParams.get("order") || "";
+      const accessKey = searchParams.get("key") || "";
+
+      if (!orderId || !accessKey) {
+        if (!cancelled) {
+          setAccessState("locked");
+          setAccessMessage(
+            "หน้านี้เปิดได้หลังตรวจสอบและอนุมัติการชำระเงินแล้วเท่านั้น"
+          );
+        }
+        return;
+      }
+
+      setStatusHref(
+        `/order/${encodeURIComponent(
+          orderId
+        )}?key=${encodeURIComponent(accessKey)}`
+      );
+
+      try {
+        const response = await fetch(
+          `/api/orders/${encodeURIComponent(
+            orderId
+          )}?key=${encodeURIComponent(accessKey)}`,
+          { cache: "no-store" }
+        );
+
+        const data =
+          (await response.json()) as OrderStatusResponse;
+
+        if (!response.ok || !data.ok) {
+          throw new Error(
+            data.message || "ตรวจสอบสิทธิ์ไม่สำเร็จ"
+          );
+        }
+
+        if (data.status !== "approved" || !data.request) {
+          if (!cancelled) {
+            setAccessState("pending");
+            setAccessMessage(
+              "คำสั่งซื้อนี้ยังรอตรวจสอบการชำระเงิน กรุณากลับไปที่หน้าตรวจสอบสถานะ"
+            );
+          }
+          return;
+        }
+
+        const nextPlan = generateWeeklyContentPlan(
+          data.request
+        );
+
+        window.localStorage.setItem(
+          REQUEST_STORAGE_KEY,
+          JSON.stringify(data.request)
+        );
+
+        if (!cancelled) {
+          setPlan(nextPlan);
+          setState(readState(nextPlan.id));
+          setHydrated(true);
+          setAccessState("approved");
+        }
+      } catch (error) {
+        if (!cancelled) {
+          setAccessState("error");
+          setAccessMessage(
+            error instanceof Error
+              ? error.message
+              : "ตรวจสอบสิทธิ์ไม่สำเร็จ กรุณาลองใหม่"
+          );
+        }
+      }
+    }
+
+    void loadApprovedPlan();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
-    if (!hydrated) return;
+    if (!hydrated || accessState !== "approved") return;
 
     writeState(plan.id, state);
-  }, [hydrated, plan.id, state]);
+  }, [accessState, hydrated, plan.id, state]);
 
   const planCopy = getWeeklyPlanCopy(plan.planType);
 
@@ -438,6 +534,37 @@ export default function WeeklyDashboardPage() {
     if (!confirmed) return;
 
     setState(getInitialState());
+  }
+
+  if (accessState !== "approved") {
+    return (
+      <main style={pageStyle}>
+        <section style={accessCardStyle}>
+          <p style={accessEyebrowStyle}>
+            Creator OS · แผนคอนเทนต์ 7 วัน
+          </p>
+
+          <h1 style={accessTitleStyle}>
+            {accessState === "loading"
+              ? "กำลังตรวจสอบสิทธิ์"
+              : accessState === "pending"
+                ? "รอตรวจสอบการชำระเงิน"
+                : "ยังไม่สามารถเปิดแผนได้"}
+          </h1>
+
+          <p style={accessTextStyle}>{accessMessage}</p>
+
+          <Link
+            href={statusHref}
+            style={accessButtonStyle}
+          >
+            {accessState === "pending"
+              ? "กลับไปตรวจสอบสถานะ"
+              : "กลับไปหน้าชำระเงิน"}
+          </Link>
+        </section>
+      </main>
+    );
   }
 
   return (
@@ -1065,6 +1192,52 @@ export default function WeeklyDashboardPage() {
     </main>
   );
 }
+
+const accessCardStyle: CSSProperties = {
+  width: "min(680px, 100%)",
+  margin: "70px auto",
+  padding: "32px",
+  border: "1px solid #e2e8f0",
+  borderRadius: "24px",
+  background: "white",
+  boxShadow: "0 20px 60px rgba(15, 23, 42, 0.10)",
+};
+
+const accessEyebrowStyle: CSSProperties = {
+  margin: 0,
+  color: "#4f46e5",
+  fontSize: "12px",
+  fontWeight: 900,
+  letterSpacing: "0.12em",
+  textTransform: "uppercase",
+};
+
+const accessTitleStyle: CSSProperties = {
+  margin: "12px 0 0",
+  color: "#0f172a",
+  fontSize: "clamp(28px, 5vw, 42px)",
+  lineHeight: 1.15,
+};
+
+const accessTextStyle: CSSProperties = {
+  margin: "16px 0 0",
+  color: "#475569",
+  lineHeight: 1.8,
+};
+
+const accessButtonStyle: CSSProperties = {
+  display: "inline-flex",
+  minHeight: "48px",
+  alignItems: "center",
+  justifyContent: "center",
+  marginTop: "24px",
+  padding: "0 20px",
+  borderRadius: "14px",
+  background: "#4f46e5",
+  color: "white",
+  textDecoration: "none",
+  fontWeight: 900,
+};
 
 const pageStyle: CSSProperties = {
   maxWidth: "1160px",
