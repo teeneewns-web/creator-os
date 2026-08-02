@@ -1,8 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import type { PlanRequest } from "../../../types/plan-request";
 
@@ -21,30 +20,45 @@ type OrderStatusClientProps = {
   accessKey: string;
 };
 
+type VisibleStatus =
+  | "checking"
+  | "pending"
+  | "approved"
+  | "error";
+
 export default function OrderStatusClient({
   orderId,
   accessKey,
 }: OrderStatusClientProps) {
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  const [status, setStatus] =
+    useState<VisibleStatus>("checking");
   const [message, setMessage] = useState(
     "กำลังตรวจสอบสถานะการชำระเงิน..."
   );
   const [error, setError] = useState("");
+  const [planHref, setPlanHref] = useState("");
+  const redirectStartedRef = useRef(false);
 
   const checkStatus = useCallback(async () => {
     if (!accessKey) {
+      setStatus("error");
       setError("ลิงก์นี้ไม่มีรหัสเข้าถึงคำสั่งซื้อ");
-      setLoading(false);
       return;
     }
+
+    setError("");
 
     try {
       const response = await fetch(
         `/api/orders/${encodeURIComponent(
           orderId
-        )}?key=${encodeURIComponent(accessKey)}`,
-        { cache: "no-store" }
+        )}?key=${encodeURIComponent(accessKey)}&t=${Date.now()}`,
+        {
+          cache: "no-store",
+          headers: {
+            "Cache-Control": "no-cache",
+          },
+        }
       );
 
       const data = (await response.json()) as OrderStatusResponse;
@@ -61,40 +75,54 @@ export default function OrderStatusClient({
           JSON.stringify(data.request)
         );
 
-        setMessage("อนุมัติแล้ว กำลังเปิดแผน 7 วัน...");
-
-        router.replace(
+        const nextHref =
           `/dashboard/weekly?order=${encodeURIComponent(
             orderId
-          )}&key=${encodeURIComponent(accessKey)}`
+          )}&key=${encodeURIComponent(accessKey)}`;
+
+        setPlanHref(nextHref);
+        setStatus("approved");
+        setMessage(
+          "อนุมัติการชำระเงินแล้ว กำลังเปิดแผนคอนเทนต์ 7 วัน..."
         );
+
+        if (!redirectStartedRef.current) {
+          redirectStartedRef.current = true;
+
+          window.setTimeout(() => {
+            window.location.assign(nextHref);
+          }, 700);
+        }
+
         return;
       }
 
+      setStatus("pending");
       setMessage(
-        "รอตรวจสอบการชำระเงิน เมื่ออนุมัติแล้วหน้านี้จะเปิดแผน 7 วันให้อัตโนมัติ"
+        "ยังรอตรวจสอบการชำระเงิน เมื่อผู้ดูแลอนุมัติแล้ว ระบบจะเปิดแผน 7 วันให้อัตโนมัติ"
       );
-      setError("");
-      setLoading(false);
     } catch (statusError) {
+      setStatus("error");
       setError(
         statusError instanceof Error
           ? statusError.message
           : "ตรวจสอบสถานะไม่สำเร็จ"
       );
-      setLoading(false);
     }
-  }, [accessKey, orderId, router]);
+  }, [accessKey, orderId]);
 
   useEffect(() => {
     void checkStatus();
 
     const intervalId = window.setInterval(() => {
       void checkStatus();
-    }, 10000);
+    }, 8000);
 
     return () => window.clearInterval(intervalId);
   }, [checkStatus]);
+
+  const isApproved = status === "approved";
+  const isChecking = status === "checking";
 
   return (
     <main className="min-h-screen bg-slate-950 px-4 py-14 text-white">
@@ -116,13 +144,36 @@ export default function OrderStatusClient({
           </p>
         </div>
 
-        <div className="mt-5 rounded-2xl border border-amber-300/20 bg-amber-300/10 p-5">
-          <p className="font-bold text-amber-100">
-            {loading
+        <div
+          className={`mt-5 rounded-2xl border p-5 ${
+            isApproved
+              ? "border-emerald-300/20 bg-emerald-300/10"
+              : "border-amber-300/20 bg-amber-300/10"
+          }`}
+        >
+          <p
+            className={`font-bold ${
+              isApproved
+                ? "text-emerald-100"
+                : "text-amber-100"
+            }`}
+          >
+            {isChecking
               ? "กำลังตรวจสอบ..."
-              : "สถานะ: รอตรวจสอบการชำระเงิน"}
+              : isApproved
+                ? "สถานะ: อนุมัติแล้ว"
+                : status === "error"
+                  ? "สถานะ: ตรวจสอบไม่สำเร็จ"
+                  : "สถานะ: รอตรวจสอบการชำระเงิน"}
           </p>
-          <p className="mt-2 text-sm leading-7 text-amber-50/80">
+
+          <p
+            className={`mt-2 text-sm leading-7 ${
+              isApproved
+                ? "text-emerald-50/80"
+                : "text-amber-50/80"
+            }`}
+          >
             {message}
           </p>
         </div>
@@ -133,20 +184,31 @@ export default function OrderStatusClient({
           </div>
         )}
 
-        <button
-          type="button"
-          onClick={() => void checkStatus()}
-          className="mt-6 w-full rounded-2xl bg-indigo-600 px-5 py-3 font-black transition hover:bg-indigo-500"
-        >
-          ตรวจสอบอีกครั้ง
-        </button>
+        {isApproved && planHref ? (
+          <a
+            href={planHref}
+            className="mt-6 flex w-full items-center justify-center rounded-2xl bg-emerald-600 px-5 py-3 font-black transition hover:bg-emerald-500"
+          >
+            เปิดแผนคอนเทนต์ 7 วัน
+          </a>
+        ) : (
+          <button
+            type="button"
+            onClick={() => void checkStatus()}
+            className="mt-6 w-full rounded-2xl bg-indigo-600 px-5 py-3 font-black transition hover:bg-indigo-500"
+          >
+            ตรวจสอบอีกครั้ง
+          </button>
+        )}
 
-        <Link
-          href="/checkout"
-          className="mt-3 flex w-full items-center justify-center rounded-2xl border border-white/15 px-5 py-3 font-bold text-slate-200"
-        >
-          กลับหน้าชำระเงิน
-        </Link>
+        {!isApproved && (
+          <Link
+            href="/checkout"
+            className="mt-3 flex w-full items-center justify-center rounded-2xl border border-white/15 px-5 py-3 font-bold text-slate-200"
+          >
+            กลับหน้าชำระเงิน
+          </Link>
+        )}
 
         <p className="mt-5 text-xs leading-6 text-slate-500">
           เก็บลิงก์หน้านี้ไว้เป็นส่วนตัว เพราะใช้เปิดแผนของคำสั่งซื้อนี้
