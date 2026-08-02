@@ -20,6 +20,7 @@ export async function GET(request: Request) {
       ok: true,
       orders: orders.map((order) => ({
         orderId: order.orderId,
+        accessKey: order.accessKey,
         status: order.status,
         amount: order.amount,
         createdAt: order.createdAt,

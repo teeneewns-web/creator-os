@@ -6,6 +6,7 @@ import type { PlanRequest } from "../../../types/plan-request";
 
 type AdminOrder = {
   orderId: string;
+  accessKey: string;
   status: "pending" | "approved";
   amount: number;
   createdAt: string;
@@ -28,6 +29,12 @@ function formatDate(value: string) {
   } catch {
     return value;
   }
+}
+
+function getCustomerPath(order: AdminOrder) {
+  return `/order/${encodeURIComponent(
+    order.orderId
+  )}?key=${encodeURIComponent(order.accessKey)}`;
 }
 
 export default function AdminOrdersClient() {
@@ -141,6 +148,22 @@ export default function AdminOrdersClient() {
     }
   }
 
+  async function copyCustomerLink(order: AdminOrder) {
+    const fullLink = `${window.location.origin}${getCustomerPath(
+      order
+    )}`;
+
+    try {
+      await navigator.clipboard.writeText(fullLink);
+      setMessage(`คัดลอกลิงก์ของ ${order.orderId} แล้ว`);
+    } catch {
+      window.prompt(
+        "คัดลอกลิงก์นี้แล้วส่งให้ลูกค้า",
+        fullLink
+      );
+    }
+  }
+
   return (
     <main className="min-h-screen bg-slate-950 px-4 py-12 text-white">
       <section className="mx-auto max-w-5xl">
@@ -151,7 +174,7 @@ export default function AdminOrdersClient() {
           ตรวจและอนุมัติคำสั่งซื้อ
         </h1>
         <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300">
-          ตรวจสลิปใน LINE ให้ถูกต้องก่อน แล้วกดอนุมัติเพียงครั้งเดียว ระบบจะเปิดแผน 7 วันให้ลูกค้าอัตโนมัติ
+          ตรวจสลิปใน LINE ให้ถูกต้องก่อน แล้วกดอนุมัติเพียงครั้งเดียว ระบบจะเปิดแผน 7 วันให้ลูกค้า
         </p>
 
         <div className="mt-7 rounded-3xl border border-white/10 bg-white/5 p-5 sm:p-6">
@@ -189,64 +212,91 @@ export default function AdminOrdersClient() {
         </div>
 
         <div className="mt-6 space-y-4">
-          {orders.map((order) => (
-            <article
-              key={order.orderId}
-              className="rounded-3xl border border-white/10 bg-white/5 p-5 sm:p-6"
-            >
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                    รหัสคำสั่งซื้อ
+          {orders.map((order) => {
+            const customerPath = getCustomerPath(order);
+
+            return (
+              <article
+                key={order.orderId}
+                className="rounded-3xl border border-white/10 bg-white/5 p-5 sm:p-6"
+              >
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                      รหัสคำสั่งซื้อ
+                    </p>
+                    <h2 className="mt-1 text-xl font-black">
+                      {order.orderId}
+                    </h2>
+                    <p className="mt-2 text-sm text-slate-400">
+                      รับเมื่อ {formatDate(order.createdAt)} · {order.amount} บาท
+                    </p>
+                  </div>
+
+                  <span
+                    className={`w-fit rounded-full px-3 py-1 text-xs font-black ${
+                      order.status === "approved"
+                        ? "bg-emerald-400/15 text-emerald-200"
+                        : "bg-amber-400/15 text-amber-100"
+                    }`}
+                  >
+                    {order.status === "approved"
+                      ? "อนุมัติแล้ว"
+                      : "รอตรวจเงิน"}
+                  </span>
+                </div>
+
+                <div className="mt-5 grid gap-3 rounded-2xl bg-slate-900/70 p-4 text-sm leading-7 sm:grid-cols-2">
+                  <p>
+                    <strong>ประเภท:</strong> {order.request.planType}
                   </p>
-                  <h2 className="mt-1 text-xl font-black">
-                    {order.orderId}
-                  </h2>
-                  <p className="mt-2 text-sm text-slate-400">
-                    รับเมื่อ {formatDate(order.createdAt)} · {order.amount} บาท
+                  <p>
+                    <strong>แพลตฟอร์ม:</strong> {order.request.platform}
+                  </p>
+                  <p>
+                    <strong>หัวข้อ:</strong> {order.request.productOrService}
+                  </p>
+                  <p>
+                    <strong>เป้าหมาย:</strong> {order.request.goal}
                   </p>
                 </div>
 
-                <span
-                  className={`w-fit rounded-full px-3 py-1 text-xs font-black ${
-                    order.status === "approved"
-                      ? "bg-emerald-400/15 text-emerald-200"
-                      : "bg-amber-400/15 text-amber-100"
-                  }`}
-                >
-                  {order.status === "approved"
-                    ? "อนุมัติแล้ว"
-                    : "รอตรวจเงิน"}
-                </span>
-              </div>
+                <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                  {order.status === "pending" && (
+                    <button
+                      type="button"
+                      onClick={() => void approveOrder(order.orderId)}
+                      disabled={loading}
+                      className="rounded-2xl bg-emerald-600 px-5 py-3 font-black hover:bg-emerald-500 disabled:opacity-60"
+                    >
+                      ตรวจเงินแล้ว — อนุมัติแผน 7 วัน
+                    </button>
+                  )}
 
-              <div className="mt-5 grid gap-3 rounded-2xl bg-slate-900/70 p-4 text-sm leading-7 sm:grid-cols-2">
-                <p>
-                  <strong>ประเภท:</strong> {order.request.planType}
-                </p>
-                <p>
-                  <strong>แพลตฟอร์ม:</strong> {order.request.platform}
-                </p>
-                <p>
-                  <strong>หัวข้อ:</strong> {order.request.productOrService}
-                </p>
-                <p>
-                  <strong>เป้าหมาย:</strong> {order.request.goal}
-                </p>
-              </div>
+                  <a
+                    href={customerPath}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-2xl bg-indigo-600 px-5 py-3 text-center font-black hover:bg-indigo-500"
+                  >
+                    เปิดหน้าของลูกค้า
+                  </a>
 
-              {order.status === "pending" && (
-                <button
-                  type="button"
-                  onClick={() => void approveOrder(order.orderId)}
-                  disabled={loading}
-                  className="mt-5 w-full rounded-2xl bg-emerald-600 px-5 py-3 font-black hover:bg-emerald-500 disabled:opacity-60 sm:w-auto"
-                >
-                  ตรวจเงินแล้ว — อนุมัติแผน 7 วัน
-                </button>
-              )}
-            </article>
-          ))}
+                  <button
+                    type="button"
+                    onClick={() => void copyCustomerLink(order)}
+                    className="rounded-2xl border border-white/15 px-5 py-3 font-black text-slate-100 hover:bg-white/10"
+                  >
+                    คัดลอกลิงก์ลูกค้า
+                  </button>
+                </div>
+
+                <p className="mt-3 text-xs leading-6 text-slate-500">
+                  ลิงก์ลูกค้าเป็นลิงก์ส่วนตัว ห้ามโพสต์สาธารณะ
+                </p>
+              </article>
+            );
+          })}
         </div>
       </section>
     </main>
