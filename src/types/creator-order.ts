@@ -8,6 +8,27 @@ export type CreatorOrderStatus =
 export type CreatorPlanProductStandard =
   | "ready-to-execute-v1";
 
+export type CreatorPlanQualityCheck = {
+  id: string;
+  label: string;
+  passed: boolean;
+  critical: boolean;
+  score: number;
+  maxScore: number;
+  message: string;
+};
+
+export type CreatorPlanQualityReport = {
+  version: number;
+  score: number;
+  threshold: number;
+  passed: boolean;
+  checks: CreatorPlanQualityCheck[];
+  blockingIssues: string[];
+  auditedAt: string;
+  regenerationAttempts: number;
+};
+
 export type CreatorPlanSnapshot = {
   plan: WeeklyContentPlan;
   round: number;
@@ -19,6 +40,8 @@ export type CreatorPlanSnapshot = {
   variationIndex?: number;
   uniquenessAttempt?: number;
   duplicateFingerprintsAvoided?: number;
+  qualityRejectedPlans?: number;
+  qualityReport?: CreatorPlanQualityReport;
   contentFingerprints: string[];
   createdAt: string;
 };

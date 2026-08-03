@@ -3,6 +3,7 @@ import "server-only";
 import { createHash } from "node:crypto";
 
 import { generateWeeklyContentPlan } from "./generate-weekly-content-plan";
+import { auditPlanQuality } from "./plan-quality";
 import type { PlanRequest } from "../types/plan-request";
 import type {
   CreatorPlanSnapshot,
@@ -12,7 +13,7 @@ import type {
   WeeklyContentPlan,
 } from "../types/weekly-content-plan";
 
-export const CURRENT_PLAN_VERSION = 2;
+export const CURRENT_PLAN_VERSION = 3;
 export const CURRENT_PRODUCT_STANDARD =
   "ready-to-execute-v1" as const;
 
@@ -21,6 +22,8 @@ type CreatePlanSnapshotOptions = {
   variationIndex?: number;
   uniquenessAttempt?: number;
   duplicateFingerprintsAvoided?: number;
+  qualityRejectedPlans?: number;
+  regenerationAttempts?: number;
 };
 
 function normalizeText(value: string) {
@@ -182,6 +185,14 @@ export function createPlanSnapshot(
       options.duplicateFingerprintsAvoided || 0
     )
   );
+  const qualityRejectedPlans = Math.max(
+    0,
+    Math.floor(options.qualityRejectedPlans || 0)
+  );
+  const regenerationAttempts = Math.max(
+    0,
+    Math.floor(options.regenerationAttempts || 0)
+  );
   const createdAt = new Date().toISOString();
   const customerProfileKey =
     createCustomerProfileKey(request);
@@ -200,6 +211,11 @@ export function createPlanSnapshot(
     variationIndex,
     createdAt
   );
+  const qualityReport = auditPlanQuality(
+    plan,
+    request,
+    { regenerationAttempts }
+  );
 
   return {
     plan,
@@ -212,6 +228,8 @@ export function createPlanSnapshot(
     variationIndex,
     uniquenessAttempt,
     duplicateFingerprintsAvoided,
+    qualityRejectedPlans,
+    qualityReport,
     contentFingerprints:
       createContentFingerprints(plan),
     createdAt,

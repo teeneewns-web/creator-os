@@ -14,6 +14,14 @@ type AdminOrder = {
   planRound: number | null;
   variationIndex: number | null;
   duplicateFingerprintsAvoided: number;
+  qualityRejectedPlans: number;
+  qualityScore: number | null;
+  qualityThreshold: number | null;
+  qualityPassed: boolean | null;
+  qualityChecksPassed: number;
+  qualityChecksTotal: number;
+  qualityBlockingIssues: string[];
+  qualityRegenerationAttempts: number;
   request: PlanRequest;
 };
 
@@ -277,12 +285,60 @@ export default function AdminOrdersClient() {
                 </div>
 
                 {order.status === "approved" && (
-                  <p className="mt-3 text-xs leading-6 text-emerald-200/80">
-                    ระบบตรวจลายนิ้วมือเนื้อหาแล้ว
-                    {order.duplicateFingerprintsAvoided > 0
-                      ? ` และหลีกเลี่ยงรายการซ้ำ ${order.duplicateFingerprintsAvoided} จุด`
-                      : " และไม่พบเนื้อหาซ้ำแบบตรงกัน"}
-                  </p>
+                  <>
+                    <p className="mt-3 text-xs leading-6 text-emerald-200/80">
+                      ระบบตรวจลายนิ้วมือเนื้อหาแล้ว
+                      {order.duplicateFingerprintsAvoided > 0
+                        ? ` และหลีกเลี่ยงรายการซ้ำ ${order.duplicateFingerprintsAvoided} จุด`
+                        : " และไม่พบเนื้อหาซ้ำแบบตรงกัน"}
+                    </p>
+
+                    <div
+                      className={`mt-4 rounded-2xl border p-4 ${
+                        order.qualityPassed === true
+                          ? "border-emerald-400/25 bg-emerald-400/10"
+                          : "border-amber-400/25 bg-amber-400/10"
+                      }`}
+                    >
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                          <p className="text-xs font-black uppercase tracking-wider text-slate-300">
+                            Quality Gate
+                          </p>
+                          <p className="mt-1 text-lg font-black">
+                            {order.qualityPassed === true
+                              ? "ผ่านการตรวจคุณภาพ"
+                              : "ยังไม่ผ่านการตรวจคุณภาพ"}
+                          </p>
+                        </div>
+
+                        <p className="text-2xl font-black">
+                          {order.qualityScore ?? "–"}/100
+                        </p>
+                      </div>
+
+                      <p className="mt-2 text-xs leading-6 text-slate-300">
+                        ผ่าน {order.qualityChecksPassed}/
+                        {order.qualityChecksTotal} รายการ · เกณฑ์ขั้นต่ำ {order.qualityThreshold ?? 85}/100
+                        {order.qualityRegenerationAttempts > 0
+                          ? ` · สร้างใหม่ ${order.qualityRegenerationAttempts} ครั้ง`
+                          : ""}
+                        {order.qualityRejectedPlans > 0
+                          ? ` · ปฏิเสธแผนที่คุณภาพไม่ถึง ${order.qualityRejectedPlans} แผน`
+                          : ""}
+                      </p>
+
+                      {order.qualityBlockingIssues.length > 0 && (
+                        <p className="mt-2 text-xs font-bold leading-6 text-amber-100">
+                          จุดที่ปิดกั้น: {order.qualityBlockingIssues.join(", ")}
+                        </p>
+                      )}
+
+                      <p className="mt-2 text-xs leading-6 text-slate-400">
+                        ระบบจะไม่เปิดแผนให้ลูกค้า หากคะแนนต่ำกว่าเกณฑ์หรือมีข้อผิดพลาดสำคัญ
+                      </p>
+                    </div>
+                  </>
                 )}
 
                 <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">

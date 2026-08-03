@@ -42,3 +42,8 @@ next-env.d.ts
 
 /dist
 Thumbs.db
+.vercel
+.env*
+.creator-os-backup-*/
+creator-os-files.zip
+creator-os-source.zip

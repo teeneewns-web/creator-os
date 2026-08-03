@@ -18,6 +18,7 @@ import type {
 
 import { generateWeeklyContentPlan } from "../../../lib/generate-weekly-content-plan";
 import type { PlanRequest, PlanType } from "../../../types/plan-request";
+import type { CreatorPlanQualityReport } from "../../../types/creator-order";
 
 type FacebookMission = {
   id: string;
@@ -46,6 +47,7 @@ type OrderStatusResponse = {
   request?: PlanRequest | null;
   plan?: WeeklyContentPlan | null;
   planRound?: number | null;
+  qualityReport?: CreatorPlanQualityReport | null;
   message?: string;
 };
 
@@ -425,6 +427,8 @@ export default function WeeklyDashboardPage() {
   );
   const [statusHref, setStatusHref] = useState("/checkout");
   const [planRound, setPlanRound] = useState(1);
+  const [qualityReport, setQualityReport] =
+    useState<CreatorPlanQualityReport | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -480,6 +484,12 @@ export default function WeeklyDashboardPage() {
           return;
         }
 
+        if (!data.qualityReport?.passed) {
+          throw new Error(
+            "แผนยังไม่ผ่านการตรวจคุณภาพ จึงยังไม่สามารถเปิดใช้งานได้"
+          );
+        }
+
         const nextPlan =
           data.plan ||
           generateWeeklyContentPlan(data.request);
@@ -494,6 +504,7 @@ export default function WeeklyDashboardPage() {
           setPlanRound(
             Math.max(1, data.planRound || 1)
           );
+          setQualityReport(data.qualityReport);
           setState(readState(nextPlan.id));
           setHydrated(true);
           setAccessState("approved");
@@ -768,6 +779,12 @@ export default function WeeklyDashboardPage() {
   <span style={heroTagStyle}>
     สัปดาห์ที่ {planRound}
   </span>
+
+  {qualityReport?.passed && (
+    <span style={qualityTagStyle}>
+      ผ่านตรวจคุณภาพ {qualityReport.score}/100
+    </span>
+  )}
 
   <span style={heroTagStyle}>7 วัน</span>
 </div>
@@ -1901,6 +1918,13 @@ const heroTagStyle: CSSProperties = {
   background: "rgba(255,255,255,0.12)",
   fontSize: "14px",
   fontWeight: 700,
+};
+
+const qualityTagStyle: CSSProperties = {
+  ...heroTagStyle,
+  background: "#dcfce7",
+  borderColor: "#86efac",
+  color: "#166534",
 };
 
 const buttonRowStyle: CSSProperties = {

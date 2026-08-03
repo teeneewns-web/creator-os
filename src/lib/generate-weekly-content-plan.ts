@@ -2118,6 +2118,16 @@ function getContentAngle(
   return CONTENT_ANGLES[index];
 }
 
+const CTA_NEXT_ACTIONS = [
+  "เลือกหนึ่งข้อที่ตรงกับสถานการณ์ของคุณมากที่สุด",
+  "จดหนึ่งคำถามที่ยังต้องการข้อมูลเพิ่ม",
+  "ลองทำขั้นตอนแรกแล้วบันทึกผลที่เกิดขึ้น",
+  "เปรียบเทียบทางเลือกจากเกณฑ์ในโพสต์หนึ่งจุด",
+  "เก็บรายละเอียดที่ต้องตรวจเพิ่มไว้ก่อนตัดสินใจ",
+  "ส่งต่อให้คนที่กำลังเจอสถานการณ์ใกล้เคียงกัน",
+  "สรุปหนึ่งสิ่งที่จะนำไปทำต่อหลังจบโพสต์นี้",
+];
+
 function getVariantCta(
   request: ResolvedRequest,
   originalCta: string,
@@ -2164,7 +2174,16 @@ function getVariantCta(
     options.length + 1
   );
 
-  return index === options.length ? originalCta : options[index];
+  const selectedCta =
+    index === options.length
+      ? originalCta
+      : options[index];
+  const nextActionIndex = positiveModulo(
+    variationIndex + round + dayNumber - 1,
+    CTA_NEXT_ACTIONS.length
+  );
+
+  return `${selectedCta}\nขั้นต่อไป: ${CTA_NEXT_ACTIONS[nextActionIndex]}`;
 }
 
 function getVariantFollowUpPrompt(

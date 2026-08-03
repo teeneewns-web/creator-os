@@ -7,11 +7,16 @@ import { connect, type TLSSocket } from "tls";
 import type {
   CreatorOrder,
   CreatorOrderStatus,
+  CreatorPlanSnapshot,
 } from "../types/creator-order";
 import {
   createContentClusterKey,
   createPlanSnapshot,
 } from "./plan-history";
+import {
+  auditPlanQuality,
+  CURRENT_PLAN_QUALITY_VERSION,
+} from "./plan-quality";
 
 const ORDER_KEY_PREFIX = "creator-os:order:";
 const ORDER_INDEX_KEY = "creator-os:orders";
@@ -24,7 +29,7 @@ const CUSTOMER_LAST_ORDER_KEY_PREFIX =
 const CONTENT_VARIATION_KEY_PREFIX =
   "creator-os:content-variation:";
 
-const MAX_UNIQUENESS_ATTEMPTS = 12;
+const MAX_PLAN_GENERATION_ATTEMPTS = 24;
 
 type RespValue =
   | string
@@ -370,11 +375,18 @@ async function registerPlanFingerprints(
   }
 }
 
+type AttachPlanSnapshotOptions = {
+  forceRegenerate?: boolean;
+  preserveRound?: number;
+  variationStart?: number;
+};
+
 async function attachPlanSnapshot(
   client: RedisConnection,
-  order: CreatorOrder
+  order: CreatorOrder,
+  options: AttachPlanSnapshotOptions = {}
 ): Promise<CreatorOrder> {
-  if (order.planSnapshot) {
+  if (order.planSnapshot && !options.forceRegenerate) {
     return order;
   }
 
@@ -382,10 +394,13 @@ async function attachPlanSnapshot(
     createContentClusterKey(order.request);
   const customerKey = order.customerKey?.trim() || "";
 
-  let round = 1;
+  let round = Math.max(
+    1,
+    Math.floor(options.preserveRound || 1)
+  );
   let previousOrder: CreatorOrder | null = null;
 
-  if (customerKey) {
+  if (customerKey && !options.preserveRound) {
     const lastOrderKey = getCustomerLastOrderKey(
       customerKey,
       contentClusterKey
@@ -421,7 +436,7 @@ async function attachPlanSnapshot(
     );
   }
 
-  const variationBase = Math.max(
+  const variationCounter = Math.max(
     0,
     toSafeCounter(
       await client.command([
@@ -431,20 +446,21 @@ async function attachPlanSnapshot(
       1
     ) - 1
   );
+  const variationBase = Math.max(
+    variationCounter,
+    Math.max(
+      0,
+      Math.floor(options.variationStart || 0)
+    )
+  );
 
   let duplicateFingerprintsAvoided = 0;
-  let selectedSnapshot = createPlanSnapshot(
-    order.orderId,
-    order.request,
-    {
-      round,
-      variationIndex: variationBase,
-    }
-  );
+  let qualityRejectedPlans = 0;
+  let selectedSnapshot: CreatorPlanSnapshot | undefined;
 
   for (
     let attempt = 0;
-    attempt < MAX_UNIQUENESS_ATTEMPTS;
+    attempt < MAX_PLAN_GENERATION_ATTEMPTS;
     attempt += 1
   ) {
     const variationIndex = variationBase + attempt;
@@ -456,6 +472,8 @@ async function attachPlanSnapshot(
         variationIndex,
         uniquenessAttempt: attempt,
         duplicateFingerprintsAvoided,
+        qualityRejectedPlans,
+        regenerationAttempts: attempt,
       }
     );
     const duplicateCount =
@@ -463,19 +481,40 @@ async function attachPlanSnapshot(
         client,
         candidate.contentFingerprints
       );
+    const qualityPassed =
+      candidate.qualityReport?.passed === true;
 
-    selectedSnapshot = {
-      ...candidate,
-      duplicateFingerprintsAvoided:
-        duplicateFingerprintsAvoided +
-        duplicateCount,
-    };
-
-    if (duplicateCount === 0) {
-      break;
+    if (duplicateCount > 0) {
+      duplicateFingerprintsAvoided += duplicateCount;
     }
 
-    duplicateFingerprintsAvoided += duplicateCount;
+    if (!qualityPassed) {
+      qualityRejectedPlans += 1;
+    }
+
+    const auditedCandidate = {
+      ...candidate,
+      duplicateFingerprintsAvoided,
+      qualityRejectedPlans,
+      qualityReport: candidate.qualityReport
+        ? {
+            ...candidate.qualityReport,
+            regenerationAttempts: attempt,
+          }
+        : undefined,
+    };
+
+    if (duplicateCount === 0 && qualityPassed) {
+      selectedSnapshot = auditedCandidate;
+      break;
+    }
+  }
+
+  if (
+    !selectedSnapshot ||
+    !selectedSnapshot.qualityReport?.passed
+  ) {
+    throw new Error("PLAN_QUALITY_GATE_FAILED");
   }
 
   const updated: CreatorOrder = {
@@ -675,7 +714,68 @@ export async function ensureOrderPlan(
     }
 
     if (order.planSnapshot) {
-      return order;
+      const storedReport =
+        order.planSnapshot.qualityReport;
+
+      if (
+        storedReport?.version ===
+          CURRENT_PLAN_QUALITY_VERSION &&
+        storedReport.passed
+      ) {
+        return order;
+      }
+
+      const auditedReport = auditPlanQuality(
+        order.planSnapshot.plan,
+        order.request,
+        {
+          regenerationAttempts:
+            storedReport?.regenerationAttempts || 0,
+        }
+      );
+
+      if (auditedReport.passed) {
+        const auditedOrder: CreatorOrder = {
+          ...order,
+          planSnapshot: {
+            ...order.planSnapshot,
+            qualityReport: auditedReport,
+          },
+        };
+
+        await client.command([
+          "SET",
+          key,
+          JSON.stringify(auditedOrder),
+        ]);
+        await registerPlanFingerprints(
+          client,
+          auditedOrder
+        );
+
+        return auditedOrder;
+      }
+
+      const repairedOrder =
+        await attachPlanSnapshot(client, order, {
+          forceRegenerate: true,
+          preserveRound:
+            order.planSnapshot.round,
+          variationStart:
+            (order.planSnapshot.variationIndex || 0) + 1,
+        });
+
+      await client.command([
+        "SET",
+        key,
+        JSON.stringify(repairedOrder),
+      ]);
+      await registerPlanFingerprints(
+        client,
+        repairedOrder
+      );
+
+      return repairedOrder;
     }
 
     const updated = await attachPlanSnapshot(
@@ -694,3 +794,4 @@ export async function ensureOrderPlan(
     return updated;
   });
 }
+
