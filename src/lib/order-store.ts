@@ -1,5 +1,6 @@
 import "server-only";
 
+import { createHash } from "node:crypto";
 import { once } from "events";
 import { connect, type TLSSocket } from "tls";
 
@@ -7,12 +8,23 @@ import type {
   CreatorOrder,
   CreatorOrderStatus,
 } from "../types/creator-order";
-import { createPlanSnapshot } from "./plan-history";
+import {
+  createContentClusterKey,
+  createPlanSnapshot,
+} from "./plan-history";
 
 const ORDER_KEY_PREFIX = "creator-os:order:";
 const ORDER_INDEX_KEY = "creator-os:orders";
 const PLAN_FINGERPRINT_KEY_PREFIX =
   "creator-os:plan-fingerprint:";
+const CUSTOMER_ROUND_KEY_PREFIX =
+  "creator-os:customer-round:";
+const CUSTOMER_LAST_ORDER_KEY_PREFIX =
+  "creator-os:customer-last-order:";
+const CONTENT_VARIATION_KEY_PREFIX =
+  "creator-os:content-variation:";
+
+const MAX_UNIQUENESS_ATTEMPTS = 12;
 
 type RespValue =
   | string
@@ -152,7 +164,7 @@ class RedisConnection {
       this.notifyWaiters();
     });
 
-    socket.on("error", (error) => {
+    socket.on("error", (error: Error) => {
       this.socketError = error;
       this.notifyWaiters();
     });
@@ -259,6 +271,77 @@ function getPlanFingerprintKey(fingerprint: string) {
   return `${PLAN_FINGERPRINT_KEY_PREFIX}${fingerprint}`;
 }
 
+function hashIdentity(value: string) {
+  return createHash("sha256")
+    .update(value, "utf8")
+    .digest("hex");
+}
+
+function getCustomerRoundKey(
+  customerKey: string,
+  contentClusterKey: string
+) {
+  return (
+    `${CUSTOMER_ROUND_KEY_PREFIX}` +
+    `${hashIdentity(customerKey)}:${contentClusterKey}`
+  );
+}
+
+function getCustomerLastOrderKey(
+  customerKey: string,
+  contentClusterKey: string
+) {
+  return (
+    `${CUSTOMER_LAST_ORDER_KEY_PREFIX}` +
+    `${hashIdentity(customerKey)}:${contentClusterKey}`
+  );
+}
+
+function getContentVariationKey(
+  contentClusterKey: string
+) {
+  return `${CONTENT_VARIATION_KEY_PREFIX}${contentClusterKey}`;
+}
+
+function toSafeCounter(value: RespValue, fallback: number) {
+  if (
+    typeof value === "number" &&
+    Number.isFinite(value)
+  ) {
+    return Math.max(0, Math.floor(value));
+  }
+
+  if (typeof value === "string") {
+    const parsed = Number(value);
+
+    if (Number.isFinite(parsed)) {
+      return Math.max(0, Math.floor(parsed));
+    }
+  }
+
+  return fallback;
+}
+
+async function countRegisteredFingerprints(
+  client: RedisConnection,
+  fingerprints: string[]
+) {
+  let count = 0;
+
+  for (const fingerprint of fingerprints) {
+    const exists = await client.command([
+      "EXISTS",
+      getPlanFingerprintKey(fingerprint),
+    ]);
+
+    if (toSafeCounter(exists, 0) > 0) {
+      count += 1;
+    }
+  }
+
+  return count;
+}
+
 async function registerPlanFingerprints(
   client: RedisConnection,
   order: CreatorOrder
@@ -274,8 +357,12 @@ async function registerPlanFingerprints(
       JSON.stringify({
         orderId: order.orderId,
         round: snapshot.round,
+        variationIndex:
+          snapshot.variationIndex || 0,
         customerProfileKey:
           snapshot.customerProfileKey,
+        contentClusterKey:
+          snapshot.contentClusterKey || "",
         createdAt: snapshot.createdAt,
       }),
       "NX",
@@ -283,22 +370,139 @@ async function registerPlanFingerprints(
   }
 }
 
-function attachPlanSnapshot(order: CreatorOrder) {
+async function attachPlanSnapshot(
+  client: RedisConnection,
+  order: CreatorOrder
+): Promise<CreatorOrder> {
   if (order.planSnapshot) {
     return order;
   }
 
-  const round = 1;
+  const contentClusterKey =
+    createContentClusterKey(order.request);
+  const customerKey = order.customerKey?.trim() || "";
 
-  return {
-    ...order,
-    rootOrderId: order.rootOrderId || order.orderId,
-    planSnapshot: createPlanSnapshot(
+  let round = 1;
+  let previousOrder: CreatorOrder | null = null;
+
+  if (customerKey) {
+    const lastOrderKey = getCustomerLastOrderKey(
+      customerKey,
+      contentClusterKey
+    );
+    const previousOrderId = await client.command([
+      "GET",
+      lastOrderKey,
+    ]);
+
+    if (typeof previousOrderId === "string") {
+      previousOrder = parseOrder(
+        await client.command([
+          "GET",
+          getOrderKey(previousOrderId),
+        ])
+      );
+    }
+
+    round = toSafeCounter(
+      await client.command([
+        "INCR",
+        getCustomerRoundKey(
+          customerKey,
+          contentClusterKey
+        ),
+      ]),
+      1
+    );
+
+    round = Math.max(
+      round,
+      (previousOrder?.planSnapshot?.round || 0) + 1
+    );
+  }
+
+  const variationBase = Math.max(
+    0,
+    toSafeCounter(
+      await client.command([
+        "INCR",
+        getContentVariationKey(contentClusterKey),
+      ]),
+      1
+    ) - 1
+  );
+
+  let duplicateFingerprintsAvoided = 0;
+  let selectedSnapshot = createPlanSnapshot(
+    order.orderId,
+    order.request,
+    {
+      round,
+      variationIndex: variationBase,
+    }
+  );
+
+  for (
+    let attempt = 0;
+    attempt < MAX_UNIQUENESS_ATTEMPTS;
+    attempt += 1
+  ) {
+    const variationIndex = variationBase + attempt;
+    const candidate = createPlanSnapshot(
       order.orderId,
       order.request,
-      round
-    ),
+      {
+        round,
+        variationIndex,
+        uniquenessAttempt: attempt,
+        duplicateFingerprintsAvoided,
+      }
+    );
+    const duplicateCount =
+      await countRegisteredFingerprints(
+        client,
+        candidate.contentFingerprints
+      );
+
+    selectedSnapshot = {
+      ...candidate,
+      duplicateFingerprintsAvoided:
+        duplicateFingerprintsAvoided +
+        duplicateCount,
+    };
+
+    if (duplicateCount === 0) {
+      break;
+    }
+
+    duplicateFingerprintsAvoided += duplicateCount;
+  }
+
+  const updated: CreatorOrder = {
+    ...order,
+    previousOrderId:
+      previousOrder?.orderId ||
+      order.previousOrderId,
+    rootOrderId:
+      previousOrder?.rootOrderId ||
+      previousOrder?.orderId ||
+      order.rootOrderId ||
+      order.orderId,
+    planSnapshot: selectedSnapshot,
   };
+
+  if (customerKey) {
+    await client.command([
+      "SET",
+      getCustomerLastOrderKey(
+        customerKey,
+        contentClusterKey
+      ),
+      order.orderId,
+    ]);
+  }
+
+  return updated;
 }
 
 function parseOrder(value: RespValue) {
@@ -435,7 +639,10 @@ export async function updateOrderStatus(
 
     const updated =
       status === "approved"
-        ? attachPlanSnapshot(statusUpdated)
+        ? await attachPlanSnapshot(
+            client,
+            statusUpdated
+          )
         : statusUpdated;
 
     await client.command([
@@ -471,7 +678,10 @@ export async function ensureOrderPlan(
       return order;
     }
 
-    const updated = attachPlanSnapshot(order);
+    const updated = await attachPlanSnapshot(
+      client,
+      order
+    );
 
     await client.command([
       "SET",

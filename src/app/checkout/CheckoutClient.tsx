@@ -22,6 +22,9 @@ const REQUEST_STORAGE_KEY =
 const ORDER_STORAGE_KEY =
   "creator-os-paid-beta-order-v1";
 
+const CUSTOMER_KEY_STORAGE_KEY =
+  "creator-os-customer-key-v1";
+
 const LINE_PAYMENT_URL =
   "https://line.me/R/oaMessage/%40857xezqh/?" +
   encodeURIComponent("แจ้งชำระเงิน");
@@ -135,6 +138,25 @@ type CheckoutClientProps = {
   accountName: string;
   bankName: string;
 };
+
+function getOrCreateCustomerKey() {
+  const existing = window.localStorage.getItem(
+    CUSTOMER_KEY_STORAGE_KEY
+  );
+
+  if (existing && existing.length >= 20) {
+    return existing;
+  }
+
+  const nextKey = window.crypto.randomUUID();
+
+  window.localStorage.setItem(
+    CUSTOMER_KEY_STORAGE_KEY,
+    nextKey
+  );
+
+  return nextKey;
+}
 
 function createOrderId() {
   const now = new Date();
@@ -302,6 +324,7 @@ export default function CheckoutClient({
     const newOrderId = orderId || createOrderId();
     const newAccessKey =
       accessKey || window.crypto.randomUUID();
+    const customerKey = getOrCreateCustomerKey();
 
     setSavingOrder(true);
     setOrderError("");
@@ -316,6 +339,7 @@ export default function CheckoutClient({
           orderId: newOrderId,
           accessKey: newAccessKey,
           amount: packagePrice,
+          customerKey,
           request,
         }),
       });

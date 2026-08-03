@@ -40,11 +40,15 @@ export async function POST(request: Request) {
       .toUpperCase();
 
     const accessKey = String(body.accessKey || "").trim();
+    const customerKey = String(
+      body.customerKey || ""
+    ).trim();
     const amount = Number(body.amount);
 
     if (
       !ORDER_ID_PATTERN.test(orderId) ||
       accessKey.length < 20 ||
+      (customerKey && customerKey.length < 20) ||
       !Number.isFinite(amount) ||
       amount <= 0 ||
       !isPlanRequest(body.request)
@@ -63,6 +67,7 @@ export async function POST(request: Request) {
       accessKey,
       amount,
       request: body.request,
+      customerKey: customerKey || undefined,
       status: "pending",
       createdAt: new Date().toISOString(),
     };

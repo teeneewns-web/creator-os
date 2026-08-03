@@ -424,6 +424,7 @@ export default function WeeklyDashboardPage() {
     "กำลังตรวจสอบสิทธิ์การใช้งานแผน 7 วัน..."
   );
   const [statusHref, setStatusHref] = useState("/checkout");
+  const [planRound, setPlanRound] = useState(1);
 
   useEffect(() => {
     let cancelled = false;
@@ -490,6 +491,9 @@ export default function WeeklyDashboardPage() {
 
         if (!cancelled) {
           setPlan(nextPlan);
+          setPlanRound(
+            Math.max(1, data.planRound || 1)
+          );
           setState(readState(nextPlan.id));
           setHydrated(true);
           setAccessState("approved");
@@ -759,6 +763,10 @@ export default function WeeklyDashboardPage() {
 
   <span style={heroTagStyle}>
     {INTENSITY_LABELS[plan.intensity]}
+  </span>
+
+  <span style={heroTagStyle}>
+    สัปดาห์ที่ {planRound}
   </span>
 
   <span style={heroTagStyle}>7 วัน</span>

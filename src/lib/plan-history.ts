@@ -12,9 +12,16 @@ import type {
   WeeklyContentPlan,
 } from "../types/weekly-content-plan";
 
-export const CURRENT_PLAN_VERSION = 1;
+export const CURRENT_PLAN_VERSION = 2;
 export const CURRENT_PRODUCT_STANDARD =
   "ready-to-execute-v1" as const;
+
+type CreatePlanSnapshotOptions = {
+  round?: number;
+  variationIndex?: number;
+  uniquenessAttempt?: number;
+  duplicateFingerprintsAvoided?: number;
+};
 
 function normalizeText(value: string) {
   return value
@@ -22,6 +29,16 @@ function normalizeText(value: string) {
     .trim()
     .toLocaleLowerCase("th-TH")
     .replace(/\s+/g, " ");
+}
+
+function normalizeClusterText(value: string) {
+  return normalizeText(value)
+    .replace(
+      /\b(สินค้า|บริการ|ร้าน|เพจ|คอนเทนต์|ขาย|สำหรับ|กลุ่ม|ลูกค้า|ผู้ชม|ของ|และ|หรือ)\b/gu,
+      " "
+    )
+    .replace(/[^\p{L}\p{N}]+/gu, "")
+    .slice(0, 120);
 }
 
 function hashValue(value: string) {
@@ -62,13 +79,37 @@ export function createCustomerProfileKey(
   return hashValue(stableRequestPayload(request));
 }
 
+export function createContentClusterKey(
+  request: PlanRequest
+) {
+  return hashValue(
+    JSON.stringify({
+      planType: request.planType,
+      subject: normalizeClusterText(
+        request.productOrService
+      ),
+      audience: normalizeClusterText(
+        request.audience
+      ).slice(0, 80),
+      goal: request.goal,
+      platform: request.platform,
+    })
+  );
+}
+
 export function createPlanVariationKey(
   orderId: string,
   round: number,
-  customerProfileKey: string
+  customerProfileKey: string,
+  variationIndex: number
 ) {
   return hashValue(
-    `${orderId.trim().toUpperCase()}|${round}|${customerProfileKey}`
+    [
+      orderId.trim().toUpperCase(),
+      round,
+      customerProfileKey,
+      variationIndex,
+    ].join("|")
   );
 }
 
@@ -100,13 +141,20 @@ function createStoredPlan(
   orderId: string,
   request: PlanRequest,
   round: number,
+  variationIndex: number,
   createdAt: string
 ) {
-  const generated = generateWeeklyContentPlan(request);
+  const generated = generateWeeklyContentPlan(
+    request,
+    {
+      round,
+      variationIndex,
+    }
+  );
 
   return {
     ...generated,
-    id: `weekly-plan-${orderId.toLowerCase()}-r${round}`,
+    id: `weekly-plan-${orderId.toLowerCase()}-r${round}-v${variationIndex}`,
     createdAt,
   };
 }
@@ -114,21 +162,42 @@ function createStoredPlan(
 export function createPlanSnapshot(
   orderId: string,
   request: PlanRequest,
-  round = 1
+  options: CreatePlanSnapshotOptions = {}
 ): CreatorPlanSnapshot {
-  const safeRound = Math.max(1, Math.floor(round));
+  const safeRound = Math.max(
+    1,
+    Math.floor(options.round || 1)
+  );
+  const variationIndex = Math.max(
+    0,
+    Math.floor(options.variationIndex || 0)
+  );
+  const uniquenessAttempt = Math.max(
+    0,
+    Math.floor(options.uniquenessAttempt || 0)
+  );
+  const duplicateFingerprintsAvoided = Math.max(
+    0,
+    Math.floor(
+      options.duplicateFingerprintsAvoided || 0
+    )
+  );
   const createdAt = new Date().toISOString();
   const customerProfileKey =
     createCustomerProfileKey(request);
+  const contentClusterKey =
+    createContentClusterKey(request);
   const variationKey = createPlanVariationKey(
     orderId,
     safeRound,
-    customerProfileKey
+    customerProfileKey,
+    variationIndex
   );
   const plan = createStoredPlan(
     orderId,
     request,
     safeRound,
+    variationIndex,
     createdAt
   );
 
@@ -138,7 +207,11 @@ export function createPlanSnapshot(
     version: CURRENT_PLAN_VERSION,
     productStandard: CURRENT_PRODUCT_STANDARD,
     customerProfileKey,
+    contentClusterKey,
     variationKey,
+    variationIndex,
+    uniquenessAttempt,
+    duplicateFingerprintsAvoided,
     contentFingerprints:
       createContentFingerprints(plan),
     createdAt,

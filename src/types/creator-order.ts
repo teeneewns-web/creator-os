@@ -14,7 +14,11 @@ export type CreatorPlanSnapshot = {
   version: number;
   productStandard: CreatorPlanProductStandard;
   customerProfileKey: string;
+  contentClusterKey?: string;
   variationKey: string;
+  variationIndex?: number;
+  uniquenessAttempt?: number;
+  duplicateFingerprintsAvoided?: number;
   contentFingerprints: string[];
   createdAt: string;
 };
@@ -25,6 +29,7 @@ export type CreatorOrder = {
   status: CreatorOrderStatus;
   amount: number;
   request: PlanRequest;
+  customerKey?: string;
   createdAt: string;
   approvedAt?: string;
 

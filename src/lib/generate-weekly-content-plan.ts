@@ -61,6 +61,21 @@ type StageContent = Pick<
   | "metrics"
 >;
 
+export type WeeklyPlanGenerationOptions = {
+  round?: number;
+  variationIndex?: number;
+};
+
+type ContentAngle = {
+  id: string;
+  titlePrefix: string;
+  hookPrefix: string;
+  scriptLead: string;
+  captionHeading: string;
+  shotDirection: string;
+  onScreenText: string;
+};
+
 const GOAL_LABELS: Record<ContentGoal, string> = {
   sell: "ขายสินค้า",
   grow: "เพิ่มผู้ติดตาม",
@@ -136,60 +151,166 @@ function getPlanDefaults(
   };
 }
 
-const STAGE_SEQUENCES: Record<
+const STAGE_SEQUENCE_VARIANTS: Record<
   ContentGoal,
-  CampaignStage[]
+  CampaignStage[][]
 > = {
   sell: [
-    "problem",
-    "demo",
-    "value",
-    "objection",
-    "trust",
-    "story",
-    "action",
+    ["problem", "demo", "value", "objection", "trust", "story", "action"],
+    ["problem", "comparison", "demo", "trust", "objection", "value", "action"],
+    ["story", "problem", "value", "demo", "behind-scenes", "objection", "action"],
+    ["problem", "value", "community", "demo", "trust", "comparison", "action"],
   ],
-
   grow: [
-    "problem",
-    "value",
-    "community",
-    "story",
-    "trust",
-    "comparison",
-    "action",
+    ["problem", "value", "community", "story", "trust", "comparison", "action"],
+    ["story", "value", "problem", "community", "behind-scenes", "trust", "action"],
+    ["comparison", "problem", "value", "story", "community", "trust", "action"],
+    ["problem", "behind-scenes", "value", "community", "story", "comparison", "action"],
   ],
-
   engagement: [
-    "problem",
-    "community",
-    "value",
-    "comparison",
-    "story",
-    "community",
-    "action",
+    ["problem", "community", "value", "comparison", "story", "community", "action"],
+    ["community", "problem", "story", "value", "comparison", "trust", "action"],
+    ["story", "community", "problem", "comparison", "value", "community", "action"],
+    ["problem", "comparison", "community", "story", "value", "trust", "action"],
   ],
-
   trust: [
-    "problem",
-    "value",
-    "behind-scenes",
-    "objection",
-    "trust",
-    "story",
-    "action",
+    ["problem", "value", "behind-scenes", "objection", "trust", "story", "action"],
+    ["behind-scenes", "problem", "value", "comparison", "objection", "trust", "action"],
+    ["story", "problem", "behind-scenes", "value", "trust", "objection", "action"],
+    ["problem", "comparison", "value", "behind-scenes", "story", "trust", "action"],
   ],
-
   promote: [
-    "problem",
-    "value",
-    "demo",
-    "objection",
-    "trust",
-    "community",
-    "action",
+    ["problem", "value", "demo", "objection", "trust", "community", "action"],
+    ["story", "problem", "demo", "value", "comparison", "trust", "action"],
+    ["problem", "behind-scenes", "value", "demo", "objection", "community", "action"],
+    ["comparison", "problem", "value", "trust", "demo", "community", "action"],
   ],
 };
+
+const CONTENT_ANGLES: ContentAngle[] = [
+  {
+    id: "checklist",
+    titlePrefix: "เช็กลิสต์",
+    hookPrefix: "เช็กเรื่องนี้ให้ครบก่อน:",
+    scriptLead: "รอบนี้เราจะไล่ดูแบบเช็กลิสต์สั้น ๆ เพื่อให้ทำตามได้ทันที",
+    captionHeading: "เช็กลิสต์ที่ควรดูให้ครบ",
+    shotDirection: "เปิดด้วยภาพเช็กลิสต์หรือเลขลำดับที่อ่านจบได้ในหนึ่งวินาที",
+    onScreenText: "เช็กทีละข้อ",
+  },
+  {
+    id: "mistake",
+    titlePrefix: "จุดที่มักพลาด",
+    hookPrefix: "จุดที่หลายคนมักพลาดคือ:",
+    scriptLead: "เริ่มจากข้อผิดพลาดที่เกิดขึ้นบ่อย แล้วค่อยอธิบายวิธีทำที่ชัดกว่า",
+    captionHeading: "อย่าข้ามจุดนี้",
+    shotDirection: "เปิดด้วยภาพหรือข้อความแสดงข้อผิดพลาดที่คนดูจำได้ทันที",
+    onScreenText: "อย่าพลาดข้อนี้",
+  },
+  {
+    id: "question",
+    titlePrefix: "คำถามก่อนเริ่ม",
+    hookPrefix: "ลองตอบคำถามนี้ก่อน:",
+    scriptLead: "ใช้คำถามนำเพื่อให้ผู้ชมเปรียบเทียบกับสถานการณ์ของตัวเอง",
+    captionHeading: "คำถามที่ช่วยตัดสินใจ",
+    shotDirection: "เปิดด้วยคำถามตัวใหญ่หนึ่งประโยค แล้วเว้นจังหวะให้คนดูคิด",
+    onScreenText: "คุณตอบข้อนี้ได้ไหม",
+  },
+  {
+    id: "scenario",
+    titlePrefix: "สถานการณ์จริง",
+    hookPrefix: "ลองนึกภาพว่าสถานการณ์นี้เกิดกับคุณ:",
+    scriptLead: "เล่าจากสถานการณ์ที่กลุ่มเป้าหมายพบได้จริง แล้วพาไปสู่ขั้นตอนแก้ไข",
+    captionHeading: "เมื่อเจอสถานการณ์นี้",
+    shotDirection: "เปิดด้วยภาพจำลองสถานการณ์จริงก่อนแสดงคำอธิบาย",
+    onScreenText: "ถ้าเจอแบบนี้",
+  },
+  {
+    id: "compare",
+    titlePrefix: "เปรียบเทียบก่อนเลือก",
+    hookPrefix: "ก่อนเลือก ลองเทียบจากเกณฑ์นี้:",
+    scriptLead: "อธิบายความต่างด้วยเกณฑ์ที่ตรวจสอบได้ โดยไม่โจมตีหรือกล่าวอ้างเกินจริง",
+    captionHeading: "เทียบให้ชัดก่อนเลือก",
+    shotDirection: "เปิดด้วยภาพแบ่งซ้ายและขวา หรือหัวข้อเปรียบเทียบสองด้าน",
+    onScreenText: "ต่างกันตรงไหน",
+  },
+  {
+    id: "quick-win",
+    titlePrefix: "ทำได้ทันที",
+    hookPrefix: "ใช้เวลาไม่นาน ลองทำข้อนี้ก่อน:",
+    scriptLead: "ให้ผู้ชมได้ขั้นตอนเล็ก ๆ ที่นำไปใช้ได้ทันที ก่อนอธิบายรายละเอียดเพิ่ม",
+    captionHeading: "เริ่มจากขั้นตอนสั้น ๆ",
+    shotDirection: "เปิดด้วยผลลัพธ์หรือขั้นตอนแรกที่ทำตามได้ทันที",
+    onScreenText: "เริ่มได้เลย",
+  },
+  {
+    id: "faq",
+    titlePrefix: "คำถามที่พบบ่อย",
+    hookPrefix: "คำถามที่ควรถามก่อนคือ:",
+    scriptLead: "ตอบคำถามแบบตรงประเด็น ใช้ภาษาง่าย และแยกสิ่งที่รู้จริงออกจากสิ่งที่ต้องตรวจเพิ่ม",
+    captionHeading: "ตอบคำถามแบบตรงไปตรงมา",
+    shotDirection: "เปิดด้วยกล่องคำถามหรือข้อความคำถามหนึ่งประโยค",
+    onScreenText: "คำถามที่คนถามบ่อย",
+  },
+  {
+    id: "behind-scenes",
+    titlePrefix: "เบื้องหลัง",
+    hookPrefix: "เบื้องหลังที่หลายคนไม่ทันสังเกตคือ:",
+    scriptLead: "พาไปดูขั้นตอนหรือเหตุผลเบื้องหลัง เพื่อเพิ่มความเข้าใจและความน่าเชื่อถือ",
+    captionHeading: "เบื้องหลังที่ควรรู้",
+    shotDirection: "เปิดด้วยภาพขั้นตอนจริง อุปกรณ์ หรือหน้าจอการทำงาน",
+    onScreenText: "เบื้องหลังจริง",
+  },
+  {
+    id: "myth-fact",
+    titlePrefix: "แยกความเข้าใจผิด",
+    hookPrefix: "ความเข้าใจผิดที่ควรแยกให้ชัด:",
+    scriptLead: "เริ่มจากสิ่งที่คนมักเข้าใจผิด แล้วอธิบายข้อเท็จจริงเท่าที่ข้อมูลรองรับ",
+    captionHeading: "เข้าใจให้ถูกก่อนทำ",
+    shotDirection: "เปิดด้วยข้อความ “เข้าใจผิด / ข้อเท็จจริง” สองบรรทัด",
+    onScreenText: "จริงหรือเข้าใจผิด",
+  },
+  {
+    id: "step-by-step",
+    titlePrefix: "ทำทีละขั้น",
+    hookPrefix: "ทำตามทีละขั้นจากจุดนี้:",
+    scriptLead: "แบ่งเรื่องยากให้เหลือขั้นตอนสั้น ๆ และบอกลำดับที่ควรทำก่อนหลัง",
+    captionHeading: "ขั้นตอนพร้อมทำตาม",
+    shotDirection: "เปิดด้วยเลข 1 แล้วค่อยเปลี่ยนภาพตามแต่ละขั้น",
+    onScreenText: "ทำตามทีละขั้น",
+  },
+  {
+    id: "evidence",
+    titlePrefix: "ตรวจจากข้อมูลจริง",
+    hookPrefix: "อย่าเพิ่งเชื่อคำโฆษณา ให้ตรวจจากสิ่งนี้:",
+    scriptLead: "ชี้ให้ผู้ชมตรวจรายละเอียด ขั้นตอน หรือหลักฐานที่มีจริงก่อนตัดสินใจ",
+    captionHeading: "ตรวจข้อมูลก่อนเชื่อ",
+    shotDirection: "เปิดด้วยภาพรายละเอียดจริง ฉลาก ขั้นตอน หรือข้อมูลที่ตรวจสอบได้",
+    onScreenText: "ดูข้อมูลจริง",
+  },
+  {
+    id: "audience-specific",
+    titlePrefix: "สำหรับกลุ่มนี้โดยเฉพาะ",
+    hookPrefix: "เนื้อหานี้เหมาะกับคนที่กำลังเจอเรื่องนี้:",
+    scriptLead: "ระบุกลุ่มผู้ชมให้ชัด แล้วอธิบายเฉพาะสิ่งที่เกี่ยวข้องกับสถานการณ์ของกลุ่มนั้น",
+    captionHeading: "เหมาะกับใคร",
+    shotDirection: "เปิดด้วยข้อความระบุกลุ่มผู้ชมที่ชัดเจนหนึ่งบรรทัด",
+    onScreenText: "เหมาะกับคุณไหม",
+  },
+];
+
+const VARIANT_FOLLOW_UP_PROMPTS = [
+  "หลังดูจบ ให้เลือกหนึ่งข้อที่ตรงกับสถานการณ์จริงของคุณมากที่สุด",
+  "ก่อนทำต่อ ให้จดหนึ่งคำถามที่ยังต้องตรวจข้อมูลเพิ่ม",
+  "ลองนำขั้นตอนนี้ไปเทียบกับสิ่งที่คุณกำลังทำอยู่ แล้วเลือกจุดที่ควรปรับก่อน",
+  "บันทึกผลที่เกิดขึ้นจริงหนึ่งอย่าง เพื่อใช้ตัดสินใจในขั้นตอนถัดไป",
+  "อย่าพยายามทำทุกข้อพร้อมกัน เลือกหนึ่งข้อที่สำคัญที่สุดในวันนี้",
+  "ลองอธิบายเรื่องนี้ด้วยภาษาของตัวเองหนึ่งประโยค เพื่อเช็กว่าเข้าใจตรงกัน",
+  "เก็บคำถามจากผู้ชมหรือลูกค้าไว้ เพราะคำถามนั้นใช้เป็นหัวข้อคอนเทนต์ถัดไปได้",
+  "เปรียบเทียบก่อนและหลังลงมือทำจากตัวเลขหรือเหตุการณ์ที่สังเกตได้จริง",
+  "เลือกหลักฐานหรือรายละเอียดที่ตรวจสอบได้หนึ่งชิ้นมาใช้ประกอบการตัดสินใจ",
+  "หลังโพสต์ ให้ดูว่าคนหยุดอ่าน ดูต่อ หรือถามเรื่องใดมากที่สุด",
+  "นำข้อที่ทำได้ง่ายที่สุดไปเริ่มก่อน แล้วค่อยเพิ่มความยากเมื่อมีผลจริง",
+];
 
 const FACEBOOK_TIMES = [
   "18:30–20:00 น. (เวลาเริ่มต้นทดลอง)",
@@ -1972,10 +2093,149 @@ function adaptFallbackToPlanType(
   };
 }
 
+function positiveModulo(value: number, divisor: number) {
+  return ((value % divisor) + divisor) % divisor;
+}
+
+function resolveGenerationNumber(value: number | undefined, fallback: number) {
+  if (!Number.isFinite(value)) {
+    return fallback;
+  }
+
+  return Math.max(0, Math.floor(value as number));
+}
+
+function getContentAngle(
+  dayNumber: number,
+  round: number,
+  variationIndex: number
+) {
+  const index = positiveModulo(
+    variationIndex * 5 + round * 3 + dayNumber * 7,
+    CONTENT_ANGLES.length
+  );
+
+  return CONTENT_ANGLES[index];
+}
+
+function getVariantCta(
+  request: ResolvedRequest,
+  originalCta: string,
+  round: number,
+  variationIndex: number,
+  dayNumber: number
+) {
+  const goalOptions: Record<ContentGoal, string[]> = {
+    sell: [
+      "ตรวจรายละเอียดให้ครบ แล้วส่งข้อความถามเฉพาะจุดที่ยังไม่แน่ใจ",
+      "บันทึกโพสต์นี้ไว้ เปรียบเทียบกับความต้องการของคุณ แล้วค่อยตัดสินใจ",
+      "พิมพ์คำว่า “รายละเอียด” หากต้องการดูข้อมูลที่จำเป็นก่อนตัดสินใจ",
+      "เปิดดูเงื่อนไข ราคา และวิธีสั่งซื้อให้ครบก่อนดำเนินการ",
+    ],
+    grow: [
+      "ติดตามไว้เพื่อรับหัวข้อถัดไปที่ต่อยอดจากเรื่องนี้",
+      "บันทึกโพสต์นี้ไว้ แล้วติดตามเพื่อทำตามแผนตอนต่อไป",
+      "ส่งหัวข้อนี้ให้คนที่กำลังเริ่ม และติดตามไว้ดูตัวอย่างเพิ่ม",
+      "ติดตามเพจไว้ แล้วเลือกหนึ่งขั้นตอนไปลองทำวันนี้",
+    ],
+    engagement: [
+      "พิมพ์คำตอบของคุณไว้หนึ่งข้อ เพื่อให้เรานำไปต่อยอดเป็นโพสต์ถัดไป",
+      "เล่าประสบการณ์สั้น ๆ ว่าคุณเคยเจอกรณีไหน",
+      "เลือกข้อที่ตรงกับคุณที่สุด แล้วพิมพ์หมายเลขไว้ใต้โพสต์",
+      "ส่งคำถามที่ยังสงสัยไว้ แล้วนำคำถามที่พบบ่อยไปทำเนื้อหาต่อ",
+    ],
+    trust: [
+      "บันทึกโพสต์นี้ไว้ แล้วตรวจข้อมูลตามรายการก่อนตัดสินใจ",
+      "ส่งข้อความถามได้เฉพาะจุดที่ต้องการข้อมูลเพิ่ม",
+      "ลองใช้เกณฑ์นี้ตรวจด้วยตัวเอง แล้วค่อยเลือกทางที่เหมาะกับคุณ",
+      "ติดตามไว้เพื่อดูขั้นตอนและตัวอย่างจริงในโพสต์ถัดไป",
+    ],
+    promote: [
+      "ดูรายละเอียดให้ครบ แล้วส่งข้อความสอบถามเวลาหรือเงื่อนไขที่เหมาะกับคุณ",
+      "บันทึกโพสต์นี้ไว้ แล้วติดต่อเมื่อพร้อมดำเนินการ",
+      "พิมพ์คำว่า “สนใจ” เพื่อขอรายละเอียดที่จำเป็น",
+      "เปิดดูช่องทางติดต่อและเงื่อนไขก่อนจองหรือสอบถาม",
+    ],
+  };
+
+  const options = goalOptions[request.goal];
+  const index = positiveModulo(
+    variationIndex + round + dayNumber,
+    options.length + 1
+  );
+
+  return index === options.length ? originalCta : options[index];
+}
+
+function getVariantFollowUpPrompt(
+  dayNumber: number,
+  round: number,
+  variationIndex: number
+) {
+  const variationGroup = Math.floor(
+    variationIndex / CONTENT_ANGLES.length
+  );
+  const index = positiveModulo(
+    variationGroup * 3 + round + dayNumber * 5,
+    VARIANT_FOLLOW_UP_PROMPTS.length
+  );
+
+  return VARIANT_FOLLOW_UP_PROMPTS[index];
+}
+
+function applyContentAngle(
+  content: StageContent,
+  request: ResolvedRequest,
+  dayNumber: number,
+  round: number,
+  variationIndex: number
+): StageContent {
+  const angle = getContentAngle(
+    dayNumber,
+    round,
+    variationIndex
+  );
+  const followUpPrompt = getVariantFollowUpPrompt(
+    dayNumber,
+    round,
+    variationIndex
+  );
+
+  return {
+    ...content,
+    title: `${angle.titlePrefix}: ${content.title}`,
+    topic: `${angle.titlePrefix} — ${content.topic}`,
+    hook: `${angle.hookPrefix} ${content.hook}`,
+    script:
+      `${angle.scriptLead}\n\n${content.script}` +
+      `\n\n${followUpPrompt}`,
+    shotList: [
+      angle.shotDirection,
+      ...content.shotList,
+    ],
+    onScreenTexts: [
+      angle.onScreenText,
+      ...content.onScreenTexts,
+    ].slice(0, 6),
+    caption:
+      `${angle.captionHeading}\n\n${content.caption}` +
+      `\n\nสิ่งที่ควรทำต่อ: ${followUpPrompt}`,
+    cta: getVariantCta(
+      request,
+      content.cta,
+      round,
+      variationIndex,
+      dayNumber
+    ),
+  };
+}
+
 function createDay(
   dayNumber: number,
   stage: CampaignStage,
-  request: ResolvedRequest
+  request: ResolvedRequest,
+  round: number,
+  variationIndex: number
 ): WeeklyContentDay {
   const dayIndex = dayNumber - 1;
 
@@ -1989,13 +2249,21 @@ function createDay(
       ? createCreatorStageContent(stage, request)
       : createStageContent(stage, request);
 
-  const content =
+  const planTypeContent =
     request.planType === "service"
       ? adaptStageContentToPlanType(
           rawContent,
           request
         )
       : rawContent;
+
+  const content = applyContentAngle(
+    planTypeContent,
+    request,
+    dayNumber,
+    round,
+    variationIndex
+  );
 
   return {
     day: dayNumber,
@@ -2039,12 +2307,25 @@ function createDay(
 }
 
 export function generateWeeklyContentPlan(
-  request: PlanRequest
+  request: PlanRequest,
+  options: WeeklyPlanGenerationOptions = {}
 ): WeeklyContentPlan {
   const resolved = resolveRequest(request);
-
-  const stages =
-    STAGE_SEQUENCES[resolved.goal];
+  const round = Math.max(
+    1,
+    resolveGenerationNumber(options.round, 1)
+  );
+  const variationIndex = resolveGenerationNumber(
+    options.variationIndex,
+    0
+  );
+  const sequenceOptions =
+    STAGE_SEQUENCE_VARIANTS[resolved.goal];
+  const sequenceIndex = positiveModulo(
+    variationIndex + round - 1,
+    sequenceOptions.length
+  );
+  const stages = sequenceOptions[sequenceIndex];
 
   const timestamp =
     new Date(resolved.createdAt).getTime();
@@ -2100,7 +2381,13 @@ export function generateWeeklyContentPlan(
       resolved.createdAt,
 
     days: stages.map((stage, index) =>
-      createDay(index + 1, stage, resolved)
+      createDay(
+        index + 1,
+        stage,
+        resolved,
+        round,
+        variationIndex
+      )
     ),
   };
 }

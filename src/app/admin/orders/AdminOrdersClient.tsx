@@ -11,6 +11,9 @@ type AdminOrder = {
   amount: number;
   createdAt: string;
   approvedAt: string | null;
+  planRound: number | null;
+  variationIndex: number | null;
+  duplicateFingerprintsAvoided: number;
   request: PlanRequest;
 };
 
@@ -259,7 +262,28 @@ export default function AdminOrdersClient() {
                   <p>
                     <strong>เป้าหมาย:</strong> {order.request.goal}
                   </p>
+                  <p>
+                    <strong>รอบแผน:</strong>{" "}
+                    {order.planRound
+                      ? `สัปดาห์ที่ ${order.planRound}`
+                      : "จะกำหนดเมื่ออนุมัติ"}
+                  </p>
+                  <p>
+                    <strong>ชุดความแตกต่าง:</strong>{" "}
+                    {order.variationIndex !== null
+                      ? order.variationIndex + 1
+                      : "จะกำหนดเมื่ออนุมัติ"}
+                  </p>
                 </div>
+
+                {order.status === "approved" && (
+                  <p className="mt-3 text-xs leading-6 text-emerald-200/80">
+                    ระบบตรวจลายนิ้วมือเนื้อหาแล้ว
+                    {order.duplicateFingerprintsAvoided > 0
+                      ? ` และหลีกเลี่ยงรายการซ้ำ ${order.duplicateFingerprintsAvoided} จุด`
+                      : " และไม่พบเนื้อหาซ้ำแบบตรงกัน"}
+                  </p>
+                )}
 
                 <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                   {order.status === "pending" && (

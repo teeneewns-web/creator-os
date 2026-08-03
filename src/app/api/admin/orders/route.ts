@@ -25,6 +25,12 @@ export async function GET(request: Request) {
         amount: order.amount,
         createdAt: order.createdAt,
         approvedAt: order.approvedAt || null,
+        planRound: order.planSnapshot?.round || null,
+        variationIndex:
+          order.planSnapshot?.variationIndex ?? null,
+        duplicateFingerprintsAvoided:
+          order.planSnapshot
+            ?.duplicateFingerprintsAvoided || 0,
         request: order.request,
       })),
     });
