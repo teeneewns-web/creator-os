@@ -19,10 +19,18 @@ import type {
 import { generateWeeklyContentPlan } from "../../../lib/generate-weekly-content-plan";
 import type { PlanRequest, PlanType } from "../../../types/plan-request";
 
+type FacebookMission = {
+  id: string;
+  title: string;
+  completed: number;
+  target: number;
+};
+
 type WeeklyPageState = {
   selectedDay: number;
   statuses: Record<string, ContentTaskStatus>;
   notes: Record<string, string>;
+  facebookMissions: FacebookMission[];
 };
 
 type PlanAccessState =
@@ -41,6 +49,27 @@ type OrderStatusResponse = {
 
 const REQUEST_STORAGE_KEY = "creator-os-plan-request-v1";
 const STATE_STORAGE_PREFIX = "creator-os-weekly-plan-state";
+
+const FACEBOOK_MISSION_EXAMPLES: FacebookMission[] = [
+  {
+    id: "facebook-reels",
+    title: "สร้าง Reels",
+    completed: 0,
+    target: 5,
+  },
+  {
+    id: "facebook-public-posts",
+    title: "สร้างโพสต์สาธารณะ",
+    completed: 0,
+    target: 10,
+  },
+  {
+    id: "facebook-stories",
+    title: "สร้าง Story",
+    completed: 0,
+    target: 5,
+  },
+];
 
 const PLATFORM_LABELS: Record<ContentPlatform, string> = {
   facebook: "Facebook",
@@ -200,6 +229,7 @@ function getInitialState(): WeeklyPageState {
     selectedDay: 1,
     statuses: {},
     notes: {},
+    facebookMissions: [],
   };
 }
 
@@ -235,6 +265,28 @@ function writeState(
     JSON.stringify(state)
   );
 } 
+
+function createFacebookMission(): FacebookMission {
+  return {
+    id: `facebook-mission-${Date.now()}-${Math.random()
+      .toString(36)
+      .slice(2, 8)}`,
+    title: "",
+    completed: 0,
+    target: 1,
+  };
+}
+
+function normalizeMissionNumber(
+  value: number,
+  minimum: number
+) {
+  if (!Number.isFinite(value)) {
+    return minimum;
+  }
+
+  return Math.max(minimum, Math.floor(value));
+}
 
 function getStatusLabel(status: ContentTaskStatus) {
   return (
@@ -498,6 +550,42 @@ export default function WeeklyDashboardPage() {
   const selectedNote =
     state.notes[String(selectedDay.day)] || "";
 
+  const showFacebookMissions =
+    plan.platform === "facebook" ||
+    plan.platform === "facebook-and-tiktok";
+
+  const activeFacebookMissions =
+    state.facebookMissions.filter(
+      (mission) =>
+        mission.title.trim() && mission.target > 0
+    );
+
+  const facebookMissionProgress = useMemo(() => {
+    const totalTarget = activeFacebookMissions.reduce(
+      (sum, mission) => sum + mission.target,
+      0
+    );
+
+    if (totalTarget === 0) {
+      return 0;
+    }
+
+    const totalCompleted = activeFacebookMissions.reduce(
+      (sum, mission) =>
+        sum + Math.min(mission.completed, mission.target),
+      0
+    );
+
+    return Math.round(
+      (totalCompleted / totalTarget) * 100
+    );
+  }, [activeFacebookMissions]);
+
+  const remainingPlanDays = Math.max(
+    1,
+    8 - selectedDay.day
+  );
+
   function updateState(nextState: Partial<WeeklyPageState>) {
     setState((current) => ({
       ...current,
@@ -524,6 +612,78 @@ export default function WeeklyDashboardPage() {
         [String(day)]: note,
       },
     });
+  }
+
+  function addFacebookMission() {
+    setState((current) => ({
+      ...current,
+      facebookMissions: [
+        ...current.facebookMissions,
+        createFacebookMission(),
+      ],
+    }));
+  }
+
+  function loadFacebookMissionExamples() {
+    const confirmed =
+      state.facebookMissions.length === 0 ||
+      window.confirm(
+        "ต้องการแทนที่ภารกิจเดิมด้วยตัวอย่างภารกิจ Facebook หรือไม่?"
+      );
+
+    if (!confirmed) return;
+
+    setState((current) => ({
+      ...current,
+      facebookMissions: FACEBOOK_MISSION_EXAMPLES.map(
+        (mission) => ({ ...mission })
+      ),
+    }));
+  }
+
+  function updateFacebookMission(
+    missionId: string,
+    patch: Partial<FacebookMission>
+  ) {
+    setState((current) => ({
+      ...current,
+      facebookMissions: current.facebookMissions.map(
+        (mission) => {
+          if (mission.id !== missionId) {
+            return mission;
+          }
+
+          const target = normalizeMissionNumber(
+            patch.target ?? mission.target,
+            1
+          );
+
+          const completed = Math.min(
+            target,
+            normalizeMissionNumber(
+              patch.completed ?? mission.completed,
+              0
+            )
+          );
+
+          return {
+            ...mission,
+            ...patch,
+            target,
+            completed,
+          };
+        }
+      ),
+    }));
+  }
+
+  function removeFacebookMission(missionId: string) {
+    setState((current) => ({
+      ...current,
+      facebookMissions: current.facebookMissions.filter(
+        (mission) => mission.id !== missionId
+      ),
+    }));
   }
 
   function resetWeek() {
@@ -752,6 +912,186 @@ export default function WeeklyDashboardPage() {
           </p>
         </article>
 
+        {showFacebookMissions ? (
+          <section style={facebookMissionSectionStyle}>
+            <div style={sectionHeadingRowStyle}>
+              <div>
+                <p style={facebookMissionEyebrowStyle}>
+                  Facebook Professional Dashboard
+                </p>
+                <h2 style={facebookMissionTitleStyle}>
+                  ภารกิจ Facebook ของคุณ
+                </h2>
+                <p style={facebookMissionHelpStyle}>
+                  เปิดหน้าภารกิจใน Facebook แล้วกรอกชื่อภารกิจ
+                  จำนวนที่ทำแล้ว และเป้าหมายตามที่บัญชีของคุณแสดงจริง
+                  ระบบจะคำนวณว่าวันนี้ควรทำเพิ่มเท่าไร
+                </p>
+              </div>
+
+              <div style={facebookMissionButtonRowStyle}>
+                <button
+                  type="button"
+                  onClick={loadFacebookMissionExamples}
+                  style={facebookMissionSecondaryButtonStyle}
+                >
+                  ใส่ตัวอย่าง
+                </button>
+                <button
+                  type="button"
+                  onClick={addFacebookMission}
+                  style={facebookMissionPrimaryButtonStyle}
+                >
+                  + เพิ่มภารกิจ
+                </button>
+              </div>
+            </div>
+
+            {state.facebookMissions.length > 0 ? (
+              <>
+                <div style={facebookMissionOverallStyle}>
+                  <div>
+                    <p style={facebookMissionOverallLabelStyle}>
+                      ความคืบหน้าภารกิจรวม
+                    </p>
+                    <strong style={facebookMissionOverallNumberStyle}>
+                      {facebookMissionProgress}%
+                    </strong>
+                  </div>
+
+                  <div style={facebookMissionOverallProgressStyle}>
+                    <div
+                      style={{
+                        ...facebookMissionOverallProgressInnerStyle,
+                        width: `${facebookMissionProgress}%`,
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div style={facebookMissionListStyle}>
+                  {state.facebookMissions.map((mission) => {
+                    const remaining = Math.max(
+                      0,
+                      mission.target - mission.completed
+                    );
+                    const missionProgress =
+                      mission.target > 0
+                        ? Math.round(
+                            (Math.min(
+                              mission.completed,
+                              mission.target
+                            ) /
+                              mission.target) *
+                              100
+                          )
+                        : 0;
+                    const suggestedToday = Math.min(
+                      remaining,
+                      Math.ceil(
+                        remaining / remainingPlanDays
+                      )
+                    );
+
+                    return (
+                      <article
+                        key={mission.id}
+                        style={facebookMissionCardStyle}
+                      >
+                        <input
+                          value={mission.title}
+                          onChange={(event) =>
+                            updateFacebookMission(
+                              mission.id,
+                              { title: event.target.value }
+                            )
+                          }
+                          placeholder="เช่น สร้าง Reels"
+                          style={facebookMissionTitleInputStyle}
+                        />
+
+                        <div style={facebookMissionNumberGridStyle}>
+                          <label style={facebookMissionFieldStyle}>
+                            <span>ทำแล้ว</span>
+                            <input
+                              type="number"
+                              min={0}
+                              max={mission.target}
+                              value={mission.completed}
+                              onChange={(event) =>
+                                updateFacebookMission(
+                                  mission.id,
+                                  {
+                                    completed: Number(
+                                      event.target.value
+                                    ),
+                                  }
+                                )
+                              }
+                              style={facebookMissionNumberInputStyle}
+                            />
+                          </label>
+
+                          <label style={facebookMissionFieldStyle}>
+                            <span>เป้าหมาย</span>
+                            <input
+                              type="number"
+                              min={1}
+                              value={mission.target}
+                              onChange={(event) =>
+                                updateFacebookMission(
+                                  mission.id,
+                                  {
+                                    target: Number(
+                                      event.target.value
+                                    ),
+                                  }
+                                )
+                              }
+                              style={facebookMissionNumberInputStyle}
+                            />
+                          </label>
+                        </div>
+
+                        <div style={facebookMissionProgressTrackStyle}>
+                          <div
+                            style={{
+                              ...facebookMissionProgressFillStyle,
+                              width: `${missionProgress}%`,
+                            }}
+                          />
+                        </div>
+
+                        <p style={facebookMissionAdviceStyle}>
+                          {remaining === 0
+                            ? "ภารกิจนี้ครบแล้ว ✅"
+                            : `เหลือ ${remaining} · วันนี้ควรทำประมาณ ${suggestedToday}`}
+                        </p>
+
+                        <button
+                          type="button"
+                          onClick={() =>
+                            removeFacebookMission(mission.id)
+                          }
+                          style={facebookMissionRemoveButtonStyle}
+                        >
+                          ลบภารกิจ
+                        </button>
+                      </article>
+                    );
+                  })}
+                </div>
+              </>
+            ) : (
+              <div style={facebookMissionEmptyStyle}>
+                ยังไม่ได้กรอกภารกิจ กด “เพิ่มภารกิจ”
+                แล้วใส่ข้อมูลจาก Facebook Professional Dashboard
+                หรือกด “ใส่ตัวอย่าง” เพื่อเริ่มต้น
+              </div>
+            )}
+          </section>
+        ) : null}
+
         <article style={highlightCardStyle}>
           <p style={infoLabelStyle}>{planCopy.highlights}</p>
 
@@ -855,6 +1195,48 @@ export default function WeeklyDashboardPage() {
             </strong>
           </div>
         </div>
+
+        {showFacebookMissions &&
+        activeFacebookMissions.length > 0 ? (
+          <article style={facebookTodayCardStyle}>
+            <p style={facebookTodayEyebrowStyle}>
+              ภารกิจ Facebook สำหรับวันที่ {selectedDay.day}
+            </p>
+            <h3 style={facebookTodayTitleStyle}>
+              ทำภารกิจเหล่านี้ร่วมกับคอนเทนต์วันนี้
+            </h3>
+
+            <div style={facebookTodayGridStyle}>
+              {activeFacebookMissions.map((mission) => {
+                const remaining = Math.max(
+                  0,
+                  mission.target - mission.completed
+                );
+
+                const suggestedToday = Math.min(
+                  remaining,
+                  Math.ceil(
+                    remaining / remainingPlanDays
+                  )
+                );
+
+                return (
+                  <div
+                    key={mission.id}
+                    style={facebookTodayItemStyle}
+                  >
+                    <strong>{mission.title}</strong>
+                    <span>
+                      {remaining === 0
+                        ? "ครบแล้ว"
+                        : `ทำเพิ่มประมาณ ${suggestedToday} · เหลือ ${remaining}`}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </article>
+        ) : null}
 
         <div style={statusControlStyle}>
           <label
@@ -1192,6 +1574,228 @@ export default function WeeklyDashboardPage() {
     </main>
   );
 }
+
+const facebookMissionSectionStyle: CSSProperties = {
+  marginTop: "20px",
+  padding: "24px",
+  border: "1px solid #bfdbfe",
+  borderRadius: "24px",
+  background:
+    "linear-gradient(135deg, #eff6ff 0%, #ffffff 100%)",
+};
+
+const facebookMissionEyebrowStyle: CSSProperties = {
+  margin: 0,
+  color: "#1d4ed8",
+  fontWeight: 900,
+};
+
+const facebookMissionTitleStyle: CSSProperties = {
+  margin: "6px 0 0",
+  color: "#0f172a",
+  fontSize: "26px",
+};
+
+const facebookMissionHelpStyle: CSSProperties = {
+  maxWidth: "760px",
+  margin: "10px 0 0",
+  color: "#475569",
+  lineHeight: 1.75,
+};
+
+const facebookMissionButtonRowStyle: CSSProperties = {
+  display: "flex",
+  flexWrap: "wrap",
+  gap: "10px",
+};
+
+const facebookMissionPrimaryButtonStyle: CSSProperties = {
+  minHeight: "44px",
+  padding: "0 16px",
+  border: 0,
+  borderRadius: "12px",
+  background: "#2563eb",
+  color: "white",
+  cursor: "pointer",
+  fontWeight: 900,
+};
+
+const facebookMissionSecondaryButtonStyle: CSSProperties = {
+  minHeight: "44px",
+  padding: "0 16px",
+  border: "1px solid #93c5fd",
+  borderRadius: "12px",
+  background: "white",
+  color: "#1d4ed8",
+  cursor: "pointer",
+  fontWeight: 900,
+};
+
+const facebookMissionOverallStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "minmax(150px, 220px) 1fr",
+  alignItems: "center",
+  gap: "16px",
+  marginTop: "20px",
+  padding: "16px",
+  borderRadius: "18px",
+  background: "#dbeafe",
+};
+
+const facebookMissionOverallLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#1e3a8a",
+  fontWeight: 800,
+};
+
+const facebookMissionOverallNumberStyle: CSSProperties = {
+  display: "block",
+  marginTop: "4px",
+  color: "#1e40af",
+  fontSize: "30px",
+};
+
+const facebookMissionOverallProgressStyle: CSSProperties = {
+  height: "12px",
+  overflow: "hidden",
+  borderRadius: "999px",
+  background: "rgba(255,255,255,0.75)",
+};
+
+const facebookMissionOverallProgressInnerStyle: CSSProperties = {
+  height: "100%",
+  borderRadius: "999px",
+  background: "#2563eb",
+  transition: "width 0.2s ease",
+};
+
+const facebookMissionListStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns:
+    "repeat(auto-fit, minmax(250px, 1fr))",
+  gap: "14px",
+  marginTop: "16px",
+};
+
+const facebookMissionCardStyle: CSSProperties = {
+  padding: "16px",
+  border: "1px solid #dbeafe",
+  borderRadius: "18px",
+  background: "white",
+};
+
+const facebookMissionTitleInputStyle: CSSProperties = {
+  width: "100%",
+  minHeight: "44px",
+  padding: "0 12px",
+  border: "1px solid #cbd5e1",
+  borderRadius: "12px",
+  color: "#0f172a",
+  fontWeight: 800,
+  boxSizing: "border-box",
+};
+
+const facebookMissionNumberGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
+  gap: "10px",
+  marginTop: "12px",
+};
+
+const facebookMissionFieldStyle: CSSProperties = {
+  display: "grid",
+  gap: "6px",
+  color: "#475569",
+  fontSize: "13px",
+  fontWeight: 800,
+};
+
+const facebookMissionNumberInputStyle: CSSProperties = {
+  width: "100%",
+  minHeight: "42px",
+  padding: "0 10px",
+  border: "1px solid #cbd5e1",
+  borderRadius: "10px",
+  color: "#0f172a",
+  boxSizing: "border-box",
+};
+
+const facebookMissionProgressTrackStyle: CSSProperties = {
+  height: "9px",
+  marginTop: "14px",
+  overflow: "hidden",
+  borderRadius: "999px",
+  background: "#e2e8f0",
+};
+
+const facebookMissionProgressFillStyle: CSSProperties = {
+  height: "100%",
+  borderRadius: "999px",
+  background: "#2563eb",
+};
+
+const facebookMissionAdviceStyle: CSSProperties = {
+  margin: "10px 0 0",
+  color: "#1e3a8a",
+  fontWeight: 800,
+};
+
+const facebookMissionRemoveButtonStyle: CSSProperties = {
+  marginTop: "10px",
+  padding: 0,
+  border: 0,
+  background: "transparent",
+  color: "#dc2626",
+  cursor: "pointer",
+  fontWeight: 800,
+};
+
+const facebookMissionEmptyStyle: CSSProperties = {
+  marginTop: "18px",
+  padding: "18px",
+  border: "1px dashed #93c5fd",
+  borderRadius: "16px",
+  background: "rgba(255,255,255,0.72)",
+  color: "#475569",
+  lineHeight: 1.75,
+};
+
+const facebookTodayCardStyle: CSSProperties = {
+  marginTop: "18px",
+  padding: "18px",
+  border: "1px solid #bfdbfe",
+  borderRadius: "18px",
+  background: "#eff6ff",
+};
+
+const facebookTodayEyebrowStyle: CSSProperties = {
+  margin: 0,
+  color: "#1d4ed8",
+  fontWeight: 900,
+};
+
+const facebookTodayTitleStyle: CSSProperties = {
+  margin: "6px 0 0",
+  color: "#0f172a",
+  fontSize: "20px",
+};
+
+const facebookTodayGridStyle: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns:
+    "repeat(auto-fit, minmax(210px, 1fr))",
+  gap: "10px",
+  marginTop: "14px",
+};
+
+const facebookTodayItemStyle: CSSProperties = {
+  display: "grid",
+  gap: "4px",
+  padding: "12px",
+  borderRadius: "14px",
+  background: "white",
+  color: "#0f172a",
+};
 
 const accessCardStyle: CSSProperties = {
   width: "min(680px, 100%)",
