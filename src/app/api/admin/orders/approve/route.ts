@@ -45,6 +45,8 @@ export async function POST(request: Request) {
       ok: true,
       orderId: updated.orderId,
       status: updated.status,
+      planRound: updated.planSnapshot?.round || null,
+      planStored: Boolean(updated.planSnapshot),
     });
   } catch (error) {
     console.error("Approve order failed", error);

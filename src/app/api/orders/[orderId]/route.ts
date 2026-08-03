@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 
-import { getOrder } from "../../../../lib/order-store";
+import {
+  ensureOrderPlan,
+  getOrder,
+} from "../../../../lib/order-store";
 
 type RouteContext = {
   params: Promise<{
@@ -15,7 +18,7 @@ export async function GET(
   try {
     const { orderId } = await context.params;
     const accessKey = new URL(request.url).searchParams.get("key") || "";
-    const order = await getOrder(orderId.toUpperCase());
+    let order = await getOrder(orderId.toUpperCase());
 
     if (!order || order.accessKey !== accessKey) {
       return NextResponse.json(
@@ -30,6 +33,20 @@ export async function GET(
       );
     }
 
+    if (
+      order.status === "approved" &&
+      !order.planSnapshot
+    ) {
+      order = await ensureOrderPlan(order.orderId);
+    }
+
+    if (!order) {
+      return NextResponse.json(
+        { ok: false, message: "ไม่พบคำสั่งซื้อ" },
+        { status: 404 }
+      );
+    }
+
     return NextResponse.json(
       {
         ok: true,
@@ -40,6 +57,18 @@ export async function GET(
         request:
           order.status === "approved"
             ? order.request
+            : null,
+        plan:
+          order.status === "approved"
+            ? order.planSnapshot?.plan || null
+            : null,
+        planRound:
+          order.status === "approved"
+            ? order.planSnapshot?.round || null
+            : null,
+        planVersion:
+          order.status === "approved"
+            ? order.planSnapshot?.version || null
             : null,
       },
       {

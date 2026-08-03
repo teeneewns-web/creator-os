@@ -44,6 +44,8 @@ type OrderStatusResponse = {
   ok: boolean;
   status?: "pending" | "approved";
   request?: PlanRequest | null;
+  plan?: WeeklyContentPlan | null;
+  planRound?: number | null;
   message?: string;
 };
 
@@ -477,9 +479,9 @@ export default function WeeklyDashboardPage() {
           return;
         }
 
-        const nextPlan = generateWeeklyContentPlan(
-          data.request
-        );
+        const nextPlan =
+          data.plan ||
+          generateWeeklyContentPlan(data.request);
 
         window.localStorage.setItem(
           REQUEST_STORAGE_KEY,

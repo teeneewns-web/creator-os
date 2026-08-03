@@ -7,9 +7,12 @@ import type {
   CreatorOrder,
   CreatorOrderStatus,
 } from "../types/creator-order";
+import { createPlanSnapshot } from "./plan-history";
 
 const ORDER_KEY_PREFIX = "creator-os:order:";
 const ORDER_INDEX_KEY = "creator-os:orders";
+const PLAN_FINGERPRINT_KEY_PREFIX =
+  "creator-os:plan-fingerprint:";
 
 type RespValue =
   | string
@@ -251,6 +254,53 @@ function getOrderKey(orderId: string) {
   return `${ORDER_KEY_PREFIX}${orderId}`;
 }
 
+
+function getPlanFingerprintKey(fingerprint: string) {
+  return `${PLAN_FINGERPRINT_KEY_PREFIX}${fingerprint}`;
+}
+
+async function registerPlanFingerprints(
+  client: RedisConnection,
+  order: CreatorOrder
+) {
+  const snapshot = order.planSnapshot;
+
+  if (!snapshot) return;
+
+  for (const fingerprint of snapshot.contentFingerprints) {
+    await client.command([
+      "SET",
+      getPlanFingerprintKey(fingerprint),
+      JSON.stringify({
+        orderId: order.orderId,
+        round: snapshot.round,
+        customerProfileKey:
+          snapshot.customerProfileKey,
+        createdAt: snapshot.createdAt,
+      }),
+      "NX",
+    ]);
+  }
+}
+
+function attachPlanSnapshot(order: CreatorOrder) {
+  if (order.planSnapshot) {
+    return order;
+  }
+
+  const round = 1;
+
+  return {
+    ...order,
+    rootOrderId: order.rootOrderId || order.orderId,
+    planSnapshot: createPlanSnapshot(
+      order.orderId,
+      order.request,
+      round
+    ),
+  };
+}
+
 function parseOrder(value: RespValue) {
   if (typeof value !== "string") return null;
 
@@ -374,20 +424,62 @@ export async function updateOrderStatus(
 
     if (!order) return null;
 
-    const updated: CreatorOrder = {
+    const statusUpdated: CreatorOrder = {
       ...order,
       status,
       approvedAt:
         status === "approved"
-          ? new Date().toISOString()
+          ? order.approvedAt || new Date().toISOString()
           : undefined,
     };
+
+    const updated =
+      status === "approved"
+        ? attachPlanSnapshot(statusUpdated)
+        : statusUpdated;
 
     await client.command([
       "SET",
       key,
       JSON.stringify(updated),
     ]);
+
+    if (status === "approved") {
+      await registerPlanFingerprints(client, updated);
+    }
+
+    return updated;
+  });
+}
+
+export async function ensureOrderPlan(
+  orderId: string
+): Promise<CreatorOrder | null> {
+  return withRedis(async (client) => {
+    const key = getOrderKey(orderId);
+    const order = parseOrder(
+      await client.command(["GET", key])
+    );
+
+    if (!order) return null;
+
+    if (order.status !== "approved") {
+      return order;
+    }
+
+    if (order.planSnapshot) {
+      return order;
+    }
+
+    const updated = attachPlanSnapshot(order);
+
+    await client.command([
+      "SET",
+      key,
+      JSON.stringify(updated),
+    ]);
+
+    await registerPlanFingerprints(client, updated);
 
     return updated;
   });
