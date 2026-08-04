@@ -17,7 +17,7 @@ import type {
 } from "../../../types/weekly-content-plan";
 
 import { generateWeeklyContentPlan } from "../../../lib/generate-weekly-content-plan";
-import type { PlanRequest, PlanType } from "../../../types/plan-request";
+import type { ContentDirection, PlanRequest, PlanType } from "../../../types/plan-request";
 import type { CreatorPlanQualityReport } from "../../../types/creator-order";
 
 type FacebookMission = {
@@ -25,6 +25,13 @@ type FacebookMission = {
   title: string;
   completed: number;
   target: number;
+};
+
+type SystemFacebookMission = {
+  id: string;
+  title: string;
+  target: number;
+  reason: string;
 };
 
 type WeeklyPageState = {
@@ -54,26 +61,6 @@ type OrderStatusResponse = {
 const REQUEST_STORAGE_KEY = "creator-os-plan-request-v1";
 const STATE_STORAGE_PREFIX = "creator-os-weekly-plan-state";
 
-const FACEBOOK_MISSION_EXAMPLES: FacebookMission[] = [
-  {
-    id: "facebook-reels",
-    title: "สร้าง Reels",
-    completed: 0,
-    target: 5,
-  },
-  {
-    id: "facebook-public-posts",
-    title: "สร้างโพสต์สาธารณะ",
-    completed: 0,
-    target: 10,
-  },
-  {
-    id: "facebook-stories",
-    title: "สร้าง Story",
-    completed: 0,
-    target: 5,
-  },
-];
 
 const PLATFORM_LABELS: Record<ContentPlatform, string> = {
   facebook: "Facebook",
@@ -99,6 +86,32 @@ const PLAN_TYPE_LABELS: Record<PlanType, string> = {
   product: "สินค้า / Affiliate",
   service: "บริการ / โปรโมตร้าน",
   creator: "เพจ / ครีเอเตอร์",
+};
+
+const CONTENT_DIRECTION_LABELS: Record<
+  ContentDirection,
+  string
+> = {
+  "product-demo": "สาธิตและใช้งานจริง",
+  "product-review": "รีวิวและเปรียบเทียบ",
+  "product-lifestyle": "ไลฟ์สไตล์ / UGC",
+  "product-problem-solution": "แก้ปัญหาและตอบข้อสงสัย",
+  "product-offer": "โปรโมชั่นและปิดการขาย",
+  "product-brand-story": "เรื่องราวแบรนด์และเบื้องหลัง",
+  "service-results": "ผลงานและผลลัพธ์ที่ตรวจสอบได้",
+  "service-process": "ขั้นตอนและเบื้องหลังบริการ",
+  "service-expert": "ให้ความรู้และสร้างความเชื่อใจ",
+  "service-case-study": "รีวิวลูกค้าและกรณีศึกษา",
+  "service-local": "โปรโมตร้านและพื้นที่ให้บริการ",
+  "service-booking": "ข้อเสนอและเพิ่มการจอง",
+  "creator-short-film": "หนังสั้น / ละครสั้น",
+  "creator-comedy": "ตลก / สเก็ตช์ / มุกสถานการณ์",
+  "creator-education": "ให้ความรู้ / สอน / อธิบาย",
+  "creator-review": "รีวิว / วิเคราะห์ / แสดงความคิดเห็น",
+  "creator-story": "เล่าเรื่อง / ประสบการณ์ / สร้างตัวตน",
+  "creator-gaming": "เกม / ไฮไลต์ / ชาเลนจ์ / ไลฟ์",
+  "creator-art": "ศิลปะ / เพลง / การแสดง / ผลงานสร้างสรรค์",
+  "creator-lifestyle": "ไลฟ์สไตล์ / ชุมชน / ชีวิตประจำวัน",
 };
 
 type WeeklyPlanCopy = {
@@ -290,6 +303,67 @@ function normalizeMissionNumber(
   }
 
   return Math.max(minimum, Math.floor(value));
+}
+
+function getSystemFacebookMissions(
+  plan: WeeklyContentPlan
+): SystemFacebookMission[] {
+  const reels = plan.days.filter((day) =>
+    ["reel", "video"].includes(day.format)
+  ).length;
+
+  const stories = plan.days.filter(
+    (day) => day.format === "story"
+  ).length;
+
+  const supportingPosts = plan.days.filter((day) =>
+    ["image", "carousel", "text"].includes(
+      day.format
+    )
+  ).length;
+
+  return [
+    {
+      id: "system-main-content",
+      title: "ทำคอนเทนต์หลักตามแผน",
+      target: plan.days.length,
+      reason:
+        "ระบบคำนวณจากแผน 7 วันที่ผ่าน Quality Gate แล้ว",
+    },
+    ...(reels > 0
+      ? [
+          {
+            id: "system-reels",
+            title: "Reels / วิดีโอหลัก",
+            target: reels,
+            reason:
+              "จำนวนนี้มาจากเวลาที่เลือก ความสามารถ และรูปแบบผลงาน",
+          },
+        ]
+      : []),
+    ...(supportingPosts > 0
+      ? [
+          {
+            id: "system-support-posts",
+            title: "โพสต์เสริม ภาพ ข้อความ หรือคารูเซล",
+            target: supportingPosts,
+            reason:
+              "ใช้สนับสนุนคอนเทนต์หลักโดยไม่เพิ่มภาระการถ่ายเกินเวลา",
+          },
+        ]
+      : []),
+    ...(stories > 0
+      ? [
+          {
+            id: "system-stories",
+            title: "Story",
+            target: stories,
+            reason:
+              "กำหนดเฉพาะวันที่ Story มีหน้าที่สนับสนุนแผนจริง",
+          },
+        ]
+      : []),
+  ];
 }
 
 function getStatusLabel(status: ContentTaskStatus) {
@@ -571,6 +645,11 @@ export default function WeeklyDashboardPage() {
     plan.platform === "facebook" ||
     plan.platform === "facebook-and-tiktok";
 
+  const systemFacebookMissions = useMemo(
+    () => getSystemFacebookMissions(plan),
+    [plan]
+  );
+
   const activeFacebookMissions =
     state.facebookMissions.filter(
       (mission) =>
@@ -641,22 +720,6 @@ export default function WeeklyDashboardPage() {
     }));
   }
 
-  function loadFacebookMissionExamples() {
-    const confirmed =
-      state.facebookMissions.length === 0 ||
-      window.confirm(
-        "ต้องการแทนที่ภารกิจเดิมด้วยตัวอย่างภารกิจ Facebook หรือไม่?"
-      );
-
-    if (!confirmed) return;
-
-    setState((current) => ({
-      ...current,
-      facebookMissions: FACEBOOK_MISSION_EXAMPLES.map(
-        (mission) => ({ ...mission })
-      ),
-    }));
-  }
 
   function updateFacebookMission(
     missionId: string,
@@ -766,6 +829,12 @@ export default function WeeklyDashboardPage() {
 
   <span style={heroTagStyle}>
     {PLAN_TYPE_LABELS[plan.planType]}
+  </span>
+
+  <span style={heroTagStyle}>
+    {CONTENT_DIRECTION_LABELS[
+      plan.contentDirection
+    ]}
   </span>
 
   <span style={heroTagStyle}>
@@ -944,26 +1013,60 @@ export default function WeeklyDashboardPage() {
             <div style={sectionHeadingRowStyle}>
               <div>
                 <p style={facebookMissionEyebrowStyle}>
-                  Facebook Professional Dashboard
+                  Creator OS Recommended Missions
                 </p>
                 <h2 style={facebookMissionTitleStyle}>
-                  ภารกิจ Facebook ของคุณ
+                  ภารกิจที่ระบบคำนวณให้
                 </h2>
                 <p style={facebookMissionHelpStyle}>
-                  เปิดหน้าภารกิจใน Facebook แล้วกรอกชื่อภารกิจ
-                  จำนวนที่ทำแล้ว และเป้าหมายตามที่บัญชีของคุณแสดงจริง
-                  ระบบจะคำนวณว่าวันนี้ควรทำเพิ่มเท่าไร
+                  จำนวนด้านล่างคำนวณจากเวลาที่คุณเลือก
+                  ความสามารถ รูปแบบผลงาน และแผน 7 วันที่ผ่าน
+                  Quality Gate แล้ว จึงแก้ไขไม่ได้
+                </p>
+              </div>
+            </div>
+
+            <div style={facebookMissionListStyle}>
+              {systemFacebookMissions.map((mission) => (
+                <article
+                  key={mission.id}
+                  style={facebookMissionCardStyle}
+                >
+                  <strong style={facebookMissionTitleInputStyle}>
+                    {mission.title}
+                  </strong>
+
+                  <p style={facebookMissionOverallNumberStyle}>
+                    {mission.target} ครั้ง / สัปดาห์
+                  </p>
+
+                  <p style={facebookMissionAdviceStyle}>
+                    {mission.reason}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {showFacebookMissions ? (
+          <section style={facebookMissionSectionStyle}>
+            <div style={sectionHeadingRowStyle}>
+              <div>
+                <p style={facebookMissionEyebrowStyle}>
+                  Optional Facebook Missions
+                </p>
+                <h2 style={facebookMissionTitleStyle}>
+                  ภารกิจเพิ่มเติมของคุณ
+                </h2>
+                <p style={facebookMissionHelpStyle}>
+                  ส่วนนี้แยกจากแผนหลัก ใช้กรอกภารกิจที่บัญชี
+                  Facebook Professional Dashboard แสดงจริง
+                  หรือภารกิจที่คุณอยากเพิ่มเอง
                 </p>
               </div>
 
               <div style={facebookMissionButtonRowStyle}>
-                <button
-                  type="button"
-                  onClick={loadFacebookMissionExamples}
-                  style={facebookMissionSecondaryButtonStyle}
-                >
-                  ใส่ตัวอย่าง
-                </button>
                 <button
                   type="button"
                   onClick={addFacebookMission}
@@ -1111,9 +1214,9 @@ export default function WeeklyDashboardPage() {
               </>
             ) : (
               <div style={facebookMissionEmptyStyle}>
-                ยังไม่ได้กรอกภารกิจ กด “เพิ่มภารกิจ”
-                แล้วใส่ข้อมูลจาก Facebook Professional Dashboard
-                หรือกด “ใส่ตัวอย่าง” เพื่อเริ่มต้น
+                ยังไม่มีภารกิจเพิ่มเติม
+                กด “เพิ่มภารกิจ” เมื่อต้องการกรอกเป้าหมาย
+                จาก Facebook Professional Dashboard หรือเพิ่มงานของคุณเอง
               </div>
             )}
           </section>
@@ -1223,14 +1326,35 @@ export default function WeeklyDashboardPage() {
           </div>
         </div>
 
+        {showFacebookMissions ? (
+          <article style={facebookTodayCardStyle}>
+            <p style={facebookTodayEyebrowStyle}>
+              ภารกิจหลักสำหรับวันที่ {selectedDay.day}
+            </p>
+            <h3 style={facebookTodayTitleStyle}>
+              ทำคอนเทนต์ตามแผนวันนี้ 1 ชิ้น
+            </h3>
+
+            <div style={facebookTodayGridStyle}>
+              <div style={facebookTodayItemStyle}>
+                <strong>{selectedDay.title}</strong>
+                <span>
+                  รูปแบบ {selectedDay.format} · ใช้เวลาประมาณ{" "}
+                  {selectedDay.estimatedMinutes} นาที
+                </span>
+              </div>
+            </div>
+          </article>
+        ) : null}
+
         {showFacebookMissions &&
         activeFacebookMissions.length > 0 ? (
           <article style={facebookTodayCardStyle}>
             <p style={facebookTodayEyebrowStyle}>
-              ภารกิจ Facebook สำหรับวันที่ {selectedDay.day}
+              ภารกิจเพิ่มเติมสำหรับวันที่ {selectedDay.day}
             </p>
             <h3 style={facebookTodayTitleStyle}>
-              ทำภารกิจเหล่านี้ร่วมกับคอนเทนต์วันนี้
+              ทำเพิ่มเฉพาะเมื่อเป็นภารกิจที่คุณกรอกเอง
             </h3>
 
             <div style={facebookTodayGridStyle}>

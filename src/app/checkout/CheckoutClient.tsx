@@ -9,6 +9,7 @@ import {
 import Link from "next/link";
 import type {
   ContentCapability,
+  ContentDirection,
   ContentGoal,
   ContentPlatform,
   DailyTime,
@@ -73,7 +74,7 @@ function getCheckoutCopy(
       item: "หัวข้อเพจหรือคอนเทนต์",
       highlights: "จุดเด่นหรือแนวทางของเพจ",
       audience: "กลุ่มผู้ชม",
-      concerns: "ความสนใจหรือปัญหาของผู้ชม",
+      concerns: "สิ่งที่ผู้ชมชอบหรือคาดหวัง",
       details: "สิ่งที่ต้องการโปรโมตหรือชวนทำต่อ",
       prohibited: "เรื่องที่ไม่ต้องการเปิดเผย",
     };
@@ -88,6 +89,32 @@ function getCheckoutCopy(
     prohibited: "สิ่งที่ห้ามกล่าวหรือเปิดเผย",
   };
 }
+
+const contentDirectionLabels: Record<
+  ContentDirection,
+  string
+> = {
+  "product-demo": "สาธิตและใช้งานจริง",
+  "product-review": "รีวิวและเปรียบเทียบ",
+  "product-lifestyle": "ไลฟ์สไตล์ / UGC",
+  "product-problem-solution": "แก้ปัญหาและตอบข้อสงสัย",
+  "product-offer": "โปรโมชั่นและปิดการขาย",
+  "product-brand-story": "เรื่องราวแบรนด์และเบื้องหลัง",
+  "service-results": "ผลงานและผลลัพธ์ที่ตรวจสอบได้",
+  "service-process": "ขั้นตอนและเบื้องหลังบริการ",
+  "service-expert": "ให้ความรู้และสร้างความเชื่อใจ",
+  "service-case-study": "รีวิวลูกค้าและกรณีศึกษา",
+  "service-local": "โปรโมตร้านและพื้นที่ให้บริการ",
+  "service-booking": "ข้อเสนอและเพิ่มการจอง",
+  "creator-short-film": "หนังสั้น / ละครสั้น",
+  "creator-comedy": "ตลก / สเก็ตช์ / มุกสถานการณ์",
+  "creator-education": "ให้ความรู้ / สอน / อธิบาย",
+  "creator-review": "รีวิว / วิเคราะห์ / แสดงความคิดเห็น",
+  "creator-story": "เล่าเรื่อง / ประสบการณ์ / สร้างตัวตน",
+  "creator-gaming": "เกม / ไฮไลต์ / ชาเลนจ์ / ไลฟ์",
+  "creator-art": "ศิลปะ / เพลง / การแสดง / ผลงานสร้างสรรค์",
+  "creator-lifestyle": "ไลฟ์สไตล์ / ชุมชน / ชีวิตประจำวัน",
+};
 
 const goalLabels: Record<ContentGoal, string> = {
   sell: "เพิ่มยอดขาย",
@@ -175,8 +202,8 @@ function createOrderId() {
   return `COS-${datePart}-${randomPart}`;
 }
 
-function valueOrDash(value: string) {
-  return value.trim() || "ไม่ได้ระบุ";
+function valueOrDash(value: string | undefined) {
+  return value?.trim() || "ไม่ได้ระบุ";
 }
 
 function copyText(text: string) {
@@ -279,6 +306,13 @@ export default function CheckoutClient({
       `ประเภทแผน: ${getPlanTypeLabel(
         request.planType
       )}`,
+      `ทิศทางคอนเทนต์: ${
+        request.contentDirection
+          ? contentDirectionLabels[
+              request.contentDirection
+            ]
+          : "ไม่ได้ระบุ"
+      }`,
       `${checkoutCopy.item}: ${valueOrDash(
         request.productOrService
       )}`,
@@ -291,6 +325,13 @@ export default function CheckoutClient({
       `${checkoutCopy.concerns}: ${valueOrDash(
         request.customerConcerns
       )}`,
+      ...(request.planType === "creator"
+        ? [
+            `สิ่งที่ต้องการให้ Creator OS ช่วย: ${valueOrDash(
+              request.creatorChallenge
+            )}`,
+          ]
+        : []),
       `${checkoutCopy.details}: ${valueOrDash(
         request.promotionDetails
       )}`,
@@ -488,6 +529,17 @@ export default function CheckoutClient({
             />
 
             <SummaryItem
+              label="ทิศทางคอนเทนต์"
+              value={
+                request.contentDirection
+                  ? contentDirectionLabels[
+                      request.contentDirection
+                    ]
+                  : "ไม่ได้ระบุ"
+              }
+            />
+
+            <SummaryItem
               label={checkoutCopy.item}
               value={valueOrDash(
                 request.productOrService
@@ -512,6 +564,15 @@ export default function CheckoutClient({
                 request.customerConcerns
               )}
             />
+
+            {request.planType === "creator" ? (
+              <SummaryItem
+                label="สิ่งที่ต้องการให้ Creator OS ช่วย"
+                value={valueOrDash(
+                  request.creatorChallenge
+                )}
+              />
+            ) : null}
 
             <SummaryItem
               label={checkoutCopy.details}

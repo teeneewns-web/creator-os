@@ -5,6 +5,7 @@ export const facebookBagSamplePlan: WeeklyContentPlan = {
   title: "แผนคอนเทนต์ Facebook 7 วัน สำหรับขายกระเป๋าใบใหญ่",
 
   planType: "product",
+  contentDirection: "product-problem-solution",
 
   productOrService: "กระเป๋าใบใหญ่สำหรับใส่ของจำนวนมาก",
 

@@ -15,12 +15,16 @@ function isPlanRequest(value: unknown): value is PlanRequest {
 
   return Boolean(
     request.planType &&
+      (request.contentDirection === undefined ||
+        typeof request.contentDirection === "string") &&
       typeof request.productOrService === "string" &&
       request.productOrService.trim() &&
       typeof request.productHighlights === "string" &&
       typeof request.audience === "string" &&
       request.audience.trim() &&
       typeof request.customerConcerns === "string" &&
+      (request.creatorChallenge === undefined ||
+        typeof request.creatorChallenge === "string") &&
       typeof request.promotionDetails === "string" &&
       typeof request.prohibitedClaims === "string" &&
       request.goal &&

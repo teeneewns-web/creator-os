@@ -4,6 +4,7 @@ import type {
 } from "../types/creator-order";
 import type {
   ContentCapability,
+  ContentDirection,
   PlanRequest,
 } from "../types/plan-request";
 import type {
@@ -11,7 +12,7 @@ import type {
   WeeklyContentPlan,
 } from "../types/weekly-content-plan";
 
-export const CURRENT_PLAN_QUALITY_VERSION = 1;
+export const CURRENT_PLAN_QUALITY_VERSION = 2;
 export const PLAN_QUALITY_THRESHOLD = 85;
 
 export type AuditPlanQualityOptions = {
@@ -373,6 +374,162 @@ function findOverpromise(value: string) {
   )?.label;
 }
 
+
+function resolveExpectedDirection(
+  request: PlanRequest
+): ContentDirection {
+  if (request.contentDirection) {
+    return request.contentDirection;
+  }
+
+  if (request.planType === "creator") {
+    return "creator-education";
+  }
+
+  if (request.planType === "service") {
+    return "service-expert";
+  }
+
+  return "product-problem-solution";
+}
+
+function auditDirectionAlignment(
+  plan: WeeklyContentPlan,
+  request: PlanRequest
+) {
+  const expectedDirection =
+    resolveExpectedDirection(request);
+  const metadataPassed =
+    plan.contentDirection === expectedDirection;
+
+  if (request.planType !== "creator") {
+    return {
+      passed: metadataPassed,
+      message: metadataPassed
+        ? "ทิศทางคอนเทนต์ในแผนตรงกับตัวเลือกของลูกค้า"
+        : "ทิศทางคอนเทนต์ในแผนไม่ตรงกับตัวเลือกของลูกค้า",
+    };
+  }
+
+  const executionText = normalizeText(
+    getExecutionText(plan)
+  );
+
+  const markerGroups: Partial<
+    Record<ContentDirection, string[]>
+  > = {
+    "creator-short-film": [
+      "ฉาก",
+      "ตัวละคร",
+      "บทพูด",
+      "ตอนจบ",
+      "ตอนต่อ",
+      "หักมุม",
+    ],
+    "creator-comedy": [
+      "ฉาก",
+      "ตัวละคร",
+      "มุก",
+      "จังหวะ",
+      "ตอนจบ",
+    ],
+    "creator-education": [
+      "วิธี",
+      "ขั้นตอน",
+      "ข้อ",
+      "ทำตาม",
+      "อธิบาย",
+    ],
+    "creator-review": [
+      "รีวิว",
+      "เปรียบเทียบ",
+      "เกณฑ์",
+      "ข้อดี",
+      "ข้อจำกัด",
+    ],
+    "creator-story": [
+      "เรื่อง",
+      "ประสบการณ์",
+      "เหตุการณ์",
+      "บทเรียน",
+      "เส้นทาง",
+    ],
+    "creator-gaming": [
+      "เกม",
+      "เล่น",
+      "ภารกิจ",
+      "ไฮไลต์",
+      "ชาเลนจ์",
+    ],
+    "creator-art": [
+      "ผลงาน",
+      "กระบวนการ",
+      "เบื้องหลัง",
+      "การแสดง",
+      "สร้างสรรค์",
+    ],
+    "creator-lifestyle": [
+      "ชีวิต",
+      "กิจวัตร",
+      "สถานการณ์จริง",
+      "ชุมชน",
+      "ประจำวัน",
+    ],
+  };
+
+  const markers =
+    markerGroups[expectedDirection] || [];
+  const matchedMarkers = markers.filter(
+    (marker) =>
+      executionText.includes(normalizeText(marker))
+  );
+  const markerPassed =
+    markers.length === 0 ||
+    matchedMarkers.length >= 2;
+
+  const challenge = normalizeText(
+    request.creatorChallenge || ""
+  );
+  const challengeLeaked =
+    challenge.length >= 4 &&
+    executionText.includes(challenge);
+
+  const passed =
+    metadataPassed &&
+    markerPassed &&
+    !challengeLeaked;
+
+  if (!metadataPassed) {
+    return {
+      passed: false,
+      message:
+        "ชนิดผลงานในแผนไม่ตรงกับทิศทางที่ครีเอเตอร์เลือก",
+    };
+  }
+
+  if (challengeLeaked) {
+    return {
+      passed: false,
+      message:
+        "พบว่าปัญหาของผู้สร้างถูกนำไปใช้เป็นข้อความสำหรับผู้ชม ต้องสร้างแผนใหม่",
+    };
+  }
+
+  if (!markerPassed) {
+    return {
+      passed: false,
+      message:
+        "องค์ประกอบของผลงานยังไม่ชัดตามทิศทางที่เลือก",
+    };
+  }
+
+  return {
+    passed: true,
+    message:
+      "ผลงานตรงกับทิศทางครีเอเตอร์ และแยกโจทย์ของผู้สร้างออกจากความสนใจของผู้ชมแล้ว",
+  };
+}
+
 export function auditPlanQuality(
   plan: WeeklyContentPlan,
   request: PlanRequest,
@@ -427,16 +584,31 @@ export function auditPlanQuality(
       "request-alignment",
       "ตรงตามข้อมูลที่ลูกค้ากรอก",
       true,
-      12,
+      8,
       ratioScore(
         alignmentPassedCount,
         alignmentResults.length,
-        12
+        8
       ),
       alignmentPassed,
       alignmentPassed
         ? "ประเภท หัวข้อ กลุ่มเป้าหมาย แพลตฟอร์ม และเป้าหมายตรงกับคำสั่งซื้อ"
         : `ข้อมูลตรง ${alignmentPassedCount}/${alignmentResults.length} จุด ต้องสร้างแผนใหม่`
+    )
+  );
+
+  const directionAlignment =
+    auditDirectionAlignment(plan, request);
+
+  checks.push(
+    createCheck(
+      "content-direction-alignment",
+      "ตรงกับทิศทางคอนเทนต์ที่เลือก",
+      true,
+      8,
+      directionAlignment.passed ? 8 : 0,
+      directionAlignment.passed,
+      directionAlignment.message
     )
   );
 
@@ -450,8 +622,8 @@ export function auditPlanQuality(
       "ready-to-execute",
       "พร้อมนำไปทำและโพสต์จริง",
       true,
-      22,
-      ratioScore(readyDays, 7, 22),
+      18,
+      ratioScore(readyDays, 7, 18),
       readyPassed,
       readyPassed
         ? "ทุกวันมีหัวข้อ Hook บทพูด ช็อต ข้อความบนจอ แคปชัน CTA เวลาโพสต์ และงานหลังโพสต์ครบ"

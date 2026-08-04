@@ -1,4 +1,4 @@
-import type { PlanType } from "./plan-request";
+import type { ContentDirection, PlanType } from "./plan-request";
 
 export type ContentPlatform =
   | "facebook"
@@ -96,6 +96,7 @@ export type WeeklyContentPlan = {
   title: string;
 
   planType: PlanType;
+  contentDirection: ContentDirection;
 
   productOrService: string;
   productHighlights: string[];

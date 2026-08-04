@@ -29,13 +29,37 @@ export type ContentCapability =
   | "no-face"
   | "no-media";
 
+export type ContentDirection =
+  | "product-demo"
+  | "product-review"
+  | "product-lifestyle"
+  | "product-problem-solution"
+  | "product-offer"
+  | "product-brand-story"
+  | "service-results"
+  | "service-process"
+  | "service-expert"
+  | "service-case-study"
+  | "service-local"
+  | "service-booking"
+  | "creator-short-film"
+  | "creator-comedy"
+  | "creator-education"
+  | "creator-review"
+  | "creator-story"
+  | "creator-gaming"
+  | "creator-art"
+  | "creator-lifestyle";
+
 export type PlanRequest = {
   planType: PlanType | "";
+  contentDirection: ContentDirection | "";
 
   productOrService: string;
   productHighlights: string;
   audience: string;
   customerConcerns: string;
+  creatorChallenge: string;
   promotionDetails: string;
   prohibitedClaims: string;
 

@@ -265,11 +265,21 @@ export default function AdminOrdersClient() {
                     <strong>แพลตฟอร์ม:</strong> {order.request.platform}
                   </p>
                   <p>
+                    <strong>ทิศทางคอนเทนต์:</strong>{" "}
+                    {order.request.contentDirection || "ไม่ได้ระบุ"}
+                  </p>
+                  <p>
                     <strong>หัวข้อ:</strong> {order.request.productOrService}
                   </p>
                   <p>
                     <strong>เป้าหมาย:</strong> {order.request.goal}
                   </p>
+                  {order.request.planType === "creator" ? (
+                    <p className="sm:col-span-2">
+                      <strong>สิ่งที่ต้องการให้ระบบช่วย:</strong>{" "}
+                      {order.request.creatorChallenge || "ไม่ได้ระบุ"}
+                    </p>
+                  ) : null}
                   <p>
                     <strong>รอบแผน:</strong>{" "}
                     {order.planRound

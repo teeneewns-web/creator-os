@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import type {
   ContentCapability,
+  ContentDirection,
   ContentGoal,
   ContentPlatform,
   DailyTime,
@@ -41,6 +42,174 @@ const PLAN_TYPE_OPTIONS: Array<{
       "สำหรับเพจให้ความรู้ รีวิว เล่าเรื่อง บันเทิง หรือสร้างตัวตน โดยไม่จำเป็นต้องมีสินค้า",
   },
 ];
+
+type ContentDirectionOption = {
+  value: ContentDirection;
+  title: string;
+  description: string;
+};
+
+const CONTENT_DIRECTION_OPTIONS: Record<
+  PlanType,
+  ContentDirectionOption[]
+> = {
+  product: [
+    {
+      value: "product-demo",
+      title: "สาธิตและใช้งานจริง",
+      description:
+        "เน้นให้เห็นสินค้า วิธีใช้ รายละเอียด และผลจากการใช้งานจริง",
+    },
+    {
+      value: "product-review",
+      title: "รีวิวและเปรียบเทียบ",
+      description:
+        "ช่วยให้ผู้ชมเปรียบเทียบข้อดี ข้อจำกัด และเลือกให้เหมาะกับตนเอง",
+    },
+    {
+      value: "product-lifestyle",
+      title: "ไลฟ์สไตล์ / UGC",
+      description:
+        "นำสินค้าเข้าไปอยู่ในชีวิตประจำวัน ให้ดูเป็นธรรมชาติและเห็นบริบทจริง",
+    },
+    {
+      value: "product-problem-solution",
+      title: "แก้ปัญหาและตอบข้อสงสัย",
+      description:
+        "เริ่มจากปัญหาของลูกค้า แล้วอธิบายว่าสินค้าช่วยตรงไหนอย่างไม่กล่าวอ้างเกินจริง",
+    },
+    {
+      value: "product-offer",
+      title: "โปรโมชั่นและปิดการขาย",
+      description:
+        "เน้นราคา โปรโมชั่น ความคุ้มค่า วิธีสั่งซื้อ และคำชวนที่ชัดเจน",
+    },
+    {
+      value: "product-brand-story",
+      title: "เรื่องราวแบรนด์และเบื้องหลัง",
+      description:
+        "เล่าที่มา วิธีเลือกสินค้า กระบวนการทำ และเหตุผลที่แบรนด์แตกต่าง",
+    },
+  ],
+  service: [
+    {
+      value: "service-results",
+      title: "ผลงานและผลลัพธ์ที่ตรวจสอบได้",
+      description:
+        "แสดงตัวอย่างงาน ก่อน–หลัง หรือผลงานจริงโดยไม่รับประกันผลลัพธ์เกินจริง",
+    },
+    {
+      value: "service-process",
+      title: "ขั้นตอนและเบื้องหลังบริการ",
+      description:
+        "ทำให้ลูกค้าเห็นลำดับงาน มาตรฐาน และสิ่งที่จะได้รับก่อนตัดสินใจ",
+    },
+    {
+      value: "service-expert",
+      title: "ให้ความรู้และสร้างความเชื่อใจ",
+      description:
+        "ตอบคำถาม ให้คำแนะนำ และแสดงความเชี่ยวชาญในขอบเขตที่ยืนยันได้",
+    },
+    {
+      value: "service-case-study",
+      title: "รีวิวลูกค้าและกรณีศึกษา",
+      description:
+        "เล่าโจทย์ วิธีทำ และสิ่งที่เกิดขึ้นจากเคสจริง โดยปกป้องข้อมูลส่วนตัว",
+    },
+    {
+      value: "service-local",
+      title: "โปรโมตร้านและพื้นที่ให้บริการ",
+      description:
+        "เน้นบรรยากาศ ทำเล เวลาเปิดบริการ และเหตุผลที่คนในพื้นที่ควรรู้จัก",
+    },
+    {
+      value: "service-booking",
+      title: "ข้อเสนอและเพิ่มการจอง",
+      description:
+        "เน้นแพ็กเกจ ราคา ช่องทางติดต่อ คิวว่าง และคำชวนให้จองอย่างชัดเจน",
+    },
+  ],
+  creator: [
+    {
+      value: "creator-short-film",
+      title: "หนังสั้น / ละครสั้น",
+      description:
+        "ระบบจะสร้างเนื้อเรื่อง บทแบ่งฉาก บทพูด ลำดับภาพ และตอนจบพร้อมถ่าย",
+    },
+    {
+      value: "creator-comedy",
+      title: "ตลก / สเก็ตช์ / มุกสถานการณ์",
+      description:
+        "สร้างบทตลกสั้น จังหวะมุก ตัวละคร และตอนจบที่เข้าใจง่าย",
+    },
+    {
+      value: "creator-education",
+      title: "ให้ความรู้ / สอน / อธิบาย",
+      description:
+        "สร้างคอนเทนต์ที่ช่วยให้ผู้ชมเข้าใจ ทำตาม และแก้ปัญหาได้",
+    },
+    {
+      value: "creator-review",
+      title: "รีวิว / วิเคราะห์ / แสดงความคิดเห็น",
+      description:
+        "วางเกณฑ์รีวิว เปรียบเทียบ ข้อดี ข้อจำกัด และมุมมองที่มีเหตุผล",
+    },
+    {
+      value: "creator-story",
+      title: "เล่าเรื่อง / ประสบการณ์ / สร้างตัวตน",
+      description:
+        "เล่าเรื่องส่วนตัว เส้นทาง บทเรียน หรือมุมมองเพื่อให้ผู้ชมรู้จักผู้สร้าง",
+    },
+    {
+      value: "creator-gaming",
+      title: "เกม / ไฮไลต์ / ชาเลนจ์ / ไลฟ์",
+      description:
+        "วางคลิปเกม ภารกิจ ไฮไลต์ บทพากย์ และจังหวะชวนผู้ชมมีส่วนร่วม",
+    },
+    {
+      value: "creator-art",
+      title: "ศิลปะ / เพลง / การแสดง / ผลงานสร้างสรรค์",
+      description:
+        "เน้นตัวผลงาน กระบวนการ เบื้องหลัง การแสดง และการเปิดตัวผลงาน",
+    },
+    {
+      value: "creator-lifestyle",
+      title: "ไลฟ์สไตล์ / ชุมชน / ชีวิตประจำวัน",
+      description:
+        "สร้างเรื่องจากชีวิตจริง กิจวัตร ความสนใจ และการพูดคุยกับชุมชนผู้ติดตาม",
+    },
+  ],
+};
+
+function getContentDirectionOptions(
+  planType: PlanRequest["planType"]
+) {
+  if (
+    planType === "product" ||
+    planType === "service" ||
+    planType === "creator"
+  ) {
+    return CONTENT_DIRECTION_OPTIONS[planType];
+  }
+
+  return [];
+}
+
+function getContentDirectionLabel(
+  direction: PlanRequest["contentDirection"]
+) {
+  if (!direction) return "-";
+
+  const allOptions = Object.values(
+    CONTENT_DIRECTION_OPTIONS
+  ).flat();
+
+  return (
+    allOptions.find(
+      (option) => option.value === direction
+    )?.title || direction
+  );
+}
 
 const STEP_ONE_COPY: Record<
   PlanType,
@@ -111,29 +280,29 @@ const STEP_ONE_COPY: Record<
 
   creator: {
     itemLabel:
-      "เพจหรือคอนเทนต์ของคุณเกี่ยวกับเรื่องอะไร?",
+      "เพจหรือผลงานของคุณเกี่ยวกับเรื่องอะไร?",
     itemPlaceholder:
-      "ตัวอย่าง: เพจสอนทำอาหารง่าย ๆ สำหรับคนอยู่หอ",
+      "ตัวอย่าง: เพจหนังสั้นแนวหักมุมที่ถ่ายด้วยโทรศัพท์",
     audienceLabel:
-      "ต้องการทำคอนเทนต์ให้ใครดู?",
+      "ต้องการทำผลงานให้ใครดู?",
     audiencePlaceholder:
-      "ตัวอย่าง: นักศึกษาและคนทำงานที่มีเวลาทำอาหารน้อย",
+      "ตัวอย่าง: คนอายุ 18–35 ปีที่ชอบหนังสั้นจบไวและมีจุดหักมุม",
     highlightsLabel:
-      "จุดเด่น ประสบการณ์ หรือแนวทางของเพจ",
+      "แนวทาง ทรัพยากร หรือรูปแบบที่คุณมี",
     highlightsPlaceholder:
-      "ตัวอย่าง:\nเมนูทำง่าย\nใช้อุปกรณ์น้อย\nงบไม่เกิน 100 บาท",
+      "ตัวอย่าง:\nแนวดราม่าหักมุม\nมีนักแสดง 1–2 คน\nถ่ายได้ในห้องและบริเวณบ้าน\nใช้โทรศัพท์ถ่าย",
     concernsLabel:
-      "ผู้ชมสนใจ มีปัญหา หรืออยากรู้อะไร?",
+      "ผู้ชมของคุณชอบ คาดหวัง หรืออยากดูอะไร?",
     concernsPlaceholder:
-      "ตัวอย่าง:\nไม่มีครัว\nมีเวลาน้อย\nอยากประหยัดค่าอาหาร",
+      "ตัวอย่าง:\nเรื่องเข้าใจง่ายโดยไม่ต้องเดา\nตอนจบหักมุม\nคลิปยาวไม่เกิน 1 นาที",
     detailsLabel:
-      "เรื่องที่ต้องการโปรโมตหรือชวนผู้ชมทำต่อ",
+      "สิ่งที่ต้องการโปรโมตหรือชวนผู้ชมทำต่อ",
     detailsPlaceholder:
-      "ตัวอย่าง: ชวนติดตาม แสดงความคิดเห็น หรือเสนอหัวข้อที่อยากดู",
+      "ตัวอย่าง: ชวนติดตามเพื่อดูตอนต่อไป หรือเสนอแนวเรื่องที่อยากดู",
     prohibitedLabel:
-      "เรื่องที่ไม่ต้องการเปิดเผยหรือไม่ต้องการพูด",
+      "เรื่องที่ไม่ต้องการเปิดเผยหรือไม่ต้องการใส่ในผลงาน",
     prohibitedPlaceholder:
-      "ตัวอย่าง: ไม่เปิดเผยสถานที่พักและข้อมูลส่วนตัว",
+      "ตัวอย่าง: ไม่เปิดเผยสถานที่พัก ไม่มีฉากรุนแรง และไม่ใช้คำหยาบ",
   },
 };
 
@@ -365,10 +534,12 @@ function getCapabilityOptions(
 function getInitialForm(): PlanRequest {
   return {
     planType: "",
+    contentDirection: "",
     productOrService: "",
     productHighlights: "",
     audience: "",
     customerConcerns: "",
+    creatorChallenge: "",
     promotionDetails: "",
     prohibitedClaims: "",
 
@@ -415,6 +586,11 @@ function validateStep(
         "กรุณาเลือกประเภทแผนที่ต้องการ";
     }
 
+    if (!form.contentDirection) {
+      errors.contentDirection =
+        "กรุณาเลือกทิศทางคอนเทนต์หลัก";
+    }
+
     if (!form.productOrService.trim()) {
       errors.productOrService =
         "กรุณาระบุว่าคุณขาย ทำบริการ หรือสร้างเนื้อหาเกี่ยวกับอะไร";
@@ -428,6 +604,14 @@ function validateStep(
     if (!form.audience.trim()) {
       errors.audience =
         "กรุณาระบุกลุ่มผู้ชมหลัก";
+    }
+
+    if (
+      form.planType === "creator" &&
+      !form.creatorChallenge.trim()
+    ) {
+      errors.creatorChallenge =
+        "กรุณาระบุสิ่งที่ต้องการให้ระบบช่วยอย่างน้อย 1 ข้อ";
     }
   }
 
@@ -480,6 +664,9 @@ export default function StartPage() {
     ? STEP_ONE_COPY[selectedPlanType]
     : null;
 
+  const availableDirectionOptions =
+    getContentDirectionOptions(form.planType);
+
   const availableGoalOptions = getGoalOptions(
     form.planType
   );
@@ -524,12 +711,16 @@ export default function StartPage() {
     setForm((current) => ({
       ...current,
       planType,
+      contentDirection: "",
+      creatorChallenge: "",
       goal: "",
     }));
 
     setErrors((current) => ({
       ...current,
       planType: undefined,
+      contentDirection: undefined,
+      creatorChallenge: undefined,
       goal: undefined,
     }));
   }
@@ -595,9 +786,11 @@ export default function StartPage() {
 
       if (
         stepOneErrors.planType ||
+        stepOneErrors.contentDirection ||
         stepOneErrors.productOrService ||
         stepOneErrors.productHighlights ||
-        stepOneErrors.audience
+        stepOneErrors.audience ||
+        stepOneErrors.creatorChallenge
       ) {
         setStep(1);
       } else {
@@ -616,6 +809,8 @@ export default function StartPage() {
       audience: form.audience.trim(),
       customerConcerns:
         form.customerConcerns.trim(),
+      creatorChallenge:
+        form.creatorChallenge.trim(),
       promotionDetails:
         form.promotionDetails.trim(),
       prohibitedClaims:
@@ -735,6 +930,30 @@ export default function StartPage() {
             ))}
           </ChoiceSection>
 
+          {availableDirectionOptions.length > 0 ? (
+            <ChoiceSection
+              title="ทิศทางคอนเทนต์หลักของคุณ"
+              error={errors.contentDirection}
+            >
+              {availableDirectionOptions.map((option) => (
+                <ChoiceCard
+                  key={option.value}
+                  selected={
+                    form.contentDirection === option.value
+                  }
+                  title={option.title}
+                  description={option.description}
+                  onClick={() =>
+                    updateField(
+                      "contentDirection",
+                      option.value
+                    )
+                  }
+                />
+              ))}
+            </ChoiceSection>
+          ) : null}
+
           {stepOneCopy ? (
             <>
               <div style={fieldGridStyle}>
@@ -816,6 +1035,27 @@ export default function StartPage() {
                   style={textareaStyle}
                 />
               </Field>
+
+              {form.planType === "creator" ? (
+                <Field
+                  label="ตอนนี้คุณติดปัญหาอะไร และต้องการให้ Creator OS ช่วยอะไร?"
+                  required
+                  error={errors.creatorChallenge}
+                  helpText="ข้อมูลนี้เป็นโจทย์ของผู้สร้าง ระบบจะใช้แก้ปัญหาให้คุณ และจะไม่เอาไปเขียนเป็นปัญหาของผู้ชม"
+                >
+                  <textarea
+                    value={form.creatorChallenge}
+                    onChange={(event) =>
+                      updateField(
+                        "creatorChallenge",
+                        event.target.value
+                      )
+                    }
+                    placeholder="ตัวอย่าง: คิดเนื้อเรื่องและบทพูดไม่ออก ต้องการบทหนังพร้อมแบ่งฉาก ลำดับภาพ และตอนจบที่ถ่ายได้จริง"
+                    style={textareaStyle}
+                  />
+                </Field>
+              ) : null}
 
               <div style={fieldGridStyle}>
                 <Field
@@ -1001,6 +1241,13 @@ export default function StartPage() {
             />
 
             <SummaryCard
+              label="ทิศทางคอนเทนต์หลัก"
+              value={getContentDirectionLabel(
+                form.contentDirection
+              )}
+            />
+
+            <SummaryCard
               label={
                 stepOneCopy?.itemLabel.replace(
                   /\?$/,
@@ -1089,6 +1336,18 @@ export default function StartPage() {
                 "ยังไม่ได้ระบุ ระบบจะใช้แนวคำถามทั่วไปโดยไม่แต่งข้อมูลเพิ่มเติม"}
             </p>
           </article>
+
+          {form.planType === "creator" ? (
+            <article style={largeSummaryCardStyle}>
+              <p style={summaryLabelStyle}>
+                สิ่งที่ต้องการให้ Creator OS ช่วย
+              </p>
+
+              <p style={preserveTextStyle}>
+                {form.creatorChallenge || "-"}
+              </p>
+            </article>
+          ) : null}
 
           <article style={largeSummaryCardStyle}>
             <p style={summaryLabelStyle}>

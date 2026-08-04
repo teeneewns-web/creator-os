@@ -1,5 +1,6 @@
 import type {
   ContentCapability,
+  ContentDirection,
   DailyTime,
   PlanRequest,
   PlanType,
@@ -29,10 +30,12 @@ type CampaignStage =
 
 type ResolvedRequest = {
   planType: PlanType;
+  contentDirection: ContentDirection;
   productOrService: string;
   productHighlights: string[];
   audience: string;
   customerConcerns: string[];
+  creatorChallenge: string;
   promotionDetails: string;
   prohibitedClaims: string[];
 
@@ -96,6 +99,32 @@ const PLAN_TYPE_LABELS: Record<PlanType, string> = {
   creator: "เพจ / ครีเอเตอร์",
 };
 
+const CONTENT_DIRECTION_LABELS: Record<
+  ContentDirection,
+  string
+> = {
+  "product-demo": "สาธิตและใช้งานจริง",
+  "product-review": "รีวิวและเปรียบเทียบ",
+  "product-lifestyle": "ไลฟ์สไตล์ / UGC",
+  "product-problem-solution": "แก้ปัญหาและตอบข้อสงสัย",
+  "product-offer": "โปรโมชั่นและปิดการขาย",
+  "product-brand-story": "เรื่องราวแบรนด์และเบื้องหลัง",
+  "service-results": "ผลงานและผลลัพธ์ที่ตรวจสอบได้",
+  "service-process": "ขั้นตอนและเบื้องหลังบริการ",
+  "service-expert": "ให้ความรู้และสร้างความเชื่อใจ",
+  "service-case-study": "รีวิวลูกค้าและกรณีศึกษา",
+  "service-local": "โปรโมตร้านและพื้นที่ให้บริการ",
+  "service-booking": "ข้อเสนอและเพิ่มการจอง",
+  "creator-short-film": "หนังสั้น / ละครสั้น",
+  "creator-comedy": "ตลก / สเก็ตช์ / มุกสถานการณ์",
+  "creator-education": "ให้ความรู้ / สอน / อธิบาย",
+  "creator-review": "รีวิว / วิเคราะห์ / แสดงความคิดเห็น",
+  "creator-story": "เล่าเรื่อง / ประสบการณ์ / สร้างตัวตน",
+  "creator-gaming": "เกม / ไฮไลต์ / ชาเลนจ์ / ไลฟ์",
+  "creator-art": "ศิลปะ / เพลง / การแสดง / ผลงานสร้างสรรค์",
+  "creator-lifestyle": "ไลฟ์สไตล์ / ชุมชน / ชีวิตประจำวัน",
+};
+
 const INTENSITY_LABELS: Record<PlanIntensity, string> = {
   light: "แผนเบา ใช้เวลาน้อย",
   standard: "แผนมาตรฐาน",
@@ -120,6 +149,23 @@ function resolvePlanType(
   }
 
   return "product";
+}
+
+function resolveContentDirection(
+  value: PlanRequest["contentDirection"],
+  planType: PlanType
+): ContentDirection {
+  if (value) return value;
+
+  if (planType === "creator") {
+    return "creator-education";
+  }
+
+  if (planType === "service") {
+    return "service-expert";
+  }
+
+  return "product-problem-solution";
 }
 
 function getPlanDefaults(
@@ -186,6 +232,207 @@ const STAGE_SEQUENCE_VARIANTS: Record<
     ["comparison", "problem", "value", "trust", "demo", "community", "action"],
   ],
 };
+
+const DIRECTION_STAGE_SEQUENCES: Partial<
+  Record<ContentDirection, CampaignStage[]>
+> = {
+  "product-demo": [
+    "demo",
+    "value",
+    "problem",
+    "comparison",
+    "trust",
+    "objection",
+    "action",
+  ],
+  "product-review": [
+    "comparison",
+    "demo",
+    "objection",
+    "trust",
+    "problem",
+    "value",
+    "action",
+  ],
+  "product-lifestyle": [
+    "story",
+    "demo",
+    "behind-scenes",
+    "community",
+    "value",
+    "trust",
+    "action",
+  ],
+  "product-problem-solution": [
+    "problem",
+    "value",
+    "demo",
+    "objection",
+    "trust",
+    "comparison",
+    "action",
+  ],
+  "product-offer": [
+    "problem",
+    "value",
+    "demo",
+    "objection",
+    "comparison",
+    "trust",
+    "action",
+  ],
+  "product-brand-story": [
+    "story",
+    "behind-scenes",
+    "value",
+    "trust",
+    "community",
+    "demo",
+    "action",
+  ],
+  "service-results": [
+    "story",
+    "demo",
+    "comparison",
+    "trust",
+    "objection",
+    "community",
+    "action",
+  ],
+  "service-process": [
+    "behind-scenes",
+    "problem",
+    "demo",
+    "value",
+    "trust",
+    "objection",
+    "action",
+  ],
+  "service-expert": [
+    "problem",
+    "value",
+    "community",
+    "comparison",
+    "trust",
+    "story",
+    "action",
+  ],
+  "service-case-study": [
+    "story",
+    "problem",
+    "demo",
+    "trust",
+    "comparison",
+    "community",
+    "action",
+  ],
+  "service-local": [
+    "story",
+    "behind-scenes",
+    "demo",
+    "community",
+    "trust",
+    "value",
+    "action",
+  ],
+  "service-booking": [
+    "problem",
+    "value",
+    "demo",
+    "objection",
+    "trust",
+    "community",
+    "action",
+  ],
+  "creator-short-film": [
+    "problem",
+    "story",
+    "community",
+    "demo",
+    "behind-scenes",
+    "comparison",
+    "action",
+  ],
+  "creator-comedy": [
+    "problem",
+    "story",
+    "community",
+    "demo",
+    "behind-scenes",
+    "comparison",
+    "action",
+  ],
+  "creator-review": [
+    "problem",
+    "demo",
+    "comparison",
+    "objection",
+    "trust",
+    "community",
+    "action",
+  ],
+  "creator-story": [
+    "story",
+    "problem",
+    "behind-scenes",
+    "community",
+    "value",
+    "trust",
+    "action",
+  ],
+  "creator-gaming": [
+    "problem",
+    "demo",
+    "community",
+    "comparison",
+    "behind-scenes",
+    "story",
+    "action",
+  ],
+  "creator-art": [
+    "story",
+    "demo",
+    "behind-scenes",
+    "community",
+    "comparison",
+    "trust",
+    "action",
+  ],
+  "creator-lifestyle": [
+    "story",
+    "problem",
+    "community",
+    "behind-scenes",
+    "value",
+    "trust",
+    "action",
+  ],
+};
+
+function getStageSequence(
+  request: ResolvedRequest,
+  round: number,
+  variationIndex: number
+): CampaignStage[] {
+  const directionSequence =
+    DIRECTION_STAGE_SEQUENCES[
+      request.contentDirection
+    ];
+
+  if (directionSequence) {
+    return directionSequence;
+  }
+
+  const sequenceOptions =
+    STAGE_SEQUENCE_VARIANTS[request.goal];
+
+  const sequenceIndex = positiveModulo(
+    variationIndex + round - 1,
+    sequenceOptions.length
+  );
+
+  return sequenceOptions[sequenceIndex];
+}
 
 const CONTENT_ANGLES: ContentAngle[] = [
   {
@@ -388,6 +635,10 @@ function resolveRequest(
 
   return {
     planType,
+    contentDirection: resolveContentDirection(
+      request.contentDirection,
+      planType
+    ),
 
     productOrService:
       request.productOrService.trim() ||
@@ -406,6 +657,9 @@ function resolveRequest(
       customerConcerns.length > 0
         ? customerConcerns
         : [defaults.concern],
+
+    creatorChallenge:
+      request.creatorChallenge?.trim() || "",
 
     promotionDetails:
       request.promotionDetails.trim(),
@@ -469,9 +723,50 @@ function hasNoMedia(
 }
 
 function getBaseFormats(
-  platform: ContentPlatform,
-  intensity: PlanIntensity
+  request: ResolvedRequest
 ): ContentFormat[] {
+  const platform = request.platform;
+  const intensity = request.intensity;
+  const isNarrativeCreator =
+    request.contentDirection === "creator-short-film" ||
+    request.contentDirection === "creator-comedy";
+
+  if (isNarrativeCreator) {
+    if (intensity === "light") {
+      return [
+        "text",
+        "reel",
+        "image",
+        "text",
+        "reel",
+        "story",
+        "carousel",
+      ];
+    }
+
+    if (intensity === "growth") {
+      return [
+        "reel",
+        "reel",
+        "image",
+        "reel",
+        "story",
+        "reel",
+        "reel",
+      ];
+    }
+
+    return [
+      "reel",
+      "image",
+      "reel",
+      "story",
+      "image",
+      "reel",
+      "carousel",
+    ];
+  }
+
   if (platform === "facebook") {
     if (intensity === "light") {
       return [
@@ -580,10 +875,7 @@ function getFormatForDay(
   request: ResolvedRequest,
   dayIndex: number
 ) {
-  const formats = getBaseFormats(
-    request.platform,
-    request.intensity
-  );
+  const formats = getBaseFormats(request);
 
   return adaptFormat(
     formats[dayIndex] || "image",
@@ -678,6 +970,22 @@ function getWeeklyObjective(
   request: ResolvedRequest
 ) {
   if (request.planType === "creator") {
+    const directionLabel =
+      CONTENT_DIRECTION_LABELS[
+        request.contentDirection
+      ];
+
+    if (
+      request.contentDirection === "creator-short-film" ||
+      request.contentDirection === "creator-comedy"
+    ) {
+      return `ผลิตผลงาน ${directionLabel} ที่ ${request.audience} ดูแล้วเข้าใจและอยากติดตามต่อ โดยระบบช่วยแก้โจทย์ของผู้สร้างด้วยบทพร้อมถ่าย ลำดับฉาก และตอนจบที่เหมาะกับเวลาที่มี`;
+    }
+
+    if (request.contentDirection !== "creator-education") {
+      return `สร้างผลงานแนว ${directionLabel} เกี่ยวกับ ${request.productOrService} ให้ตรงกับสิ่งที่ ${request.audience} ต้องการดู และทำให้ทิศทางเพจชัดเจนตลอด 7 วัน`;
+    }
+
     if (request.goal === "sell") {
       return `ทำให้ ${request.audience} เห็นคุณค่าของคอนเทนต์เรื่อง ${request.productOrService} เชื่อใจผู้สร้าง และรู้ว่าควรติดตามหรือสอบถามข้อเสนออย่างไร`;
     }
@@ -756,9 +1064,19 @@ function getStrategyExplanation(
   const platformLabel =
     PLATFORM_LABELS[request.platform];
 
+  const directionLabel =
+    CONTENT_DIRECTION_LABELS[
+      request.contentDirection
+    ];
+
+  const directionStrategy =
+    request.planType === "creator"
+      ? `ระบบยึดทิศทาง “${directionLabel}” เป็นแกนหลัก และแยกสิ่งที่ผู้สร้างต้องการให้ช่วยออกจากสิ่งที่ผู้ชมสนใจ เพื่อไม่ให้ปัญหาของผู้สร้างถูกนำไปเขียนเป็นปัญหาของผู้ชม`
+      : `ระบบยึดทิศทาง “${directionLabel}” เป็นแกนหลัก เพื่อเลือกมุม เนื้อหา และคำชวนที่ตรงกับรูปแบบการขายหรือบริการ`;
+
   return [
     `แผนประเภท ${PLAN_TYPE_LABELS[request.planType]} ออกแบบสำหรับ ${platformLabel} โดยมีเป้าหมายหลักคือ ${goalLabel}`,
-    `ระบบเรียงเนื้อหาจากการทำให้ผู้ชมรู้สึกเกี่ยวข้อง ให้ข้อมูล แสดงตัวอย่าง ตอบข้อสงสัย และพาไปสู่การกระทำที่เหมาะสม`,
+    directionStrategy,
     `จำนวนและรูปแบบงานถูกปรับเป็น ${INTENSITY_LABELS[request.intensity]} ตามเวลาที่ผู้ใช้เลือก`,
     `เวลาที่แนะนำเป็นช่วงเริ่มต้นสำหรับทดลอง ควรปรับตามข้อมูลผู้ชมจริงเมื่อมีผลการใช้งาน`,
   ].join(" ");
@@ -1101,7 +1419,7 @@ function getReplyExamples(
   ];
 }
 
-function createCreatorStageContent(
+function createEducationalCreatorStageContent(
   stage: CampaignStage,
   request: ResolvedRequest
 ): StageContent {
@@ -1478,6 +1796,666 @@ function createCreatorStageContent(
     cta: action,
     ...common,
   };
+}
+
+
+type CreatorDirectionProfile = {
+  stageLabel: string;
+  mainVerb: string;
+  outputLabel: string;
+  proofLabel: string;
+  audiencePrompt: string;
+};
+
+const CREATOR_DIRECTION_PROFILES: Partial<
+  Record<ContentDirection, CreatorDirectionProfile>
+> = {
+  "creator-review": {
+    stageLabel: "รีวิวและวิเคราะห์",
+    mainVerb: "รีวิว",
+    outputLabel: "ข้อสรุปที่มีเหตุผล",
+    proofLabel: "เกณฑ์ที่ใช้ตัดสิน",
+    audiencePrompt: "คุณให้ความสำคัญกับเกณฑ์ไหนมากที่สุด?",
+  },
+  "creator-story": {
+    stageLabel: "เล่าเรื่องและสร้างตัวตน",
+    mainVerb: "เล่าเรื่อง",
+    outputLabel: "เรื่องเล่าที่มีจุดเริ่มและบทเรียน",
+    proofLabel: "เหตุการณ์หรือประสบการณ์จริง",
+    audiencePrompt: "คุณเคยเจอสถานการณ์คล้ายกันไหม?",
+  },
+  "creator-gaming": {
+    stageLabel: "เกมและชาเลนจ์",
+    mainVerb: "สร้างไฮไลต์",
+    outputLabel: "ช่วงเล่นเกมที่มีเป้าหมายชัด",
+    proofLabel: "ภาพการเล่นหรือผลลัพธ์ในเกม",
+    audiencePrompt: "รอบต่อไปควรรับภารกิจอะไร?",
+  },
+  "creator-art": {
+    stageLabel: "แสดงผลงานสร้างสรรค์",
+    mainVerb: "นำเสนอผลงาน",
+    outputLabel: "ผลงานหรือการแสดงที่ดูจบได้",
+    proofLabel: "กระบวนการและผลงานจริง",
+    audiencePrompt: "อยากเห็นขั้นตอนไหนหรือผลงานแบบไหนต่อ?",
+  },
+  "creator-lifestyle": {
+    stageLabel: "ไลฟ์สไตล์และชุมชน",
+    mainVerb: "เล่าชีวิตจริง",
+    outputLabel: "ช่วงชีวิตหรือกิจวัตรที่มีเรื่องราว",
+    proofLabel: "ภาพจากสถานการณ์จริง",
+    audiencePrompt: "ชีวิตประจำวันของคุณต่างจากนี้ตรงไหน?",
+  },
+};
+
+function getNarrativeProductionRule(
+  request: ResolvedRequest
+) {
+  if (request.intensity === "light") {
+    return {
+      duration: "15–25 วินาที",
+      cast: "นักแสดง 1 คน",
+      location: "สถานที่เดียว",
+      shots: "ไม่เกิน 3–4 ช็อต",
+      edit: "ตัดต่อแบบคัตตรงและใส่ข้อความเท่าที่จำเป็น",
+    };
+  }
+
+  if (request.intensity === "growth") {
+    return {
+      duration: "45–75 วินาที",
+      cast: "นักแสดง 1–3 คน",
+      location: "1–2 สถานที่",
+      shots: "ประมาณ 6–8 ช็อต",
+      edit: "เพิ่มเสียง บรรยากาศ และจังหวะตัดต่อได้",
+    };
+  }
+
+  return {
+    duration: "30–45 วินาที",
+    cast: "นักแสดง 1–2 คน",
+    location: "สถานที่เดียว",
+    shots: "ประมาณ 4–6 ช็อต",
+    edit: "ตัดต่อไม่ซับซ้อนและเน้นจังหวะเรื่อง",
+  };
+}
+
+function createNarrativeCreatorStageContent(
+  stage: CampaignStage,
+  request: ResolvedRequest
+): StageContent {
+  const isComedy =
+    request.contentDirection === "creator-comedy";
+  const subject = request.productOrService;
+  const audience = request.audience;
+  const audienceShort = shortAudience(audience);
+  const viewerExpectation =
+    request.customerConcerns[0] ||
+    "เรื่องสั้นที่เข้าใจง่ายและดูจบได้";
+  const firstHighlight =
+    request.productHighlights[0] ||
+    "ถ่ายด้วยอุปกรณ์ที่มี";
+  const action = getPrimaryAction(request);
+  const rule = getNarrativeProductionRule(request);
+
+  const common = {
+    afterPosting: [
+      "ตอบความคิดเห็นที่พูดถึงตัวละคร เหตุการณ์ หรือตอนจบก่อน",
+      "จดว่าคนดูหยุดดูหรือแสดงความคิดเห็นตรงฉากใด",
+      "เก็บคำถามและข้อเสนอเรื่องตอนต่อไปไว้ใช้ในแผนรอบหน้า",
+      "ตรวจยอดดูจนจบ การแชร์ และการเข้าชมโปรไฟล์",
+    ],
+    replyExamples: [
+      "ขอบคุณที่ดูจนจบครับ คุณจับจุดสำคัญของเรื่องได้ตรงไหน?",
+      "ตอนต่อไปอยากให้ตัวละครเลือกทางไหน ระหว่าง A กับ B?",
+      "มุมนี้น่าสนใจครับ จะเก็บไว้เป็นทางเลือกสำหรับตอนต่อไป",
+    ],
+    metrics: adaptListToPlanType(
+      getMetrics(request.goal),
+      request
+    ),
+  };
+
+  if (stage === "behind-scenes" || stage === "trust") {
+    return {
+      stage: "เบื้องหลังการสร้างผลงาน",
+      title: `เบื้องหลัง ${subject}: จากไอเดียหนึ่งบรรทัดสู่ฉากพร้อมถ่าย`,
+      objective:
+        "สร้างความผูกพันด้วยการให้ผู้ชมเห็นกระบวนการทำผลงานจริง โดยไม่เปลี่ยนเพจให้กลายเป็นเพจสอน",
+      marketingPrinciple: {
+        title: "เบื้องหลังช่วยให้ผู้ชมรู้สึกใกล้ชิดกับผลงาน",
+        explanation:
+          "ผู้ชมที่ชอบผลงานมักสนใจที่มา ตัวละคร และการถ่ายทำ แต่เนื้อหาหลักยังต้องอยู่ในโลกของผลงาน",
+      },
+      topic: `เบื้องหลังหนึ่งฉากของ ${subject}`,
+      hook: "ฉากสั้น ๆ นี้เริ่มจากไอเดียเพียงหนึ่งประโยค",
+      script:
+        `เปิดด้วยภาพฉากสำเร็จ 1 วินาที แล้วตัดกลับไปที่โน้ตไอเดียสั้น ๆ จากนั้นให้เห็นการจัดฉากตามข้อจำกัด “${firstHighlight}” และปิดด้วยภาพก่อน–หลังตัดต่อ ไม่ต้องอธิบายเป็นบทเรียนยาว ให้ผู้ชมเห็นว่าผลงานเกิดขึ้นจริงอย่างไร`,
+      shotList: [
+        "เปิดด้วยฉากสำเร็จที่น่าสนใจที่สุด",
+        "ถ่ายโน้ตหรือภาพร่างของเรื่อง",
+        "ถ่ายการจัดตำแหน่งตัวละครหรือกล้อง",
+        "แสดงภาพก่อนและหลังตัดต่อ",
+        "ปิดด้วยตัวอย่างตอนต่อไป 1–2 วินาที",
+      ],
+      onScreenTexts: [
+        "จากหนึ่งประโยค",
+        "จัดฉากด้วยของที่มี",
+        "ก่อนตัด / หลังตัด",
+        "ตอนต่อไปอยากดูไหม?",
+      ],
+      caption:
+        `เบื้องหลังฉากสั้นจาก ${subject}\n\nข้อจำกัดรอบนี้คือ ${firstHighlight} จึงออกแบบให้ถ่ายง่ายและยังเล่าเรื่องรู้เรื่อง\n\nคุณอยากเห็นเบื้องหลังฉากไหนต่อ?`,
+      cta: "พิมพ์ฉากที่อยากเห็นเบื้องหลัง หรือกดติดตามเพื่อดูตอนต่อไป",
+      ...common,
+    };
+  }
+
+  if (stage === "community") {
+    return {
+      stage: "ให้ผู้ชมเลือกทางของเรื่อง",
+      title: isComedy
+        ? "เลือกมุกจบ: A เข้าใจผิด หรือ B พูดความจริง"
+        : "เลือกตอนจบ: A เปิดประตู หรือ B โทรกลับ",
+      objective:
+        "ชวนผู้ชมมีส่วนร่วมกับโลกของเรื่อง โดยไม่เปลี่ยนไปทำคอนเทนต์สอน",
+      marketingPrinciple: {
+        title: "ตัวเลือกในเรื่องช่วยให้คนตอบได้ง่าย",
+        explanation:
+          "เมื่อคำถามเกี่ยวข้องกับตัวละครและเหตุการณ์โดยตรง ผู้ชมจะรู้สึกว่าตนเองมีส่วนกับตอนต่อไป",
+      },
+      topic: `โหวตทางเลือกของตัวละครใน ${subject}`,
+      hook: "ถ้าคุณเป็นตัวละครนี้ จะเลือก A หรือ B?",
+      script:
+        isComedy
+          ? `ตัวละครได้รับข้อความว่า “ของมาถึงแล้ว” จึงรีบเปิดประตูพร้อมพูดว่า “ในที่สุดก็มา!” แต่คนหน้าประตูกลับเป็นเพื่อนที่ยืมของไปเมื่อวาน ให้หยุดภาพก่อนเฉลย แล้วขึ้นตัวเลือก A แกล้งทำเป็นจำไม่ได้ หรือ B ทวงของตรง ๆ ปิดด้วยสีหน้าตัวละครและรอผลโหวต`
+          : `ตัวละครได้ยินเสียงเคาะประตูหลังอ่านข้อความว่า “อย่าเปิดประตู” ให้ถ่ายมือที่กำลังจับลูกบิด แล้วหยุดก่อนเปิด ขึ้นตัวเลือก A เปิดทันที หรือ B โทรหาคนส่งข้อความ ปิดด้วยเสียงเคาะอีกครั้งและภาพดำ`,
+      shotList: [
+        "เปิดด้วยเหตุการณ์ที่ต้องตัดสินใจทันที",
+        "แสดงสีหน้าหรือมือของตัวละคร",
+        "หยุดภาพก่อนการตัดสินใจ",
+        "ขึ้นตัวเลือก A และ B ตัวใหญ่",
+        "ปิดด้วยเสียงหรือภาพค้าง 2 วินาที",
+      ],
+      onScreenTexts: [
+        "ถ้าเป็นคุณจะเลือกอะไร?",
+        "A",
+        "B",
+        "ตอนต่อไปใช้ผลโหวตจริง",
+      ],
+      caption:
+        `ถึงจุดที่ตัวละครต้องเลือกแล้ว\n\nA หรือ B?\n\nพิมพ์คำตอบพร้อมเหตุผลสั้น ๆ แล้วตอนต่อไปจะใช้ตัวเลือกที่คนโหวตมากที่สุด`,
+      cta: "พิมพ์ A หรือ B และติดตามไว้ดูผลของการเลือก",
+      ...common,
+    };
+  }
+
+  if (stage === "comparison") {
+    return {
+      stage: "ทดลองสองเวอร์ชันของเรื่อง",
+      title: isComedy
+        ? "ฉากเดียว สองมุกจบ: แบบเงียบกับแบบสวนกลับ"
+        : "ฉากเดียว สองตอนจบ: เปิดประตูกับไม่เปิด",
+      objective:
+        "ทดลองรูปแบบการเล่าเรื่องสองเวอร์ชัน เพื่อดูว่าผู้ชมตอบสนองกับจังหวะและตอนจบแบบใดมากกว่า",
+      marketingPrinciple: {
+        title: "A/B Test ต้องยังเป็นผลงาน ไม่ใช่คลิปสอน",
+        explanation:
+          "ทั้งสองเวอร์ชันควรเป็นฉากหนังที่ดูจบได้จริง ต่างกันเฉพาะจังหวะหรือทางเลือกของตอนจบ",
+      },
+      topic: isComedy
+        ? "ทดลองมุกจบสองแบบจากสถานการณ์เดียวกัน"
+        : "ทดลองตอนจบสองทางจากเหตุการณ์เดียวกัน",
+      hook: isComedy
+        ? "ประโยคเดียวกัน แต่เว้นจังหวะคนละแบบ ทำให้มุกเปลี่ยนไปเลย"
+        : "ถ้าเขาเปิดประตู เรื่องจะจบแบบหนึ่ง แต่ถ้าไม่เปิด จะเจออีกความจริง",
+      script: isComedy
+        ? `เวอร์ชัน A: ตัวละครเปิดประตู รับถุงขยะ แล้วเงียบมองกล้อง 2 วินาที ก่อนพูดว่า “อย่างน้อยก็มาถูกห้อง”
+เวอร์ชัน B: ตัวละครรับถุงขยะ แล้วยื่นคืนพร้อมพูดว่า “ของผมยังไม่มา แต่ของคุณกลับไปได้แล้ว”
+ถ่ายฉากตั้งต้นครั้งเดียว แล้วเปลี่ยนเฉพาะจังหวะและประโยคจบ เพื่อดูว่าผู้ชมชอบมุกแบบเงียบหรือแบบสวนกลับ`
+        : `เวอร์ชัน A: ตัวละครเปิดประตู พบทางเดินว่าง แต่โทรศัพท์ในมือขึ้นข้อความว่า “ช้าไปแล้ว”
+เวอร์ชัน B: ตัวละครไม่เปิดประตู แล้วได้ยินเสียงตัวเองพูดจากอีกฝั่งว่า “ตัดสินใจถูกแล้ว”
+ถ่ายฉากตั้งต้นเหมือนกัน แล้วเปลี่ยนเฉพาะตอนจบ ให้ผู้ชมเลือกว่าทางไหนควรเป็นเรื่องหลัก`,
+      shotList: [
+        "ถ่ายฉากตั้งต้นร่วมกันหนึ่งครั้ง",
+        "ถ่ายตอนจบเวอร์ชัน A",
+        "ถ่ายตอนจบเวอร์ชัน B",
+        "ใช้ข้อความกำกับ A/B ให้เห็นชัด",
+        "ปิดด้วยภาพค้างและคำถามหนึ่งข้อ",
+      ],
+      onScreenTexts: [
+        "ตอนจบ A",
+        "ตอนจบ B",
+        "คุณเลือกแบบไหน?",
+      ],
+      caption: isComedy
+        ? "ฉากเดียวกัน ลองจบสองแบบ 😂\n\nA มุกเงียบ หรือ B มุกสวนกลับ?\n\nพิมพ์ตัวเลือกที่ทำให้คุณอยากดูต่อมากกว่า"
+        : "เรื่องเดียวกัน แต่มีสองทางจบ\n\nA เปิดประตู หรือ B ไม่เปิด?\n\nเลือกทางที่คุณอยากให้กลายเป็นตอนจริง",
+      cta: "พิมพ์ A หรือ B พร้อมเหตุผลสั้น ๆ แล้วติดตามไว้ดูเวอร์ชันที่ถูกเลือก",
+      ...common,
+    };
+  }
+
+  if (stage === "action") {
+    return {
+      stage: "ตอนจบและพาไปตอนต่อไป",
+      title: isComedy
+        ? "เฉลยมุกและทิ้งปมสำหรับตอนต่อไป"
+        : "เฉลยตอนจบหักมุมแบบถ่ายง่าย",
+      objective:
+        "ส่งมอบผลงานที่ดูจบได้ พร้อมสร้างเหตุผลให้ผู้ชมติดตามตอนต่อไป",
+      marketingPrinciple: {
+        title: "จบอารมณ์ให้ครบก่อนขอการติดตาม",
+        explanation:
+          "การค้างฉากสำคัญ 2–3 วินาทีและให้ผู้ชมรับตอนจบก่อนขึ้นคำชวน ช่วยรักษาอารมณ์ของเรื่อง",
+      },
+      topic: `ตอนจบของเรื่องสั้นใน ${subject}`,
+      hook: isComedy
+        ? "เขาทำทุกอย่างเพื่อซ่อนความจริง แต่คนที่รู้ดันยืนอยู่ข้างหลัง"
+        : "ข้อความที่เตือนว่าอย่าเปิดประตู มาจากโทรศัพท์ที่อยู่ในห้อง",
+      script:
+        isComedy
+          ? `ฉาก 1: ตัวละครพูดกับกล้องว่า “ทุกอย่างเรียบร้อย ไม่มีใครรู้แน่นอน”\nฉาก 2: กล้องค่อย ๆ เลื่อนไปเห็นเพื่อนยืนด้านหลังถือของที่ถูกซ่อนไว้\nเพื่อน: “พูดต่อสิ กำลังฟังอยู่”\nฉาก 3: ตัวละครยิ้มแห้งและค่อย ๆ ปิดประตู\nตอนจบ: ค้างสีหน้า 2 วินาที เสียงค่อย ๆ เบาลง แล้วค่อยขึ้นคำว่า “ตอนต่อไปจะเอาตัวรอดยังไง?”`
+          : `ฉาก 1: ตัวละครอ่านข้อความ “อย่าเปิดประตู” แล้วเงยหน้ามองประตู\nฉาก 2: เสียงเคาะดังขึ้น ตัวละครถอยหนึ่งก้าว\nฉาก 3: โทรศัพท์อีกเครื่องบนโต๊ะสว่างขึ้น และชื่อผู้ส่งคือชื่อของตัวละครเอง\nตัวละคร: “แล้วใครเป็นคนส่ง?”\nตอนจบ: กล้องซูมช้าไปที่โทรศัพท์ ค้าง 2–3 วินาที เสียงเคาะเบาลง แล้วจึงขึ้นข้อความ “มีตอนต่อ”`,
+      shotList: [
+        `กำหนดคลิปประมาณ ${rule.duration}`,
+        `ใช้ ${rule.cast} และ ${rule.location}`,
+        "ถ่ายฉากตั้งต้นให้เข้าใจใน 3 วินาทีแรก",
+        "ถ่ายจังหวะเฉลยแยกเป็นช็อตชัดเจน",
+        "ค้างฉากสำคัญ 2–3 วินาทีก่อนขึ้น CTA",
+      ],
+      onScreenTexts: [
+        isComedy ? "ไม่มีใครรู้แน่นอน..." : "อย่าเปิดประตู",
+        isComedy ? "พูดต่อสิ" : "ผู้ส่ง: ตัวคุณเอง",
+        "มีตอนต่อ",
+      ],
+      caption:
+        isComedy
+          ? "คิดว่าตัวละครจะเอาตัวรอดจากสถานการณ์นี้ยังไงในตอนต่อไป?\n\nดูจนจบแล้วพิมพ์ทางออกที่คิดว่าเนียนที่สุด"
+          : "ถ้าข้อความเตือนมาจากโทรศัพท์ของตัวเอง คุณจะทำอะไรต่อ?\n\nพิมพ์คำตอบไว้ แล้วติดตามตอนต่อไป",
+      cta: action,
+      ...common,
+    };
+  }
+
+  if (stage === "story") {
+    return {
+      stage: "ผลงานหลักตอนที่ 1 พร้อมถ่าย",
+      title: isComedy
+        ? "บทสั้นตอนที่ 1: คนส่งของผิดห้อง"
+        : "บทสั้นตอนที่ 1: ข้อความจากตัวเอง",
+      objective:
+        "ส่งมอบบทเรื่องแรกที่ถ่ายได้จริง โดยใช้ข้อจำกัดของผู้สร้างเป็นกรอบการออกแบบ",
+      marketingPrinciple: {
+        title: "ผลงานต้นฉบับต้องเป็นแกนหลักของเพจบันเทิง",
+        explanation:
+          "ผู้ชมติดตามเพราะต้องการดูเรื่อง ตัวละคร อารมณ์ และตอนจบ ไม่ใช่เพราะต้องการเรียนวิธีทำหนังทุกวัน",
+      },
+      topic: isComedy
+        ? "มุกเข้าใจผิดจากข้อความสั้น ๆ"
+        : "เรื่องลึกลับจากข้อความเตือนที่ไม่รู้ผู้ส่ง",
+      hook: isComedy
+        ? "เขารอของสำคัญมาทั้งวัน แต่คนที่มาถึงไม่ใช่คนส่งของ"
+        : "เขาได้รับข้อความว่า “อย่าเปิดประตู” ตอนที่มือกำลังจับลูกบิด",
+      script: isComedy
+        ? `ฉาก 1 (0–5 วิ): ตัวละครมองโทรศัพท์ เห็นข้อความ “ถึงหน้าห้องแล้ว” แล้วรีบจัดท่าต้อนรับ
+ตัวละคร: “มาแล้วสินะ!”
+ฉาก 2 (5–15 วิ): เปิดประตู พบเพื่อนถือถุงขยะ
+เพื่อน: “ฝากทิ้งให้หน่อย”
+ตัวละคร: “แล้วของฉันล่ะ?”
+ฉาก 3 (15–25 วิ): เสียงแจ้งเตือนดังขึ้น ข้อความใหม่เขียนว่า “ส่งผิดห้องครับ”
+ตอนจบ: เพื่อนยื่นถุงขยะให้แล้วพูด “แต่อันนี้ถูกห้อง” ค้างสีหน้า 2 วินาที`
+        : `ฉาก 1 (0–7 วิ): มือกำลังจับลูกบิด โทรศัพท์ดังขึ้น ข้อความเขียนว่า “อย่าเปิดประตู”
+ตัวละคร: “ใครส่งมา?”
+ฉาก 2 (7–20 วิ): เสียงเคาะดังสามครั้ง ตัวละครถอยและโทรกลับ แต่ได้ยินเสียงริงโทนจากในห้อง
+ฉาก 3 (20–35 วิ): กล้องค่อย ๆ หันไปเห็นโทรศัพท์อีกเครื่องใต้หมอน หน้าจอแสดงชื่อผู้ส่งเป็นชื่อตัวละคร
+ตัวละครกระซิบ: “แต่นั่นไม่ใช่เครื่องของฉัน...”
+ตอนจบ: ไฟดับ เสียงเคาะหยุด ค้างภาพดำ 2 วินาที แล้วขึ้นคำว่า “ตอนที่ 2”`,
+      shotList: [
+        `ความยาวเป้าหมาย ${rule.duration}`,
+        `${rule.cast} · ${rule.location}`,
+        "ช็อตเปิดต้องทำให้เข้าใจเหตุการณ์ใน 3 วินาที",
+        isComedy
+          ? "ช็อตกลางเน้นสีหน้าและจังหวะเว้นก่อนมุก"
+          : "ช็อตกลางเน้นเสียงเคาะและแหล่งเสียงโทรศัพท์",
+        "ช็อตจบค้างอารมณ์ 2–3 วินาทีก่อนขึ้นข้อความ",
+      ],
+      onScreenTexts: [
+        isComedy ? "ถึงหน้าห้องแล้ว" : "อย่าเปิดประตู",
+        isComedy ? "ส่งผิดห้องครับ" : "ผู้ส่ง: ตัวคุณเอง",
+        isComedy ? "แต่อันนี้ถูกห้อง" : "ตอนที่ 2",
+      ],
+      caption: isComedy
+        ? `รอของสำคัญทั้งวัน แต่สิ่งที่มาถึงกลับเป็นถุงขยะ 😂\n\nเคยเจอข้อความหรือของส่งผิดแบบนี้ไหม?`
+        : `ถ้ามีโทรศัพท์อีกเครื่องในห้อง และผู้ส่งใช้ชื่อของคุณเอง คุณจะเปิดประตูไหม?\n\nพิมพ์ A เปิด หรือ B ไม่เปิด`,
+      cta: action,
+      ...common,
+    };
+  }
+
+  if (stage === "demo" || stage === "value") {
+    return {
+      stage: "ผลงานหลักตอนที่ 2 พร้อมถ่าย",
+      title: isComedy
+        ? "บทสั้นตอนที่ 2: เสียงเรียกจากตู้เย็น"
+        : "บทสั้นตอนที่ 2: เสียงเรียกจากห้องว่าง",
+      objective:
+        "ส่งมอบบทอีกเรื่องที่มีเหตุการณ์ ตัวละคร และตอนจบต่างจากตอนแรก เพื่อให้แผน 7 วันมีผลงานจริงมากกว่าหนึ่งชิ้น",
+      marketingPrinciple: {
+        title: "สร้างความคาดหวังด้วยตอนที่แตกต่างแต่ยังอยู่ในแนวเดียวกัน",
+        explanation:
+          "ผู้ชมควรจำแนวของเพจได้ แต่ไม่ควรรู้สึกว่าเรื่องและมุกถูกทำซ้ำ",
+      },
+      topic: isComedy
+        ? "มุกเสียงลึกลับที่มีต้นเหตุธรรมดาเกินคาด"
+        : "เสียงจากห้องว่างที่รู้ข้อมูลของตัวละคร",
+      hook: isComedy
+        ? "ทุกคืนตู้เย็นจะเรียกชื่อเขา จนคืนนี้เขาตัดสินใจตอบกลับ"
+        : "ห้องข้าง ๆ ว่างมาสามเดือน แต่เมื่อคืนมีเสียงเรียกชื่อเขา",
+      script: isComedy
+        ? `ฉาก 1: ตัวละครได้ยินเสียงเบา ๆ จากตู้เย็นว่า “มานี่...” จึงถือไม้กวาดเดินเข้าไป
+ฉาก 2: เปิดตู้เย็นช้า ๆ พบโทรศัพท์ที่เปิดคลิปเสียงค้างอยู่
+ตัวละคร: “ใครเอาโทรศัพท์มาไว้ตรงนี้?”
+ฉาก 3: เพื่อนเดินเข้ามาหยิบน้ำแล้วตอบ “ก็เธอบอกให้เตือนว่าอย่าลืมกินของในตู้”
+ตอนจบ: ตัวละครมองอาหารหมดอายุแล้วพูด “เตือนช้าไปสามวัน” ค้าง 2 วินาที`
+        : `ฉาก 1: ตัวละครเดินผ่านห้องว่างและได้ยินเสียงเรียกชื่อจากด้านใน
+ฉาก 2: เขาเปิดกล้องโทรศัพท์ส่องลอดช่องประตู เห็นห้องว่าง แต่ในจอโทรศัพท์มีเงาคนยืนด้านหลัง
+ตัวละครหันกลับ ไม่มีใคร
+ฉาก 3: เสียงในห้องพูดว่า “อย่าหันมาอีกครั้ง”
+ตอนจบ: กล้องค้างที่มือซึ่งกำลังเอื้อมจับลูกบิด แล้วตัดดำ`,
+      shotList: [
+        `กำหนดคลิปประมาณ ${rule.duration}`,
+        `ใช้ ${rule.cast} และ ${rule.location}`,
+        "แยกแหล่งเสียงให้ผู้ชมเข้าใจทิศทาง",
+        "ถ่ายปฏิกิริยาตัวละครเป็นช็อตใกล้",
+        "จบด้วยภาพหรือประโยคที่ไม่ซ้ำกับตอนแรก",
+      ],
+      onScreenTexts: [
+        isComedy ? "ใครเรียก?" : "ห้องนี้ว่าง",
+        isComedy ? "เตือนช้าไปสามวัน" : "อย่าหันมาอีกครั้ง",
+        "เรื่องสั้นตอนใหม่",
+      ],
+      caption: isComedy
+        ? "ถ้าได้ยินเสียงเรียกจากตู้เย็น คุณจะเปิดไหม? 😂\n\nตอนจบธรรมดากว่าที่คิด แต่ปัญหาจริงคือของหมดอายุ"
+        : "ถ้ากล้องเห็นบางอย่างที่ตาเปล่าไม่เห็น คุณจะเชื่อกล้องหรือเชื่อตัวเอง?\n\nติดตามไว้ดูเรื่องสั้นตอนต่อไป",
+      cta: "พิมพ์สิ่งที่คุณคิดว่าอยู่ในห้อง แล้วติดตามไว้ดูเรื่องสั้นตอนใหม่",
+      ...common,
+    };
+  }
+
+  return {
+    stage: "เปิดโลกและตัวละคร",
+    title: isComedy
+      ? `แนะนำตัวละครที่มักเข้าใจทุกอย่างผิดใน ${subject}`
+      : `เปิดปมของเพจ ${subject} ด้วยเหตุการณ์หนึ่งประโยค`,
+    objective:
+      "ทำให้ผู้ชมรู้จักแนวผลงาน ตัวละคร และอารมณ์ของเพจโดยใช้คอนเทนต์ที่อยู่ในโลกของเรื่อง",
+    marketingPrinciple: {
+      title: "เริ่มจากผลงาน ไม่เริ่มจากการอธิบายตัวเอง",
+      explanation:
+        "ตัวอย่างเรื่องสั้นช่วยให้ผู้ชมเข้าใจแนวเพจได้เร็วกว่าการบอกเพียงว่าเพจทำอะไร",
+    },
+    topic: `ตัวอย่างโลกของเรื่องสำหรับ ${audienceShort}`,
+    hook: isComedy
+      ? "คนนี้ไม่ได้ซวย เขาแค่ตีความทุกอย่างเร็วเกินไป"
+      : "ทุกคืนเวลาเดิม โทรศัพท์ที่ไม่มีซิมจะดังขึ้นหนึ่งครั้ง",
+    script:
+      isComedy
+        ? `ถ่ายตัวละครอ่านข้อความสั้น ๆ แล้วรีบตอบสนองผิดสถานการณ์สามครั้งติดกัน ปิดด้วยประโยค “ครั้งนี้มั่นใจว่าเข้าใจถูก” ก่อนเปิดประตูไปเจอเหตุการณ์ตรงข้าม ค้างสีหน้าแล้วขึ้นชื่อซีรีส์`
+        : `ถ่ายโทรศัพท์เก่าวางอยู่บนโต๊ะ เวลา 23:59 หน้าจอสว่างและขึ้นสายเรียกเข้าจาก “พรุ่งนี้” ตัวละครไม่รับสาย แต่มีข้อความตามมาว่า “คืนนี้อย่านอน” ปิดด้วยตัวละครมองนาฬิกาที่หยุดเดิน`,
+    shotList: [
+      `ยึดข้อจำกัด ${firstHighlight}`,
+      `ใช้ ${rule.shots}`,
+      "เปิดด้วยวัตถุหรือเหตุการณ์ที่จำได้ทันที",
+      "แสดงปฏิกิริยาตัวละครให้ชัด",
+      "จบด้วยคำถามหรือปมที่พาไปตอนถัดไป",
+    ],
+    onScreenTexts: [
+      CONTENT_DIRECTION_LABELS[request.contentDirection],
+      viewerExpectation,
+      "ติดตามตอนต่อไป",
+    ],
+    caption:
+      `นี่คือตัวอย่างแนว ${CONTENT_DIRECTION_LABELS[request.contentDirection]} ของเพจ ${subject}\n\nตั้งใจให้ ${viewerExpectation}\n\nถ้าอยากดูเรื่องนี้ต่อ กดติดตามไว้ได้เลย`,
+    cta: action,
+    ...common,
+  };
+}
+
+function createFocusedCreatorStageContent(
+  stage: CampaignStage,
+  request: ResolvedRequest
+): StageContent {
+  const profile =
+    CREATOR_DIRECTION_PROFILES[
+      request.contentDirection
+    ] || CREATOR_DIRECTION_PROFILES["creator-lifestyle"]!;
+  const subject = request.productOrService;
+  const audience = request.audience;
+  const firstHighlight =
+    request.productHighlights[0];
+  const secondHighlight =
+    request.productHighlights[1] ||
+    "มุมที่แตกต่างจากเนื้อหาทั่วไป";
+  const expectation =
+    request.customerConcerns[0];
+  const action = getPrimaryAction(request);
+
+  const common = {
+    afterPosting: [
+      "ตอบความคิดเห็นที่พูดถึงเนื้อหาหรือผลงานจริงก่อน",
+      "จดคำถามและหัวข้อที่ผู้ชมอยากเห็นต่อ",
+      "ดูยอดดูจนจบ การบันทึก แชร์ และการเข้าชมโปรไฟล์",
+      "นำภาษาที่ผู้ชมใช้จริงไปปรับหัวข้อวันถัดไป",
+    ],
+    replyExamples: [
+      `ขอบคุณครับ มุมนี้เกี่ยวกับ ${subject} โดยตรงเลย`,
+      profile.audiencePrompt,
+      "จะเก็บข้อเสนอนี้ไว้เป็นหนึ่งในหัวข้อต่อไปครับ",
+    ],
+    metrics: adaptListToPlanType(
+      getMetrics(request.goal),
+      request
+    ),
+  };
+
+  if (stage === "community") {
+    return {
+      stage: "ชวนชุมชนมีส่วนร่วม",
+      title: `${profile.audiencePrompt}`,
+      objective:
+        "ใช้คำถามที่อยู่ในทิศทางของเพจเพื่อเก็บความต้องการจริงของผู้ชม",
+      marketingPrinciple: {
+        title: "คำถามต้องต่อยอดผลงาน ไม่เปลี่ยนทิศทางเพจ",
+        explanation:
+          "คำตอบของผู้ชมควรช่วยเลือกหัวข้อ รีวิว เกม ผลงาน หรือเรื่องต่อไปได้ทันที",
+      },
+      topic: `คำถามชุมชนเกี่ยวกับ ${subject}`,
+      hook: profile.audiencePrompt,
+      script:
+        `เปิดด้วยตัวอย่างสั้นจาก ${subject} แล้วให้ตัวเลือก A ${firstHighlight} หรือ B ${secondHighlight} จากนั้นถามผู้ชมว่าต้องการเห็นทางไหนต่อ พร้อมบอกว่าจะนำคำตอบไปใช้ในผลงานรอบถัดไปจริง`,
+      shotList: [
+        "เปิดด้วยตัวอย่างผลงานหรือเหตุการณ์ 1–2 วินาที",
+        `ขึ้นตัวเลือก A: ${firstHighlight}`,
+        `ขึ้นตัวเลือก B: ${secondHighlight}`,
+        "เว้นจังหวะให้ผู้ชมเลือก",
+        "ปิดด้วยคำยืนยันว่าจะใช้ผลโหวตต่อยอด",
+      ],
+      onScreenTexts: [
+        "เลือก A หรือ B",
+        firstHighlight,
+        secondHighlight,
+      ],
+      caption:
+        `${profile.audiencePrompt}\n\nA. ${firstHighlight}\nB. ${secondHighlight}\n\nพิมพ์ตัวเลือกพร้อมเหตุผลได้เลย`,
+      cta: "พิมพ์ A หรือ B และติดตามไว้ดูผลงานที่เลือก",
+      ...common,
+    };
+  }
+
+  if (stage === "behind-scenes" || stage === "trust") {
+    return {
+      stage: "แสดงกระบวนการและความน่าเชื่อถือ",
+      title: `เบื้องหลัง ${profile.mainVerb} เรื่อง ${subject}`,
+      objective:
+        `ทำให้ผู้ชมเห็น ${profile.proofLabel} และเข้าใจคุณภาพของผลงาน`,
+      marketingPrinciple: {
+        title: "แสดงสิ่งที่ตรวจสอบได้",
+        explanation:
+          `ความน่าเชื่อถือของทิศทางนี้มาจาก ${profile.proofLabel} ไม่ใช่คำกล่าวอ้างลอย ๆ`,
+      },
+      topic: `กระบวนการสร้าง ${profile.outputLabel}`,
+      hook: `ก่อนเห็นผลงานสุดท้าย นี่คือสิ่งที่ต้องเตรียมจริง`,
+      script:
+        `เริ่มจากโจทย์ ${subject} เลือกจุดเด่น ${firstHighlight} แล้วแสดงขั้นตอนหรือหลักฐานจริงทีละส่วน ปิดด้วยผลลัพธ์หรือผลงานที่ผู้ชมตรวจสอบได้ โดยไม่พูดเกินข้อมูลที่มี`,
+      shotList: [
+        "แสดงโจทย์หรือภาพก่อนเริ่ม",
+        `แสดงขั้นตอนที่เกี่ยวกับ ${firstHighlight}`,
+        `แสดง ${profile.proofLabel}`,
+        "แสดงผลงานหรือข้อสรุป",
+        "ปิดด้วยคำถามสำหรับผลงานต่อไป",
+      ],
+      onScreenTexts: [
+        "ก่อนเริ่ม",
+        firstHighlight,
+        profile.proofLabel,
+        "ผลงานสุดท้าย",
+      ],
+      caption:
+        `เบื้องหลัง ${profile.mainVerb} เรื่อง ${subject}\n\nจุดที่ให้ความสำคัญคือ ${firstHighlight}\n\n${profile.audiencePrompt}`,
+      cta: action,
+      ...common,
+    };
+  }
+
+  if (stage === "comparison" || stage === "objection") {
+    return {
+      stage: "เปรียบเทียบและตอบข้อสงสัย",
+      title: `${firstHighlight} กับ ${secondHighlight} ต่างกันอย่างไร?`,
+      objective:
+        "ช่วยให้ผู้ชมเข้าใจความแตกต่างด้วยเกณฑ์ที่ชัดและสอดคล้องกับทิศทางเพจ",
+      marketingPrinciple: {
+        title: "เปรียบเทียบจากเกณฑ์ ไม่ตัดสินแบบลอย ๆ",
+        explanation:
+          `เนื้อหา ${profile.stageLabel} ควรบอกทั้งเหตุผล ข้อดี และข้อจำกัด`,
+      },
+      topic: `เปรียบเทียบสองมุมของ ${subject}`,
+      hook: `สองแบบนี้ดูคล้ายกัน แต่ให้ประสบการณ์ต่างกันตรงนี้`,
+      script:
+        `กำหนดเกณฑ์หนึ่งคือ ${firstHighlight} และอีกเกณฑ์คือ ${secondHighlight} แสดงตัวอย่างของแต่ละแบบ แล้วสรุปว่าแบบใดเหมาะกับสถานการณ์ใด โดยไม่บอกว่ามีคำตอบเดียวสำหรับทุกคน`,
+      shotList: [
+        "ขึ้นเกณฑ์เปรียบเทียบให้ชัด",
+        `ตัวอย่างฝั่ง A: ${firstHighlight}`,
+        `ตัวอย่างฝั่ง B: ${secondHighlight}`,
+        "สรุปข้อดีและข้อจำกัด",
+        "ถามผู้ชมว่าตรงกับแบบใด",
+      ],
+      onScreenTexts: [
+        "ต่างกันตรงไหน?",
+        firstHighlight,
+        secondHighlight,
+        "เลือกตามสิ่งที่ต้องการ",
+      ],
+      caption:
+        `${firstHighlight} กับ ${secondHighlight} ให้ผลต่างกันตามเป้าหมาย\n\nคุณเลือกแบบไหน และเพราะอะไร?`,
+      cta: "พิมพ์ตัวเลือกและเหตุผลของคุณ",
+      ...common,
+    };
+  }
+
+  if (stage === "action") {
+    return {
+      stage: "สรุปผลงานและพาไปต่อ",
+      title: `สรุป 7 วันของ ${subject} และผลงานต่อไป`,
+      objective:
+        "รวมสิ่งที่ผู้ชมได้เห็น แล้วบอกชัดว่าควรติดตามหรือมีส่วนร่วมอย่างไร",
+      marketingPrinciple: {
+        title: "ขอการติดตามหลังส่งมอบคุณค่า",
+        explanation:
+          "ผู้ชมควรเห็นผลงานและทิศทางชัดก่อน จึงค่อยเชิญให้ติดตามตอนหรือผลงานต่อไป",
+      },
+      topic: `ผลงานเด่นและหัวข้อต่อไปของ ${subject}`,
+      hook: `ถ้าชอบผลงานแบบนี้ เรื่องต่อไปกำลังต่อยอดจากคำตอบของคุณ`,
+      script:
+        `รวบรวมช่วงเด่น 3 ช่วงจากสัปดาห์นี้ ได้แก่ ${firstHighlight}, ${secondHighlight} และคำตอบของผู้ชม จากนั้นประกาศหัวข้อหรือผลงานต่อไป พร้อมวันหรือเงื่อนไขที่ตรวจสอบได้`,
+      shotList: [
+        "ตัดช่วงเด่นที่หนึ่ง",
+        "ตัดช่วงเด่นที่สอง",
+        "แสดงความคิดเห็นหรือผลโหวต",
+        "เปิดชื่อผลงานหรือหัวข้อต่อไป",
+        "ปิดด้วยคำชวนเดียวที่ชัดเจน",
+      ],
+      onScreenTexts: [
+        "สรุป 7 วัน",
+        firstHighlight,
+        secondHighlight,
+        "ผลงานต่อไป",
+      ],
+      caption:
+        `สัปดาห์นี้ได้ลอง ${profile.mainVerb} เรื่อง ${subject} หลายมุม\n\nผลงานต่อไปจะต่อยอดจากคำตอบของผู้ชม\n\nกดติดตามไว้เพื่อไม่พลาดตอนหรือผลงานใหม่`,
+      cta: action,
+      ...common,
+    };
+  }
+
+  return {
+    stage: profile.stageLabel,
+    title: `${profile.mainVerb}: ${subject} ผ่านมุม ${firstHighlight}`,
+    objective:
+      `ส่งมอบ ${profile.outputLabel} ที่ผู้ชมดูแล้วเข้าใจทิศทางเพจทันที`,
+    marketingPrinciple: {
+      title: "ทิศทางคอนเทนต์ต้องคงเส้นคงวา",
+      explanation:
+        `ทุกส่วนต้องสนับสนุนการ ${profile.mainVerb} ไม่เปลี่ยนไปเป็นคลิปสอนหรือขายแบบอื่นโดยไม่มีเหตุผล`,
+    },
+    topic: `${profile.mainVerb} เรื่อง ${subject}`,
+    hook: `ถ้าสนใจ ${subject} จุดนี้คือส่วนที่ไม่ควรมองข้าม`,
+    script:
+      `เปิดด้วยตัวอย่างหรือเหตุการณ์จริง แล้ว ${profile.mainVerb} โดยยึด ${firstHighlight} เป็นแกนหลัก เพิ่ม ${secondHighlight} เป็นมุมรอง และปิดด้วยข้อสรุปที่ตรงกับสิ่งที่ผู้ชมคาดหวังเรื่อง ${expectation}`,
+    shotList: [
+      "เปิดด้วยผลงานหรือเหตุการณ์จริง",
+      `แสดงแกนหลัก: ${firstHighlight}`,
+      `แสดงมุมเสริม: ${secondHighlight}`,
+      `แสดง ${profile.proofLabel}`,
+      "ปิดด้วยข้อสรุปและคำถามหนึ่งข้อ",
+    ],
+    onScreenTexts: [
+      CONTENT_DIRECTION_LABELS[request.contentDirection],
+      firstHighlight,
+      secondHighlight,
+      profile.audiencePrompt,
+    ],
+    caption:
+      `${profile.mainVerb} เรื่อง ${subject}\n\nแกนหลัก: ${firstHighlight}\nมุมเสริม: ${secondHighlight}\n\n${profile.audiencePrompt}`,
+    cta: action,
+    ...common,
+  };
+}
+
+function createCreatorStageContent(
+  stage: CampaignStage,
+  request: ResolvedRequest
+): StageContent {
+  if (
+    request.contentDirection === "creator-short-film" ||
+    request.contentDirection === "creator-comedy"
+  ) {
+    return createNarrativeCreatorStageContent(
+      stage,
+      request
+    );
+  }
+
+  if (request.contentDirection === "creator-education") {
+    return createEducationalCreatorStageContent(
+      stage,
+      request
+    );
+  }
+
+  return createFocusedCreatorStageContent(
+    stage,
+    request
+  );
 }
 
 function createStageContent(
@@ -2249,6 +3227,73 @@ function applyContentAngle(
   };
 }
 
+const CREATOR_DIRECTION_ANGLES = [
+  {
+    title: "เปิดมุมหลัก",
+    hook: "เริ่มจากสิ่งที่ผู้ชมเห็นแล้วเข้าใจแนวเพจทันที:",
+    followUp: "ปิดด้วยคำถามหนึ่งข้อที่ต่อยอดผลงานหรือหัวข้อถัดไป",
+  },
+  {
+    title: "เจาะรายละเอียด",
+    hook: "รายละเอียดเล็ก ๆ นี้ทำให้ผลงานต่างจากแบบทั่วไป:",
+    followUp: "ชี้ให้เห็นรายละเอียดที่ผู้ชมควรสังเกต โดยยังคงอยู่ในทิศทางของเพจ",
+  },
+  {
+    title: "ให้ผู้ชมเลือก",
+    hook: "ถ้าให้เลือกจากสองทางนี้ คุณจะเลือกแบบไหน?",
+    followUp: "ให้ตัวเลือกที่ตอบง่ายและนำผลไปใช้กับผลงานต่อไปจริง",
+  },
+  {
+    title: "ทดลองอีกเวอร์ชัน",
+    hook: "ลองเปลี่ยนมุมเดียว แล้วประสบการณ์ของผู้ชมจะต่างออกไป:",
+    followUp: "แสดงอีกเวอร์ชันที่ยังอยู่ในแนวเดียวกัน แต่ไม่ซ้ำกับผลงานก่อนหน้า",
+  },
+  {
+    title: "เปิดเบื้องหลัง",
+    hook: "ก่อนเห็นผลงานสุดท้าย นี่คือสิ่งที่เกิดขึ้นจริง:",
+    followUp: "ให้เห็นกระบวนการหรือหลักฐานจริงแบบกระชับ โดยไม่เปลี่ยนเป็นบทเรียนยาว",
+  },
+  {
+    title: "เปรียบเทียบให้ชัด",
+    hook: "สองแบบนี้ดูคล้ายกัน แต่ต่างกันตรงจุดสำคัญนี้:",
+    followUp: "เปรียบเทียบจากเกณฑ์ที่ตรวจสอบได้และบอกข้อจำกัดของแต่ละแบบ",
+  },
+  {
+    title: "สรุปและพาไปต่อ",
+    hook: "จากสิ่งที่ผู้ชมตอบมาตลอดสัปดาห์ นี่คือผลงานหรือหัวข้อต่อไป:",
+    followUp: "สรุปสิ่งที่ส่งมอบแล้วจึงค่อยชวนติดตามผลงานต่อไป",
+  },
+] as const;
+
+function applyCreatorDirectionAngle(
+  content: StageContent,
+  request: ResolvedRequest,
+  dayNumber: number,
+  round: number,
+  variationIndex: number
+): StageContent {
+  const angle =
+    CREATOR_DIRECTION_ANGLES[
+      (dayNumber - 1) % CREATOR_DIRECTION_ANGLES.length
+    ];
+
+  return {
+    ...content,
+    title: `${angle.title}: ${content.title}`,
+    topic: `${angle.title} — ${content.topic}`,
+    hook: `${angle.hook} ${content.hook}`,
+    script: `${content.script}\n\n${angle.followUp}`,
+    caption: `${content.caption}\n\nมุมของวันนี้: ${angle.title}`,
+    cta: getVariantCta(
+      request,
+      content.cta,
+      round,
+      variationIndex,
+      dayNumber
+    ),
+  };
+}
+
 function createDay(
   dayNumber: number,
   stage: CampaignStage,
@@ -2276,13 +3321,38 @@ function createDay(
         )
       : rawContent;
 
-  const content = applyContentAngle(
-    planTypeContent,
-    request,
-    dayNumber,
-    round,
-    variationIndex
-  );
+  const isNarrativeCreator =
+    request.planType === "creator" &&
+    (request.contentDirection === "creator-short-film" ||
+      request.contentDirection === "creator-comedy");
+
+  const content = isNarrativeCreator
+    ? {
+        ...planTypeContent,
+        cta: getVariantCta(
+          request,
+          planTypeContent.cta,
+          round,
+          variationIndex,
+          dayNumber
+        ),
+      }
+    : request.planType === "creator" &&
+        request.contentDirection !== "creator-education"
+      ? applyCreatorDirectionAngle(
+          planTypeContent,
+          request,
+          dayNumber,
+          round,
+          variationIndex
+        )
+      : applyContentAngle(
+          planTypeContent,
+          request,
+          dayNumber,
+          round,
+          variationIndex
+        );
 
   return {
     day: dayNumber,
@@ -2338,13 +3408,11 @@ export function generateWeeklyContentPlan(
     options.variationIndex,
     0
   );
-  const sequenceOptions =
-    STAGE_SEQUENCE_VARIANTS[resolved.goal];
-  const sequenceIndex = positiveModulo(
-    variationIndex + round - 1,
-    sequenceOptions.length
+  const stages = getStageSequence(
+    resolved,
+    round,
+    variationIndex
   );
-  const stages = sequenceOptions[sequenceIndex];
 
   const timestamp =
     new Date(resolved.createdAt).getTime();
@@ -2359,9 +3427,11 @@ export function generateWeeklyContentPlan(
 
     title:
       `แผนคอนเทนต์ ${PLATFORM_LABELS[resolved.platform]} 7 วัน ` +
+      `แนว ${CONTENT_DIRECTION_LABELS[resolved.contentDirection]} ` +
       `สำหรับ “${resolved.productOrService}”`,
 
     planType: resolved.planType,
+    contentDirection: resolved.contentDirection,
 
     productOrService:
       resolved.productOrService,
