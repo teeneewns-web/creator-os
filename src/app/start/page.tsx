@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import type { CSSProperties } from "react";
 import { useEffect, useMemo, useState } from "react";
@@ -1088,7 +1088,7 @@ export default function StartPage() {
                   href="https://line.me/R/ti/p/@857xezqh"
                   target="_blank"
                   rel="noreferrer"
-                  style={backButtonStyle}
+                  style={requestDirectionButtonStyle}
                 >
                   แจ้งขอเพิ่มแนวทาง
                 </a>
@@ -2278,7 +2278,23 @@ const backButtonStyle: CSSProperties = {
   fontWeight: 800,
 };
 
+const requestDirectionButtonStyle: CSSProperties = {
+  ...backButtonStyle,
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: "fit-content",
+  maxWidth: "100%",
+  marginTop: "14px",
+  textDecoration: "none",
+  textAlign: "center",
+  lineHeight: 1.35,
+  boxSizing: "border-box",
+  whiteSpace: "normal",
+};
+
 const resetButtonStyle: CSSProperties = {
   ...backButtonStyle,
   color: "#b91c1c",
 };
+
