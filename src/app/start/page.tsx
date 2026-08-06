@@ -11,7 +11,20 @@ import type {
   DailyTime,
   PlanRequest,
   PlanType,
+  SupportNeed,
 } from "../../types/plan-request";
+import {
+  AUDIENCE_STAGE_LABELS,
+  AUDIENCE_STAGE_OPTIONS,
+  AUDIENCE_VALUE_LABELS,
+  DESIRED_ACTION_LABELS,
+  SUPPORT_NEED_LABELS,
+  TONE_LABELS,
+  TONE_OPTIONS,
+  getAudienceValueOptions,
+  getDesiredActionOptions,
+  getSupportNeedOptions,
+} from "../../data/plan-intent-options";
 
 type FormErrors = Partial<Record<keyof PlanRequest, string>>;
 
@@ -543,6 +556,12 @@ function getInitialForm(): PlanRequest {
     promotionDetails: "",
     prohibitedClaims: "",
 
+    audienceStage: "",
+    audienceValue: "",
+    desiredAction: "",
+    supportNeeds: [],
+    tone: "",
+
     goal: "",
     platform: "",
     dailyTime: "",
@@ -606,12 +625,24 @@ function validateStep(
         "กรุณาระบุกลุ่มผู้ชมหลัก";
     }
 
-    if (
-      form.planType === "creator" &&
-      !form.creatorChallenge.trim()
-    ) {
-      errors.creatorChallenge =
-        "กรุณาระบุสิ่งที่ต้องการให้ระบบช่วยอย่างน้อย 1 ข้อ";
+    if (!form.audienceStage) {
+      errors.audienceStage =
+        "กรุณาเลือกระดับความคุ้นเคยของผู้ชม";
+    }
+
+    if (!form.audienceValue) {
+      errors.audienceValue =
+        "กรุณาเลือกสิ่งหลักที่ผู้ชมควรได้รับ";
+    }
+
+    if (form.supportNeeds.length === 0) {
+      errors.supportNeeds =
+        "กรุณาเลือกสิ่งที่ต้องการให้ Creator OS ช่วยอย่างน้อย 1 ข้อ";
+    }
+
+    if (!form.tone) {
+      errors.tone =
+        "กรุณาเลือกน้ำเสียงหลักของคอนเทนต์";
     }
   }
 
@@ -619,6 +650,11 @@ function validateStep(
     if (!form.goal) {
       errors.goal =
         "กรุณาเลือกเป้าหมายหลัก";
+    }
+
+    if (!form.desiredAction) {
+      errors.desiredAction =
+        "กรุณาเลือกสิ่งที่อยากให้ผู้ชมทำต่อ";
     }
 
     if (!form.platform) {
@@ -674,6 +710,24 @@ export default function StartPage() {
   const availableCapabilityOptions =
     getCapabilityOptions(form.planType);
 
+  const availableAudienceValueOptions =
+    getAudienceValueOptions(
+      form.planType,
+      form.contentDirection
+    );
+
+  const availableDesiredActionOptions =
+    getDesiredActionOptions(
+      form.planType,
+      form.goal
+    );
+
+  const availableSupportNeedOptions =
+    getSupportNeedOptions(
+      form.planType,
+      form.contentDirection
+    );
+
   useEffect(() => {
     setForm(readDraft());
     setHydrated(true);
@@ -713,6 +767,10 @@ export default function StartPage() {
       planType,
       contentDirection: "",
       creatorChallenge: "",
+      audienceValue: "",
+      desiredAction: "",
+      supportNeeds: [],
+      tone: "",
       goal: "",
     }));
 
@@ -721,6 +779,10 @@ export default function StartPage() {
       planType: undefined,
       contentDirection: undefined,
       creatorChallenge: undefined,
+      audienceValue: undefined,
+      desiredAction: undefined,
+      supportNeeds: undefined,
+      tone: undefined,
       goal: undefined,
     }));
   }
@@ -738,6 +800,63 @@ export default function StartPage() {
             (item) => item !== capability
           )
         : [...form.capabilities, capability]
+    );
+  }
+
+  function selectContentDirection(
+    direction: ContentDirection
+  ) {
+    setForm((current) => ({
+      ...current,
+      contentDirection: direction,
+      audienceValue: "",
+      supportNeeds: [],
+    }));
+
+    setErrors((current) => ({
+      ...current,
+      contentDirection: undefined,
+      audienceValue: undefined,
+      supportNeeds: undefined,
+    }));
+  }
+
+  function selectGoal(goal: ContentGoal) {
+    setForm((current) => ({
+      ...current,
+      goal,
+      desiredAction: "",
+    }));
+
+    setErrors((current) => ({
+      ...current,
+      goal: undefined,
+      desiredAction: undefined,
+    }));
+  }
+
+  function toggleSupportNeed(
+    need: SupportNeed
+  ) {
+    const selected =
+      form.supportNeeds.includes(need);
+
+    if (!selected && form.supportNeeds.length >= 3) {
+      setErrors((current) => ({
+        ...current,
+        supportNeeds:
+          "เลือกได้ไม่เกิน 3 ข้อ เพื่อให้ระบบรู้ว่าสิ่งใดสำคัญที่สุด",
+      }));
+      return;
+    }
+
+    updateField(
+      "supportNeeds",
+      selected
+        ? form.supportNeeds.filter(
+            (item) => item !== need
+          )
+        : [...form.supportNeeds, need]
     );
   }
 
@@ -790,7 +909,10 @@ export default function StartPage() {
         stepOneErrors.productOrService ||
         stepOneErrors.productHighlights ||
         stepOneErrors.audience ||
-        stepOneErrors.creatorChallenge
+        stepOneErrors.audienceStage ||
+        stepOneErrors.audienceValue ||
+        stepOneErrors.supportNeeds ||
+        stepOneErrors.tone
       ) {
         setStep(1);
       } else {
@@ -931,27 +1053,47 @@ export default function StartPage() {
           </ChoiceSection>
 
           {availableDirectionOptions.length > 0 ? (
-            <ChoiceSection
-              title="ทิศทางคอนเทนต์หลักของคุณ"
-              error={errors.contentDirection}
-            >
-              {availableDirectionOptions.map((option) => (
-                <ChoiceCard
-                  key={option.value}
-                  selected={
-                    form.contentDirection === option.value
-                  }
-                  title={option.title}
-                  description={option.description}
-                  onClick={() =>
-                    updateField(
-                      "contentDirection",
-                      option.value
-                    )
-                  }
-                />
-              ))}
-            </ChoiceSection>
+            <>
+              <ChoiceSection
+                title="ทิศทางคอนเทนต์หลักของคุณ"
+                error={errors.contentDirection}
+              >
+                {availableDirectionOptions.map((option) => (
+                  <ChoiceCard
+                    key={option.value}
+                    selected={
+                      form.contentDirection === option.value
+                    }
+                    title={option.title}
+                    description={option.description}
+                    onClick={() =>
+                      selectContentDirection(
+                        option.value
+                      )
+                    }
+                  />
+                ))}
+              </ChoiceSection>
+
+              <article style={largeSummaryCardStyle}>
+                <p style={summaryLabelStyle}>
+                  ไม่พบแนวทางที่ต้องการ?
+                </p>
+
+                <p style={preserveTextStyle}>
+                  อย่าฝืนเลือกแนวที่ไม่ตรง เพราะระบบจะใช้ตัวเลือกนี้ควบคุมแผนทั้งหมด คุณสามารถแจ้งขอเพิ่มแนวทางใหม่ผ่าน LINE @857xezqh แล้วทีมจะตรวจว่าควรเพิ่มเป็นประเภทมาตรฐานหรือรับเป็นงานเฉพาะ
+                </p>
+
+                <a
+                  href="https://line.me/R/ti/p/@857xezqh"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={backButtonStyle}
+                >
+                  แจ้งขอเพิ่มแนวทาง
+                </a>
+              </article>
+            </>
           ) : null}
 
           {stepOneCopy ? (
@@ -996,6 +1138,53 @@ export default function StartPage() {
                 </Field>
               </div>
 
+              <ChoiceSection
+                title="ผู้ชมส่วนใหญ่รู้จักคุณในระดับไหน?"
+                error={errors.audienceStage}
+              >
+                {AUDIENCE_STAGE_OPTIONS.map((option) => (
+                  <ChoiceCard
+                    key={option.value}
+                    selected={
+                      form.audienceStage === option.value
+                    }
+                    title={option.title}
+                    description={option.description}
+                    onClick={() =>
+                      updateField(
+                        "audienceStage",
+                        option.value
+                      )
+                    }
+                  />
+                ))}
+              </ChoiceSection>
+
+              <ChoiceSection
+                title="สิ่งหลักที่ผู้ชมควรได้รับจากคอนเทนต์นี้"
+                error={errors.audienceValue}
+              >
+                {availableAudienceValueOptions.map(
+                  (option) => (
+                    <ChoiceCard
+                      key={option.value}
+                      selected={
+                        form.audienceValue ===
+                        option.value
+                      }
+                      title={option.title}
+                      description={option.description}
+                      onClick={() =>
+                        updateField(
+                          "audienceValue",
+                          option.value
+                        )
+                      }
+                    />
+                  )
+                )}
+              </ChoiceSection>
+
               <Field
                 label={stepOneCopy.highlightsLabel}
                 required
@@ -1016,6 +1205,44 @@ export default function StartPage() {
                   style={textareaStyle}
                 />
               </Field>
+
+              <ChoiceSection
+                title="ส่วนไหนที่ต้องการให้ Creator OS ช่วยมากที่สุด? (เลือกได้ไม่เกิน 3 ข้อ)"
+                error={errors.supportNeeds}
+              >
+                {availableSupportNeedOptions.map(
+                  (option) => (
+                    <ChoiceCard
+                      key={option.value}
+                      selected={form.supportNeeds.includes(
+                        option.value
+                      )}
+                      title={option.title}
+                      description={option.description}
+                      onClick={() =>
+                        toggleSupportNeed(option.value)
+                      }
+                    />
+                  )
+                )}
+              </ChoiceSection>
+
+              <ChoiceSection
+                title="น้ำเสียงหลักของคอนเทนต์"
+                error={errors.tone}
+              >
+                {TONE_OPTIONS.map((option) => (
+                  <ChoiceCard
+                    key={option.value}
+                    selected={form.tone === option.value}
+                    title={option.title}
+                    description={option.description}
+                    onClick={() =>
+                      updateField("tone", option.value)
+                    }
+                  />
+                ))}
+              </ChoiceSection>
 
               <Field
                 label={stepOneCopy.concernsLabel}
@@ -1038,10 +1265,8 @@ export default function StartPage() {
 
               {form.planType === "creator" ? (
                 <Field
-                  label="ตอนนี้คุณติดปัญหาอะไร และต้องการให้ Creator OS ช่วยอะไร?"
-                  required
-                  error={errors.creatorChallenge}
-                  helpText="ข้อมูลนี้เป็นโจทย์ของผู้สร้าง ระบบจะใช้แก้ปัญหาให้คุณ และจะไม่เอาไปเขียนเป็นปัญหาของผู้ชม"
+                  label="รายละเอียดปัญหาหรือข้อจำกัดเพิ่มเติม"
+                  helpText="เว้นว่างได้ เพราะทิศทางหลักถูกกำหนดจากตัวเลือกแล้ว ใช้ช่องนี้เฉพาะข้อมูลเฉพาะตัวที่ตัวเลือกยังบอกไม่ครบ"
                 >
                   <textarea
                     value={form.creatorChallenge}
@@ -1127,7 +1352,29 @@ export default function StartPage() {
                 title={option.title}
                 description={option.description}
                 onClick={() =>
-                  updateField("goal", option.value)
+                  selectGoal(option.value)
+                }
+              />
+            ))}
+          </ChoiceSection>
+
+          <ChoiceSection
+            title="หลังดูคอนเทนต์แล้ว อยากให้ผู้ชมทำอะไรต่อเป็นหลัก?"
+            error={errors.desiredAction}
+          >
+            {availableDesiredActionOptions.map((option) => (
+              <ChoiceCard
+                key={option.value}
+                selected={
+                  form.desiredAction === option.value
+                }
+                title={option.title}
+                description={option.description}
+                onClick={() =>
+                  updateField(
+                    "desiredAction",
+                    option.value
+                  )
                 }
               />
             ))}
@@ -1268,12 +1515,66 @@ export default function StartPage() {
             />
 
             <SummaryCard
+              label="ผู้ชมรู้จักคุณในระดับ"
+              value={
+                form.audienceStage
+                  ? AUDIENCE_STAGE_LABELS[
+                      form.audienceStage
+                    ]
+                  : "-"
+              }
+            />
+
+            <SummaryCard
+              label="สิ่งหลักที่ผู้ชมควรได้รับ"
+              value={
+                form.audienceValue
+                  ? AUDIENCE_VALUE_LABELS[
+                      form.audienceValue
+                    ]
+                  : "-"
+              }
+            />
+
+            <SummaryCard
+              label="สิ่งที่ต้องการให้ระบบช่วย"
+              value={
+                form.supportNeeds
+                  .map(
+                    (need) =>
+                      SUPPORT_NEED_LABELS[need]
+                  )
+                  .join(", ") || "-"
+              }
+            />
+
+            <SummaryCard
+              label="น้ำเสียงหลัก"
+              value={
+                form.tone
+                  ? TONE_LABELS[form.tone]
+                  : "-"
+              }
+            />
+
+            <SummaryCard
               label="เป้าหมาย"
               value={
                 availableGoalOptions.find(
                   (option) =>
                     option.value === form.goal
                 )?.title || "-"
+              }
+            />
+
+            <SummaryCard
+              label="สิ่งที่อยากให้ผู้ชมทำต่อ"
+              value={
+                form.desiredAction
+                  ? DESIRED_ACTION_LABELS[
+                      form.desiredAction
+                    ]
+                  : "-"
               }
             />
 
@@ -1340,11 +1641,11 @@ export default function StartPage() {
           {form.planType === "creator" ? (
             <article style={largeSummaryCardStyle}>
               <p style={summaryLabelStyle}>
-                สิ่งที่ต้องการให้ Creator OS ช่วย
+                รายละเอียดปัญหาหรือข้อจำกัดเพิ่มเติม
               </p>
 
               <p style={preserveTextStyle}>
-                {form.creatorChallenge || "-"}
+                {form.creatorChallenge || "ไม่ได้ระบุ"}
               </p>
             </article>
           ) : null}

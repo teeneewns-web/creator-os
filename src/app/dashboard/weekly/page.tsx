@@ -6,6 +6,13 @@ import Link from "next/link";
 
 import CopyButton from "../../../components/dashboard/CopyButton";
 import { facebookBagSamplePlan } from "../../../data/weekly-plans/facebook-bag-sample";
+import {
+  AUDIENCE_STAGE_LABELS,
+  AUDIENCE_VALUE_LABELS,
+  DESIRED_ACTION_LABELS,
+  SUPPORT_NEED_LABELS,
+  TONE_LABELS,
+} from "../../../data/plan-intent-options";
 
 import type {
   ContentGoal,
@@ -954,6 +961,26 @@ export default function WeeklyDashboardPage() {
             </p>
           </article>
         </div>
+
+        <article style={strategyCardStyle}>
+          <p style={strategyLabelStyle}>
+            ระบบเข้าใจคำสั่งของคุณว่า
+          </p>
+
+          <p style={strategyTextStyle}>
+            ผู้ชมอยู่ในระดับ “{AUDIENCE_STAGE_LABELS[plan.audienceStage || "new"]}”
+            และควรได้รับ “{AUDIENCE_VALUE_LABELS[plan.audienceValue || "solve"]}”
+            จากคอนเทนต์นี้ โดยคำชวนหลักคือ
+            “{DESIRED_ACTION_LABELS[plan.desiredAction || "follow"]}”
+            ใช้น้ำเสียง “{TONE_LABELS[plan.tone || "friendly"]}”
+            และให้น้ำหนักกับ{" "}
+            {(plan.supportNeeds || [])
+              .map(
+                (need) => SUPPORT_NEED_LABELS[need]
+              )
+              .join(", ") || "บทและลำดับงานพร้อมใช้"}
+          </p>
+        </article>
 
         <article style={strategyCardStyle}>
           <p style={strategyLabelStyle}>

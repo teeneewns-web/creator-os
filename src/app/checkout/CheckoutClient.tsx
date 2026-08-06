@@ -16,6 +16,13 @@ import type {
   PlanRequest,
   PlanType,
 } from "../../types/plan-request";
+import {
+  AUDIENCE_STAGE_LABELS,
+  AUDIENCE_VALUE_LABELS,
+  DESIRED_ACTION_LABELS,
+  SUPPORT_NEED_LABELS,
+  TONE_LABELS,
+} from "../../data/plan-intent-options";
 
 const REQUEST_STORAGE_KEY =
   "creator-os-plan-request-v1";
@@ -322,12 +329,41 @@ export default function CheckoutClient({
       `${checkoutCopy.audience}: ${valueOrDash(
         request.audience
       )}`,
+      `ผู้ชมรู้จักคุณในระดับ: ${
+        request.audienceStage
+          ? AUDIENCE_STAGE_LABELS[
+              request.audienceStage
+            ]
+          : "ไม่ได้ระบุ"
+      }`,
+      `สิ่งหลักที่ผู้ชมควรได้รับ: ${
+        request.audienceValue
+          ? AUDIENCE_VALUE_LABELS[
+              request.audienceValue
+            ]
+          : "ไม่ได้ระบุ"
+      }`,
+      `สิ่งที่ต้องการให้ระบบช่วย: ${
+        Array.isArray(request.supportNeeds) &&
+        request.supportNeeds.length > 0
+          ? request.supportNeeds
+              .map(
+                (need) => SUPPORT_NEED_LABELS[need]
+              )
+              .join(", ")
+          : "ไม่ได้ระบุ"
+      }`,
+      `น้ำเสียงหลัก: ${
+        request.tone
+          ? TONE_LABELS[request.tone]
+          : "ไม่ได้ระบุ"
+      }`,
       `${checkoutCopy.concerns}: ${valueOrDash(
         request.customerConcerns
       )}`,
       ...(request.planType === "creator"
         ? [
-            `สิ่งที่ต้องการให้ Creator OS ช่วย: ${valueOrDash(
+            `รายละเอียดปัญหาหรือข้อจำกัดเพิ่มเติม: ${valueOrDash(
               request.creatorChallenge
             )}`,
           ]
@@ -341,6 +377,13 @@ export default function CheckoutClient({
       `เป้าหมาย: ${
         request.goal
           ? goalLabels[request.goal]
+          : "ไม่ได้ระบุ"
+      }`,
+      `สิ่งที่อยากให้ผู้ชมทำต่อ: ${
+        request.desiredAction
+          ? DESIRED_ACTION_LABELS[
+              request.desiredAction
+            ]
           : "ไม่ได้ระบุ"
       }`,
       `แพลตฟอร์ม: ${
@@ -559,6 +602,52 @@ export default function CheckoutClient({
             />
 
             <SummaryItem
+              label="ระดับความคุ้นเคยของผู้ชม"
+              value={
+                request.audienceStage
+                  ? AUDIENCE_STAGE_LABELS[
+                      request.audienceStage
+                    ]
+                  : "ไม่ได้ระบุ"
+              }
+            />
+
+            <SummaryItem
+              label="สิ่งหลักที่ผู้ชมควรได้รับ"
+              value={
+                request.audienceValue
+                  ? AUDIENCE_VALUE_LABELS[
+                      request.audienceValue
+                    ]
+                  : "ไม่ได้ระบุ"
+              }
+            />
+
+            <SummaryItem
+              label="สิ่งที่ต้องการให้ระบบช่วย"
+              value={
+                Array.isArray(request.supportNeeds) &&
+                request.supportNeeds.length > 0
+                  ? request.supportNeeds
+                      .map(
+                        (need) =>
+                          SUPPORT_NEED_LABELS[need]
+                      )
+                      .join(", ")
+                  : "ไม่ได้ระบุ"
+              }
+            />
+
+            <SummaryItem
+              label="น้ำเสียงหลัก"
+              value={
+                request.tone
+                  ? TONE_LABELS[request.tone]
+                  : "ไม่ได้ระบุ"
+              }
+            />
+
+            <SummaryItem
               label={checkoutCopy.concerns}
               value={valueOrDash(
                 request.customerConcerns
@@ -567,7 +656,7 @@ export default function CheckoutClient({
 
             {request.planType === "creator" ? (
               <SummaryItem
-                label="สิ่งที่ต้องการให้ Creator OS ช่วย"
+                label="รายละเอียดปัญหาหรือข้อจำกัดเพิ่มเติม"
                 value={valueOrDash(
                   request.creatorChallenge
                 )}
@@ -593,6 +682,17 @@ export default function CheckoutClient({
               value={
                 request.goal
                   ? goalLabels[request.goal]
+                  : "ไม่ได้ระบุ"
+              }
+            />
+
+            <SummaryItem
+              label="สิ่งที่อยากให้ผู้ชมทำต่อ"
+              value={
+                request.desiredAction
+                  ? DESIRED_ACTION_LABELS[
+                      request.desiredAction
+                    ]
                   : "ไม่ได้ระบุ"
               }
             />

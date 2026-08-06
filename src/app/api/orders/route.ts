@@ -27,6 +27,12 @@ function isPlanRequest(value: unknown): value is PlanRequest {
         typeof request.creatorChallenge === "string") &&
       typeof request.promotionDetails === "string" &&
       typeof request.prohibitedClaims === "string" &&
+      request.audienceStage &&
+      request.audienceValue &&
+      request.desiredAction &&
+      Array.isArray(request.supportNeeds) &&
+      request.supportNeeds.length > 0 &&
+      request.tone &&
       request.goal &&
       request.platform &&
       request.dailyTime &&

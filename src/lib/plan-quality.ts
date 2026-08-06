@@ -12,7 +12,7 @@ import type {
   WeeklyContentPlan,
 } from "../types/weekly-content-plan";
 
-export const CURRENT_PLAN_QUALITY_VERSION = 2;
+export const CURRENT_PLAN_QUALITY_VERSION = 3;
 export const PLAN_QUALITY_THRESHOLD = 85;
 
 export type AuditPlanQualityOptions = {
@@ -245,9 +245,16 @@ function auditCapabilityCompliance(
     "ออกหน้ากล้อง",
     "ถ่ายใบหน้า",
   ];
-  const requiresFace = faceRequiredPhrases.some(
-    (phrase) => executionText.includes(phrase)
-  );
+  const narrativeCreator =
+    request.planType === "creator" &&
+    (request.contentDirection === "creator-short-film" ||
+      request.contentDirection === "creator-comedy");
+
+  const requiresFace =
+    !narrativeCreator &&
+    faceRequiredPhrases.some(
+      (phrase) => executionText.includes(phrase)
+    );
 
   if (!canProduceVideo && videoDays.length > 0) {
     return {
@@ -277,10 +284,10 @@ function auditCapabilityCompliance(
 }
 
 function getMaximumMinutes(request: PlanRequest) {
-  if (request.dailyTime === "10-20") return 25;
-  if (request.dailyTime === "30-45") return 55;
-  if (request.dailyTime === "60-90") return 100;
-  if (request.dailyTime === "90-plus") return 240;
+  if (request.dailyTime === "10-20") return 20;
+  if (request.dailyTime === "30-45") return 45;
+  if (request.dailyTime === "60-90") return 90;
+  if (request.dailyTime === "90-plus") return 180;
 
   return 60;
 }
@@ -572,6 +579,24 @@ export function auditPlanQuality(
       compactText(request.productOrService),
     compactText(plan.audience) ===
       compactText(request.audience || plan.audience),
+    request.audienceStage
+      ? plan.audienceStage === request.audienceStage
+      : true,
+    request.audienceValue
+      ? plan.audienceValue === request.audienceValue
+      : true,
+    request.desiredAction
+      ? plan.desiredAction === request.desiredAction
+      : true,
+    request.tone
+      ? plan.tone === request.tone
+      : true,
+    Array.isArray(request.supportNeeds) &&
+    request.supportNeeds.length > 0
+      ? request.supportNeeds.every((need) =>
+          plan.supportNeeds.includes(need)
+        )
+      : true,
   ];
   const alignmentPassedCount = alignmentResults.filter(
     Boolean
@@ -592,7 +617,7 @@ export function auditPlanQuality(
       ),
       alignmentPassed,
       alignmentPassed
-        ? "ประเภท หัวข้อ กลุ่มเป้าหมาย แพลตฟอร์ม และเป้าหมายตรงกับคำสั่งซื้อ"
+        ? "ประเภท ทิศทาง ผู้ชม คุณค่าที่ต้องส่งมอบ คำชวน น้ำเสียง แพลตฟอร์ม และเป้าหมายตรงกับคำสั่งซื้อ"
         : `ข้อมูลตรง ${alignmentPassedCount}/${alignmentResults.length} จุด ต้องสร้างแผนใหม่`
     )
   );

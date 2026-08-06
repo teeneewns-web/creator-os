@@ -51,6 +51,49 @@ export type ContentDirection =
   | "creator-art"
   | "creator-lifestyle";
 
+export type AudienceStage =
+  | "new"
+  | "aware"
+  | "considering"
+  | "existing";
+
+export type AudienceValue =
+  | "entertain"
+  | "learn"
+  | "solve"
+  | "compare"
+  | "inspire"
+  | "trust"
+  | "participate";
+
+export type DesiredAction =
+  | "follow"
+  | "comment"
+  | "save"
+  | "share"
+  | "message"
+  | "click"
+  | "order"
+  | "book";
+
+export type SupportNeed =
+  | "ideas"
+  | "full-script"
+  | "shot-list"
+  | "caption-cta"
+  | "editing"
+  | "schedule"
+  | "sales-angle"
+  | "consistency";
+
+export type ContentTone =
+  | "friendly"
+  | "expert"
+  | "fun"
+  | "emotional"
+  | "premium"
+  | "direct";
+
 export type PlanRequest = {
   planType: PlanType | "";
   contentDirection: ContentDirection | "";
@@ -62,6 +105,12 @@ export type PlanRequest = {
   creatorChallenge: string;
   promotionDetails: string;
   prohibitedClaims: string;
+
+  audienceStage: AudienceStage | "";
+  audienceValue: AudienceValue | "";
+  desiredAction: DesiredAction | "";
+  supportNeeds: SupportNeed[];
+  tone: ContentTone | "";
 
   goal: ContentGoal | "";
   platform: ContentPlatform | "";

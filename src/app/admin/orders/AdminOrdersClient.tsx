@@ -3,6 +3,13 @@
 import { useEffect, useState } from "react";
 
 import type { PlanRequest } from "../../../types/plan-request";
+import {
+  AUDIENCE_STAGE_LABELS,
+  AUDIENCE_VALUE_LABELS,
+  DESIRED_ACTION_LABELS,
+  SUPPORT_NEED_LABELS,
+  TONE_LABELS,
+} from "../../../data/plan-intent-options";
 
 type AdminOrder = {
   orderId: string;
@@ -274,9 +281,51 @@ export default function AdminOrdersClient() {
                   <p>
                     <strong>เป้าหมาย:</strong> {order.request.goal}
                   </p>
+                  <p>
+                    <strong>ผู้ชมรู้จักคุณ:</strong>{" "}
+                    {order.request.audienceStage
+                      ? AUDIENCE_STAGE_LABELS[
+                          order.request.audienceStage
+                        ]
+                      : "ไม่ได้ระบุ"}
+                  </p>
+                  <p>
+                    <strong>สิ่งที่ผู้ชมควรได้รับ:</strong>{" "}
+                    {order.request.audienceValue
+                      ? AUDIENCE_VALUE_LABELS[
+                          order.request.audienceValue
+                        ]
+                      : "ไม่ได้ระบุ"}
+                  </p>
+                  <p>
+                    <strong>สิ่งที่อยากให้ผู้ชมทำต่อ:</strong>{" "}
+                    {order.request.desiredAction
+                      ? DESIRED_ACTION_LABELS[
+                          order.request.desiredAction
+                        ]
+                      : "ไม่ได้ระบุ"}
+                  </p>
+                  <p>
+                    <strong>น้ำเสียง:</strong>{" "}
+                    {order.request.tone
+                      ? TONE_LABELS[order.request.tone]
+                      : "ไม่ได้ระบุ"}
+                  </p>
+                  <p className="sm:col-span-2">
+                    <strong>สิ่งที่ต้องการให้ระบบช่วย:</strong>{" "}
+                    {Array.isArray(order.request.supportNeeds) &&
+                    order.request.supportNeeds.length > 0
+                      ? order.request.supportNeeds
+                          .map(
+                            (need) =>
+                              SUPPORT_NEED_LABELS[need]
+                          )
+                          .join(", ")
+                      : "ไม่ได้ระบุ"}
+                  </p>
                   {order.request.planType === "creator" ? (
                     <p className="sm:col-span-2">
-                      <strong>สิ่งที่ต้องการให้ระบบช่วย:</strong>{" "}
+                      <strong>รายละเอียดปัญหาหรือข้อจำกัดเพิ่มเติม:</strong>{" "}
                       {order.request.creatorChallenge || "ไม่ได้ระบุ"}
                     </p>
                   ) : null}

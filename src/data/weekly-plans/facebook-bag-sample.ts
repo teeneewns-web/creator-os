@@ -19,6 +19,16 @@ export const facebookBagSamplePlan: WeeklyContentPlan = {
   audience:
     "คนทำงาน นักเรียน นักศึกษา แม่ค้า และผู้ที่ต้องพกของหลายชิ้นในแต่ละวัน",
 
+  audienceStage: "new",
+  audienceValue: "solve",
+  desiredAction: "order",
+  supportNeeds: [
+    "full-script",
+    "caption-cta",
+    "sales-angle",
+  ],
+  tone: "friendly",
+
   platform: "facebook",
   goal: "sell",
   intensity: "standard",

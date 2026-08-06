@@ -1,10 +1,22 @@
 import type {
+  AudienceStage,
+  AudienceValue,
   ContentCapability,
   ContentDirection,
+  ContentTone,
   DailyTime,
+  DesiredAction,
   PlanRequest,
   PlanType,
+  SupportNeed,
 } from "../types/plan-request";
+import {
+  AUDIENCE_STAGE_LABELS,
+  AUDIENCE_VALUE_LABELS,
+  DESIRED_ACTION_LABELS,
+  SUPPORT_NEED_LABELS,
+  TONE_LABELS,
+} from "../data/plan-intent-options";
 
 import type {
   ContentFormat,
@@ -36,6 +48,12 @@ type ResolvedRequest = {
   audience: string;
   customerConcerns: string[];
   creatorChallenge: string;
+
+  audienceStage: AudienceStage;
+  audienceValue: AudienceValue;
+  desiredAction: DesiredAction;
+  supportNeeds: SupportNeed[];
+  tone: ContentTone;
   promotionDetails: string;
   prohibitedClaims: string[];
 
@@ -409,6 +427,72 @@ const DIRECTION_STAGE_SEQUENCES: Partial<
   ],
 };
 
+function prioritizeSequenceForAudienceStage(
+  sequence: CampaignStage[],
+  audienceStage: AudienceStage
+): CampaignStage[] {
+  const priorities: Record<
+    AudienceStage,
+    CampaignStage[]
+  > = {
+    new: [
+      "problem",
+      "story",
+      "value",
+      "demo",
+      "trust",
+      "community",
+      "action",
+    ],
+    aware: [
+      "value",
+      "demo",
+      "story",
+      "behind-scenes",
+      "trust",
+      "community",
+      "action",
+    ],
+    considering: [
+      "objection",
+      "trust",
+      "demo",
+      "comparison",
+      "value",
+      "community",
+      "action",
+    ],
+    existing: [
+      "community",
+      "story",
+      "behind-scenes",
+      "demo",
+      "value",
+      "trust",
+      "action",
+    ],
+  };
+
+  const rank = new Map(
+    priorities[audienceStage].map(
+      (stage, index) => [stage, index]
+    )
+  );
+
+  return [...sequence].sort((left, right) => {
+    const leftRank =
+      rank.get(left) ?? priorities[audienceStage].length;
+    const rightRank =
+      rank.get(right) ?? priorities[audienceStage].length;
+
+    if (leftRank !== rightRank) {
+      return leftRank - rightRank;
+    }
+
+    return sequence.indexOf(left) - sequence.indexOf(right);
+  });
+}
+
 function getStageSequence(
   request: ResolvedRequest,
   round: number,
@@ -420,7 +504,10 @@ function getStageSequence(
     ];
 
   if (directionSequence) {
-    return directionSequence;
+    return prioritizeSequenceForAudienceStage(
+      directionSequence,
+      request.audienceStage
+    );
   }
 
   const sequenceOptions =
@@ -431,7 +518,10 @@ function getStageSequence(
     sequenceOptions.length
   );
 
-  return sequenceOptions[sequenceIndex];
+  return prioritizeSequenceForAudienceStage(
+    sequenceOptions[sequenceIndex],
+    request.audienceStage
+  );
 }
 
 const CONTENT_ANGLES: ContentAngle[] = [
@@ -615,12 +705,142 @@ function resolveIntensity(
   return "standard";
 }
 
+function resolveAudienceStage(
+  value: PlanRequest["audienceStage"]
+): AudienceStage {
+  if (
+    value === "aware" ||
+    value === "considering" ||
+    value === "existing"
+  ) {
+    return value;
+  }
+
+  return "new";
+}
+
+function resolveAudienceValue(
+  value: PlanRequest["audienceValue"],
+  planType: PlanType,
+  direction: ContentDirection
+): AudienceValue {
+  if (
+    value === "entertain" ||
+    value === "learn" ||
+    value === "solve" ||
+    value === "compare" ||
+    value === "inspire" ||
+    value === "trust" ||
+    value === "participate"
+  ) {
+    return value;
+  }
+
+  if (
+    direction === "creator-short-film" ||
+    direction === "creator-comedy" ||
+    direction === "creator-gaming"
+  ) {
+    return "entertain";
+  }
+
+  if (planType === "creator") {
+    return "inspire";
+  }
+
+  return planType === "service" ? "trust" : "solve";
+}
+
+function resolveDesiredAction(
+  value: PlanRequest["desiredAction"],
+  planType: PlanType,
+  goal: ContentGoal
+): DesiredAction {
+  if (
+    value === "follow" ||
+    value === "comment" ||
+    value === "save" ||
+    value === "share" ||
+    value === "message" ||
+    value === "click" ||
+    value === "order" ||
+    value === "book"
+  ) {
+    return value;
+  }
+
+  if (planType === "creator") {
+    return goal === "engagement" ? "comment" : "follow";
+  }
+
+  if (planType === "service") {
+    return goal === "sell" ? "book" : "message";
+  }
+
+  return goal === "sell" ? "order" : "click";
+}
+
+function resolveSupportNeeds(
+  value: PlanRequest["supportNeeds"],
+  planType: PlanType
+): SupportNeed[] {
+  const allowed: SupportNeed[] = [
+    "ideas",
+    "full-script",
+    "shot-list",
+    "caption-cta",
+    "editing",
+    "schedule",
+    "sales-angle",
+    "consistency",
+  ];
+
+  const selected = Array.isArray(value)
+    ? value.filter(
+        (item): item is SupportNeed =>
+          allowed.includes(item as SupportNeed)
+      )
+    : [];
+
+  if (selected.length > 0) {
+    return selected.slice(0, 3);
+  }
+
+  return planType === "creator"
+    ? ["ideas", "full-script", "shot-list"]
+    : ["full-script", "caption-cta", "schedule"];
+}
+
+function resolveTone(
+  value: PlanRequest["tone"]
+): ContentTone {
+  if (
+    value === "expert" ||
+    value === "fun" ||
+    value === "emotional" ||
+    value === "premium" ||
+    value === "direct"
+  ) {
+    return value;
+  }
+
+  return "friendly";
+}
+
 function resolveRequest(
   request: PlanRequest
 ): ResolvedRequest {
   const planType = resolvePlanType(
     request.planType
   );
+
+  const contentDirection =
+    resolveContentDirection(
+      request.contentDirection,
+      planType
+    );
+
+  const goal = resolveGoal(request.goal);
 
   const defaults = getPlanDefaults(planType);
 
@@ -635,10 +855,7 @@ function resolveRequest(
 
   return {
     planType,
-    contentDirection: resolveContentDirection(
-      request.contentDirection,
-      planType
-    ),
+    contentDirection,
 
     productOrService:
       request.productOrService.trim() ||
@@ -661,12 +878,38 @@ function resolveRequest(
     creatorChallenge:
       request.creatorChallenge?.trim() || "",
 
+    audienceStage:
+      resolveAudienceStage(request.audienceStage),
+
+    audienceValue:
+      resolveAudienceValue(
+        request.audienceValue,
+        planType,
+        contentDirection
+      ),
+
+    desiredAction:
+      resolveDesiredAction(
+        request.desiredAction,
+        planType,
+        goal
+      ),
+
+    supportNeeds:
+      resolveSupportNeeds(
+        request.supportNeeds,
+        planType
+      ),
+
+    tone:
+      resolveTone(request.tone),
+
     promotionDetails:
       request.promotionDetails.trim(),
 
     prohibitedClaims,
 
-    goal: resolveGoal(request.goal),
+    goal,
     platform: resolvePlatform(request.platform),
     intensity: resolveIntensity(request.dailyTime),
 
@@ -902,32 +1145,23 @@ function getEstimatedMinutes(
   intensity: PlanIntensity,
   format: ContentFormat
 ) {
-  let minutes = 30;
-
   if (intensity === "light") {
-    minutes = 15;
+    if (format === "text") return 10;
+    if (format === "image") return 15;
+    return 20;
   }
 
-  if (intensity === "growth") {
-    minutes = 50;
+  if (intensity === "standard") {
+    if (format === "text") return 25;
+    if (format === "image") return 30;
+    if (format === "carousel") return 35;
+    return 45;
   }
 
-  if (
-    format === "reel" ||
-    format === "video"
-  ) {
-    minutes += 10;
-  }
-
-  if (format === "carousel") {
-    minutes += 5;
-  }
-
-  if (format === "text") {
-    minutes -= 5;
-  }
-
-  return Math.max(10, minutes);
+  if (format === "text") return 45;
+  if (format === "image") return 55;
+  if (format === "carousel") return 65;
+  return 80;
 }
 
 function getPrimaryAction(
@@ -935,35 +1169,35 @@ function getPrimaryAction(
 ) {
   const subject = request.productOrService;
 
-  if (request.goal === "sell") {
-    if (request.planType === "service") {
-      return `ดูรายละเอียดของ ${subject} ให้ครบ แล้วติดต่อสอบถามหรือจองเมื่อพร้อม`;
-    }
-
-    if (request.planType === "creator") {
-      return "ติดตามเพจ ดูรายละเอียดข้อเสนอ หรือส่งข้อความสอบถามเมื่อพร้อม";
-    }
-
-    return `ดูรายละเอียดของ ${subject} ให้ครบก่อนตัดสินใจ`;
+  if (request.desiredAction === "follow") {
+    return "กดติดตามไว้เพื่อดูผลงานหรือเนื้อหาต่อไป";
   }
 
-  if (request.goal === "grow") {
-    return "ติดตามไว้เพื่อดูหัวข้อและตัวอย่างต่อไป";
+  if (request.desiredAction === "comment") {
+    return "พิมพ์ความคิดเห็นหรือคำตอบของคุณไว้ใต้โพสต์";
   }
 
-  if (request.goal === "engagement") {
-    return "พิมพ์ความคิดเห็นหรือประสบการณ์ของคุณไว้ใต้โพสต์";
+  if (request.desiredAction === "save") {
+    return "บันทึกโพสต์นี้ไว้กลับมาดูหรือทำตามภายหลัง";
   }
 
-  if (request.goal === "trust") {
-    return "บันทึกโพสต์นี้ไว้ และถามข้อมูลเพิ่มเติมในจุดที่ยังไม่แน่ใจ";
+  if (request.desiredAction === "share") {
+    return "แชร์โพสต์นี้ให้คนที่น่าจะสนใจหรือเคยเจอสถานการณ์คล้ายกัน";
   }
 
-  if (request.planType === "creator") {
-    return "ติดตามเพจ บันทึกโพสต์ หรือส่งข้อความเพื่อดูรายละเอียดเพิ่มเติม";
+  if (request.desiredAction === "message") {
+    return `ส่งข้อความสอบถามรายละเอียดของ ${subject} เมื่อพร้อม`;
   }
 
-  return `ดูรายละเอียดของ ${subject} หรือสอบถามข้อมูลเพิ่มเติม`;
+  if (request.desiredAction === "click") {
+    return `กดดูรายละเอียดของ ${subject} ต่อจากลิงก์หรือช่องทางที่ระบุ`;
+  }
+
+  if (request.desiredAction === "order") {
+    return `ตรวจรายละเอียดของ ${subject} ให้ครบ แล้วสั่งซื้อผ่านช่องทางที่ระบุ`;
+  }
+
+  return `ตรวจรายละเอียดของ ${subject} ให้ครบ แล้วจองคิวผ่านช่องทางที่ระบุ`;
 }
 
 function getWeeklyObjective(
@@ -979,11 +1213,11 @@ function getWeeklyObjective(
       request.contentDirection === "creator-short-film" ||
       request.contentDirection === "creator-comedy"
     ) {
-      return `ผลิตผลงาน ${directionLabel} ที่ ${request.audience} ดูแล้วเข้าใจและอยากติดตามต่อ โดยระบบช่วยแก้โจทย์ของผู้สร้างด้วยบทพร้อมถ่าย ลำดับฉาก และตอนจบที่เหมาะกับเวลาที่มี`;
+      return `ผลิตผลงาน ${directionLabel} ให้ ${request.audience} ได้รับ “${AUDIENCE_VALUE_LABELS[request.audienceValue]}” และพาไปสู่การ “${DESIRED_ACTION_LABELS[request.desiredAction]}” โดยระบบเน้น ${request.supportNeeds.map((need) => SUPPORT_NEED_LABELS[need]).join(", ")} ภายในเวลาที่มี`;
     }
 
     if (request.contentDirection !== "creator-education") {
-      return `สร้างผลงานแนว ${directionLabel} เกี่ยวกับ ${request.productOrService} ให้ตรงกับสิ่งที่ ${request.audience} ต้องการดู และทำให้ทิศทางเพจชัดเจนตลอด 7 วัน`;
+      return `สร้างผลงานแนว ${directionLabel} เกี่ยวกับ ${request.productOrService} ให้ ${request.audience} ได้รับ “${AUDIENCE_VALUE_LABELS[request.audienceValue]}” ด้วยน้ำเสียง “${TONE_LABELS[request.tone]}” และทำให้ทิศทางเพจชัดเจนตลอด 7 วัน`;
     }
 
     if (request.goal === "sell") {
@@ -1077,6 +1311,9 @@ function getStrategyExplanation(
   return [
     `แผนประเภท ${PLAN_TYPE_LABELS[request.planType]} ออกแบบสำหรับ ${platformLabel} โดยมีเป้าหมายหลักคือ ${goalLabel}`,
     directionStrategy,
+    `ผู้ชมหลักอยู่ในระดับ “${AUDIENCE_STAGE_LABELS[request.audienceStage]}” และคอนเทนต์ต้องส่งมอบ “${AUDIENCE_VALUE_LABELS[request.audienceValue]}”`,
+    `คำชวนหลักของแผนคือ “${DESIRED_ACTION_LABELS[request.desiredAction]}” โดยใช้น้ำเสียง “${TONE_LABELS[request.tone]}”`,
+    `ระบบให้น้ำหนักกับ ${request.supportNeeds.map((need) => SUPPORT_NEED_LABELS[need]).join(", ")}`,
     `จำนวนและรูปแบบงานถูกปรับเป็น ${INTENSITY_LABELS[request.intensity]} ตามเวลาที่ผู้ใช้เลือก`,
     `เวลาที่แนะนำเป็นช่วงเริ่มต้นสำหรับทดลอง ควรปรับตามข้อมูลผู้ชมจริงเมื่อมีผลการใช้งาน`,
   ].join(" ");
@@ -1889,8 +2126,10 @@ function createNarrativeCreatorStageContent(
   const audience = request.audience;
   const audienceShort = shortAudience(audience);
   const viewerExpectation =
-    request.customerConcerns[0] ||
-    "เรื่องสั้นที่เข้าใจง่ายและดูจบได้";
+    AUDIENCE_VALUE_LABELS[request.audienceValue] +
+    (request.customerConcerns[0]
+      ? ` โดยเฉพาะ ${request.customerConcerns[0]}`
+      : "");
   const firstHighlight =
     request.productHighlights[0] ||
     "ถ่ายด้วยอุปกรณ์ที่มี";
@@ -2237,7 +2476,8 @@ function createFocusedCreatorStageContent(
     request.productHighlights[1] ||
     "มุมที่แตกต่างจากเนื้อหาทั่วไป";
   const expectation =
-    request.customerConcerns[0];
+    request.customerConcerns[0] ||
+    AUDIENCE_VALUE_LABELS[request.audienceValue];
   const action = getPrimaryAction(request);
 
   const common = {
@@ -3294,6 +3534,35 @@ function applyCreatorDirectionAngle(
   };
 }
 
+function getToneExecutionNote(
+  tone: ContentTone
+) {
+  const notes: Record<ContentTone, string> = {
+    friendly:
+      "ใช้น้ำเสียงเป็นกันเอง ประโยคสั้น และคำที่คนทั่วไปเข้าใจได้ทันที",
+    expert:
+      "ใช้น้ำเสียงน่าเชื่อถือ อธิบายเหตุผล และแยกข้อเท็จจริงออกจากความคิดเห็น",
+    fun:
+      "ใช้น้ำเสียงสนุก มีจังหวะ แต่ห้ามทำให้สารหลักหรือเหตุการณ์ของเรื่องสับสน",
+    emotional:
+      "เว้นจังหวะให้อารมณ์ทำงาน และอย่ารีบขึ้นคำชวนก่อนฉากสำคัญจบ",
+    premium:
+      "ใช้ภาษากระชับ เรียบ และหลีกเลี่ยงข้อความบนจอที่มากเกินไป",
+    direct:
+      "เข้าประเด็นเร็ว ตัดคำเกริ่นที่ไม่จำเป็น และบอกสิ่งที่ต้องทำให้ชัด",
+  };
+
+  return `ควบคุมน้ำเสียง: ${notes[tone]}`;
+}
+
+function getSupportFocusNote(
+  supportNeeds: SupportNeed[]
+) {
+  return `จุดที่ระบบต้องช่วยเป็นพิเศษ: ${supportNeeds
+    .map((need) => SUPPORT_NEED_LABELS[need])
+    .join(", ")}`;
+}
+
 function createDay(
   dayNumber: number,
   stage: CampaignStage,
@@ -3376,10 +3645,14 @@ function createDay(
       request
     ),
 
-    preparation: adaptListToPlanType(
-      buildPreparation(request, format),
-      request
-    ),
+    preparation: [
+      ...adaptListToPlanType(
+        buildPreparation(request, format),
+        request
+      ),
+      getToneExecutionNote(request.tone),
+      getSupportFocusNote(request.supportNeeds),
+    ],
 
     fallback: adaptFallbackToPlanType(
       buildFallback(
@@ -3442,6 +3715,21 @@ export function generateWeeklyContentPlan(
     audience:
       resolved.audience,
 
+    audienceStage:
+      resolved.audienceStage,
+
+    audienceValue:
+      resolved.audienceValue,
+
+    desiredAction:
+      resolved.desiredAction,
+
+    supportNeeds:
+      resolved.supportNeeds,
+
+    tone:
+      resolved.tone,
+
     platform:
       resolved.platform,
 
@@ -3452,10 +3740,10 @@ export function generateWeeklyContentPlan(
       resolved.intensity,
 
     weeklyObjective:
-      adaptTextToPlanType(
+      `${adaptTextToPlanType(
         getWeeklyObjective(resolved),
         resolved
-      ),
+      )} คุณค่าหลักที่ต้องส่งมอบคือ “${AUDIENCE_VALUE_LABELS[resolved.audienceValue]}” และคำชวนหลักคือ “${DESIRED_ACTION_LABELS[resolved.desiredAction]}”`,
 
     strategyExplanation:
       adaptTextToPlanType(
