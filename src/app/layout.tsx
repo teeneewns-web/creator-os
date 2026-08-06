@@ -4,16 +4,11 @@ import SiteHeader from "../components/layout/SiteHeader";
 import SiteFooter from "../components/layout/SiteFooter";
 
 export const metadata: Metadata = {
-  title: "Creator OS | ระบบผู้ช่วย Creator",
-  description:
-    "ระบบผู้ช่วย Creator ให้รู้ว่าวันนี้ต้องทำอะไร วางแผน เขียนโพสต์ ตรวจคุณภาพ และสรุปผลใน 7 วัน",
+  title: "Creator OS | แผนคอนเทนต์ 7 วันพร้อมทำจริง",
+  description: "กรอกข้อมูลสินค้า บริการ หรือทิศทางครีเอเตอร์ครั้งเดียว รับแผนคอนเทนต์ 7 วัน พร้อม Hook บท ลำดับการถ่าย Caption CTA และแผนสำรอง",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="th">
       <body>

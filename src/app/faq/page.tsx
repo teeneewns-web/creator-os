@@ -1,418 +1,142 @@
 import type { CSSProperties } from "react";
 import Link from "next/link";
 
-type FAQItem = {
-  question: string;
-  answer: string;
-};
+type FAQItem = { question: string; answer: string };
+type FAQSection = { title: string; items: FAQItem[] };
 
-type FAQSection = {
-  title: string;
-  description: string;
-  items: FAQItem[];
-};
-
-const faqSections: FAQSection[] = [
+const sections: FAQSection[] = [
   {
-    title: "คำถามพื้นฐาน",
-    description: "คำถามสำหรับคนที่เพิ่งเข้ามาใช้ Creator OS ครั้งแรก",
+    title: "ก่อนสั่งซื้อ",
     items: [
       {
         question: "Creator OS คืออะไร?",
-        answer:
-          "Creator OS คือระบบช่วยทำคอนเทนต์สำหรับคนที่ไม่อยากเริ่มจากหน้าว่าง มีคลัง Hook, แคปชัน, CTA, สคริปต์, ระบบบันทึกไอเดีย, หน้าตรวจคุณภาพ และแผนทำงานรายวัน",
+        answer: "Creator OS คือบริการสร้างแผนคอนเทนต์ 7 วันจากข้อมูลจริงของลูกค้า โดยจัดหัวข้อ บทพูดหรือลำดับฉาก ลำดับการถ่าย Caption CTA แผนสำรอง และงานหลังโพสต์ให้พร้อมทำตามได้ทันที",
       },
       {
-        question: "เว็บนี้เหมาะกับใคร?",
-        answer:
-          "เหมาะกับ Creator มือใหม่ เจ้าของเพจ เจ้าของร้านออนไลน์ คนทำ TikTok, Reels, Shorts, ฟรีแลนซ์ และคนที่ต้องทำคอนเทนต์สม่ำเสมอ",
+        question: "เหมาะกับใคร?",
+        answer: "เหมาะกับผู้ขายสินค้า ผู้ให้บริการ ร้านขนาดเล็ก TikTok Affiliate เจ้าของเพจ และครีเอเตอร์ เช่น หนังสั้น ตลก รีวิว ให้ความรู้ เกม เพลง หรือไลฟ์สไตล์",
       },
       {
-        question: "ต้องมีประสบการณ์ทำคอนเทนต์ก่อนไหม?",
-        answer:
-          "ไม่จำเป็น เว็บนี้ออกแบบให้คนเริ่มต้นใช้งานได้ โดยเริ่มจากหน้า ภารกิจวันนี้ แล้วค่อยใช้คลัง Hook และหน้าค้นหาเพื่อหาไอเดียเพิ่มเติม",
-      },
-    ],
-  },
-  {
-    title: "การใช้งาน",
-    description: "วิธีใช้งานส่วนหลักของระบบ",
-    items: [
-      {
-        question: "ควรเริ่มจากหน้าไหน?",
-        answer:
-          "ถ้ายังไม่รู้จะเริ่มตรงไหน แนะนำให้เริ่มจากหน้า ภารกิจวันนี้ เพราะหน้านั้นจะบอกเป็นขั้นตอนว่าวันนี้ควรทำอะไร เลือก Hook เขียนร่าง ตรวจคุณภาพ และบันทึกผลลัพธ์",
+        question: "ต้องมีประสบการณ์ทำคอนเทนต์หรือไม่?",
+        answer: "ไม่จำเป็น แบบฟอร์มจะให้เลือกทิศทาง เป้าหมาย เวลา ความสามารถ และสิ่งที่ต้องการให้ระบบช่วย จากนั้นแผนจะปรับระดับงานให้เหมาะกับข้อมูลที่กรอก",
       },
       {
-        question: "Hook คืออะไร?",
-        answer:
-          "Hook คือประโยคเปิดที่ใช้ดึงความสนใจ เช่น ประโยคเปิดคลิป ประโยคแรกของโพสต์ หรือข้อความที่ทำให้คนหยุดอ่านและอยากดูต่อ",
-      },
-      {
-        question: "CTA คืออะไร?",
-        answer:
-          "CTA คือคำชวนให้ผู้ชมทำบางอย่างต่อ เช่น กดติดตาม บันทึกโพสต์ ทักแชต คลิกดูสินค้า สมัคร หรือซื้อสินค้า",
-      },
-      {
-        question: "บันทึกไอเดียไว้แล้วไปดูที่ไหน?",
-        answer:
-          "ไอเดียที่กดบันทึกไว้จะอยู่ที่หน้า บันทึกไว้ หรือ /favorites สามารถกลับมาคัดลอกและนำไปใช้ต่อได้",
+        question: "ถ้าไม่มีแนวทางที่ต้องการในตัวเลือกควรทำอย่างไร?",
+        answer: "ไม่ควรเลือกแนวทางที่ใกล้เคียงแต่ไม่ตรง ให้กดแจ้งขอเพิ่มแนวทางผ่าน LINE เพื่อให้เราตรวจว่าควรเพิ่มเป็นแนวมาตรฐานหรือรับเป็นงานเฉพาะ",
       },
     ],
   },
   {
-    title: "คุณภาพเนื้อหา",
-    description: "คำถามเกี่ยวกับการคัดคุณภาพ Hook และคอนเทนต์",
+    title: "การสั่งซื้อและรับแผน",
     items: [
       {
-        question: "ระบบตรวจคุณภาพ Hook ใช้ทำอะไร?",
-        answer:
-          "ใช้ดูว่า Hook ไหนพร้อมใช้ Hook ไหนเหมาะกับระดับ Pro หรือพรีเมียม และ Hook ไหนควรเขียนใหม่ก่อนนำไปขายหรือใช้จริง",
+        question: "ราคาเท่าไร?",
+        answer: "Paid Beta ราคาเปิดตัว 149 บาทต่อ 1 แผน ไม่มีค่าสมาชิกรายเดือน โดยหนึ่งแผนครอบคลุมหัวข้อหลัก 1 เรื่อง เป้าหมายหลัก 1 เป้าหมาย และแพลตฟอร์มหลักตามที่เลือก",
       },
       {
-        question: "Premium-ready หมายถึงอะไร?",
-        answer:
-          "หมายถึง Hook หรือคอนเทนต์ที่มีคุณภาพสูงพอสำหรับนำไปอยู่ในแพ็กพรีเมียม เช่น มีมุมชัด เจาะปัญหาคนดู ใช้งานจริงได้ และไม่กว้างเกินไป",
+        question: "ชำระเงินอย่างไร?",
+        answer: "กรอกข้อมูลและตรวจสรุปก่อนสร้างคำสั่งซื้อ จากนั้นส่งรหัสคำสั่งซื้อพร้อมหลักฐานการชำระผ่าน LINE เจ้าหน้าที่จะตรวจและอนุมัติคำสั่งซื้อ",
       },
       {
-        question: "ถ้า Hook ถูกจัดว่า needs rewrite ต้องทำยังไง?",
-        answer:
-          "ควรปรับให้เฉพาะเจาะจงขึ้น เช่น เพิ่มกลุ่มเป้าหมาย เพิ่มปัญหา เพิ่มสถานการณ์จริง หรือทำให้ประโยคเปิดมีแรงดึงดูดมากกว่าเดิม",
+        question: "ได้รับแผนที่ไหน?",
+        answer: "หลังอนุมัติ ระบบจะเปิดลิงก์ส่วนตัวของคำสั่งซื้อและพาไปยังหน้าแผน 7 วัน ลิงก์นี้ควรเก็บเป็นส่วนตัวเพราะใช้เข้าถึงข้อมูลของลูกค้า",
+      },
+      {
+        question: "ขอแก้ไขได้หรือไม่?",
+        answer: "Paid Beta ขอแก้ไขเนื้อหาได้ 1 รอบภายในขอบเขตเดิม เช่น หัวข้อหลัก เป้าหมาย และแพลตฟอร์มเดิม หากเปลี่ยนเป็นงานคนละประเภทจะถือเป็นแผนใหม่",
       },
     ],
   },
   {
-    title: "Free / Pro / Premium",
-    description: "คำถามเกี่ยวกับการใช้งานฟรีและแพ็กจ่ายเงิน",
+    title: "คุณภาพและความเฉพาะบุคคล",
     items: [
       {
-        question: "ใช้ฟรีได้ไหม?",
-        answer:
-          "แนวคิดของเว็บคือให้ผู้ใช้เริ่มใช้ฟรีก่อน เพื่อทดลองดูคุณค่าและเข้าใจระบบ ก่อนตัดสินใจอัปเกรดเป็น Pro หรือพรีเมียมในอนาคต",
+        question: "แผนสร้างจากข้อมูลของฉันจริงหรือไม่?",
+        answer: "ใช่ ระบบใช้ประเภทงาน ทิศทาง ผู้ชม เป้าหมาย สิ่งที่ต้องการให้ผู้ชมทำ น้ำเสียง เวลา ความสามารถ ข้อจำกัด และข้อห้ามที่ลูกค้าเลือกหรือกรอก",
       },
       {
-        question: "Free กับ Premium ต่างกันยังไง?",
-        answer:
-          "Free เหมาะสำหรับทดลองและใช้ตัวอย่างพื้นฐาน ส่วน Premium ควรเป็นเนื้อหาที่คัดคุณภาพสูงกว่า ใช้งานจริงได้มากกว่า และประหยัดเวลาผู้ใช้มากกว่า",
+        question: "Quality Gate ตรวจอะไร?",
+        answer: "ตรวจความครบ 7 วัน ความตรงกับเจตนา ความพร้อมใช้งาน ความแตกต่างของแต่ละวัน เวลา ความสามารถ CTA ข้อห้าม ข้อความกล่าวอ้างเกินจริง และแผนสำรอง โดยต้องได้อย่างน้อย 85/100 และไม่มีข้อผิดพลาดปิดกั้น",
       },
       {
-        question: "ตอนนี้จำเป็นต้องมีระบบจ่ายเงินเลยไหม?",
-        answer:
-          "ยังไม่จำเป็น ขั้นแรกควรทำให้เว็บน่าใช้ เข้าใจง่าย มีข้อมูลคุณภาพ และทำให้ผู้ใช้เห็นคุณค่าก่อน หลังจากนั้นค่อยเพิ่มระบบสมาชิกหรือระบบชำระเงิน",
+        question: "ระบบจะแต่งราคา โปรโมชั่น หรือผลลัพธ์ให้หรือไม่?",
+        answer: "ไม่แต่งข้อมูลที่ลูกค้าไม่ได้ระบุ หากรายละเอียดสำคัญไม่ครบ ระบบควรใช้ภาษากลางหรือแจ้งให้ตรวจสอบแทนการสร้างข้อเท็จจริงขึ้นเอง",
+      },
+      {
+        question: "รับประกันยอดขายหรือการเป็นไวรัลหรือไม่?",
+        answer: "ไม่รับประกัน แผนช่วยลดเวลาคิดและจัดงานให้เป็นระบบ แต่ผลลัพธ์ขึ้นอยู่กับสินค้า ราคา การถ่าย การตัดต่อ การลงมือทำ บัญชี และผู้ชมจริง",
+      },
+    ],
+  },
+  {
+    title: "การใช้ต่อสัปดาห์ถัดไป",
+    items: [
+      {
+        question: "ซื้อแผนใหม่ทุกสัปดาห์ได้หรือไม่?",
+        answer: "ได้ ระบบบันทึกรอบแผนและลายนิ้วมือเนื้อหาเพื่อลดการสร้างหัวข้อซ้ำกับรอบก่อนของลูกค้ารายเดิม",
+      },
+      {
+        question: "ควรเก็บผลลัพธ์อะไรหลังโพสต์?",
+        answer: "ควรบันทึก Reach การรับชม ความคิดเห็น การแชร์ การบันทึก การคลิก และข้อความที่ได้รับ เพื่อใช้ตัดสินว่าควรทำซ้ำ ปรับ หรือหยุดอะไรในสัปดาห์ถัดไป",
       },
     ],
   },
 ];
 
-function getTotalQuestions() {
-  return faqSections.reduce((sum, section) => sum + section.items.length, 0);
-}
-
 export default function FAQPage() {
-  const totalQuestions = getTotalQuestions();
-
   return (
-    <main style={{ maxWidth: "1100px", margin: "0 auto", padding: "24px" }}>
+    <main style={mainStyle}>
       <section style={heroStyle}>
-        <p style={labelStyle}>คำถามที่พบบ่อย</p>
-
-        <h1 style={titleStyle}>ตอบข้อสงสัยก่อนเริ่มใช้ Creator OS</h1>
-
+        <p style={eyebrowStyle}>คำถามที่พบบ่อย</p>
+        <h1 style={titleStyle}>รู้ขอบเขตและขั้นตอนก่อนสั่งแผน Creator OS</h1>
         <p style={subtitleStyle}>
-          รวมคำถามสำคัญเกี่ยวกับการใช้งาน Creator OS เช่น เว็บนี้คืออะไร
-          เหมาะกับใคร ใช้ Hook ยังไง Premium ต่างจาก Free ยังไง
-          และควรเริ่มใช้งานจากหน้าไหน
+          คำตอบด้านล่างยึดตามบริการ Paid Beta ปัจจุบัน ไม่ใช่ระบบสมาชิกหรือคลังข้อความสำเร็จรูป
         </p>
-
-        <div style={buttonRowStyle}>
-          <Link href="/dashboard">
-            <button style={primaryButtonStyle}>เริ่มภารกิจวันนี้</button>
-          </Link>
-
-          <Link href="/about">
-            <button style={secondaryButtonStyle}>เกี่ยวกับเว็บ</button>
-          </Link>
-
-          <Link href="/pricing">
-            <button style={secondaryButtonStyle}>ดูราคาแพ็กเกจ</button>
-          </Link>
-        </div>
       </section>
 
-      <section style={summaryGridStyle}>
-        <article style={summaryCardStyle}>
-          <p style={summaryLabelStyle}>จำนวนคำถาม</p>
-          <h2 style={summaryNumberStyle}>{totalQuestions}</h2>
-          <p style={mutedTextStyle}>คำถามหลักที่ผู้ใช้มักสงสัย</p>
-        </article>
-
-        <article style={summaryCardStyle}>
-          <p style={summaryLabelStyle}>หมวดคำถาม</p>
-          <h2 style={summaryNumberStyle}>{faqSections.length}</h2>
-          <p style={mutedTextStyle}>แบ่งเป็นพื้นฐาน ใช้งาน คุณภาพ และแพ็กเกจ</p>
-        </article>
-
-        <article style={summaryCardStyle}>
-          <p style={summaryLabelStyle}>เป้าหมาย</p>
-          <h2 style={summaryTitleStyle}>ลดความลังเล</h2>
-          <p style={mutedTextStyle}>
-            ทำให้ผู้ใช้เข้าใจเว็บเร็วขึ้น และกล้าลองใช้งานมากขึ้น
-          </p>
-        </article>
-      </section>
-
-      <section style={sectionListStyle}>
-        {faqSections.map((section, sectionIndex) => (
+      <div style={sectionWrapStyle}>
+        {sections.map((section) => (
           <section key={section.title} style={sectionStyle}>
-            <div style={sectionTopRowStyle}>
-              <div>
-                <p style={labelStyle}>หมวดที่ {sectionIndex + 1}</p>
-
-                <h2 style={{ margin: "6px 0" }}>{section.title}</h2>
-
-                <p style={mutedTextStyle}>{section.description}</p>
-              </div>
-
-              <span style={countBadgeStyle}>{section.items.length} คำถาม</span>
-            </div>
-
+            <h2 style={sectionTitleStyle}>{section.title}</h2>
             <div style={faqGridStyle}>
-              {section.items.map((item, itemIndex) => (
+              {section.items.map((item) => (
                 <article key={item.question} style={faqCardStyle}>
-                  <p style={questionNumberStyle}>
-                    คำถามที่ {itemIndex + 1}
-                  </p>
-
                   <h3 style={questionStyle}>{item.question}</h3>
-
                   <p style={answerStyle}>{item.answer}</p>
                 </article>
               ))}
             </div>
           </section>
         ))}
-      </section>
+      </div>
 
-      <section style={bottomCtaStyle}>
-        <h2 style={{ marginTop: 0 }}>ยังไม่รู้จะเริ่มตรงไหน?</h2>
-
-        <p style={bottomTextStyle}>
-          เริ่มจากหน้า ภารกิจวันนี้ แล้วทำตามขั้นตอนในระบบ
-          จากนั้นค่อยเปิดคลัง Hook หรือหน้าค้นหาเพื่อหาไอเดียเพิ่มเติม
-        </p>
-
-        <div style={buttonRowCenterStyle}>
-          <Link href="/dashboard">
-            <button style={darkButtonStyle}>เริ่มภารกิจวันนี้</button>
-          </Link>
-
-          <Link href="/hooks">
-            <button style={darkSecondaryButtonStyle}>เปิดคลัง Hook</button>
-          </Link>
-
-          <Link href="/quality/hooks">
-            <button style={darkSecondaryButtonStyle}>ตรวจคุณภาพ Hook</button>
-          </Link>
+      <section style={ctaStyle}>
+        <h2 style={ctaTitleStyle}>คำถามของคุณยังไม่มีคำตอบ?</h2>
+        <p style={ctaTextStyle}>ติดต่อผ่าน LINE ก่อนชำระเงิน หรือเริ่มกรอกข้อมูลเพื่อดูคำถามทั้งหมดในแบบฟอร์ม</p>
+        <div style={buttonRowStyle}>
+          <Link href="/contact" style={secondaryLinkStyle}>ติดต่อเรา</Link>
+          <Link href="/start" style={primaryLinkStyle}>เริ่มสร้างแผน</Link>
         </div>
       </section>
     </main>
   );
 }
 
-const heroStyle: CSSProperties = {
-  padding: "46px 24px",
-  borderRadius: "28px",
-  background: "#111827",
-  color: "white",
-};
-
-const labelStyle: CSSProperties = {
-  color: "#4f46e5",
-  fontWeight: "bold",
-  marginTop: 0,
-};
-
-const titleStyle: CSSProperties = {
-  fontSize: "46px",
-  lineHeight: "1.12",
-  margin: "12px 0",
-  maxWidth: "920px",
-};
-
-const subtitleStyle: CSSProperties = {
-  color: "#d1d5db",
-  fontSize: "18px",
-  lineHeight: "1.8",
-  maxWidth: "850px",
-};
-
-const buttonRowStyle: CSSProperties = {
-  display: "flex",
-  gap: "10px",
-  flexWrap: "wrap",
-  marginTop: "18px",
-};
-
-const buttonRowCenterStyle: CSSProperties = {
-  display: "flex",
-  justifyContent: "center",
-  gap: "10px",
-  flexWrap: "wrap",
-  marginTop: "18px",
-};
-
-const primaryButtonStyle: CSSProperties = {
-  padding: "12px 18px",
-  borderRadius: "14px",
-  border: "1px solid #4f46e5",
-  background: "#4f46e5",
-  color: "white",
-  cursor: "pointer",
-  fontWeight: "bold",
-};
-
-const secondaryButtonStyle: CSSProperties = {
-  padding: "12px 18px",
-  borderRadius: "14px",
-  border: "1px solid #c7d2fe",
-  background: "white",
-  color: "#111827",
-  cursor: "pointer",
-  fontWeight: "bold",
-};
-
-const summaryGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))",
-  gap: "16px",
-  marginTop: "22px",
-};
-
-const summaryCardStyle: CSSProperties = {
-  border: "1px solid #e5e7eb",
-  borderRadius: "20px",
-  padding: "20px",
-  background: "white",
-};
-
-const summaryLabelStyle: CSSProperties = {
-  marginTop: 0,
-  color: "#555",
-  fontWeight: "bold",
-};
-
-const summaryNumberStyle: CSSProperties = {
-  margin: "8px 0",
-  fontSize: "38px",
-};
-
-const summaryTitleStyle: CSSProperties = {
-  margin: "8px 0",
-  fontSize: "26px",
-};
-
-const mutedTextStyle: CSSProperties = {
-  color: "#555",
-  lineHeight: "1.7",
-  margin: 0,
-};
-
-const sectionListStyle: CSSProperties = {
-  display: "grid",
-  gap: "24px",
-  marginTop: "24px",
-};
-
-const sectionStyle: CSSProperties = {
-  padding: "24px",
-  borderRadius: "24px",
-  border: "1px solid #e5e7eb",
-  background: "white",
-};
-
-const sectionTopRowStyle: CSSProperties = {
-  display: "flex",
-  justifyContent: "space-between",
-  gap: "16px",
-  flexWrap: "wrap",
-  alignItems: "center",
-};
-
-const countBadgeStyle: CSSProperties = {
-  display: "inline-block",
-  padding: "8px 12px",
-  borderRadius: "999px",
-  background: "#eef2ff",
-  color: "#4f46e5",
-  border: "1px solid #c7d2fe",
-  fontWeight: "bold",
-};
-
-const faqGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
-  gap: "16px",
-  marginTop: "20px",
-};
-
-const faqCardStyle: CSSProperties = {
-  padding: "20px",
-  borderRadius: "20px",
-  background: "#f8fafc",
-  border: "1px solid #e5e7eb",
-};
-
-const questionNumberStyle: CSSProperties = {
-  marginTop: 0,
-  color: "#4f46e5",
-  fontWeight: "bold",
-};
-
-const questionStyle: CSSProperties = {
-  fontSize: "22px",
-  lineHeight: "1.4",
-  margin: "8px 0",
-};
-
-const answerStyle: CSSProperties = {
-  color: "#374151",
-  lineHeight: "1.8",
-  marginBottom: 0,
-};
-
-const bottomCtaStyle: CSSProperties = {
-  marginTop: "34px",
-  padding: "30px 24px",
-  borderRadius: "28px",
-  background: "#111827",
-  color: "white",
-  textAlign: "center",
-};
-
-const bottomTextStyle: CSSProperties = {
-  color: "#d1d5db",
-  lineHeight: "1.8",
-  fontSize: "17px",
-  maxWidth: "760px",
-  margin: "0 auto",
-};
-
-const darkButtonStyle: CSSProperties = {
-  padding: "12px 18px",
-  borderRadius: "14px",
-  border: "1px solid white",
-  background: "white",
-  color: "#111827",
-  cursor: "pointer",
-  fontWeight: "bold",
-};
-
-const darkSecondaryButtonStyle: CSSProperties = {
-  padding: "12px 18px",
-  borderRadius: "14px",
-  border: "1px solid #4b5563",
-  background: "#1f2937",
-  color: "white",
-  cursor: "pointer",
-  fontWeight: "bold",
-};
+const mainStyle: CSSProperties = { maxWidth: "1050px", margin: "0 auto", padding: "clamp(16px, 4vw, 28px)", overflowX: "hidden" };
+const heroStyle: CSSProperties = { padding: "clamp(30px, 7vw, 56px)", borderRadius: "28px", background: "#111827", color: "white" };
+const eyebrowStyle: CSSProperties = { margin: 0, color: "#a5b4fc", fontWeight: 800 };
+const titleStyle: CSSProperties = { margin: "12px 0", fontSize: "clamp(34px, 7vw, 52px)", lineHeight: 1.14 };
+const subtitleStyle: CSSProperties = { margin: 0, color: "#d1d5db", lineHeight: 1.8, fontSize: "18px" };
+const sectionWrapStyle: CSSProperties = { display: "grid", gap: "26px", padding: "clamp(46px, 8vw, 76px) 0" };
+const sectionStyle: CSSProperties = { display: "grid", gap: "16px" };
+const sectionTitleStyle: CSSProperties = { margin: 0, color: "#111827", fontSize: "clamp(26px, 5vw, 36px)" };
+const faqGridStyle: CSSProperties = { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 360px), 1fr))", gap: "14px" };
+const faqCardStyle: CSSProperties = { padding: "22px", borderRadius: "20px", border: "1px solid #e5e7eb", background: "white" };
+const questionStyle: CSSProperties = { margin: "0 0 10px", color: "#111827", fontSize: "19px" };
+const answerStyle: CSSProperties = { margin: 0, color: "#4b5563", lineHeight: 1.8 };
+const ctaStyle: CSSProperties = { textAlign: "center", padding: "clamp(32px, 6vw, 50px)", borderRadius: "24px", background: "#eef2ff" };
+const ctaTitleStyle: CSSProperties = { margin: "0 0 10px", color: "#111827", fontSize: "clamp(27px, 5vw, 38px)" };
+const ctaTextStyle: CSSProperties = { margin: 0, color: "#4b5563", lineHeight: 1.7 };
+const buttonRowStyle: CSSProperties = { display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "12px", marginTop: "22px" };
+const primaryLinkStyle: CSSProperties = { display: "inline-flex", minHeight: "48px", alignItems: "center", justifyContent: "center", padding: "0 18px", borderRadius: "14px", background: "#4f46e5", color: "white", textDecoration: "none", fontWeight: 800 };
+const secondaryLinkStyle: CSSProperties = { ...primaryLinkStyle, background: "white", color: "#4338ca", border: "1px solid #c7d2fe" };

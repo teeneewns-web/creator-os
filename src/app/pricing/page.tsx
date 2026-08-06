@@ -1,1057 +1,147 @@
 import type { CSSProperties } from "react";
 import Link from "next/link";
 
-type PricingOption = {
-  name: string;
-  label: string;
-  price: string;
-  description: string;
-  bestFor: string;
-  features: string[];
-  note?: string;
-  ctaText: string;
-  href: string;
-  highlight?: boolean;
-};
-
-const pricingOptions: PricingOption[] = [
-  {
-    name: "ทดลองระบบอัตโนมัติ",
-    label: "ทดลองก่อน",
-    price: "0 บาท",
-    description:
-      "ทดลองกรอกข้อมูลสินค้า แล้วให้ระบบสร้างร่างแผนคอนเทนต์ 7 วันโดยอัตโนมัติ",
-    bestFor:
-      "คนที่ต้องการดูว่ารูปแบบแผนเหมาะกับตนเองหรือไม่",
-    features: [
-      "กรอกข้อมูลสินค้า เป้าหมาย และกลุ่มลูกค้า",
-      "เลือกระหว่าง Facebook, TikTok หรือทั้งสองแพลตฟอร์ม",
-      "ระบุเวลาที่มีและรูปแบบที่สามารถผลิตได้",
-      "ได้รับร่างแผนคอนเทนต์อัตโนมัติ 7 วัน",
-      "มี Hook บทพูด แคปชัน CTA และแผนสำรอง",
-      "บันทึกสถานะและบันทึกของแต่ละวันในอุปกรณ์ได้",
-    ],
-    note:
-      "แผนทดลองสร้างโดยระบบอัตโนมัติ ยังไม่มีมนุษย์ตรวจและปรับเนื้อหาให้เฉพาะธุรกิจ",
-    ctaText: "ทดลองสร้างแผน",
-    href: "/start",
-  },
-  {
-    name: "แผนคอนเทนต์ 7 วัน Paid Beta",
-    label: "แนะนำสำหรับใช้งานจริง",
-    price: "149 บาท / 1 แผน",
-    description:
-      "ระบบสร้างร่างแผน 7 วัน และมีคนตรวจความเหมาะสม ความชัดเจน และข้อความก่อนนำไปใช้งาน",
-    bestFor:
-      "ผู้ขายออนไลน์ TikTok Affiliate ร้านเล็ก และเจ้าของเพจที่ต้องการนำแผนไปใช้จริง",
-    features: [
-      "สำหรับสินค้า บริการ หรือหัวข้อหลัก 1 รายการ",
-      "เป้าหมายหลัก 1 เป้าหมาย",
-      "แพลตฟอร์มหลักตามที่เลือก",
-      "แผนคอนเทนต์พร้อมทำครบ 7 วัน",
-      "Hook และบทพูดพร้อมใช้ในแต่ละวัน",
-      "ลำดับการถ่ายและข้อความบนหน้าจอ",
-      "แคปชัน CTA และแฮชแท็ก",
-      "มีแผนสำรองทุกวันเมื่อทำวิดีโอไม่ได้",
-      "มีงานหลังโพสต์และตัวอย่างตอบความคิดเห็น",
-      "ตรวจไม่ให้แต่งคุณสมบัติสินค้าที่ไม่ได้ระบุ",
-      "ตรวจและปรับเนื้อหาโดยมนุษย์",
-      "ขอแก้ไขได้ 1 รอบ",
-    ],
-    note:
-  "ราคาเปิดตัว 149 บาทสำหรับ 90 วันแรก หลังจากจบช่วงเปิดตัว ราคาพื้นฐานจะปรับเป็น 299 บาท โดยอาจเปลี่ยนตามผลตอบรับจากผู้ใช้จริง",
-    ctaText: "ซื้อแผน 149 บาท",
-    href: "/checkout",
-    highlight: true,
-  },
+const included = [
+  "สินค้า บริการ หรือหัวข้อหลัก 1 รายการ",
+  "เป้าหมายหลัก 1 เป้าหมาย",
+  "แพลตฟอร์มหลักตามที่เลือก",
+  "แผนคอนเทนต์พร้อมทำครบ 7 วัน",
+  "Hook บทพูด บทเต็ม หรือลำดับฉากตามประเภทคอนเทนต์",
+  "ลำดับการถ่าย ข้อความบนหน้าจอ Caption CTA และ Hashtags",
+  "สิ่งที่ต้องเตรียม เวลาโดยประมาณ และแผนสำรองทุกวัน",
+  "งานหลังโพสต์ ตัวอย่างตอบความคิดเห็น และตัวเลขที่ควรบันทึก",
+  "ตรวจความตรง ความซ้ำ ข้อห้าม และคำกล่าวอ้างเกินจริง",
+  "ตรวจและปรับคุณภาพก่อนส่งมอบ",
+  "ขอแก้ไขเนื้อหาได้ 1 รอบ",
 ];
 
-const comparisonRows = [
-  {
-    title: "แผนคอนเทนต์ 7 วัน",
-    automatic: "มี",
-    beta: "มี",
-  },
-  {
-    title: "สร้างจากข้อมูลสินค้า",
-    automatic: "มี",
-    beta: "มี",
-  },
-  {
-    title: "Hook และบทพูด",
-    automatic: "ระบบสร้างอัตโนมัติ",
-    beta: "ระบบสร้างและมีคนตรวจ",
-  },
-  {
-    title: "แคปชัน CTA และแฮชแท็ก",
-    automatic: "ระบบสร้างอัตโนมัติ",
-    beta: "ระบบสร้างและมีคนตรวจ",
-  },
-  {
-    title: "แผนสำรองทุกวัน",
-    automatic: "มี",
-    beta: "มีและตรวจความเหมาะสม",
-  },
-  {
-    title: "ตรวจข้อความกล่าวอ้างเกินจริง",
-    automatic: "อ้างอิงข้อมูลที่กรอก",
-    beta: "มีคนตรวจเพิ่มเติม",
-  },
-  {
-    title: "แก้ไขตามคำขอ",
-    automatic: "ไม่มีบริการแก้โดยมนุษย์",
-    beta: "แก้ได้ 1 รอบ",
-  },
-  {
-    title: "เหมาะกับ",
-    automatic: "ทดลองระบบ",
-    beta: "นำไปใช้กับธุรกิจจริง",
-  },
-];
-
-const betaSteps = [
-  {
-    number: "1",
-    title: "กรอกข้อมูลธุรกิจ",
-    description:
-      "บอกสินค้า จุดเด่น ลูกค้า เป้าหมาย และสิ่งที่ห้ามกล่าวอ้าง",
-  },
-  {
-    number: "2",
-    title: "ระบบสร้างร่างแผน",
-    description:
-      "ระบบจัดลำดับหัวข้อ Hook บทพูด แคปชัน และแผนสำรองครบ 7 วัน",
-  },
-  {
-    number: "3",
-    title: "ตรวจและปรับคุณภาพ",
-    description:
-      "ตรวจภาษา ความเหมาะสม ความซ้ำ และข้อความที่อาจเกินข้อมูลจริง",
-  },
-  {
-    number: "4",
-    title: "รับแผนพร้อมใช้งาน",
-    description:
-      "นำแผนไปถ่าย ทำภาพ หรือโพสต์ตามรายละเอียดของแต่ละวัน",
-  },
+const process = [
+  "กรอกข้อมูลผ่านแบบฟอร์ม 3 ขั้นตอน",
+  "ตรวจสรุปข้อมูลและสร้างคำสั่งซื้อ",
+  "แจ้งชำระเงินพร้อมรหัสคำสั่งซื้อผ่าน LINE",
+  "ทีมงานตรวจการชำระและอนุมัติ",
+  "ระบบสร้างแผนและผ่าน Quality Gate อย่างน้อย 85/100",
+  "เปิดลิงก์ส่วนตัวเพื่อรับแผน 7 วัน",
 ];
 
 export default function PricingPage() {
   return (
-    <main style={pageStyle}>
+    <main style={mainStyle}>
       <section style={heroStyle}>
-        <p style={heroLabelStyle}>
-          ราคา Creator OS
+        <p style={eyebrowStyle}>ราคา Creator OS · Paid Beta</p>
+        <h1 style={titleStyle}>เริ่มจากหนึ่งแผน ก่อนตัดสินใจใช้ต่อสัปดาห์ถัดไป</h1>
+        <p style={subtitleStyle}>
+          ไม่มีสัญญารายเดือนในช่วงเริ่มต้น ซื้อเป็นรายแผนและใช้ข้อมูลจริงของคุณ
+          เพื่อสร้างงานที่นำไปทำได้ทันที
         </p>
-
-        <h1 style={heroTitleStyle}>
-          เริ่มจากการทดลองระบบ
-          แล้วเลือกให้มีคนตรวจเมื่อจะนำไปใช้จริง
-        </h1>
-
-        <p style={heroSubtitleStyle}>
-          ไม่ต้องสมัครสมาชิกรายเดือนในช่วงเริ่มต้น
-          เลือกซื้อเป็นแผนสำหรับสินค้า 1 รายการ
-          เพื่อดูผลลัพธ์ก่อนตัดสินใจใช้ต่อ
-        </p>
-
-        <div style={heroTagsStyle}>
-          <span style={heroTagStyle}>ไม่มีสัญญารายเดือน</span>
-          <span style={heroTagStyle}>แผนพร้อมทำ 7 วัน</span>
-          <span style={heroTagStyle}>ภาษาไทย</span>
-          <span style={heroTagStyle}>แก้ได้ 1 รอบใน Paid Beta</span>
-        </div>
-
-        <div style={buttonRowStyle}>
-          <Link href="/start" style={whiteLinkStyle}>
-            ทดลองสร้างแผน
-          </Link>
-
-          <Link
-            href="/checkout"
-            style={darkOutlineLinkStyle}
-          >
-            ซื้อราคาเปิดตัว 149 บาท
-          </Link>
-
-          <Link
-            href="/dashboard/weekly"
-            style={darkOutlineLinkStyle}
-          >
-            ดูตัวอย่างแผน
-          </Link>
-        </div>
       </section>
 
-      <section style={noticeStyle}>
+      <section style={priceCardStyle}>
         <div>
-          <p style={noticeLabelStyle}>สถานะปัจจุบัน</p>
-
-          <h2 style={noticeTitleStyle}>
-            กำลังเปิดรับผู้ใช้ Paid Beta รุ่นแรก
-          </h2>
-
-          <p style={noticeTextStyle}>
-            ช่วง Beta เน้นดูแลคุณภาพแบบรายแผน
-            เพื่อเรียนรู้ว่าผู้ใช้ทำตามส่วนไหนจริง
-            ต้องการแก้ไขตรงไหน และควรพัฒนาระบบอัตโนมัติส่วนใดต่อ
+          <p style={planLabelStyle}>แผนคอนเทนต์ 7 วัน Paid Beta</p>
+          <div style={priceRowStyle}>
+            <strong style={priceStyle}>149 บาท</strong>
+            <span style={priceSuffixStyle}>ต่อ 1 แผน</span>
+          </div>
+          <p style={planTextStyle}>
+            ราคาเปิดตัวสำหรับ 90 วันแรก หลังช่วงเปิดตัวราคาพื้นฐานอาจปรับเป็น 299 บาท
+            ตามขอบเขตงานและผลตอบรับจริง
           </p>
         </div>
-
-        <Link
-          href="/checkout"
-          style={greenLinkStyle}
-        >
-          ชำระราคาเปิดตัว 149 บาท
-        </Link>
-      </section>
-
-      <section style={planGridStyle}>
-        {pricingOptions.map((option) => (
-          <article
-            key={option.name}
-            style={
-              option.highlight
-                ? highlightedPlanStyle
-                : planCardStyle
-            }
-          >
-            <span
-              style={
-                option.highlight
-                  ? highlightedBadgeStyle
-                  : normalBadgeStyle
-              }
-            >
-              {option.label}
-            </span>
-
-            <h2 style={planNameStyle}>{option.name}</h2>
-
-            <p style={priceStyle}>{option.price}</p>
-
-            <p style={descriptionStyle}>
-              {option.description}
-            </p>
-
-            <div style={bestForStyle}>
-              <p style={bestForLabelStyle}>เหมาะกับ</p>
-
-              <p style={bestForTextStyle}>
-                {option.bestFor}
-              </p>
-            </div>
-
-            <div style={featureListStyle}>
-              {option.features.map((feature) => (
-                <div
-                  key={feature}
-                  style={featureItemStyle}
-                >
-                  <span style={checkStyle}>✓</span>
-
-                  <p style={featureTextStyle}>
-                    {feature}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            {option.note ? (
-              <div style={planNoteStyle}>
-                {option.note}
-              </div>
-            ) : null}
-
-            <Link
-              href={option.href}
-              style={
-                option.highlight
-                  ? highlightedPlanLinkStyle
-                  : planLinkStyle
-              }
-            >
-              {option.ctaText}
-            </Link>
-          </article>
-        ))}
+        <Link href="/start" style={primaryLinkStyle}>เริ่มสร้างแผน</Link>
       </section>
 
       <section style={sectionStyle}>
-        <div style={sectionHeadingStyle}>
-          <p style={labelStyle}>เปรียบเทียบ</p>
-
-          <h2 style={sectionTitleStyle}>
-            ทดลองระบบกับ Paid Beta ต่างกันอย่างไร
-          </h2>
-        </div>
-
-        <div style={tableWrapStyle}>
-          <table style={tableStyle}>
-            <thead>
-              <tr>
-                <th style={thTitleStyle}>รายละเอียด</th>
-                <th style={thStyle}>ทดลองอัตโนมัติ</th>
-                <th style={highlightedThStyle}>
-                  Paid Beta 149 บาท
-                </th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {comparisonRows.map((row) => (
-                <tr key={row.title}>
-                  <td style={tdTitleStyle}>
-                    {row.title}
-                  </td>
-
-                  <td style={tdStyle}>
-                    {row.automatic}
-                  </td>
-
-                  <td style={highlightedTdStyle}>
-                    {row.beta}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <p style={labelStyle}>สิ่งที่รวมอยู่</p>
+        <h2 style={sectionTitleStyle}>หนึ่งคำสั่งซื้อครอบคลุมอะไรบ้าง</h2>
+        <div style={gridStyle}>
+          {included.map((item) => (
+            <div key={item} style={itemCardStyle}>
+              <span style={checkStyle}>✓</span>
+              <p style={itemTextStyle}>{item}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      <section style={processSectionStyle}>
-        <div style={sectionHeadingStyle}>
-          <p style={lightLabelStyle}>
-            ขั้นตอนของ Paid Beta
-          </p>
-
-          <h2 style={lightTitleStyle}>
-            จากข้อมูลสินค้าไปเป็นแผนที่ตรวจแล้ว
-          </h2>
-
-          <p style={lightTextStyle}>
-            การมีคนตรวจในช่วงเริ่มต้นช่วยลดข้อความซ้ำ
-            ภาษาแข็ง และคำกล่าวอ้างที่เกินจากข้อมูลสินค้า
-          </p>
-        </div>
-
+      <section style={softSectionStyle}>
+        <p style={labelStyle}>ขั้นตอนรับแผน</p>
+        <h2 style={sectionTitleStyle}>จากแบบฟอร์มไปสู่แผนที่ตรวจแล้ว</h2>
         <div style={processGridStyle}>
-          {betaSteps.map((step) => (
-            <article
-              key={step.number}
-              style={processCardStyle}
-            >
-              <span style={processNumberStyle}>
-                {step.number}
-              </span>
-
-              <h3 style={processTitleStyle}>
-                {step.title}
-              </h3>
-
-              <p style={processTextStyle}>
-                {step.description}
-              </p>
+          {process.map((item, index) => (
+            <article key={item} style={processCardStyle}>
+              <span style={numberStyle}>{index + 1}</span>
+              <p style={itemTextStyle}>{item}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section style={scopeSectionStyle}>
-        <div>
-          <p style={labelStyle}>ขอบเขต Paid Beta</p>
-
-          <h2 style={sectionTitleStyle}>
-            หนึ่งคำสั่งซื้อครอบคลุมอะไรบ้าง
-          </h2>
-
-          <p style={sectionTextStyle}>
-            สินค้ารุ่นแรกตั้งใจให้ขอบเขตชัดเจน
-            เพื่อรักษาคุณภาพและส่งมอบแผนที่นำไปใช้ต่อได้
+      <section style={noticeGridStyle}>
+        <article style={noticeCardStyle}>
+          <h3 style={noticeTitleStyle}>ไม่รับประกันยอดขายหรือไวรัล</h3>
+          <p style={noticeTextStyle}>
+            แผนช่วยลดเวลาคิดและเตรียมงาน แต่ผลลัพธ์ขึ้นอยู่กับคุณภาพสินค้า ราคา
+            การลงมือทำ บัญชี และกลุ่มผู้ชมจริง
           </p>
-        </div>
-
-        <div style={scopeGridStyle}>
-          {[
-            "สินค้า บริการ หรือหัวข้อหลัก 1 รายการ",
-            "เป้าหมายหลัก 1 เป้าหมาย",
-            "แพลตฟอร์มหลักตามที่เลือก",
-            "แผนพร้อมทำครบ 7 วัน",
-            "ตรวจและปรับคุณภาพโดยมนุษย์",
-            "ขอแก้ไขเนื้อหาได้ 1 รอบ",
-          ].map((item) => (
-            <div key={item} style={scopeItemStyle}>
-              <span style={scopeCheckStyle}>✓</span>
-              <span>{item}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section style={warningSectionStyle}>
-        <p style={warningLabelStyle}>
-          สิ่งที่ควรทราบก่อนใช้
-        </p>
-
-        <div style={warningGridStyle}>
-          <article style={warningCardStyle}>
-            <h3 style={warningTitleStyle}>
-              ไม่รับประกันยอดขาย
-            </h3>
-
-            <p style={warningTextStyle}>
-              แผนช่วยลดเวลาคิดและเตรียมเนื้อหา
-              แต่ผลลัพธ์ขึ้นอยู่กับสินค้า ราคา คุณภาพคลิป
-              บัญชีผู้ใช้ และกลุ่มผู้ชมจริง
-            </p>
-          </article>
-
-          <article style={warningCardStyle}>
-            <h3 style={warningTitleStyle}>
-              ไม่รับประกันการเป็นไวรัล
-            </h3>
-
-            <p style={warningTextStyle}>
-              Hook และเวลาที่แนะนำเป็นแนวทางเริ่มต้น
-              ต้องทดลองและปรับจากข้อมูลของบัญชีจริง
-            </p>
-          </article>
-
-          <article style={warningCardStyle}>
-            <h3 style={warningTitleStyle}>
-              ใช้ข้อมูลจริงของผู้ใช้
-            </h3>
-
-            <p style={warningTextStyle}>
-              ผู้ใช้ควรระบุคุณสมบัติ เงื่อนไข
-              และสิ่งที่ห้ามกล่าวอ้างให้ครบ
-              เพื่อให้เนื้อหาตรงกับสินค้าจริง
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section style={futureSectionStyle}>
-        <div>
-          <p style={labelStyle}>แผนสมาชิกในอนาคต</p>
-
-          <h2 style={sectionTitleStyle}>
-            ระบบรายเดือนจะเปิดเมื่อมีข้อมูลว่าผู้ใช้กลับมาซื้อซ้ำ
-          </h2>
-
-          <p style={sectionTextStyle}>
-            ตอนนี้ยังไม่บังคับสมัครสมาชิก
-            เราจะพัฒนาระบบรายเดือนเมื่อมีหลักฐานว่า
-            ผู้ใช้ต้องการสร้างแผนใหม่ทุกสัปดาห์จริง
+        </article>
+        <article style={noticeCardStyle}>
+          <h3 style={noticeTitleStyle}>ใช้ข้อมูลจริงของลูกค้า</h3>
+          <p style={noticeTextStyle}>
+            ระบบจะไม่แต่งราคา โปรโมชั่น คุณสมบัติ ผลลัพธ์ หรือหลักฐานแทนลูกค้า
+            ข้อมูลเฉพาะต้องกรอกให้ครบก่อนสร้างแผน
           </p>
-        </div>
-
-        <div style={futureListStyle}>
-          <div style={futureItemStyle}>
-            สร้างแผนใหม่ได้ทุกสัปดาห์
-          </div>
-
-          <div style={futureItemStyle}>
-            บันทึกข้อมูลหลายสินค้า
-          </div>
-
-          <div style={futureItemStyle}>
-            ระบบจำแนวภาษาของร้าน
-          </div>
-
-          <div style={futureItemStyle}>
-            ใช้ผลลัพธ์เดิมปรับแผนสัปดาห์ถัดไป
-          </div>
-        </div>
+        </article>
+        <article style={noticeCardStyle}>
+          <h3 style={noticeTitleStyle}>แนวทางที่ยังไม่รองรับ</h3>
+          <p style={noticeTextStyle}>
+            ไม่ควรเลือกตัวเลือกใกล้เคียงแล้วฝืนใช้ สามารถแจ้งความต้องการผ่าน LINE
+            เพื่อให้เราตรวจและเพิ่มแนวทางมาตรฐานภายหลัง
+          </p>
+        </article>
       </section>
 
-      <section style={bottomCtaStyle}>
-        <p style={bottomLabelStyle}>
-          เริ่มจากหนึ่งสินค้า
-        </p>
-
-        <h2 style={bottomTitleStyle}>
-          ทดลองสร้างร่างก่อน
-          หรือให้เราตรวจแผนก่อนนำไปใช้งานจริง
-        </h2>
-
-        <p style={bottomTextStyle}>
-          ไม่มีข้อผูกมัดรายเดือนในช่วง Beta
-          เลือกใช้ตามความพร้อมและเป้าหมายของคุณ
-        </p>
-
-        <div style={buttonRowCenterStyle}>
-          <Link href="/start" style={whiteLinkStyle}>
-            ทดลองสร้างแผน
-          </Link>
-
-          <Link
-            href="/contact?type=paid-beta"
-            style={darkOutlineLinkStyle}
-          >
-            ซื้อ Paid Beta 149 บาท
-          </Link>
+      <section style={ctaStyle}>
+        <h2 style={ctaTitleStyle}>พร้อมลดเวลาคิดคอนเทนต์ตลอด 7 วันหรือยัง</h2>
+        <p style={ctaTextStyle}>เริ่มจากหัวข้อหลักหนึ่งเรื่อง แล้วตรวจข้อมูลก่อนชำระเงินได้</p>
+        <div style={buttonRowStyle}>
+          <Link href="/start" style={primaryLinkStyle}>เริ่มกรอกข้อมูล</Link>
+          <Link href="/samples" style={secondaryLinkStyle}>ดูตัวอย่างแผน</Link>
         </div>
       </section>
     </main>
   );
 }
 
-const pageStyle: CSSProperties = {
-  maxWidth: "1180px",
-  margin: "0 auto",
-  padding: "24px",
-};
-
-const heroStyle: CSSProperties = {
-  padding: "clamp(34px, 7vw, 56px) clamp(20px, 5vw, 34px)",
-  borderRadius: "30px",
-  background:
-    "linear-gradient(135deg, #111827 0%, #312e81 55%, #4f46e5 100%)",
-  color: "white",
-};
-
-const heroLabelStyle: CSSProperties = {
-  margin: 0,
-  color: "#c7d2fe",
-  fontWeight: 800,
-};
-
-const heroTitleStyle: CSSProperties = {
-  maxWidth: "960px",
-  margin: "12px 0",
-  fontSize: "clamp(36px, 7vw, 54px)",
-  lineHeight: 1.14,
-};
-
-const heroSubtitleStyle: CSSProperties = {
-  maxWidth: "840px",
-  margin: 0,
-  color: "#e0e7ff",
-  fontSize: "18px",
-  lineHeight: 1.8,
-};
-
-const heroTagsStyle: CSSProperties = {
-  display: "flex",
-  flexWrap: "wrap",
-  gap: "9px",
-  marginTop: "20px",
-};
-
-const heroTagStyle: CSSProperties = {
-  padding: "7px 11px",
-  borderRadius: "999px",
-  border: "1px solid rgba(255,255,255,0.28)",
-  background: "rgba(255,255,255,0.1)",
-  color: "#eef2ff",
-  fontSize: "14px",
-  fontWeight: 700,
-};
-
-const buttonRowStyle: CSSProperties = {
-  display: "flex",
-  flexWrap: "wrap",
-  gap: "10px",
-  marginTop: "24px",
-};
-
-const buttonRowCenterStyle: CSSProperties = {
-  display: "flex",
-  justifyContent: "center",
-  flexWrap: "wrap",
-  gap: "10px",
-  marginTop: "22px",
-};
-
-const whiteLinkStyle: CSSProperties = {
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center",
-  minHeight: "46px",
-  padding: "0 18px",
-  borderRadius: "14px",
-  border: "1px solid white",
-  background: "white",
-  color: "#111827",
-  textDecoration: "none",
-  fontWeight: 800,
-};
-
-const darkOutlineLinkStyle: CSSProperties = {
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center",
-  minHeight: "46px",
-  padding: "0 18px",
-  borderRadius: "14px",
-  border: "1px solid rgba(255,255,255,0.36)",
-  background: "rgba(255,255,255,0.08)",
-  color: "white",
-  textDecoration: "none",
-  fontWeight: 800,
-};
-
-const greenLinkStyle: CSSProperties = {
-  display: "inline-flex",
-  flexShrink: 0,
-  alignItems: "center",
-  justifyContent: "center",
-  minHeight: "46px",
-  padding: "0 18px",
-  borderRadius: "14px",
-  border: "1px solid #047857",
-  background: "#047857",
-  color: "white",
-  textDecoration: "none",
-  fontWeight: 800,
-};
-
-const noticeStyle: CSSProperties = {
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  flexWrap: "wrap",
-  gap: "18px",
-  marginTop: "24px",
-  padding: "22px",
-  borderRadius: "22px",
-  border: "1px solid #bbf7d0",
-  background: "#f0fdf4",
-};
-
-const noticeLabelStyle: CSSProperties = {
-  margin: 0,
-  color: "#047857",
-  fontWeight: 900,
-};
-
-const noticeTitleStyle: CSSProperties = {
-  margin: "6px 0",
-  color: "#14532d",
-};
-
-const noticeTextStyle: CSSProperties = {
-  maxWidth: "800px",
-  margin: 0,
-  color: "#166534",
-  lineHeight: 1.75,
-};
-
-const planGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns:
-    "repeat(auto-fit, minmax(min(100%, 330px), 1fr))",
-  gap: "20px",
-  alignItems: "start",
-  marginTop: "30px",
-};
-
-const planCardStyle: CSSProperties = {
-  padding: "25px",
-  borderRadius: "25px",
-  border: "1px solid #e5e7eb",
-  background: "white",
-};
-
-const highlightedPlanStyle: CSSProperties = {
-  ...planCardStyle,
-  border: "2px solid #4f46e5",
-  background: "#eef2ff",
-  boxShadow: "0 18px 40px rgba(79,70,229,0.14)",
-};
-
-const normalBadgeStyle: CSSProperties = {
-  display: "inline-block",
-  padding: "7px 11px",
-  borderRadius: "999px",
-  border: "1px solid #c7d2fe",
-  background: "#f8fafc",
-  color: "#4338ca",
-  fontSize: "13px",
-  fontWeight: 800,
-};
-
-const highlightedBadgeStyle: CSSProperties = {
-  ...normalBadgeStyle,
-  border: "1px solid #4f46e5",
-  background: "#4f46e5",
-  color: "white",
-};
-
-const planNameStyle: CSSProperties = {
-  margin: "16px 0 7px",
-  color: "#111827",
-  fontSize: "30px",
-  lineHeight: 1.3,
-};
-
-const priceStyle: CSSProperties = {
-  margin: "0 0 12px",
-  color: "#111827",
-  fontSize: "28px",
-  fontWeight: 900,
-};
-
-const descriptionStyle: CSSProperties = {
-  margin: 0,
-  color: "#475569",
-  lineHeight: 1.75,
-};
-
-const bestForStyle: CSSProperties = {
-  marginTop: "17px",
-  padding: "15px",
-  borderRadius: "16px",
-  border: "1px solid #e5e7eb",
-  background: "white",
-};
-
-const bestForLabelStyle: CSSProperties = {
-  margin: "0 0 5px",
-  color: "#4f46e5",
-  fontWeight: 800,
-};
-
-const bestForTextStyle: CSSProperties = {
-  margin: 0,
-  color: "#334155",
-  lineHeight: 1.65,
-};
-
-const featureListStyle: CSSProperties = {
-  display: "grid",
-  gap: "10px",
-  marginTop: "20px",
-};
-
-const featureItemStyle: CSSProperties = {
-  display: "flex",
-  alignItems: "flex-start",
-  gap: "10px",
-};
-
-const checkStyle: CSSProperties = {
-  color: "#16a34a",
-  fontWeight: 900,
-};
-
-const featureTextStyle: CSSProperties = {
-  margin: 0,
-  color: "#334155",
-  lineHeight: 1.65,
-};
-
-const planNoteStyle: CSSProperties = {
-  marginTop: "18px",
-  padding: "13px",
-  borderRadius: "14px",
-  border: "1px solid #fde68a",
-  background: "#fffbeb",
-  color: "#92400e",
-  fontSize: "14px",
-  lineHeight: 1.65,
-};
-
-const planLinkStyle: CSSProperties = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  minHeight: "48px",
-  marginTop: "22px",
-  padding: "0 18px",
-  borderRadius: "14px",
-  border: "1px solid #c7d2fe",
-  background: "white",
-  color: "#312e81",
-  textDecoration: "none",
-  fontWeight: 800,
-};
-
-const highlightedPlanLinkStyle: CSSProperties = {
-  ...planLinkStyle,
-  border: "1px solid #4f46e5",
-  background: "#4f46e5",
-  color: "white",
-};
-
-const sectionStyle: CSSProperties = {
-  marginTop: "30px",
-  padding: "26px",
-  borderRadius: "26px",
-  border: "1px solid #e5e7eb",
-  background: "white",
-};
-
-const sectionHeadingStyle: CSSProperties = {
-  maxWidth: "820px",
-};
-
-const labelStyle: CSSProperties = {
-  margin: 0,
-  color: "#4f46e5",
-  fontWeight: 800,
-};
-
-const sectionTitleStyle: CSSProperties = {
-  margin: "8px 0",
-  color: "#111827",
-  fontSize: "clamp(28px, 5vw, 38px)",
-  lineHeight: 1.3,
-};
-
-const sectionTextStyle: CSSProperties = {
-  margin: 0,
-  color: "#475569",
-  fontSize: "17px",
-  lineHeight: 1.8,
-};
-
-const tableWrapStyle: CSSProperties = {
-  marginTop: "22px",
-  overflowX: "auto",
-};
-
-const tableStyle: CSSProperties = {
-  width: "100%",
-  minWidth: "680px",
-  borderCollapse: "collapse",
-};
-
-const thTitleStyle: CSSProperties = {
-  padding: "15px",
-  border: "1px solid #e5e7eb",
-  background: "#f8fafc",
-  color: "#111827",
-  textAlign: "left",
-};
-
-const thStyle: CSSProperties = {
-  ...thTitleStyle,
-  background: "#eef2ff",
-};
-
-const highlightedThStyle: CSSProperties = {
-  ...thTitleStyle,
-  background: "#4f46e5",
-  color: "white",
-};
-
-const tdTitleStyle: CSSProperties = {
-  padding: "15px",
-  border: "1px solid #e5e7eb",
-  color: "#111827",
-  fontWeight: 800,
-};
-
-const tdStyle: CSSProperties = {
-  padding: "15px",
-  border: "1px solid #e5e7eb",
-  color: "#475569",
-  lineHeight: 1.6,
-};
-
-const highlightedTdStyle: CSSProperties = {
-  ...tdStyle,
-  background: "#eef2ff",
-  color: "#312e81",
-  fontWeight: 700,
-};
-
-const processSectionStyle: CSSProperties = {
-  marginTop: "30px",
-  padding: "30px 26px",
-  borderRadius: "28px",
-  background: "#111827",
-  color: "white",
-};
-
-const lightLabelStyle: CSSProperties = {
-  margin: 0,
-  color: "#a5b4fc",
-  fontWeight: 800,
-};
-
-const lightTitleStyle: CSSProperties = {
-  margin: "8px 0",
-  fontSize: "clamp(30px, 5vw, 40px)",
-  lineHeight: 1.3,
-};
-
-const lightTextStyle: CSSProperties = {
-  margin: 0,
-  color: "#d1d5db",
-  fontSize: "17px",
-  lineHeight: 1.8,
-};
-
-const processGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns:
-    "repeat(auto-fit, minmax(210px, 1fr))",
-  gap: "14px",
-  marginTop: "24px",
-};
-
-const processCardStyle: CSSProperties = {
-  padding: "19px",
-  borderRadius: "18px",
-  border: "1px solid #374151",
-  background: "#1f2937",
-};
-
-const processNumberStyle: CSSProperties = {
-  display: "inline-flex",
-  width: "34px",
-  height: "34px",
-  alignItems: "center",
-  justifyContent: "center",
-  borderRadius: "999px",
-  background: "white",
-  color: "#312e81",
-  fontWeight: 900,
-};
-
-const processTitleStyle: CSSProperties = {
-  margin: "13px 0 7px",
-  color: "white",
-};
-
-const processTextStyle: CSSProperties = {
-  margin: 0,
-  color: "#cbd5e1",
-  lineHeight: 1.7,
-};
-
-const scopeSectionStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns:
-    "repeat(auto-fit, minmax(min(100%, 330px), 1fr))",
-  gap: "22px",
-  alignItems: "center",
-  marginTop: "30px",
-  padding: "26px",
-  borderRadius: "26px",
-  border: "1px solid #bbf7d0",
-  background: "#f0fdf4",
-};
-
-const scopeGridStyle: CSSProperties = {
-  display: "grid",
-  gap: "10px",
-};
-
-const scopeItemStyle: CSSProperties = {
-  display: "flex",
-  alignItems: "flex-start",
-  gap: "10px",
-  padding: "13px",
-  borderRadius: "14px",
-  border: "1px solid #bbf7d0",
-  background: "white",
-  color: "#166534",
-  lineHeight: 1.6,
-};
-
-const scopeCheckStyle: CSSProperties = {
-  color: "#16a34a",
-  fontWeight: 900,
-};
-
-const warningSectionStyle: CSSProperties = {
-  marginTop: "30px",
-  padding: "26px",
-  borderRadius: "26px",
-  border: "1px solid #fde68a",
-  background: "#fffbeb",
-};
-
-const warningLabelStyle: CSSProperties = {
-  margin: 0,
-  color: "#92400e",
-  fontWeight: 900,
-};
-
-const warningGridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns:
-    "repeat(auto-fit, minmax(230px, 1fr))",
-  gap: "14px",
-  marginTop: "18px",
-};
-
-const warningCardStyle: CSSProperties = {
-  padding: "18px",
-  borderRadius: "17px",
-  border: "1px solid #fde68a",
-  background: "white",
-};
-
-const warningTitleStyle: CSSProperties = {
-  margin: "0 0 7px",
-  color: "#78350f",
-};
-
-const warningTextStyle: CSSProperties = {
-  margin: 0,
-  color: "#64748b",
-  lineHeight: 1.7,
-};
-
-const futureSectionStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns:
-    "repeat(auto-fit, minmax(min(100%, 330px), 1fr))",
-  gap: "22px",
-  alignItems: "center",
-  marginTop: "30px",
-  padding: "26px",
-  borderRadius: "26px",
-  border: "1px solid #e5e7eb",
-  background: "white",
-};
-
-const futureListStyle: CSSProperties = {
-  display: "grid",
-  gap: "10px",
-};
-
-const futureItemStyle: CSSProperties = {
-  padding: "14px",
-  borderRadius: "14px",
-  border: "1px solid #e5e7eb",
-  background: "#f8fafc",
-  color: "#334155",
-  fontWeight: 700,
-};
-
-const bottomCtaStyle: CSSProperties = {
-  marginTop: "30px",
-  padding: "38px 26px",
-  borderRadius: "30px",
-  background:
-    "linear-gradient(135deg, #312e81 0%, #4f46e5 100%)",
-  color: "white",
-  textAlign: "center",
-};
-
-const bottomLabelStyle: CSSProperties = {
-  margin: 0,
-  color: "#c7d2fe",
-  fontWeight: 800,
-};
-
-const bottomTitleStyle: CSSProperties = {
-  maxWidth: "850px",
-  margin: "10px auto",
-  fontSize: "clamp(30px, 6vw, 43px)",
-  lineHeight: 1.3,
-};
-
-const bottomTextStyle: CSSProperties = {
-  maxWidth: "720px",
-  margin: "0 auto",
-  color: "#e0e7ff",
-  fontSize: "17px",
-  lineHeight: 1.8,
-};
+const mainStyle: CSSProperties = { maxWidth: "1100px", margin: "0 auto", padding: "clamp(16px, 4vw, 28px)", overflowX: "hidden" };
+const heroStyle: CSSProperties = { padding: "clamp(32px, 7vw, 60px)", borderRadius: "28px", background: "#111827", color: "white" };
+const eyebrowStyle: CSSProperties = { margin: 0, color: "#a5b4fc", fontWeight: 800 };
+const titleStyle: CSSProperties = { fontSize: "clamp(34px, 7vw, 54px)", lineHeight: 1.12, margin: "14px 0", maxWidth: "900px" };
+const subtitleStyle: CSSProperties = { margin: 0, color: "#d1d5db", lineHeight: 1.8, fontSize: "18px", maxWidth: "800px" };
+const priceCardStyle: CSSProperties = { marginTop: "22px", padding: "clamp(24px, 5vw, 38px)", border: "2px solid #4f46e5", borderRadius: "24px", display: "flex", flexWrap: "wrap", gap: "24px", justifyContent: "space-between", alignItems: "center", background: "white" };
+const planLabelStyle: CSSProperties = { margin: 0, color: "#4f46e5", fontWeight: 900 };
+const priceRowStyle: CSSProperties = { display: "flex", flexWrap: "wrap", gap: "10px", alignItems: "baseline", marginTop: "8px" };
+const priceStyle: CSSProperties = { fontSize: "clamp(40px, 8vw, 60px)", color: "#111827" };
+const priceSuffixStyle: CSSProperties = { color: "#6b7280", fontWeight: 700 };
+const planTextStyle: CSSProperties = { color: "#4b5563", lineHeight: 1.7, maxWidth: "680px", margin: "10px 0 0" };
+const primaryLinkStyle: CSSProperties = { display: "inline-flex", minHeight: "50px", alignItems: "center", justifyContent: "center", padding: "0 20px", borderRadius: "14px", background: "#4f46e5", color: "white", textDecoration: "none", fontWeight: 800, textAlign: "center" };
+const secondaryLinkStyle: CSSProperties = { ...primaryLinkStyle, background: "white", color: "#4338ca", border: "1px solid #c7d2fe" };
+const sectionStyle: CSSProperties = { padding: "clamp(50px, 8vw, 76px) 0" };
+const softSectionStyle: CSSProperties = { ...sectionStyle, paddingLeft: "clamp(18px, 4vw, 34px)", paddingRight: "clamp(18px, 4vw, 34px)", background: "#f8fafc", borderRadius: "26px" };
+const labelStyle: CSSProperties = { margin: "0 0 8px", color: "#4f46e5", fontWeight: 800 };
+const sectionTitleStyle: CSSProperties = { margin: "0 0 24px", fontSize: "clamp(28px, 5vw, 40px)", color: "#111827" };
+const gridStyle: CSSProperties = { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))", gap: "12px" };
+const itemCardStyle: CSSProperties = { display: "flex", gap: "10px", alignItems: "flex-start", padding: "16px", borderRadius: "16px", border: "1px solid #e5e7eb", background: "white" };
+const checkStyle: CSSProperties = { color: "#16a34a", fontWeight: 900 };
+const itemTextStyle: CSSProperties = { margin: 0, color: "#4b5563", lineHeight: 1.7 };
+const processGridStyle: CSSProperties = { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 240px), 1fr))", gap: "14px" };
+const processCardStyle: CSSProperties = { display: "flex", gap: "12px", alignItems: "flex-start", padding: "18px", borderRadius: "18px", background: "white", border: "1px solid #e5e7eb" };
+const numberStyle: CSSProperties = { display: "inline-flex", width: "34px", height: "34px", borderRadius: "11px", alignItems: "center", justifyContent: "center", background: "#eef2ff", color: "#4338ca", fontWeight: 900, flex: "0 0 auto" };
+const noticeGridStyle: CSSProperties = { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 270px), 1fr))", gap: "16px", padding: "clamp(50px, 8vw, 76px) 0" };
+const noticeCardStyle: CSSProperties = { padding: "22px", borderRadius: "20px", border: "1px solid #e5e7eb", background: "white" };
+const noticeTitleStyle: CSSProperties = { margin: "0 0 10px", color: "#111827" };
+const noticeTextStyle: CSSProperties = { margin: 0, color: "#4b5563", lineHeight: 1.75 };
+const ctaStyle: CSSProperties = { textAlign: "center", padding: "clamp(36px, 7vw, 60px)", borderRadius: "26px", background: "#eef2ff" };
+const ctaTitleStyle: CSSProperties = { margin: "0 0 12px", color: "#111827", fontSize: "clamp(28px, 5vw, 40px)" };
+const ctaTextStyle: CSSProperties = { margin: 0, color: "#4b5563", lineHeight: 1.7 };
+const buttonRowStyle: CSSProperties = { display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "12px", marginTop: "22px" };
