@@ -15,7 +15,8 @@ export type CreatorPaymentProof = {
 };
 
 export type CreatorPlanProductStandard =
-  | "ready-to-execute-v1";
+  | "ready-to-execute-v1"
+  | "ready-to-execute-v2";
 
 export type CreatorPlanQualityCheck = {
   id: string;

@@ -18,6 +18,7 @@ import {
   TONE_LABELS,
 } from "../data/plan-intent-options";
 
+import { applyRealityPlaybook } from "./reality-playbooks";
 import type {
   ContentFormat,
   ContentGoal,
@@ -3623,7 +3624,7 @@ function createDay(
           variationIndex
         );
 
-  return {
+  const draftDay: WeeklyContentDay = {
     day: dayNumber,
 
     ...content,
@@ -3666,6 +3667,15 @@ function createDay(
 
     status: "not-started",
   };
+
+  return applyRealityPlaybook(
+    draftDay,
+    request,
+    {
+      round,
+      variationIndex,
+    }
+  );
 }
 
 export function generateWeeklyContentPlan(
