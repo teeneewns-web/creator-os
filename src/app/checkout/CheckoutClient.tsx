@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
   useEffect,
@@ -7,6 +7,7 @@ import {
   type CSSProperties,
 } from "react";
 import Link from "next/link";
+import QRCode from "qrcode";
 import type {
   ContentCapability,
   ContentDirection,
@@ -247,6 +248,10 @@ export default function CheckoutClient({
   const [savingOrder, setSavingOrder] = useState(false);
   const [orderError, setOrderError] = useState("");
   const [copyMessage, setCopyMessage] = useState("");
+  const [mobileLineDevice, setMobileLineDevice] =
+    useState(false);
+  const [lineQrDataUrl, setLineQrDataUrl] =
+    useState("");
 
   useEffect(() => {
     try {
@@ -289,6 +294,25 @@ export default function CheckoutClient({
     } catch {
       setRequest(null);
     }
+  }, []);
+
+  useEffect(() => {
+    const mobile =
+      /Android|iPhone|iPad|iPod|Mobile/i.test(
+        window.navigator.userAgent
+      );
+
+    setMobileLineDevice(mobile);
+
+    if (mobile) return;
+
+    QRCode.toDataURL(LINE_PAYMENT_URL, {
+      width: 240,
+      margin: 1,
+      errorCorrectionLevel: "M",
+    })
+      .then(setLineQrDataUrl)
+      .catch(() => setLineQrDataUrl(""));
   }, []);
 
   const orderSummary = useMemo(() => {
@@ -481,8 +505,32 @@ export default function CheckoutClient({
   function copyAndOpenLine() {
     if (!orderSummary) return;
 
-    copyText(orderSummary);
-    window.location.href = LINE_PAYMENT_URL;
+    const copied = copyText(orderSummary);
+
+    if (mobileLineDevice) {
+      setCopyMessage(
+        copied
+          ? "คัดลอกข้อมูลแล้ว กำลังเปิด LINE"
+          : "กำลังเปิด LINE กรุณาคัดลอกข้อมูลคำสั่งซื้อก่อนส่ง"
+      );
+      window.location.href = LINE_PAYMENT_URL;
+      return;
+    }
+
+    setCopyMessage(
+      copied
+        ? "คัดลอกข้อมูลคำสั่งซื้อแล้ว — ใช้โทรศัพท์สแกน QR ด้านล่าง หรือค้นหา LINE OA @857xezqh บน LINE for PC"
+        : "คัดลอกไม่สำเร็จ กรุณากดคัดลอกข้อมูลคำสั่งซื้อ แล้วสแกน QR ด้านล่าง"
+    );
+
+    window.setTimeout(() => {
+      document
+        .getElementById("line-desktop-payment")
+        ?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+    }, 50);
   }
 
   if (request === undefined) {
@@ -833,14 +881,64 @@ export default function CheckoutClient({
               onClick={copyAndOpenLine}
               style={lineButtonStyle}
             >
-              ชำระแล้ว คัดลอกข้อมูลและเปิด LINE
+              {mobileLineDevice
+                ? "ชำระแล้ว คัดลอกข้อมูลและเปิด LINE"
+                : "ชำระแล้ว คัดลอกข้อมูลสำหรับส่ง LINE"}
             </button>
 
-            <p style={lineHelpStyle}>
-              เมื่อ LINE เปิดขึ้น ให้ส่งคำว่า
-              “แจ้งชำระเงิน” จากนั้นแนบสลิป
-              และวางข้อมูลคำสั่งซื้อที่คัดลอกไว้
-            </p>
+            {mobileLineDevice ? (
+              <p style={lineHelpStyle}>
+                เมื่อ LINE เปิดขึ้น ให้ส่งคำว่า
+                “แจ้งชำระเงิน” จากนั้นแนบสลิป
+                และวางข้อมูลคำสั่งซื้อที่คัดลอกไว้
+              </p>
+            ) : (
+              <div
+                id="line-desktop-payment"
+                style={lineDesktopHelpStyle}
+              >
+                <strong style={lineDesktopTitleStyle}>
+                  ใช้โน้ตบุ๊กหรือคอมพิวเตอร์
+                </strong>
+
+                <p style={lineDesktopTextStyle}>
+                  LINE ไม่รองรับลิงก์เปิดแชต
+                  Official Account โดยตรงบน LINE for PC
+                  ให้สแกน QR นี้ด้วย LINE บนโทรศัพท์
+                </p>
+
+                {lineQrDataUrl ? (
+                  <img
+                    src={lineQrDataUrl}
+                    width={220}
+                    height={220}
+                    alt="QR สำหรับเปิดแชต LINE Official Account @857xezqh"
+                    style={lineQrImageStyle}
+                  />
+                ) : (
+                  <p style={lineDesktopTextStyle}>
+                    กำลังสร้าง QR สำหรับ LINE...
+                  </p>
+                )}
+
+                <p style={lineDesktopStepsStyle}>
+                  1. เปิด LINE บนโทรศัพท์และสแกน QR
+                  <br />
+                  2. ส่งคำว่า “แจ้งชำระเงิน”
+                  <br />
+                  3. แนบสลิป
+                  <br />
+                  4. วางข้อมูลคำสั่งซื้อที่คัดลอกไว้
+                </p>
+
+                <p style={lineDesktopFallbackStyle}>
+                  ใช้ LINE บนคอมอย่างเดียว:
+                  ค้นหา LINE OA{" "}
+                  <strong>@857xezqh</strong>
+                  {" "}แล้วเปิดแชตด้วยตนเอง
+                </p>
+              </div>
+            )}
 
             <div style={timeBoxStyle}>
               หลังตรวจยอดและกดอนุมัติ
@@ -1116,6 +1214,58 @@ const lineButtonStyle: CSSProperties = {
   color: "white",
   fontWeight: 900,
   cursor: "pointer",
+};
+
+const lineDesktopHelpStyle: CSSProperties = {
+  marginTop: "14px",
+  padding: "18px",
+  borderRadius: "16px",
+  border: "1px solid #bbf7d0",
+  background: "#f0fdf4",
+  textAlign: "center",
+};
+
+const lineDesktopTitleStyle: CSSProperties = {
+  display: "block",
+  color: "#166534",
+  fontSize: "17px",
+  fontWeight: 900,
+};
+
+const lineDesktopTextStyle: CSSProperties = {
+  margin: "8px auto 12px",
+  maxWidth: "520px",
+  color: "#475569",
+  lineHeight: 1.7,
+};
+
+const lineQrImageStyle: CSSProperties = {
+  display: "block",
+  width: "220px",
+  maxWidth: "100%",
+  height: "auto",
+  margin: "10px auto",
+  padding: "8px",
+  borderRadius: "14px",
+  background: "white",
+  border: "1px solid #dcfce7",
+};
+
+const lineDesktopStepsStyle: CSSProperties = {
+  margin: "12px auto 0",
+  maxWidth: "420px",
+  color: "#166534",
+  lineHeight: 1.8,
+  textAlign: "left",
+  fontWeight: 700,
+};
+
+const lineDesktopFallbackStyle: CSSProperties = {
+  margin: "12px 0 0",
+  paddingTop: "12px",
+  borderTop: "1px solid #bbf7d0",
+  color: "#475569",
+  lineHeight: 1.7,
 };
 
 const lineHelpStyle: CSSProperties = {
