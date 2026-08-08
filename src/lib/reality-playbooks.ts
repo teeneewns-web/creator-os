@@ -57,7 +57,91 @@ type DirectionMission = {
   angle: string;
   execution: string;
   proof: string;
+  baseAngle?: string;
+  renewalLens?: string;
 };
+
+type RenewalLens = {
+  label: string;
+  instruction: string;
+  proofFocus: string;
+  narrativeBeat: string;
+};
+
+const RENEWAL_LENSES: readonly RenewalLens[] = [
+  {
+    label: "มุมคนเพิ่งเจอครั้งแรก",
+    instruction: "ทำใหม่จากมุมคนที่ยังไม่รู้บริบท เริ่มจากสิ่งที่ต้องเห็นหรือเข้าใจก่อนที่สุด",
+    proofFocus: "หลักฐานที่คนใหม่ตรวจได้โดยไม่ต้องเชื่อคำบอก",
+    narrativeBeat: "เพิ่มจังหวะที่ตัวละครหยุดตรวจสิ่งผิดปกติก่อนตัดสินใจ เพื่อให้เหตุ–ผลชัดขึ้น",
+  },
+  {
+    label: "มุมคนที่ยังลังเล",
+    instruction: "หยิบข้อกังวลที่ยังไม่ได้ใช้เป็นแกน แล้วทำให้เห็นคำตอบผ่านการกระทำหรือหลักฐาน",
+    proofFocus: "สิ่งที่ช่วยลดความลังเลโดยไม่กล่าวอ้างเกินจริง",
+    narrativeBeat: "ให้ตัวละครเข้าใจผิดหนึ่งครั้ง แล้วแก้ความเข้าใจจากรายละเอียดที่เห็นจริงในฉาก",
+  },
+  {
+    label: "มุมข้อผิดพลาดและการแก้",
+    instruction: "เริ่มจากวิธีที่มักทำพลาดหนึ่งอย่าง แล้วแสดงวิธีแก้ที่ง่ายกว่าและทำได้จริง",
+    proofFocus: "ภาพเปรียบเทียบก่อนแก้กับหลังแก้",
+    narrativeBeat: "ให้การกระทำแรกสร้างผลผิดคาด แล้วการแก้ครั้งที่สองทำให้เรื่องคลี่คลาย",
+  },
+  {
+    label: "มุมเปรียบเทียบสองทางเลือก",
+    instruction: "วางสองทางเลือกภายใต้เงื่อนไขเดียวกันแล้วสรุปว่าแต่ละแบบเหมาะกับสถานการณ์ใด",
+    proofFocus: "เกณฑ์เดียวกันที่ใช้เทียบทั้งสองทางเลือก",
+    narrativeBeat: "ให้ตัวละครลองทางเลือก A ก่อน แล้วเปลี่ยนไป B เพราะสังเกตเห็นเบาะแสหนึ่งจุด",
+  },
+  {
+    label: "มุมทรัพยากรน้อย",
+    instruction: "ทำเวอร์ชันที่ใช้ของที่มีอยู่ เวลาให้น้อยลง และตัดขั้นตอนที่ไม่จำเป็นออก",
+    proofFocus: "ผลที่ยังทำได้แม้ใช้อุปกรณ์หรือทรัพยากรขั้นต่ำ",
+    narrativeBeat: "จำกัดฉากและของประกอบให้เหลือเท่าที่จำเป็น แล้วใช้การจัดวางวัตถุสร้างจุดหักมุม",
+  },
+  {
+    label: "มุมเช็กลิสต์สำหรับมือใหม่",
+    instruction: "แตกงานเป็น 3 จุดตรวจที่มือใหม่ทำตามได้ตามลำดับ โดยไม่ต้องมีความรู้เดิม",
+    proofFocus: "เช็กลิสต์ที่ตรวจด้วยตนเองได้ทีละข้อ",
+    narrativeBeat: "ให้เรื่องเดินผ่านสามการกระทำต่อเนื่อง แต่ละการกระทำต้องเป็นสาเหตุของช็อตถัดไป",
+  },
+  {
+    label: "มุมคำถามจริงจากผู้ชม",
+    instruction: "ใช้คำถามหรือความคาดหวังอีกข้อของผู้ชมเป็นโจทย์ แล้วตอบด้วยตัวอย่างจริงแทนคำตอบกว้าง ๆ",
+    proofFocus: "ตัวอย่างหรือเหตุการณ์ที่ตอบคำถามนั้นโดยตรง",
+    narrativeBeat: "เปิดด้วยสิ่งที่ชวนให้สงสัย แล้วเฉลยด้วยการกระทำแทนข้อความอธิบาย",
+  },
+  {
+    label: "มุมสถานการณ์ใช้งานใหม่",
+    instruction: "ย้ายแกนเดิมไปอยู่ในสถานการณ์อีกแบบที่กลุ่มเป้าหมายเจอจริง เพื่อไม่ทำซ้ำบริบทเดิม",
+    proofFocus: "หลักฐานจากบริบทใหม่ที่ยังสัมพันธ์กับหัวข้อหลัก",
+    narrativeBeat: "เปลี่ยนเหตุการณ์เริ่มต้น แต่คงเป้าหมายตัวละครไว้ แล้วให้ผลลัพธ์เกิดจากข้อจำกัดของสถานการณ์ใหม่",
+  },
+  {
+    label: "มุมตรวจผลหลังทำ",
+    instruction: "เริ่มจากผลที่เกิดขึ้นแล้วค่อยย้อนให้เห็นขั้นตอนที่ทำให้เกิดผลนั้น",
+    proofFocus: "ลำดับย้อนกลับจากผลไปหาสาเหตุ",
+    narrativeBeat: "เปิดด้วยภาพผลลัพธ์ก่อน แล้วค่อยย้อนให้เห็นสาเหตุทีละช็อตจนคนดูเข้าใจเฉลย",
+  },
+  {
+    label: "มุมข้อจำกัดที่ควรรู้",
+    instruction: "เน้นขอบเขต สิ่งที่ทำไม่ได้ หรือเงื่อนไขที่ควรรู้ แล้วแนะนำทางเลือกที่เหมาะกว่า",
+    proofFocus: "ข้อจำกัดที่ตรวจสอบได้และทางเลือกที่ไม่ฝืนข้อเท็จจริง",
+    narrativeBeat: "ให้ตัวละครพยายามทำสิ่งหนึ่งแต่ติดข้อจำกัด แล้วหาทางออกจากสิ่งที่มีอยู่ในฉาก",
+  },
+  {
+    label: "มุมชวนผู้ชมทดลอง",
+    instruction: "เปลี่ยนเนื้อหาเป็นภารกิจเล็กที่ผู้ชมทำตามได้และรู้ว่าต้องสังเกตอะไรหลังลอง",
+    proofFocus: "ผลที่ผู้ชมสามารถตรวจเองหลังทำภารกิจ",
+    narrativeBeat: "ออกแบบเรื่องให้คนดูคาดเดาการตัดสินใจถัดไปได้ก่อนเฉลย เพื่อเพิ่มการมีส่วนร่วมโดยไม่ใช้ข้อความบังคับ",
+  },
+  {
+    label: "มุมต่อยอดจากสัปดาห์ก่อน",
+    instruction: "ใช้สิ่งที่เคยพูดไปแล้วเป็นฐาน แต่เพิ่มคำถาม ขั้นตอน หรือสถานการณ์ใหม่แทนการเล่าเนื้อหาเดิมซ้ำ",
+    proofFocus: "ข้อมูลใหม่หรือมุมใหม่ที่ต่อยอดจากสิ่งเดิมอย่างชัดเจน",
+    narrativeBeat: "ใช้วัตถุหรือเหตุการณ์จากตอนเดิมเป็น callback แต่เปลี่ยนสาเหตุและผลลัพธ์ของเรื่องใหม่",
+  },
+];
 
 const DIRECTION_MISSIONS: Record<
   ContentDirection,
@@ -433,10 +517,36 @@ function getMission(
   dayNumber: number,
   round: number,
   variationIndex: number
-) {
+): DirectionMission {
   const missions = DIRECTION_MISSIONS[direction];
-  const offset = Math.max(0, round - 1) * 2 + Math.max(0, variationIndex);
-  return missions[(dayNumber - 1 + offset) % missions.length];
+  const safeRound = Math.max(1, round);
+  const safeVariation = Math.max(0, variationIndex);
+  const baseOffset =
+    safeRound === 1
+      ? safeVariation
+      : (safeRound - 1) * 3 + safeVariation * 2;
+  const base =
+    missions[(dayNumber - 1 + baseOffset) % missions.length];
+
+  if (safeRound === 1) {
+    return base;
+  }
+
+  const lensIndex =
+    ((safeRound - 2) * 7 +
+      (dayNumber - 1) * 3 +
+      safeVariation * 5) %
+    RENEWAL_LENSES.length;
+  const lens = RENEWAL_LENSES[lensIndex];
+
+  return {
+    ...base,
+    baseAngle: base.angle,
+    renewalLens: lens.label,
+    angle: `${base.angle} · ${lens.label}`,
+    execution: `${base.execution} จากนั้น ${lens.instruction}`,
+    proof: `${base.proof} และ ${lens.proofFocus}`,
+  };
 }
 
 function trimShots(shots: string[], maxShots: number) {
@@ -593,8 +703,9 @@ function buildNarrativeCore(
       "ตอนจบ: ตัวละครหยิบของเดิมขึ้นมาแล้ววางนอกห้องอย่างจริงจัง",
     ],
   };
-  const shortFilmSilent = shortFilmSilentByAngle[mission.angle] || shortFilmSilentByAngle["เรื่องจากวัตถุชิ้นเดียว"];
-  const comedySilent = comedySilentByAngle[mission.angle] || comedySilentByAngle["ตั้งใจอย่างหนึ่ง ได้อีกอย่าง"];
+  const narrativeBaseAngle = mission.baseAngle || mission.angle;
+  const shortFilmSilent = shortFilmSilentByAngle[narrativeBaseAngle] || shortFilmSilentByAngle["เรื่องจากวัตถุชิ้นเดียว"];
+  const comedySilent = comedySilentByAngle[narrativeBaseAngle] || comedySilentByAngle["ตั้งใจอย่างหนึ่ง ได้อีกอย่าง"];
   const spoken = comedy
     ? [
         `ช็อต 1 (0–3 วิ): เปิดสถานการณ์ “${mission.angle}” ให้คนดูเข้าใจเป้าหมายของตัวละครทันที`,
@@ -609,9 +720,19 @@ function buildNarrativeCore(
         "ตอนจบ: ค้างภาพเฉลย 2–3 วินาทีก่อนจบ ไม่รีบขึ้น CTA",
       ];
 
-  const chosen = silent
+  const chosenBase = silent
     ? (comedy ? comedySilent : shortFilmSilent)
     : spoken;
+  const renewalLens = mission.renewalLens
+    ? RENEWAL_LENSES.find((item) => item.label === mission.renewalLens)
+    : undefined;
+  const chosen = renewalLens
+    ? chosenBase.map((item, index) =>
+        index === Math.min(1, chosenBase.length - 1)
+          ? `${item} ${renewalLens.narrativeBeat}`
+          : item
+      )
+    : chosenBase;
 
   return {
     title: `${mission.angle}: ${subject}`,
@@ -876,6 +997,128 @@ function calculateEstimatedMinutes(
   return Math.max(8, Math.min(caps, base));
 }
 
+function applyRenewalLayer(
+  core: {
+    title: string;
+    topic: string;
+    hook: string;
+    script: string;
+    shotList: string[];
+    onScreenTexts: string[];
+    caption: string;
+  },
+  context: RealityPlaybookContext,
+  mission: DirectionMission,
+  constraints: ProductionConstraints,
+  limits: RealityLimits
+) {
+  if (!mission.renewalLens) return core;
+
+  const lens = RENEWAL_LENSES.find(
+    (item) => item.label === mission.renewalLens
+  );
+
+  if (!lens) return core;
+
+  const subject = context.productOrService;
+  const highlight =
+    context.productHighlights[1] ||
+    context.productHighlights[0] ||
+    "จุดสำคัญที่ตรวจสอบได้";
+  const concern =
+    context.customerConcerns[1] ||
+    context.customerConcerns[0] ||
+    "คำถามที่ผู้ชมยังอยากรู้";
+  const narrative =
+    context.contentDirection === "creator-short-film" ||
+    context.contentDirection === "creator-comedy";
+
+  if (narrative) {
+    const narrativeShot =
+      `จังหวะใหม่ของสัปดาห์นี้: ${lens.narrativeBeat}`;
+
+    return {
+      ...core,
+      title: `${mission.renewalLens}: ${core.title}`,
+      topic: `${mission.renewalLens} — ${mission.execution}`,
+      hook: context.contentDirection === "creator-comedy"
+        ? `เริ่มเหมือนเหตุการณ์ธรรมดา แต่รอบนี้ให้ความผิดพลาดเล็ก ๆ เป็นตัวเปลี่ยนเรื่อง`
+        : `เปิดด้วยผลลัพธ์ที่ผิดปกติหนึ่งภาพ แล้วค่อยให้การกระทำพาคนดูย้อนหาสาเหตุ`,
+      script: [
+        `โครงเรื่องสัปดาห์ใหม่: ${mission.renewalLens}`,
+        `เหตุเริ่ม: ${mission.execution}`,
+        narrativeShot,
+        `บท/การกระทำพร้อมถ่าย:
+${core.script}`,
+        `หลักฐานของเหตุ–ผลที่ต้องเห็นในภาพ: ${mission.proof}`,
+      ].join("\n"),
+      shotList: trimShots(
+        core.shotList.map((shot, index) => {
+          if (index === 0) {
+            return `${shot} — เปิดให้สื่อ ${mission.renewalLens} โดยไม่อธิบายด้วยข้อความ`;
+          }
+
+          if (index === 1) {
+            return `${shot} — ใช้จังหวะนี้ทำให้เหตุ–ผลของมุมใหม่ชัดขึ้น`;
+          }
+
+          return shot;
+        }),
+        limits.maxShots
+      ),
+      onScreenTexts: constraints.noOnScreenText
+        ? []
+        : [mission.renewalLens, ...core.onScreenTexts].slice(0, 3),
+      caption: `สัปดาห์นี้เปลี่ยนกลไกการเล่าเป็น “${mission.renewalLens}” เพื่อให้เรื่องใหม่ไม่ใช่การสลับคำจากตอนเดิม\n\n${core.caption}`,
+    };
+  }
+
+  const openerByLens: Record<string, string> = {
+    "มุมคนเพิ่งเจอครั้งแรก": `ถ้าเพิ่งรู้จัก ${subject} วันนี้ให้ดูเพียงสิ่งเดียวก่อน: ${highlight}`,
+    "มุมคนที่ยังลังเล": `ถ้ายังติดคำถาม “${concern}” รอบนี้เราตอบด้วยสิ่งที่เห็นจริง`,
+    "มุมข้อผิดพลาดและการแก้": `ลองเริ่มจากสิ่งที่มักทำพลาด แล้วดูว่าการแก้เพียงจุดเดียวเปลี่ยนอะไร`,
+    "มุมเปรียบเทียบสองทางเลือก": `แทนที่จะบอกว่าแบบไหนดีกว่า เราจะวางสองทางเลือกในเงื่อนไขเดียวกัน`,
+    "มุมทรัพยากรน้อย": `รอบนี้ตัดของที่ไม่จำเป็นออก แล้วทำด้วยสิ่งที่มีอยู่จริง`,
+    "มุมเช็กลิสต์สำหรับมือใหม่": `มือใหม่ไม่ต้องจำทั้งหมด เช็กทีละ 3 จุดนี้ก่อน`,
+    "มุมคำถามจริงจากผู้ชม": `คำถามรอบนี้คือ “${concern}” และคำตอบต้องเห็นได้จากตัวอย่าง`,
+    "มุมสถานการณ์ใช้งานใหม่": `เอา ${subject} ไปดูในอีกสถานการณ์หนึ่ง แล้วดูว่าจุดสำคัญเปลี่ยนอย่างไร`,
+    "มุมตรวจผลหลังทำ": `เริ่มจากผลที่เกิดขึ้นก่อน แล้วค่อยย้อนดูว่าอะไรเป็นสาเหตุ`,
+    "มุมข้อจำกัดที่ควรรู้": `ก่อนทำตาม มีข้อจำกัดหนึ่งอย่างที่ควรรู้เพื่อไม่เสียเวลา`,
+    "มุมชวนผู้ชมทดลอง": `วันนี้ไม่จบแค่ดู ให้ลองภารกิจเล็กนี้แล้วสังเกตผลด้วยตัวเอง`,
+    "มุมต่อยอดจากสัปดาห์ก่อน": `จากสิ่งที่สัปดาห์ก่อนปูไว้ รอบนี้เพิ่มคำถามใหม่แทนการเล่าเรื่องเดิมซ้ำ`,
+  };
+
+  const hook =
+    openerByLens[mission.renewalLens] ||
+    `${mission.renewalLens}: ${core.hook}`;
+  const actionShots = [
+    `ช็อต/ภาพ 1: เปิดด้วย ${mission.renewalLens} และให้เห็นบริบทจริงของ ${subject}`,
+    `ช็อต/ภาพ 2: ${mission.execution}`,
+    `ช็อต/ภาพ 3: ซูมหรือแยกให้เห็น ${mission.proof}`,
+    `ช็อต/ภาพสุดท้าย: สรุปเฉพาะสิ่งที่ตรวจได้ แล้วใช้ CTA เดียว`,
+  ];
+
+  return {
+    ...core,
+    title: `${mission.renewalLens}: ${core.title}`,
+    topic: `${mission.renewalLens} — ${mission.execution}`,
+    hook,
+    script: [
+      `ประโยคเปิด: “${hook}”`,
+      `ช่วงทำจริง: ${mission.execution}`,
+      `สิ่งที่ต้องทำให้คนดูเห็น: ${mission.proof}`,
+      `โยงกับข้อมูลของคุณ: ${highlight}`,
+      `ตอบข้อสงสัยที่เกี่ยวข้อง: ${concern}`,
+      `ปิดโดยสรุปเฉพาะสิ่งที่เห็น/ยืนยันได้ ไม่ยกคำกล่าวอ้างจากสัปดาห์ก่อนมาพูดซ้ำ`,
+    ].join("\n"),
+    shotList: trimShots(actionShots, limits.maxShots),
+    onScreenTexts: constraints.noOnScreenText
+      ? []
+      : [mission.renewalLens, highlight, "ดูหลักฐานก่อนสรุป"],
+    caption: `สัปดาห์ต่อยอด · ${mission.renewalLens}\n\nวันนี้ไม่เล่าแกนเดิมซ้ำ แต่ใช้ ${mission.execution} และยึด ${mission.proof} เป็นหลัก`,
+  };
+}
+
 export function applyRealityPlaybook(
   day: WeeklyContentDay,
   context: RealityPlaybookContext,
@@ -892,10 +1135,17 @@ export function applyRealityPlaybook(
     options.round,
     options.variationIndex
   );
-  const core = buildDirectionCore(
+  const baseCore = buildDirectionCore(
     context,
     mission,
     day,
+    constraints,
+    limits
+  );
+  const core = applyRenewalLayer(
+    baseCore,
+    context,
+    mission,
     constraints,
     limits
   );

@@ -25,6 +25,13 @@ type AdminOrder = {
   planRound: number | null;
   variationIndex: number | null;
   duplicateFingerprintsAvoided: number;
+  repeatNoveltyRejectedPlans: number;
+  repeatNoveltyPassed: boolean | null;
+  repeatAverageSimilarity: number | null;
+  repeatMaxSimilarity: number | null;
+  repeatPreviousPlansCompared: number;
+  previousOrderId: string | null;
+  rootOrderId: string;
   qualityRejectedPlans: number;
   qualityScore: number | null;
   qualityThreshold: number | null;
@@ -407,6 +414,12 @@ export default function AdminOrdersClient() {
                       ? order.variationIndex + 1
                       : "จะกำหนดเมื่ออนุมัติ"}
                   </p>
+                  {order.previousOrderId ? (
+                    <p className="sm:col-span-2">
+                      <strong>ต่อจากออเดอร์:</strong>{" "}
+                      {order.previousOrderId}
+                    </p>
+                  ) : null}
                 </div>
 
                 {order.status === "payment-submitted" && (
@@ -466,6 +479,28 @@ export default function AdminOrdersClient() {
                         ? ` และหลีกเลี่ยงรายการซ้ำ ${order.duplicateFingerprintsAvoided} จุด`
                         : " และไม่พบเนื้อหาซ้ำแบบตรงกัน"}
                     </p>
+
+                    {order.planRound &&
+                    order.planRound > 1 ? (
+                      <div className="mt-4 rounded-2xl border border-violet-400/25 bg-violet-400/10 p-4">
+                        <p className="text-xs font-black uppercase tracking-wider text-violet-200">
+                          Repeat Novelty Gate
+                        </p>
+                        <p className="mt-1 text-sm font-bold text-violet-50">
+                          {order.repeatNoveltyPassed
+                            ? "ผ่าน — แผนใหม่ต่างจากประวัติเดิมในระดับที่กำหนด"
+                            : "ยังไม่มีผลตรวจความใหม่"}
+                        </p>
+                        {order.repeatNoveltyPassed ? (
+                          <p className="mt-2 text-xs leading-6 text-violet-100/80">
+                            เทียบ {order.repeatPreviousPlansCompared} สัปดาห์ก่อนหน้า · ความคล้ายเฉลี่ยสูงสุด {Math.round((order.repeatAverageSimilarity || 0) * 100)}% · วันคล้ายสูงสุด {Math.round((order.repeatMaxSimilarity || 0) * 100)}%
+                            {order.repeatNoveltyRejectedPlans > 0
+                              ? ` · ปฏิเสธแผนซ้ำ ${order.repeatNoveltyRejectedPlans} ชุดก่อนเลือกชุดนี้`
+                              : ""}
+                          </p>
+                        ) : null}
+                      </div>
+                    ) : null}
 
                     <div
                       className={`mt-4 rounded-2xl border p-4 ${

@@ -33,6 +33,15 @@ const ORDER_STORAGE_KEY =
 const CUSTOMER_KEY_STORAGE_KEY =
   "creator-os-customer-key-v1";
 
+const REPEAT_CONTEXT_STORAGE_KEY =
+  "creator-os-repeat-context-v1";
+
+type RepeatContext = {
+  previousOrderId: string;
+  previousAccessKey: string;
+  previousRound: number;
+};
+
 const planTypeLabels: Record<PlanType, string> = {
   product: "แผนขายสินค้า / Affiliate",
   service: "แผนขายบริการ / โปรโมตร้าน",
@@ -253,6 +262,8 @@ export default function CheckoutClient({
   const [paymentMessage, setPaymentMessage] =
     useState("");
   const [paymentError, setPaymentError] = useState("");
+  const [repeatContext, setRepeatContext] =
+    useState<RepeatContext | null>(null);
 
   useEffect(() => {
     try {
@@ -271,6 +282,30 @@ export default function CheckoutClient({
       ) as PlanRequest;
 
       setRequest(parsedRequest);
+
+      const rawRepeatContext =
+        window.localStorage.getItem(
+          REPEAT_CONTEXT_STORAGE_KEY
+        );
+
+      if (rawRepeatContext) {
+        try {
+          const parsedRepeatContext = JSON.parse(
+            rawRepeatContext
+          ) as RepeatContext;
+
+          if (
+            parsedRepeatContext.previousOrderId &&
+            parsedRepeatContext.previousAccessKey
+          ) {
+            setRepeatContext(parsedRepeatContext);
+          }
+        } catch {
+          window.localStorage.removeItem(
+            REPEAT_CONTEXT_STORAGE_KEY
+          );
+        }
+      }
 
       const rawOrder =
         window.localStorage.getItem(
@@ -471,6 +506,10 @@ export default function CheckoutClient({
           amount: packagePrice,
           customerKey,
           request,
+          previousOrderId:
+            repeatContext?.previousOrderId,
+          previousAccessKey:
+            repeatContext?.previousAccessKey,
         }),
       });
 
@@ -784,6 +823,13 @@ export default function CheckoutClient({
         </p>
       </section>
 
+      {repeatContext ? (
+        <section style={repeatNoticeStyle}>
+          <strong>สัปดาห์ถัดไป:</strong>{" "}
+          คำสั่งซื้อนี้จะต่อจากสัปดาห์ที่ {repeatContext.previousRound} และระบบจะตรวจความซ้ำกับแผนเดิมก่อนเปิดแผนใหม่
+        </section>
+      ) : null}
+
       <section style={layoutStyle}>
         <article style={cardStyle}>
           <div style={sectionHeaderStyle}>
@@ -797,7 +843,18 @@ export default function CheckoutClient({
               </h2>
             </div>
 
-            <Link href="/start" style={editLinkStyle}>
+            <Link
+              href={
+                repeatContext
+                  ? `/start?repeatOrder=${encodeURIComponent(
+                      repeatContext.previousOrderId
+                    )}&key=${encodeURIComponent(
+                      repeatContext.previousAccessKey
+                    )}`
+                  : "/start"
+              }
+              style={editLinkStyle}
+            >
               แก้ไขข้อมูล
             </Link>
           </div>
@@ -1223,6 +1280,17 @@ function SummaryItem({
     </div>
   );
 }
+
+const repeatNoticeStyle: CSSProperties = {
+  maxWidth: "1100px",
+  margin: "16px auto 0",
+  padding: "14px 18px",
+  borderRadius: "16px",
+  border: "1px solid #a7f3d0",
+  background: "#ecfdf5",
+  color: "#065f46",
+  lineHeight: 1.65,
+};
 
 const pageStyle: CSSProperties = {
   minHeight: "100vh",

@@ -94,9 +94,21 @@ export async function GET(
           order.status === "approved"
             ? order.planSnapshot?.version || null
             : null,
+        previousOrderId:
+          order.status === "approved"
+            ? order.previousOrderId || null
+            : null,
+        rootOrderId:
+          order.status === "approved"
+            ? order.rootOrderId || order.orderId
+            : null,
         qualityReport:
           order.status === "approved"
             ? qualityReport
+            : null,
+        repeatNoveltyReport:
+          order.status === "approved"
+            ? order.planSnapshot?.repeatNoveltyReport || null
             : null,
       },
       {

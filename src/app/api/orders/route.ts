@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { createOrder } from "../../../lib/order-store";
+import { createOrder, getOrder } from "../../../lib/order-store";
 import type { CreatorOrder } from "../../../types/creator-order";
 import type { PlanRequest } from "../../../types/plan-request";
 
@@ -41,19 +41,31 @@ function isPlanRequest(value: unknown): value is PlanRequest {
   );
 }
 
+type CreateOrderPayload = Partial<CreatorOrder> & {
+  previousAccessKey?: string;
+};
+
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as Partial<CreatorOrder>;
+    const body = (await request.json()) as CreateOrderPayload;
 
     const orderId = String(body.orderId || "")
       .trim()
       .toUpperCase();
 
     const accessKey = String(body.accessKey || "").trim();
-    const customerKey = String(
+    let customerKey = String(
       body.customerKey || ""
     ).trim();
     const amount = Number(body.amount);
+    const previousOrderId = String(
+      body.previousOrderId || ""
+    )
+      .trim()
+      .toUpperCase();
+    const previousAccessKey = String(
+      body.previousAccessKey || ""
+    ).trim();
 
     if (
       !ORDER_ID_PATTERN.test(orderId) ||
@@ -72,6 +84,39 @@ export async function POST(request: Request) {
       );
     }
 
+    let previousOrder: CreatorOrder | null = null;
+
+    if (previousOrderId || previousAccessKey) {
+      if (!previousOrderId || !previousAccessKey) {
+        return NextResponse.json(
+          {
+            ok: false,
+            message: "ข้อมูลสัปดาห์ก่อนหน้าไม่ครบ กรุณาเปิดจากปุ่มสร้างสัปดาห์ถัดไปอีกครั้ง",
+          },
+          { status: 400 }
+        );
+      }
+
+      previousOrder = await getOrder(previousOrderId);
+
+      if (
+        !previousOrder ||
+        previousOrder.accessKey !== previousAccessKey ||
+        previousOrder.status !== "approved"
+      ) {
+        return NextResponse.json(
+          {
+            ok: false,
+            message: "ไม่สามารถยืนยันแผนสัปดาห์ก่อนหน้าได้ กรุณาเปิดจากลิงก์แผนเดิมของคุณ",
+          },
+          { status: 403 }
+        );
+      }
+
+      customerKey =
+        previousOrder.customerKey || customerKey;
+    }
+
     const order: CreatorOrder = {
       orderId,
       accessKey,
@@ -80,6 +125,10 @@ export async function POST(request: Request) {
       customerKey: customerKey || undefined,
       status: "pending",
       createdAt: new Date().toISOString(),
+      previousOrderId: previousOrder?.orderId,
+      rootOrderId: previousOrder
+        ? previousOrder.rootOrderId || previousOrder.orderId
+        : undefined,
     };
 
     const saved = await createOrder(order);

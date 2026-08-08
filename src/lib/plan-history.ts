@@ -13,7 +13,7 @@ import type {
   WeeklyContentPlan,
 } from "../types/weekly-content-plan";
 
-export const CURRENT_PLAN_VERSION = 4;
+export const CURRENT_PLAN_VERSION = 5;
 export const CURRENT_PRODUCT_STANDARD =
   "ready-to-execute-v2" as const;
 

@@ -51,6 +51,21 @@ export async function GET(request: Request) {
           duplicateFingerprintsAvoided:
             storedSnapshot
               ?.duplicateFingerprintsAvoided || 0,
+          repeatNoveltyRejectedPlans:
+            storedSnapshot?.repeatNoveltyRejectedPlans || 0,
+          repeatNoveltyPassed:
+            storedSnapshot?.repeatNoveltyReport?.passed ?? null,
+          repeatAverageSimilarity:
+            storedSnapshot?.repeatNoveltyReport
+              ?.averageBestSimilarity ?? null,
+          repeatMaxSimilarity:
+            storedSnapshot?.repeatNoveltyReport
+              ?.maxDaySimilarity ?? null,
+          repeatPreviousPlansCompared:
+            storedSnapshot?.repeatNoveltyReport
+              ?.previousPlansCompared || 0,
+          previousOrderId: order.previousOrderId || null,
+          rootOrderId: order.rootOrderId || order.orderId,
           qualityRejectedPlans:
             storedSnapshot?.qualityRejectedPlans || 0,
           qualityScore: qualityReport?.score ?? null,

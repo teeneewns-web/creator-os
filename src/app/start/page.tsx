@@ -30,6 +30,14 @@ type FormErrors = Partial<Record<keyof PlanRequest, string>>;
 
 const DRAFT_STORAGE_KEY = "creator-os-start-draft-v1";
 const REQUEST_STORAGE_KEY = "creator-os-plan-request-v1";
+const REPEAT_CONTEXT_STORAGE_KEY =
+  "creator-os-repeat-context-v1";
+
+type RepeatContext = {
+  previousOrderId: string;
+  previousAccessKey: string;
+  previousRound: number;
+};
 
 const PLAN_TYPE_OPTIONS: Array<{
   value: PlanType;
@@ -688,6 +696,10 @@ export default function StartPage() {
     useState<PlanRequest>(getInitialForm);
   const [errors, setErrors] = useState<FormErrors>({});
   const [hydrated, setHydrated] = useState(false);
+  const [repeatContext, setRepeatContext] =
+    useState<RepeatContext | null>(null);
+  const [repeatLoading, setRepeatLoading] = useState(false);
+  const [repeatError, setRepeatError] = useState("");
 
   const selectedPlanType: PlanType | null =
     form.planType === "product" ||
@@ -729,8 +741,100 @@ export default function StartPage() {
     );
 
   useEffect(() => {
-    setForm(readDraft());
-    setHydrated(true);
+    let cancelled = false;
+
+    async function loadInitialForm() {
+      const searchParams = new URLSearchParams(
+        window.location.search
+      );
+      const repeatOrder =
+        searchParams.get("repeatOrder")?.trim().toUpperCase() || "";
+      const repeatKey =
+        searchParams.get("key")?.trim() || "";
+
+      if (!repeatOrder || !repeatKey) {
+        window.localStorage.removeItem(
+          REPEAT_CONTEXT_STORAGE_KEY
+        );
+        setForm(readDraft());
+        setHydrated(true);
+        return;
+      }
+
+      setRepeatLoading(true);
+      setRepeatError("");
+
+      try {
+        const response = await fetch(
+          `/api/orders/${encodeURIComponent(
+            repeatOrder
+          )}?key=${encodeURIComponent(repeatKey)}&t=${Date.now()}`,
+          { cache: "no-store" }
+        );
+        const data = (await response.json()) as {
+          ok?: boolean;
+          status?: string;
+          request?: PlanRequest | null;
+          planRound?: number | null;
+          message?: string;
+        };
+
+        if (
+          !response.ok ||
+          !data.ok ||
+          data.status !== "approved" ||
+          !data.request
+        ) {
+          throw new Error(
+            data.message ||
+              "ไม่สามารถโหลดข้อมูลสัปดาห์ก่อนหน้าได้"
+          );
+        }
+
+        if (cancelled) return;
+
+        const nextContext: RepeatContext = {
+          previousOrderId: repeatOrder,
+          previousAccessKey: repeatKey,
+          previousRound: Math.max(1, data.planRound || 1),
+        };
+
+        setRepeatContext(nextContext);
+        setForm({
+          ...getInitialForm(),
+          ...data.request,
+          createdAt: "",
+        });
+        setStep(3);
+        window.localStorage.setItem(
+          REPEAT_CONTEXT_STORAGE_KEY,
+          JSON.stringify(nextContext)
+        );
+      } catch (error) {
+        if (cancelled) return;
+
+        window.localStorage.removeItem(
+          REPEAT_CONTEXT_STORAGE_KEY
+        );
+        setRepeatError(
+          error instanceof Error
+            ? error.message
+            : "ไม่สามารถโหลดข้อมูลสัปดาห์ก่อนหน้าได้"
+        );
+        setForm(readDraft());
+      } finally {
+        if (!cancelled) {
+          setRepeatLoading(false);
+          setHydrated(true);
+        }
+      }
+    }
+
+    void loadInitialForm();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
@@ -963,6 +1067,10 @@ export default function StartPage() {
 
     window.localStorage.removeItem(DRAFT_STORAGE_KEY);
     window.localStorage.removeItem(REQUEST_STORAGE_KEY);
+    window.localStorage.removeItem(
+      REPEAT_CONTEXT_STORAGE_KEY
+    );
+    setRepeatContext(null);
   }
 
   return (
@@ -996,6 +1104,28 @@ export default function StartPage() {
           />
         </div>
       </section>
+
+      {repeatLoading ? (
+        <section style={repeatBannerStyle}>
+          <strong>กำลังดึงข้อมูลสัปดาห์ก่อนหน้า...</strong>
+        </section>
+      ) : repeatContext ? (
+        <section style={repeatBannerStyle}>
+          <p style={repeatBannerLabelStyle}>
+            แผนสัปดาห์ถัดไป
+          </p>
+          <h2 style={repeatBannerTitleStyle}>
+            ระบบดึงข้อมูลจากสัปดาห์ที่ {repeatContext.previousRound} ให้แล้ว
+          </h2>
+          <p style={repeatBannerTextStyle}>
+            ถ้าข้อมูลยังเหมือนเดิม ไม่ต้องกรอกใหม่ทั้งหมด คุณสามารถตรวจสรุปแล้วสร้างสัปดาห์ที่ {repeatContext.previousRound + 1} ต่อได้เลย ถ้ามีอะไรเปลี่ยน ให้ย้อนกลับแก้เฉพาะช่องนั้น
+          </p>
+        </section>
+      ) : repeatError ? (
+        <section style={repeatErrorStyle}>
+          {repeatError} กรุณาเปิดจากปุ่ม “สร้างแผนสัปดาห์ถัดไป” ในแผนเดิมอีกครั้ง
+        </section>
+      ) : null}
 
       <section style={stepNavigationStyle}>
         {[1, 2, 3].map((item) => (
@@ -2291,6 +2421,42 @@ const requestDirectionButtonStyle: CSSProperties = {
   lineHeight: 1.35,
   boxSizing: "border-box",
   whiteSpace: "normal",
+};
+
+const repeatBannerStyle: CSSProperties = {
+  maxWidth: "1100px",
+  margin: "18px auto 0",
+  padding: "20px",
+  borderRadius: "20px",
+  border: "1px solid #a7f3d0",
+  background: "#ecfdf5",
+  color: "#064e3b",
+};
+
+const repeatBannerLabelStyle: CSSProperties = {
+  margin: 0,
+  color: "#047857",
+  fontWeight: 900,
+  fontSize: "13px",
+  textTransform: "uppercase",
+  letterSpacing: "0.08em",
+};
+
+const repeatBannerTitleStyle: CSSProperties = {
+  margin: "7px 0 6px",
+  fontSize: "22px",
+};
+
+const repeatBannerTextStyle: CSSProperties = {
+  margin: 0,
+  lineHeight: 1.7,
+};
+
+const repeatErrorStyle: CSSProperties = {
+  ...repeatBannerStyle,
+  border: "1px solid #fecaca",
+  background: "#fef2f2",
+  color: "#991b1b",
 };
 
 const resetButtonStyle: CSSProperties = {

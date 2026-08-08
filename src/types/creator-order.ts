@@ -14,6 +14,19 @@ export type CreatorPaymentProof = {
   verifiedAt?: string;
 };
 
+
+export type RepeatNoveltyReport = {
+  version: number;
+  passed: boolean;
+  previousPlansCompared: number;
+  historicalDaysCompared: number;
+  maxDaySimilarity: number;
+  averageBestSimilarity: number;
+  maxDayThreshold: number;
+  averageThreshold: number;
+  message: string;
+};
+
 export type CreatorPlanProductStandard =
   | "ready-to-execute-v1"
   | "ready-to-execute-v2";
@@ -52,6 +65,8 @@ export type CreatorPlanSnapshot = {
   duplicateFingerprintsAvoided?: number;
   qualityRejectedPlans?: number;
   qualityReport?: CreatorPlanQualityReport;
+  repeatNoveltyReport?: RepeatNoveltyReport;
+  repeatNoveltyRejectedPlans?: number;
   contentFingerprints: string[];
   createdAt: string;
 };

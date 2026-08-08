@@ -18,6 +18,8 @@ import {
   auditPlanQuality,
   CURRENT_PLAN_QUALITY_VERSION,
 } from "./plan-quality";
+import { auditRepeatNovelty } from "./plan-novelty";
+import type { WeeklyContentPlan } from "../types/weekly-content-plan";
 
 const ORDER_KEY_PREFIX = "creator-os:order:";
 const ORDER_INDEX_KEY = "creator-os:orders";
@@ -382,6 +384,48 @@ type AttachPlanSnapshotOptions = {
   variationStart?: number;
 };
 
+async function readOrderById(
+  client: RedisConnection,
+  orderId: string
+) {
+  return parseOrder(
+    await client.command([
+      "GET",
+      getOrderKey(orderId.trim().toUpperCase()),
+    ])
+  );
+}
+
+async function collectPreviousPlans(
+  client: RedisConnection,
+  startOrder: CreatorOrder | null,
+  limit = 12
+): Promise<WeeklyContentPlan[]> {
+  const plans: WeeklyContentPlan[] = [];
+  const visited = new Set<string>();
+  let current = startOrder;
+
+  while (
+    current &&
+    plans.length < limit &&
+    !visited.has(current.orderId)
+  ) {
+    visited.add(current.orderId);
+
+    if (current.planSnapshot?.plan) {
+      plans.push(current.planSnapshot.plan);
+    }
+
+    if (!current.previousOrderId) break;
+    current = await readOrderById(
+      client,
+      current.previousOrderId
+    );
+  }
+
+  return plans;
+}
+
 async function attachPlanSnapshot(
   client: RedisConnection,
   order: CreatorOrder,
@@ -401,7 +445,25 @@ async function attachPlanSnapshot(
   );
   let previousOrder: CreatorOrder | null = null;
 
-  if (customerKey && !options.preserveRound) {
+  if (!options.preserveRound && order.previousOrderId) {
+    previousOrder = await readOrderById(
+      client,
+      order.previousOrderId
+    );
+
+    if (previousOrder?.status === "approved") {
+      round = Math.max(
+        2,
+        (previousOrder.planSnapshot?.round || 1) + 1
+      );
+    }
+  }
+
+  if (
+    !previousOrder &&
+    customerKey &&
+    !options.preserveRound
+  ) {
     const lastOrderKey = getCustomerLastOrderKey(
       customerKey,
       contentClusterKey
@@ -412,11 +474,9 @@ async function attachPlanSnapshot(
     ]);
 
     if (typeof previousOrderId === "string") {
-      previousOrder = parseOrder(
-        await client.command([
-          "GET",
-          getOrderKey(previousOrderId),
-        ])
+      previousOrder = await readOrderById(
+        client,
+        previousOrderId
       );
     }
 
@@ -436,6 +496,11 @@ async function attachPlanSnapshot(
       (previousOrder?.planSnapshot?.round || 0) + 1
     );
   }
+
+  const previousPlans = await collectPreviousPlans(
+    client,
+    previousOrder
+  );
 
   const variationCounter = Math.max(
     0,
@@ -457,6 +522,7 @@ async function attachPlanSnapshot(
 
   let duplicateFingerprintsAvoided = 0;
   let qualityRejectedPlans = 0;
+  let repeatNoveltyRejectedPlans = 0;
   let selectedSnapshot: CreatorPlanSnapshot | undefined;
 
   for (
@@ -484,6 +550,10 @@ async function attachPlanSnapshot(
       );
     const qualityPassed =
       candidate.qualityReport?.passed === true;
+    const repeatNoveltyReport = auditRepeatNovelty(
+      candidate.plan,
+      previousPlans
+    );
 
     if (duplicateCount > 0) {
       duplicateFingerprintsAvoided += duplicateCount;
@@ -493,10 +563,16 @@ async function attachPlanSnapshot(
       qualityRejectedPlans += 1;
     }
 
-    const auditedCandidate = {
+    if (!repeatNoveltyReport.passed) {
+      repeatNoveltyRejectedPlans += 1;
+    }
+
+    const auditedCandidate: CreatorPlanSnapshot = {
       ...candidate,
       duplicateFingerprintsAvoided,
       qualityRejectedPlans,
+      repeatNoveltyRejectedPlans,
+      repeatNoveltyReport,
       qualityReport: candidate.qualityReport
         ? {
             ...candidate.qualityReport,
@@ -505,7 +581,11 @@ async function attachPlanSnapshot(
         : undefined,
     };
 
-    if (duplicateCount === 0 && qualityPassed) {
+    if (
+      duplicateCount === 0 &&
+      qualityPassed &&
+      repeatNoveltyReport.passed
+    ) {
       selectedSnapshot = auditedCandidate;
       break;
     }
@@ -513,7 +593,8 @@ async function attachPlanSnapshot(
 
   if (
     !selectedSnapshot ||
-    !selectedSnapshot.qualityReport?.passed
+    !selectedSnapshot.qualityReport?.passed ||
+    !selectedSnapshot.repeatNoveltyReport?.passed
   ) {
     throw new Error("PLAN_QUALITY_GATE_FAILED");
   }

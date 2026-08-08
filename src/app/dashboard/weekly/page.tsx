@@ -25,7 +25,7 @@ import type {
 
 import { generateWeeklyContentPlan } from "../../../lib/generate-weekly-content-plan";
 import type { ContentDirection, PlanRequest, PlanType } from "../../../types/plan-request";
-import type { CreatorPlanQualityReport } from "../../../types/creator-order";
+import type { CreatorPlanQualityReport, RepeatNoveltyReport } from "../../../types/creator-order";
 
 type FacebookMission = {
   id: string;
@@ -62,6 +62,7 @@ type OrderStatusResponse = {
   plan?: WeeklyContentPlan | null;
   planRound?: number | null;
   qualityReport?: CreatorPlanQualityReport | null;
+  repeatNoveltyReport?: RepeatNoveltyReport | null;
   message?: string;
 };
 
@@ -510,6 +511,10 @@ export default function WeeklyDashboardPage() {
   const [planRound, setPlanRound] = useState(1);
   const [qualityReport, setQualityReport] =
     useState<CreatorPlanQualityReport | null>(null);
+  const [repeatNoveltyReport, setRepeatNoveltyReport] =
+    useState<RepeatNoveltyReport | null>(null);
+  const [currentOrderId, setCurrentOrderId] = useState("");
+  const [currentAccessKey, setCurrentAccessKey] = useState("");
 
   useEffect(() => {
     let cancelled = false;
@@ -521,6 +526,11 @@ export default function WeeklyDashboardPage() {
 
       const orderId = searchParams.get("order") || "";
       const accessKey = searchParams.get("key") || "";
+
+      if (!cancelled) {
+        setCurrentOrderId(orderId);
+        setCurrentAccessKey(accessKey);
+      }
 
       if (!orderId || !accessKey) {
         if (!cancelled) {
@@ -586,6 +596,9 @@ export default function WeeklyDashboardPage() {
             Math.max(1, data.planRound || 1)
           );
           setQualityReport(data.qualityReport);
+          setRepeatNoveltyReport(
+            data.repeatNoveltyReport || null
+          );
           setState(readState(nextPlan.id));
           setHydrated(true);
           setAccessState("approved");
@@ -862,14 +875,32 @@ export default function WeeklyDashboardPage() {
     </span>
   )}
 
+  {planRound > 1 && repeatNoveltyReport?.passed && (
+    <span style={qualityTagStyle}>
+      ผ่านตรวจความใหม่จากสัปดาห์ก่อน
+    </span>
+  )}
+
   <span style={heroTagStyle}>7 วัน</span>
 </div>
 
 
                 <div style={buttonRowStyle}>
+  {currentOrderId && currentAccessKey ? (
+    <Link
+      href={`/start?repeatOrder=${encodeURIComponent(
+        currentOrderId
+      )}&key=${encodeURIComponent(currentAccessKey)}`}
+    >
+      <button type="button" style={nextWeekButtonStyle}>
+        สร้างสัปดาห์ที่ {planRound + 1}
+      </button>
+    </Link>
+  ) : null}
+
   <Link href="/start">
     <button type="button" style={createPlanButtonStyle}>
-      สร้างแผนใหม่
+      สร้างแผนใหม่คนละชุด
     </button>
   </Link>
 
@@ -882,6 +913,15 @@ export default function WeeklyDashboardPage() {
   <CopyButton text={getWeeklyCopyText(plan)} />
 </div>
       </section>
+
+      {planRound > 1 && repeatNoveltyReport ? (
+        <section style={repeatWeekNoticeStyle}>
+          <strong>สัปดาห์ที่ {planRound} ต่อจากแผนเดิม</strong>
+          <span>
+            ระบบเปรียบเทียบกับ {repeatNoveltyReport.previousPlansCompared} สัปดาห์ก่อนหน้าแล้ว โดยค่าเฉลี่ยความคล้ายสูงสุดของแต่ละวันอยู่ที่ {Math.round(repeatNoveltyReport.averageBestSimilarity * 100)}% และผ่าน Repeat Novelty Gate
+          </span>
+        </section>
+      ) : null}
 
       <section style={overviewSectionStyle}>
         <div style={sectionHeadingRowStyle}>
@@ -2084,6 +2124,30 @@ const buttonRowStyle: CSSProperties = {
   gap: "12px",
   alignItems: "center",
   marginTop: "28px",
+};
+
+const nextWeekButtonStyle: CSSProperties = {
+  padding: "12px 18px",
+  borderRadius: "14px",
+  border: "1px solid #047857",
+  background: "#047857",
+  color: "white",
+  fontWeight: 900,
+  cursor: "pointer",
+};
+
+const repeatWeekNoticeStyle: CSSProperties = {
+  maxWidth: "1180px",
+  margin: "18px auto 0",
+  padding: "16px 20px",
+  display: "flex",
+  flexDirection: "column",
+  gap: "6px",
+  borderRadius: "18px",
+  border: "1px solid #a7f3d0",
+  background: "#ecfdf5",
+  color: "#065f46",
+  lineHeight: 1.65,
 };
 
 const createPlanButtonStyle: CSSProperties = {
