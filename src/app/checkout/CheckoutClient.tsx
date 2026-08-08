@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import {
   useEffect,
@@ -7,7 +7,6 @@ import {
   type CSSProperties,
 } from "react";
 import Link from "next/link";
-import QRCode from "qrcode";
 import type {
   ContentCapability,
   ContentDirection,
@@ -33,10 +32,6 @@ const ORDER_STORAGE_KEY =
 
 const CUSTOMER_KEY_STORAGE_KEY =
   "creator-os-customer-key-v1";
-
-const LINE_PAYMENT_URL =
-  "https://line.me/R/oaMessage/%40857xezqh/?" +
-  encodeURIComponent("แจ้งชำระเงิน");
 
 const planTypeLabels: Record<PlanType, string> = {
   product: "แผนขายสินค้า / Affiliate",
@@ -248,10 +243,16 @@ export default function CheckoutClient({
   const [savingOrder, setSavingOrder] = useState(false);
   const [orderError, setOrderError] = useState("");
   const [copyMessage, setCopyMessage] = useState("");
-  const [mobileLineDevice, setMobileLineDevice] =
+  const [slipDataUrl, setSlipDataUrl] = useState("");
+  const [slipFileName, setSlipFileName] = useState("");
+  const [transferName, setTransferName] = useState("");
+  const [submittingPayment, setSubmittingPayment] =
     useState(false);
-  const [lineQrDataUrl, setLineQrDataUrl] =
+  const [paymentSubmitted, setPaymentSubmitted] =
+    useState(false);
+  const [paymentMessage, setPaymentMessage] =
     useState("");
+  const [paymentError, setPaymentError] = useState("");
 
   useEffect(() => {
     try {
@@ -297,23 +298,44 @@ export default function CheckoutClient({
   }, []);
 
   useEffect(() => {
-    const mobile =
-      /Android|iPhone|iPad|iPod|Mobile/i.test(
-        window.navigator.userAgent
-      );
+    if (!confirmed || !orderId || !accessKey) {
+      return;
+    }
 
-    setMobileLineDevice(mobile);
+    let cancelled = false;
 
-    if (mobile) return;
+    void fetch(
+      `/api/orders/${encodeURIComponent(
+        orderId
+      )}?key=${encodeURIComponent(accessKey)}&t=${Date.now()}`,
+      {
+        cache: "no-store",
+      }
+    )
+      .then((response) => response.json())
+      .then(
+        (data: {
+          ok?: boolean;
+          status?: string;
+        }) => {
+          if (
+            !cancelled &&
+            data.ok &&
+            (data.status === "payment-submitted" ||
+              data.status === "approved")
+          ) {
+            setPaymentSubmitted(true);
+          }
+        }
+      )
+      .catch(() => {
+        // หน้า Checkout ยังใช้งานต่อได้
+      });
 
-    QRCode.toDataURL(LINE_PAYMENT_URL, {
-      width: 240,
-      margin: 1,
-      errorCorrectionLevel: "M",
-    })
-      .then(setLineQrDataUrl)
-      .catch(() => setLineQrDataUrl(""));
-  }, []);
+    return () => {
+      cancelled = true;
+    };
+  }, [accessKey, confirmed, orderId]);
 
   const orderSummary = useMemo(() => {
     if (!request || !orderId) return "";
@@ -502,35 +524,202 @@ export default function CheckoutClient({
     );
   }
 
-  function copyAndOpenLine() {
-    if (!orderSummary) return;
-
-    const copied = copyText(orderSummary);
-
-    if (mobileLineDevice) {
-      setCopyMessage(
-        copied
-          ? "คัดลอกข้อมูลแล้ว กำลังเปิด LINE"
-          : "กำลังเปิด LINE กรุณาคัดลอกข้อมูลคำสั่งซื้อก่อนส่ง"
+  async function prepareSlipImage(file: File) {
+    if (
+      !["image/jpeg", "image/png", "image/webp"].includes(
+        file.type
+      )
+    ) {
+      throw new Error(
+        "รองรับเฉพาะรูป JPG, PNG หรือ WebP"
       );
-      window.location.href = LINE_PAYMENT_URL;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      throw new Error(
+        "ไฟล์ต้นฉบับใหญ่เกิน 10 MB กรุณาใช้รูปที่เล็กลง"
+      );
+    }
+
+    const sourceDataUrl = await new Promise<string>(
+      (resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = () =>
+          resolve(String(reader.result || ""));
+        reader.onerror = () =>
+          reject(
+            new Error("อ่านไฟล์สลิปไม่สำเร็จ")
+          );
+
+        reader.readAsDataURL(file);
+      }
+    );
+
+    const image = await new Promise<HTMLImageElement>(
+      (resolve, reject) => {
+        const img = new Image();
+
+        img.onload = () => resolve(img);
+        img.onerror = () =>
+          reject(
+            new Error("เปิดรูปสลิปไม่สำเร็จ")
+          );
+        img.src = sourceDataUrl;
+      }
+    );
+
+    const maxSide = 1200;
+    const largestSide = Math.max(
+      image.naturalWidth,
+      image.naturalHeight
+    );
+    const scale =
+      largestSide > maxSide
+        ? maxSide / largestSide
+        : 1;
+
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(
+      1,
+      Math.round(image.naturalWidth * scale)
+    );
+    canvas.height = Math.max(
+      1,
+      Math.round(image.naturalHeight * scale)
+    );
+
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+      throw new Error(
+        "เตรียมรูปสลิปไม่สำเร็จ"
+      );
+    }
+
+    context.drawImage(
+      image,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    let prepared = canvas.toDataURL(
+      "image/jpeg",
+      0.74
+    );
+
+    if (prepared.length > 900_000) {
+      prepared = canvas.toDataURL(
+        "image/jpeg",
+        0.55
+      );
+    }
+
+    if (prepared.length > 1_050_000) {
+      throw new Error(
+        "รูปสลิปยังใหญ่เกินไป กรุณาครอปเฉพาะส่วนสลิปแล้วอัปโหลดใหม่"
+      );
+    }
+
+    return prepared;
+  }
+
+  async function handleSlipFile(file: File | null) {
+    setPaymentError("");
+    setPaymentMessage("");
+
+    if (!file) {
+      setSlipDataUrl("");
+      setSlipFileName("");
       return;
     }
 
-    setCopyMessage(
-      copied
-        ? "คัดลอกข้อมูลคำสั่งซื้อแล้ว — ใช้โทรศัพท์สแกน QR ด้านล่าง หรือค้นหา LINE OA @857xezqh บน LINE for PC"
-        : "คัดลอกไม่สำเร็จ กรุณากดคัดลอกข้อมูลคำสั่งซื้อ แล้วสแกน QR ด้านล่าง"
-    );
+    try {
+      const prepared = await prepareSlipImage(file);
+      setSlipDataUrl(prepared);
+      setSlipFileName(file.name);
+      setPaymentMessage(
+        "เตรียมรูปสลิปแล้ว กรุณาตรวจภาพก่อนส่ง"
+      );
+    } catch (error) {
+      setSlipDataUrl("");
+      setSlipFileName("");
+      setPaymentError(
+        error instanceof Error
+          ? error.message
+          : "เตรียมรูปสลิปไม่สำเร็จ"
+      );
+    }
+  }
 
-    window.setTimeout(() => {
-      document
-        .getElementById("line-desktop-payment")
-        ?.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-    }, 50);
+  async function submitPaymentProof() {
+    if (
+      !orderId ||
+      !accessKey ||
+      !slipDataUrl ||
+      submittingPayment
+    ) {
+      if (!slipDataUrl) {
+        setPaymentError(
+          "กรุณาเลือกรูปสลิปก่อนส่ง"
+        );
+      }
+      return;
+    }
+
+    setSubmittingPayment(true);
+    setPaymentError("");
+    setPaymentMessage("");
+
+    try {
+      const response = await fetch(
+        `/api/orders/${encodeURIComponent(
+          orderId
+        )}/payment`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            accessKey,
+            slipDataUrl,
+            originalFileName: slipFileName,
+            transferName: transferName.trim(),
+          }),
+        }
+      );
+
+      const data = (await response.json()) as {
+        ok: boolean;
+        status?: string;
+        message?: string;
+      };
+
+      if (!response.ok || !data.ok) {
+        throw new Error(
+          data.message ||
+            "ส่งหลักฐานการชำระเงินไม่สำเร็จ"
+        );
+      }
+
+      setPaymentSubmitted(true);
+      setPaymentMessage(
+        "ส่งหลักฐานเรียบร้อยแล้ว กำลังรอผู้ดูแลตรวจสอบ"
+      );
+      setSlipDataUrl("");
+      setSlipFileName("");
+    } catch (error) {
+      setPaymentError(
+        error instanceof Error
+          ? error.message
+          : "ส่งหลักฐานการชำระเงินไม่สำเร็จ"
+      );
+    } finally {
+      setSubmittingPayment(false);
+    }
   }
 
   if (request === undefined) {
@@ -876,74 +1065,125 @@ export default function CheckoutClient({
               </p>
             )}
 
-            <button
-              type="button"
-              onClick={copyAndOpenLine}
-              style={lineButtonStyle}
-            >
-              {mobileLineDevice
-                ? "ชำระแล้ว คัดลอกข้อมูลและเปิด LINE"
-                : "ชำระแล้ว คัดลอกข้อมูลสำหรับส่ง LINE"}
-            </button>
-
-            {mobileLineDevice ? (
-              <p style={lineHelpStyle}>
-                เมื่อ LINE เปิดขึ้น ให้ส่งคำว่า
-                “แจ้งชำระเงิน” จากนั้นแนบสลิป
-                และวางข้อมูลคำสั่งซื้อที่คัดลอกไว้
+            <div style={paymentProofBoxStyle}>
+              <p style={paymentProofTitleStyle}>
+                หลังโอนเงิน — ส่งสลิปบนเว็บไซต์
               </p>
-            ) : (
-              <div
-                id="line-desktop-payment"
-                style={lineDesktopHelpStyle}
-              >
-                <strong style={lineDesktopTitleStyle}>
-                  ใช้โน้ตบุ๊กหรือคอมพิวเตอร์
-                </strong>
 
-                <p style={lineDesktopTextStyle}>
-                  LINE ไม่รองรับลิงก์เปิดแชต
-                  Official Account โดยตรงบน LINE for PC
-                  ให้สแกน QR นี้ด้วย LINE บนโทรศัพท์
-                </p>
+              <p style={paymentProofTextStyle}>
+                ไม่ต้องเปิด LINE และไม่ต้องคัดลอกข้อมูลไปที่อื่น
+                เลือกรูปสลิปแล้วส่งจากหน้านี้ได้เลย
+              </p>
 
-                {lineQrDataUrl ? (
-                  <img
-                    src={lineQrDataUrl}
-                    width={220}
-                    height={220}
-                    alt="QR สำหรับเปิดแชต LINE Official Account @857xezqh"
-                    style={lineQrImageStyle}
+              {paymentSubmitted ? (
+                <div style={paymentSuccessStyle}>
+                  <strong>
+                    ส่งหลักฐานการชำระเงินแล้ว
+                  </strong>
+                  <span>
+                    กำลังรอผู้ดูแลตรวจสอบ เมื่ออนุมัติแล้วระบบจะเปิดแผนให้
+                  </span>
+                </div>
+              ) : (
+                <>
+                  <label
+                    htmlFor="payment-slip"
+                    style={fileLabelStyle}
+                  >
+                    เลือกรูปสลิป
+                  </label>
+
+                  <input
+                    id="payment-slip"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    onChange={(event) =>
+                      void handleSlipFile(
+                        event.target.files?.[0] || null
+                      )
+                    }
+                    style={fileInputStyle}
                   />
-                ) : (
-                  <p style={lineDesktopTextStyle}>
-                    กำลังสร้าง QR สำหรับ LINE...
-                  </p>
-                )}
 
-                <p style={lineDesktopStepsStyle}>
-                  1. เปิด LINE บนโทรศัพท์และสแกน QR
-                  <br />
-                  2. ส่งคำว่า “แจ้งชำระเงิน”
-                  <br />
-                  3. แนบสลิป
-                  <br />
-                  4. วางข้อมูลคำสั่งซื้อที่คัดลอกไว้
-                </p>
+                  <label
+                    htmlFor="transfer-name"
+                    style={optionalLabelStyle}
+                  >
+                    ชื่อผู้โอน (ไม่บังคับ)
+                  </label>
 
-                <p style={lineDesktopFallbackStyle}>
-                  ใช้ LINE บนคอมอย่างเดียว:
-                  ค้นหา LINE OA{" "}
-                  <strong>@857xezqh</strong>
-                  {" "}แล้วเปิดแชตด้วยตนเอง
+                  <input
+                    id="transfer-name"
+                    type="text"
+                    value={transferName}
+                    onChange={(event) =>
+                      setTransferName(event.target.value)
+                    }
+                    maxLength={120}
+                    placeholder="เช่น SOMCHAI JAIDEE"
+                    style={textInputStyle}
+                  />
+
+                  {slipDataUrl && (
+                    <div style={slipPreviewWrapStyle}>
+                      <img
+                        src={slipDataUrl}
+                        alt="ตัวอย่างสลิปที่จะส่ง"
+                        style={slipPreviewStyle}
+                      />
+                    </div>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      void submitPaymentProof()
+                    }
+                    disabled={
+                      !slipDataUrl || submittingPayment
+                    }
+                    style={{
+                      ...paymentSubmitButtonStyle,
+                      opacity:
+                        !slipDataUrl ||
+                        submittingPayment
+                          ? 0.55
+                          : 1,
+                      cursor:
+                        !slipDataUrl ||
+                        submittingPayment
+                          ? "not-allowed"
+                          : "pointer",
+                    }}
+                  >
+                    {submittingPayment
+                      ? "กำลังส่งหลักฐาน..."
+                      : "ส่งหลักฐานการชำระเงิน"}
+                  </button>
+                </>
+              )}
+
+              {paymentMessage && (
+                <p style={paymentMessageStyle}>
+                  {paymentMessage}
                 </p>
-              </div>
-            )}
+              )}
+
+              {paymentError && (
+                <p style={paymentErrorStyle}>
+                  {paymentError}
+                </p>
+              )}
+
+              <p style={paymentPrivacyStyle}>
+                รูปสลิปใช้สำหรับตรวจสอบการชำระเงินเท่านั้น
+                และระบบจะลบรูปออกจากคำสั่งซื้อหลังผู้ดูแลอนุมัติแล้ว
+              </p>
+            </div>
 
             <div style={timeBoxStyle}>
-              หลังตรวจยอดและกดอนุมัติ
-              ระบบจะเปิดแผนคอนเทนต์ 7 วัน
-              ให้ใช้งานบนเว็บไซต์ทันที
+              หลังผู้ดูแลตรวจสลิปและยอดเงินจริง
+              ระบบจะสร้าง ตรวจคุณภาพ และเปิดแผนคอนเทนต์ 7 วันให้ใช้งานบนเว็บไซต์
             </div>
 
             {accessKey && (
@@ -1200,77 +1440,129 @@ const copyMessageStyle: CSSProperties = {
   fontWeight: 800,
 };
 
-const lineButtonStyle: CSSProperties = {
+const paymentProofBoxStyle: CSSProperties = {
+  marginTop: "18px",
+  padding: "18px",
+  borderRadius: "18px",
+  border: "1px solid #c7d2fe",
+  background: "#eef2ff",
+};
+
+const paymentProofTitleStyle: CSSProperties = {
+  margin: 0,
+  color: "#312e81",
+  fontSize: "18px",
+  fontWeight: 900,
+};
+
+const paymentProofTextStyle: CSSProperties = {
+  margin: "8px 0 0",
+  color: "#475569",
+  lineHeight: 1.7,
+};
+
+const fileLabelStyle: CSSProperties = {
+  display: "block",
+  marginTop: "16px",
+  color: "#0f172a",
+  fontWeight: 900,
+};
+
+const fileInputStyle: CSSProperties = {
+  display: "block",
+  width: "100%",
+  marginTop: "8px",
+  padding: "12px",
+  borderRadius: "12px",
+  border: "1px solid #cbd5e1",
+  background: "white",
+  color: "#0f172a",
+};
+
+const optionalLabelStyle: CSSProperties = {
+  display: "block",
+  marginTop: "14px",
+  color: "#475569",
+  fontSize: "13px",
+  fontWeight: 800,
+};
+
+const textInputStyle: CSSProperties = {
+  width: "100%",
+  marginTop: "7px",
+  padding: "12px 14px",
+  borderRadius: "12px",
+  border: "1px solid #cbd5e1",
+  background: "white",
+  color: "#0f172a",
+  boxSizing: "border-box",
+};
+
+const slipPreviewWrapStyle: CSSProperties = {
+  marginTop: "14px",
+  padding: "10px",
+  borderRadius: "14px",
+  background: "white",
+  border: "1px solid #cbd5e1",
+};
+
+const slipPreviewStyle: CSSProperties = {
+  display: "block",
+  width: "100%",
+  maxWidth: "430px",
+  maxHeight: "620px",
+  objectFit: "contain",
+  margin: "0 auto",
+  borderRadius: "10px",
+};
+
+const paymentSubmitButtonStyle: CSSProperties = {
   display: "flex",
   width: "100%",
   minHeight: "52px",
   alignItems: "center",
   justifyContent: "center",
-  marginTop: "12px",
+  marginTop: "14px",
   padding: "0 18px",
   border: 0,
   borderRadius: "14px",
   background: "#16a34a",
   color: "white",
   fontWeight: 900,
-  cursor: "pointer",
 };
 
-const lineDesktopHelpStyle: CSSProperties = {
+const paymentSuccessStyle: CSSProperties = {
+  display: "grid",
+  gap: "5px",
   marginTop: "14px",
-  padding: "18px",
-  borderRadius: "16px",
-  border: "1px solid #bbf7d0",
-  background: "#f0fdf4",
-  textAlign: "center",
-};
-
-const lineDesktopTitleStyle: CSSProperties = {
-  display: "block",
-  color: "#166534",
-  fontSize: "17px",
-  fontWeight: 900,
-};
-
-const lineDesktopTextStyle: CSSProperties = {
-  margin: "8px auto 12px",
-  maxWidth: "520px",
-  color: "#475569",
-  lineHeight: 1.7,
-};
-
-const lineQrImageStyle: CSSProperties = {
-  display: "block",
-  width: "220px",
-  maxWidth: "100%",
-  height: "auto",
-  margin: "10px auto",
-  padding: "8px",
+  padding: "14px",
   borderRadius: "14px",
-  background: "white",
-  border: "1px solid #dcfce7",
-};
-
-const lineDesktopStepsStyle: CSSProperties = {
-  margin: "12px auto 0",
-  maxWidth: "420px",
+  background: "#dcfce7",
   color: "#166534",
-  lineHeight: 1.8,
-  textAlign: "left",
-  fontWeight: 700,
+  lineHeight: 1.6,
 };
 
-const lineDesktopFallbackStyle: CSSProperties = {
-  margin: "12px 0 0",
-  paddingTop: "12px",
-  borderTop: "1px solid #bbf7d0",
-  color: "#475569",
-  lineHeight: 1.7,
-};
-
-const lineHelpStyle: CSSProperties = {
+const paymentMessageStyle: CSSProperties = {
   margin: "10px 0 0",
-  color: "#475569",
+  color: "#15803d",
+  lineHeight: 1.6,
+  fontWeight: 800,
+};
+
+const paymentErrorStyle: CSSProperties = {
+  margin: "10px 0 0",
+  padding: "10px 12px",
+  borderRadius: "12px",
+  background: "#fef2f2",
+  color: "#b91c1c",
+  lineHeight: 1.6,
+  fontWeight: 800,
+};
+
+const paymentPrivacyStyle: CSSProperties = {
+  margin: "12px 0 0",
+  color: "#64748b",
+  fontSize: "12px",
   lineHeight: 1.7,
 };
 

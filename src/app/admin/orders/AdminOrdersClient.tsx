@@ -14,10 +14,14 @@ import {
 type AdminOrder = {
   orderId: string;
   accessKey: string;
-  status: "pending" | "approved";
+  status: "pending" | "payment-submitted" | "approved";
   amount: number;
   createdAt: string;
   approvedAt: string | null;
+  paymentSubmittedAt: string | null;
+  paymentTransferName: string;
+  hasPaymentProof: boolean;
+  paymentVerifiedAt: string | null;
   planRound: number | null;
   variationIndex: number | null;
   duplicateFingerprintsAvoided: number;
@@ -60,6 +64,11 @@ export default function AdminOrdersClient() {
   const [orders, setOrders] = useState<AdminOrder[]>([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [proofs, setProofs] = useState<
+    Record<string, string>
+  >({});
+  const [proofLoadingId, setProofLoadingId] =
+    useState("");
 
   useEffect(() => {
     const savedCode = window.sessionStorage.getItem(
@@ -119,9 +128,62 @@ export default function AdminOrdersClient() {
     }
   }
 
+  async function loadPaymentProof(orderId: string) {
+    if (proofs[orderId]) {
+      setProofs((current) => {
+        const next = { ...current };
+        delete next[orderId];
+        return next;
+      });
+      return;
+    }
+
+    setProofLoadingId(orderId);
+    setMessage("");
+
+    try {
+      const response = await fetch(
+        `/api/admin/orders/${encodeURIComponent(
+          orderId
+        )}/payment-proof`,
+        {
+          headers: {
+            "x-admin-code": code.trim(),
+          },
+          cache: "no-store",
+        }
+      );
+
+      const data = (await response.json()) as {
+        ok: boolean;
+        imageDataUrl?: string;
+        message?: string;
+      };
+
+      if (!response.ok || !data.ok || !data.imageDataUrl) {
+        throw new Error(
+          data.message || "โหลดสลิปไม่สำเร็จ"
+        );
+      }
+
+      setProofs((current) => ({
+        ...current,
+        [orderId]: data.imageDataUrl || "",
+      }));
+    } catch (error) {
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "โหลดสลิปไม่สำเร็จ"
+      );
+    } finally {
+      setProofLoadingId("");
+    }
+  }
+
   async function approveOrder(orderId: string) {
     const confirmed = window.confirm(
-      `ยืนยันว่าได้รับเงินของ ${orderId} แล้วหรือไม่?`
+      `ตรวจสลิปและยอดเงินจริงของ ${orderId} แล้วใช่หรือไม่?`
     );
 
     if (!confirmed) return;
@@ -192,7 +254,7 @@ export default function AdminOrdersClient() {
           ตรวจและอนุมัติคำสั่งซื้อ
         </h1>
         <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300">
-          ตรวจสลิปใน LINE ให้ถูกต้องก่อน แล้วกดอนุมัติเพียงครั้งเดียว ระบบจะเปิดแผน 7 วันให้ลูกค้า
+          ลูกค้าส่งสลิปบนเว็บไซต์ ตรวจสลิปกับยอดเงินจริงให้ตรงกันก่อน แล้วกดอนุมัติเพียงครั้งเดียว ระบบจะเปิดแผน 7 วันให้ลูกค้า
         </p>
 
         <div className="mt-7 rounded-3xl border border-white/10 bg-white/5 p-5 sm:p-6">
@@ -255,12 +317,16 @@ export default function AdminOrdersClient() {
                     className={`w-fit rounded-full px-3 py-1 text-xs font-black ${
                       order.status === "approved"
                         ? "bg-emerald-400/15 text-emerald-200"
-                        : "bg-amber-400/15 text-amber-100"
+                        : order.status === "payment-submitted"
+                          ? "bg-sky-400/15 text-sky-100"
+                          : "bg-amber-400/15 text-amber-100"
                     }`}
                   >
                     {order.status === "approved"
                       ? "อนุมัติแล้ว"
-                      : "รอตรวจเงิน"}
+                      : order.status === "payment-submitted"
+                        ? "ส่งสลิปแล้ว"
+                        : "รอลูกค้าส่งสลิป"}
                   </span>
                 </div>
 
@@ -343,6 +409,55 @@ export default function AdminOrdersClient() {
                   </p>
                 </div>
 
+                {order.status === "payment-submitted" && (
+                  <div className="mt-4 rounded-2xl border border-sky-400/20 bg-sky-400/10 p-4">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <p className="text-xs font-black uppercase tracking-wider text-sky-200">
+                          หลักฐานการชำระเงิน
+                        </p>
+                        <p className="mt-1 text-sm leading-6 text-sky-50/90">
+                          ส่งเมื่อ{" "}
+                          {order.paymentSubmittedAt
+                            ? formatDate(order.paymentSubmittedAt)
+                            : "ไม่ทราบเวลา"}
+                          {order.paymentTransferName
+                            ? ` · ชื่อผู้โอน ${order.paymentTransferName}`
+                            : ""}
+                        </p>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          void loadPaymentProof(order.orderId)
+                        }
+                        disabled={
+                          !order.hasPaymentProof ||
+                          proofLoadingId === order.orderId
+                        }
+                        className="rounded-xl border border-sky-200/30 px-4 py-2 text-sm font-black text-sky-100 disabled:opacity-50"
+                      >
+                        {proofLoadingId === order.orderId
+                          ? "กำลังโหลด..."
+                          : proofs[order.orderId]
+                            ? "ซ่อนสลิป"
+                            : "ดูสลิป"}
+                      </button>
+                    </div>
+
+                    {proofs[order.orderId] && (
+                      <div className="mt-4 overflow-hidden rounded-2xl bg-white p-2">
+                        <img
+                          src={proofs[order.orderId]}
+                          alt={`สลิปของ ${order.orderId}`}
+                          className="mx-auto max-h-[720px] w-auto max-w-full rounded-xl object-contain"
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 {order.status === "approved" && (
                   <>
                     <p className="mt-3 text-xs leading-6 text-emerald-200/80">
@@ -401,15 +516,21 @@ export default function AdminOrdersClient() {
                 )}
 
                 <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                  {order.status === "pending" && (
+                  {order.status === "payment-submitted" && (
                     <button
                       type="button"
                       onClick={() => void approveOrder(order.orderId)}
                       disabled={loading}
                       className="rounded-2xl bg-emerald-600 px-5 py-3 font-black hover:bg-emerald-500 disabled:opacity-60"
                     >
-                      ตรวจเงินแล้ว — อนุมัติแผน 7 วัน
+                      ตรวจสลิปและเงินแล้ว — อนุมัติแผน 7 วัน
                     </button>
+                  )}
+
+                  {order.status === "pending" && (
+                    <span className="rounded-2xl border border-amber-300/20 bg-amber-300/10 px-5 py-3 text-center text-sm font-bold text-amber-100">
+                      ยังอนุมัติไม่ได้ — รอลูกค้าส่งสลิปบนเว็บไซต์
+                    </span>
                   )}
 
                   <a

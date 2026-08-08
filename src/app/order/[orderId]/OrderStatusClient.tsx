@@ -10,7 +10,7 @@ const REQUEST_STORAGE_KEY = "creator-os-plan-request-v1";
 type OrderStatusResponse = {
   ok: boolean;
   orderId?: string;
-  status?: "pending" | "approved";
+  status?: "pending" | "payment-submitted" | "approved";
   request?: PlanRequest | null;
   message?: string;
 };
@@ -23,6 +23,7 @@ type OrderStatusClientProps = {
 type VisibleStatus =
   | "checking"
   | "pending"
+  | "payment-submitted"
   | "approved"
   | "error";
 
@@ -97,9 +98,17 @@ export default function OrderStatusClient({
         return;
       }
 
+      if (data.status === "payment-submitted") {
+        setStatus("payment-submitted");
+        setMessage(
+          "ได้รับหลักฐานการชำระเงินแล้ว กำลังรอผู้ดูแลตรวจสอบ เมื่ออนุมัติแล้วระบบจะเปิดแผน 7 วันให้อัตโนมัติ"
+        );
+        return;
+      }
+
       setStatus("pending");
       setMessage(
-        "ยังรอตรวจสอบการชำระเงิน เมื่อผู้ดูแลอนุมัติแล้ว ระบบจะเปิดแผน 7 วันให้อัตโนมัติ"
+        "ยังไม่ได้ส่งหลักฐานการชำระเงิน กรุณากลับหน้าชำระเงินและอัปโหลดสลิปบนเว็บไซต์"
       );
     } catch (statusError) {
       setStatus("error");
@@ -122,6 +131,8 @@ export default function OrderStatusClient({
   }, [checkStatus]);
 
   const isApproved = status === "approved";
+  const isPaymentSubmitted =
+    status === "payment-submitted";
   const isChecking = status === "checking";
 
   return (
@@ -148,30 +159,38 @@ export default function OrderStatusClient({
           className={`mt-5 rounded-2xl border p-5 ${
             isApproved
               ? "border-emerald-300/20 bg-emerald-300/10"
-              : "border-amber-300/20 bg-amber-300/10"
+              : isPaymentSubmitted
+                ? "border-sky-300/20 bg-sky-300/10"
+                : "border-amber-300/20 bg-amber-300/10"
           }`}
         >
           <p
             className={`font-bold ${
               isApproved
                 ? "text-emerald-100"
-                : "text-amber-100"
+                : isPaymentSubmitted
+                  ? "text-sky-100"
+                  : "text-amber-100"
             }`}
           >
             {isChecking
               ? "กำลังตรวจสอบ..."
               : isApproved
                 ? "สถานะ: อนุมัติแล้ว"
-                : status === "error"
-                  ? "สถานะ: ตรวจสอบไม่สำเร็จ"
-                  : "สถานะ: รอตรวจสอบการชำระเงิน"}
+                : isPaymentSubmitted
+                  ? "สถานะ: ส่งหลักฐานแล้ว"
+                  : status === "error"
+                    ? "สถานะ: ตรวจสอบไม่สำเร็จ"
+                    : "สถานะ: รอส่งหลักฐานการชำระเงิน"}
           </p>
 
           <p
             className={`mt-2 text-sm leading-7 ${
               isApproved
                 ? "text-emerald-50/80"
-                : "text-amber-50/80"
+                : isPaymentSubmitted
+                  ? "text-sky-50/80"
+                  : "text-amber-50/80"
             }`}
           >
             {message}
@@ -201,12 +220,12 @@ export default function OrderStatusClient({
           </button>
         )}
 
-        {!isApproved && (
+        {!isApproved && !isPaymentSubmitted && (
           <Link
             href="/checkout"
             className="mt-3 flex w-full items-center justify-center rounded-2xl border border-white/15 px-5 py-3 font-bold text-slate-200"
           >
-            กลับหน้าชำระเงิน
+            กลับไปอัปโหลดสลิป
           </Link>
         )}
 

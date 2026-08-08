@@ -76,6 +76,8 @@ export async function GET(
         status: order.status,
         createdAt: order.createdAt,
         approvedAt: order.approvedAt || null,
+        paymentSubmittedAt:
+          order.paymentProof?.submittedAt || null,
         request:
           order.status === "approved"
             ? order.request

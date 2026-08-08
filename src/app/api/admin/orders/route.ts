@@ -36,6 +36,15 @@ export async function GET(request: Request) {
           amount: order.amount,
           createdAt: order.createdAt,
           approvedAt: order.approvedAt || null,
+          paymentSubmittedAt:
+            order.paymentProof?.submittedAt || null,
+          paymentTransferName:
+            order.paymentProof?.transferName || "",
+          hasPaymentProof: Boolean(
+            order.paymentProof?.imageDataUrl
+          ),
+          paymentVerifiedAt:
+            order.paymentProof?.verifiedAt || null,
           planRound: storedSnapshot?.round || null,
           variationIndex:
             storedSnapshot?.variationIndex ?? null,

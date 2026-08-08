@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 
 import { isValidAdminCode } from "../../../../../lib/admin-code";
-import { updateOrderStatus } from "../../../../../lib/order-store";
+import {
+  getOrder,
+  updateOrderStatus,
+} from "../../../../../lib/order-store";
 
 export async function POST(request: Request) {
   const code = request.headers.get("x-admin-code") || "";
@@ -26,6 +29,29 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { ok: false, message: "กรุณาระบุรหัสคำสั่งซื้อ" },
         { status: 400 }
+      );
+    }
+
+    const existing = await getOrder(orderId);
+
+    if (!existing) {
+      return NextResponse.json(
+        { ok: false, message: "ไม่พบคำสั่งซื้อ" },
+        { status: 404 }
+      );
+    }
+
+    if (
+      existing.status !== "payment-submitted" ||
+      !existing.paymentProof?.imageDataUrl
+    ) {
+      return NextResponse.json(
+        {
+          ok: false,
+          message:
+            "ยังไม่มีหลักฐานการชำระเงินบนเว็บไซต์ จึงยังอนุมัติไม่ได้",
+        },
+        { status: 409 }
       );
     }
 

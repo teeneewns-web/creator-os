@@ -3,7 +3,16 @@ import type { WeeklyContentPlan } from "./weekly-content-plan";
 
 export type CreatorOrderStatus =
   | "pending"
+  | "payment-submitted"
   | "approved";
+
+export type CreatorPaymentProof = {
+  imageDataUrl?: string;
+  originalFileName?: string;
+  transferName?: string;
+  submittedAt: string;
+  verifiedAt?: string;
+};
 
 export type CreatorPlanProductStandard =
   | "ready-to-execute-v1";
@@ -55,6 +64,7 @@ export type CreatorOrder = {
   customerKey?: string;
   createdAt: string;
   approvedAt?: string;
+  paymentProof?: CreatorPaymentProof;
 
   previousOrderId?: string;
   rootOrderId?: string;

@@ -7,6 +7,7 @@ import { connect, type TLSSocket } from "tls";
 import type {
   CreatorOrder,
   CreatorOrderStatus,
+  CreatorPaymentProof,
   CreatorPlanSnapshot,
 } from "../types/creator-order";
 import {
@@ -655,6 +656,48 @@ export async function listOrders(
   });
 }
 
+export async function submitPaymentProof(
+  orderId: string,
+  accessKey: string,
+  proof: Omit<CreatorPaymentProof, "submittedAt" | "verifiedAt">
+): Promise<CreatorOrder | null> {
+  return withRedis(async (client) => {
+    const key = getOrderKey(orderId);
+    const order = parseOrder(
+      await client.command(["GET", key])
+    );
+
+    if (!order) return null;
+
+    if (order.accessKey !== accessKey) {
+      throw new Error("INVALID_ORDER_ACCESS");
+    }
+
+    if (order.status === "approved") {
+      return order;
+    }
+
+    const updated: CreatorOrder = {
+      ...order,
+      status: "payment-submitted",
+      paymentProof: {
+        imageDataUrl: proof.imageDataUrl,
+        originalFileName: proof.originalFileName,
+        transferName: proof.transferName,
+        submittedAt: new Date().toISOString(),
+      },
+    };
+
+    await client.command([
+      "SET",
+      key,
+      JSON.stringify(updated),
+    ]);
+
+    return updated;
+  });
+}
+
 export async function updateOrderStatus(
   orderId: string,
   status: CreatorOrderStatus
@@ -667,13 +710,27 @@ export async function updateOrderStatus(
 
     if (!order) return null;
 
+    const approvedAt =
+      status === "approved"
+        ? order.approvedAt || new Date().toISOString()
+        : undefined;
+
     const statusUpdated: CreatorOrder = {
       ...order,
       status,
-      approvedAt:
-        status === "approved"
-          ? order.approvedAt || new Date().toISOString()
-          : undefined,
+      approvedAt,
+      paymentProof:
+        status === "approved" && order.paymentProof
+          ? {
+              originalFileName:
+                order.paymentProof.originalFileName,
+              transferName:
+                order.paymentProof.transferName,
+              submittedAt:
+                order.paymentProof.submittedAt,
+              verifiedAt: approvedAt,
+            }
+          : order.paymentProof,
     };
 
     const updated =
