@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 
 import type { PlanRequest } from "../../../types/plan-request";
+import type { WeeklyContentPlan } from "../../../types/weekly-content-plan";
+import type { CreatorRevisionRequest } from "../../../types/creator-order";
 import {
   AUDIENCE_STAGE_LABELS,
   AUDIENCE_VALUE_LABELS,
@@ -14,10 +16,18 @@ import {
 type AdminOrder = {
   orderId: string;
   accessKey: string;
-  status: "pending" | "payment-submitted" | "approved";
+  productId: string;
+  productName: string;
+  status:
+    | "pending"
+    | "payment-submitted"
+    | "review-ready"
+    | "approved";
   amount: number;
   createdAt: string;
+  reviewReadyAt: string | null;
   approvedAt: string | null;
+  deliveredAt: string | null;
   paymentSubmittedAt: string | null;
   paymentTransferName: string;
   hasPaymentProof: boolean;
@@ -30,6 +40,7 @@ type AdminOrder = {
   repeatAverageSimilarity: number | null;
   repeatMaxSimilarity: number | null;
   repeatPreviousPlansCompared: number;
+  diversityPoolKey: string | null;
   previousOrderId: string | null;
   rootOrderId: string;
   qualityRejectedPlans: number;
@@ -41,6 +52,11 @@ type AdminOrder = {
   qualityBlockingIssues: string[];
   qualityRegenerationAttempts: number;
   request: PlanRequest;
+  plan: WeeklyContentPlan | null;
+  revisionRequest: CreatorRevisionRequest | null;
+  revisionUsedAt: string | null;
+  pendingRevisionPlan: WeeklyContentPlan | null;
+  pendingRevisionQualityScore: number | null;
 };
 
 type OrdersResponse = {
@@ -64,6 +80,71 @@ function getCustomerPath(order: AdminOrder) {
   return `/order/${encodeURIComponent(
     order.orderId
   )}?key=${encodeURIComponent(order.accessKey)}`;
+}
+
+function PlanPreview({
+  plan,
+  label,
+}: {
+  plan: WeeklyContentPlan;
+  label: string;
+}) {
+  return (
+    <details className="mt-4 rounded-2xl border border-white/10 bg-slate-950/70 p-4">
+      <summary className="cursor-pointer font-black text-indigo-200">
+        {label} — เปิดอ่านครบ 7 วัน
+      </summary>
+
+      <div className="mt-4 space-y-4">
+        <div className="rounded-xl bg-white/5 p-4 text-sm leading-7 text-slate-200">
+          <p><strong>เป้าหมายสัปดาห์:</strong> {plan.weeklyObjective}</p>
+          <p className="mt-2"><strong>เหตุผลของแผน:</strong> {plan.strategyExplanation}</p>
+        </div>
+
+        {plan.days.map((day) => (
+          <article
+            key={`${label}-${day.day}`}
+            className="rounded-2xl border border-white/10 bg-white/5 p-4"
+          >
+            <p className="text-xs font-black uppercase tracking-wider text-slate-400">
+              Day {day.day} · {day.format} · ประมาณ {day.estimatedMinutes} นาที
+            </p>
+            <h3 className="mt-2 text-lg font-black text-white">
+              {day.title}
+            </h3>
+            <p className="mt-3 text-sm leading-7 text-slate-200">
+              <strong>Hook:</strong> {day.hook}
+            </p>
+            <div className="mt-3 whitespace-pre-wrap rounded-xl bg-slate-900 p-3 text-sm leading-7 text-slate-200">
+              <strong>Script / เนื้อหา:</strong><br />{day.script}
+            </div>
+            <div className="mt-3 text-sm leading-7 text-slate-300">
+              <strong>ลำดับการถ่าย:</strong>
+              <ol className="mt-1 list-decimal pl-5">
+                {day.shotList.map((shot) => (
+                  <li key={shot}>{shot}</li>
+                ))}
+              </ol>
+            </div>
+            <p className="mt-3 text-sm leading-7 text-slate-200">
+              <strong>Caption:</strong> {day.caption}
+            </p>
+            <p className="mt-2 text-sm leading-7 text-slate-200">
+              <strong>CTA:</strong> {day.cta}
+            </p>
+            <div className="mt-3 text-sm leading-7 text-slate-300">
+              <strong>สิ่งที่ต้องเตรียม:</strong>
+              <ul className="mt-1 list-disc pl-5">
+                {day.preparation.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        ))}
+      </div>
+    </details>
+  );
 }
 
 export default function AdminOrdersClient() {
@@ -222,13 +303,194 @@ export default function AdminOrdersClient() {
         );
       }
 
-      setMessage(`อนุมัติ ${orderId} แล้ว`);
+      setMessage(
+        data.message ||
+          `ตรวจยอด ${orderId} แล้ว — กรุณาเปิดอ่านแผนก่อนส่งมอบ`
+      );
       await loadOrders();
     } catch (error) {
       setMessage(
         error instanceof Error
           ? error.message
           : "อนุมัติไม่สำเร็จ"
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function regenerateReviewPlan(orderId: string) {
+    const confirmed = window.confirm(
+      `แผนของ ${orderId} ยังไม่ดีพอและต้องการสร้างตัวเลือกใหม่ก่อนส่งมอบใช่หรือไม่?`
+    );
+
+    if (!confirmed) return;
+
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const response = await fetch(
+        "/api/admin/orders/regenerate",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-admin-code": code.trim(),
+          },
+          body: JSON.stringify({ orderId }),
+        }
+      );
+      const data = (await response.json()) as {
+        ok: boolean;
+        message?: string;
+      };
+
+      if (!response.ok || !data.ok) {
+        throw new Error(
+          data.message || "สร้างแผนตัวเลือกใหม่ไม่สำเร็จ"
+        );
+      }
+
+      setMessage(data.message || "สร้างแผนตัวเลือกใหม่แล้ว");
+      await loadOrders();
+    } catch (error) {
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "สร้างแผนตัวเลือกใหม่ไม่สำเร็จ"
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function deliverOrder(orderId: string) {
+    const confirmed = window.confirm(
+      `เปิดอ่านแผนของ ${orderId} ครบแล้ว และพร้อมส่งมอบให้ลูกค้าใช่หรือไม่?`
+    );
+
+    if (!confirmed) return;
+
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const response = await fetch(
+        "/api/admin/orders/deliver",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-admin-code": code.trim(),
+          },
+          body: JSON.stringify({ orderId }),
+        }
+      );
+      const data = (await response.json()) as {
+        ok: boolean;
+        message?: string;
+      };
+
+      if (!response.ok || !data.ok) {
+        throw new Error(
+          data.message || "ส่งมอบแผนไม่สำเร็จ"
+        );
+      }
+
+      setMessage(data.message || `ส่งมอบ ${orderId} แล้ว`);
+      await loadOrders();
+    } catch (error) {
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "ส่งมอบแผนไม่สำเร็จ"
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function generateRevision(orderId: string) {
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const response = await fetch(
+        "/api/admin/orders/revision/generate",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-admin-code": code.trim(),
+          },
+          body: JSON.stringify({ orderId }),
+        }
+      );
+      const data = (await response.json()) as {
+        ok: boolean;
+        message?: string;
+      };
+
+      if (!response.ok || !data.ok) {
+        throw new Error(
+          data.message || "สร้างเวอร์ชันแก้ไขไม่สำเร็จ"
+        );
+      }
+
+      setMessage(data.message || "สร้างเวอร์ชันแก้ไขแล้ว");
+      await loadOrders();
+    } catch (error) {
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "สร้างเวอร์ชันแก้ไขไม่สำเร็จ"
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function deliverRevision(orderId: string) {
+    const confirmed = window.confirm(
+      `ตรวจเวอร์ชันแก้ไขของ ${orderId} แล้ว และพร้อมใช้สิทธิ์แก้ไข 1 รอบเพื่อส่งมอบใช่หรือไม่?`
+    );
+
+    if (!confirmed) return;
+
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const response = await fetch(
+        "/api/admin/orders/revision/deliver",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-admin-code": code.trim(),
+          },
+          body: JSON.stringify({ orderId }),
+        }
+      );
+      const data = (await response.json()) as {
+        ok: boolean;
+        message?: string;
+      };
+
+      if (!response.ok || !data.ok) {
+        throw new Error(
+          data.message || "ส่งมอบเวอร์ชันแก้ไขไม่สำเร็จ"
+        );
+      }
+
+      setMessage(data.message || "ส่งมอบเวอร์ชันแก้ไขแล้ว");
+      await loadOrders();
+    } catch (error) {
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "ส่งมอบเวอร์ชันแก้ไขไม่สำเร็จ"
       );
     } finally {
       setLoading(false);
@@ -261,7 +523,7 @@ export default function AdminOrdersClient() {
           ตรวจและอนุมัติคำสั่งซื้อ
         </h1>
         <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300">
-          ลูกค้าส่งสลิปบนเว็บไซต์ ตรวจสลิปกับยอดเงินจริงให้ตรงกันก่อน แล้วกดอนุมัติเพียงครั้งเดียว ระบบจะเปิดแผน 7 วันให้ลูกค้า
+          Flow ใหม่: ตรวจสลิปและยอดเงินจริง → ระบบสร้างแผนและล็อกไว้ → เปิดอ่านแผนจริง 7 วัน → กดส่งมอบให้ลูกค้า หากลูกค้าขอแก้ไข 1 รอบ ระบบจะสร้างเวอร์ชันแก้ไขให้ตรวจอีกครั้งก่อนส่ง
         </p>
 
         <div className="mt-7 rounded-3xl border border-white/10 bg-white/5 p-5 sm:p-6">
@@ -316,7 +578,7 @@ export default function AdminOrdersClient() {
                       {order.orderId}
                     </h2>
                     <p className="mt-2 text-sm text-slate-400">
-                      รับเมื่อ {formatDate(order.createdAt)} · {order.amount} บาท
+                      {order.productName} · รับเมื่อ {formatDate(order.createdAt)} · {order.amount} บาท
                     </p>
                   </div>
 
@@ -324,16 +586,20 @@ export default function AdminOrdersClient() {
                     className={`w-fit rounded-full px-3 py-1 text-xs font-black ${
                       order.status === "approved"
                         ? "bg-emerald-400/15 text-emerald-200"
-                        : order.status === "payment-submitted"
-                          ? "bg-sky-400/15 text-sky-100"
-                          : "bg-amber-400/15 text-amber-100"
+                        : order.status === "review-ready"
+                          ? "bg-violet-400/15 text-violet-100"
+                          : order.status === "payment-submitted"
+                            ? "bg-sky-400/15 text-sky-100"
+                            : "bg-amber-400/15 text-amber-100"
                     }`}
                   >
                     {order.status === "approved"
-                      ? "อนุมัติแล้ว"
-                      : order.status === "payment-submitted"
-                        ? "ส่งสลิปแล้ว"
-                        : "รอลูกค้าส่งสลิป"}
+                      ? "ส่งมอบแล้ว"
+                      : order.status === "review-ready"
+                        ? "รอ Human Review"
+                        : order.status === "payment-submitted"
+                          ? "ส่งสลิปแล้ว"
+                          : "รอลูกค้าส่งสลิป"}
                   </span>
                 </div>
 
@@ -471,13 +737,14 @@ export default function AdminOrdersClient() {
                   </div>
                 )}
 
-                {order.status === "approved" && (
+                {(order.status === "review-ready" ||
+                  order.status === "approved") && (
                   <>
                     <p className="mt-3 text-xs leading-6 text-emerald-200/80">
-                      ระบบตรวจลายนิ้วมือเนื้อหาแล้ว
+                      Global Diversity ใช้ชุด variation ร่วมข้ามออเดอร์ในสายเดียวกัน และตรวจลายนิ้วมือเนื้อหากับออเดอร์ที่เคยส่งแล้ว
                       {order.duplicateFingerprintsAvoided > 0
-                        ? ` และหลีกเลี่ยงรายการซ้ำ ${order.duplicateFingerprintsAvoided} จุด`
-                        : " และไม่พบเนื้อหาซ้ำแบบตรงกัน"}
+                        ? ` · หลีกเลี่ยงรายการซ้ำ ${order.duplicateFingerprintsAvoided} จุด`
+                        : " · ไม่พบเนื้อหาซ้ำแบบตรงกัน"}
                     </p>
 
                     {order.planRound &&
@@ -550,6 +817,67 @@ export default function AdminOrdersClient() {
                   </>
                 )}
 
+                {order.plan ? (
+                  <PlanPreview
+                    plan={order.plan}
+                    label={
+                      order.status === "review-ready"
+                        ? "Human Review — แผนก่อนส่งมอบ"
+                        : "แผนที่ส่งมอบแล้ว"
+                    }
+                  />
+                ) : null}
+
+                {order.status === "approved" && order.revisionRequest ? (
+                  <div className="mt-4 rounded-2xl border border-fuchsia-300/20 bg-fuchsia-300/10 p-4">
+                    <p className="text-xs font-black uppercase tracking-wider text-fuchsia-200">
+                      Revision 1 รอบ
+                    </p>
+                    <p className="mt-2 text-sm font-bold text-fuchsia-50">
+                      สถานะ: {order.revisionRequest.status}
+                    </p>
+                    <p className="mt-2 text-sm leading-7 text-fuchsia-50/90">
+                      ประเภท: {order.revisionRequest.kind}
+                      {order.revisionRequest.note
+                        ? ` · ${order.revisionRequest.note}`
+                        : ""}
+                    </p>
+
+                    {order.pendingRevisionPlan ? (
+                      <PlanPreview
+                        plan={order.pendingRevisionPlan}
+                        label={`เวอร์ชันแก้ไข — Quality ${order.pendingRevisionQualityScore ?? "–"}/100`}
+                      />
+                    ) : null}
+
+                    <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                      {!order.revisionUsedAt && (
+                        <button
+                          type="button"
+                          onClick={() => void generateRevision(order.orderId)}
+                          disabled={loading}
+                          className="rounded-2xl border border-fuchsia-200/30 px-5 py-3 font-black text-fuchsia-100 hover:bg-fuchsia-300/10 disabled:opacity-60"
+                        >
+                          {order.pendingRevisionPlan
+                            ? "สร้างตัวเลือกแก้ไขใหม่อีกครั้ง"
+                            : "สร้างเวอร์ชันแก้ไข"}
+                        </button>
+                      )}
+
+                      {order.pendingRevisionPlan && !order.revisionUsedAt ? (
+                        <button
+                          type="button"
+                          onClick={() => void deliverRevision(order.orderId)}
+                          disabled={loading}
+                          className="rounded-2xl bg-fuchsia-600 px-5 py-3 font-black hover:bg-fuchsia-500 disabled:opacity-60"
+                        >
+                          ตรวจ Revision แล้ว — ส่งมอบ
+                        </button>
+                      ) : null}
+                    </div>
+                  </div>
+                ) : null}
+
                 <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                   {order.status === "payment-submitted" && (
                     <button
@@ -558,8 +886,29 @@ export default function AdminOrdersClient() {
                       disabled={loading}
                       className="rounded-2xl bg-emerald-600 px-5 py-3 font-black hover:bg-emerald-500 disabled:opacity-60"
                     >
-                      ตรวจสลิปและเงินแล้ว — อนุมัติแผน 7 วัน
+                      ตรวจยอดแล้ว — สร้างแผนเพื่อ Human Review
                     </button>
+                  )}
+
+                  {order.status === "review-ready" && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => void regenerateReviewPlan(order.orderId)}
+                        disabled={loading}
+                        className="rounded-2xl border border-violet-200/30 px-5 py-3 font-black text-violet-100 hover:bg-violet-300/10 disabled:opacity-60"
+                      >
+                        แผนยังไม่ดี — สร้างตัวเลือกใหม่
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => void deliverOrder(order.orderId)}
+                        disabled={loading || order.qualityPassed !== true}
+                        className="rounded-2xl bg-violet-600 px-5 py-3 font-black hover:bg-violet-500 disabled:opacity-60"
+                      >
+                        ตรวจแผนครบแล้ว — ส่งมอบให้ลูกค้า
+                      </button>
+                    </>
                   )}
 
                   {order.status === "pending" && (

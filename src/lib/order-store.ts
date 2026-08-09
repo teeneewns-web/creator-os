@@ -9,9 +9,11 @@ import type {
   CreatorOrderStatus,
   CreatorPaymentProof,
   CreatorPlanSnapshot,
+  CreatorRevisionKind,
 } from "../types/creator-order";
 import {
   createContentClusterKey,
+  createDirectionDiversityPoolKey,
   createPlanSnapshot,
 } from "./plan-history";
 import {
@@ -20,6 +22,7 @@ import {
 } from "./plan-quality";
 import { auditRepeatNovelty } from "./plan-novelty";
 import type { WeeklyContentPlan } from "../types/weekly-content-plan";
+import type { PlanRequest } from "../types/plan-request";
 
 const ORDER_KEY_PREFIX = "creator-os:order:";
 const ORDER_INDEX_KEY = "creator-os:orders";
@@ -306,9 +309,9 @@ function getCustomerLastOrderKey(
 }
 
 function getContentVariationKey(
-  contentClusterKey: string
+  diversityPoolKey: string
 ) {
-  return `${CONTENT_VARIATION_KEY_PREFIX}${contentClusterKey}`;
+  return `${CONTENT_VARIATION_KEY_PREFIX}${diversityPoolKey}`;
 }
 
 function toSafeCounter(value: RespValue, fallback: number) {
@@ -382,6 +385,7 @@ type AttachPlanSnapshotOptions = {
   forceRegenerate?: boolean;
   preserveRound?: number;
   variationStart?: number;
+  trackCustomerHistory?: boolean;
 };
 
 async function readOrderById(
@@ -437,6 +441,8 @@ async function attachPlanSnapshot(
 
   const contentClusterKey =
     createContentClusterKey(order.request);
+  const diversityPoolKey =
+    createDirectionDiversityPoolKey(order.request);
   const customerKey = order.customerKey?.trim() || "";
 
   let round = Math.max(
@@ -474,27 +480,39 @@ async function attachPlanSnapshot(
     ]);
 
     if (typeof previousOrderId === "string") {
-      previousOrder = await readOrderById(
+      const storedPreviousOrder = await readOrderById(
         client,
         previousOrderId
       );
+
+      previousOrder =
+        storedPreviousOrder?.status === "approved"
+          ? storedPreviousOrder
+          : null;
     }
 
-    round = toSafeCounter(
-      await client.command([
-        "INCR",
-        getCustomerRoundKey(
-          customerKey,
-          contentClusterKey
-        ),
-      ]),
-      1
-    );
+    if (options.trackCustomerHistory === false) {
+      round = Math.max(
+        1,
+        (previousOrder?.planSnapshot?.round || 0) + 1
+      );
+    } else {
+      round = toSafeCounter(
+        await client.command([
+          "INCR",
+          getCustomerRoundKey(
+            customerKey,
+            contentClusterKey
+          ),
+        ]),
+        1
+      );
 
-    round = Math.max(
-      round,
-      (previousOrder?.planSnapshot?.round || 0) + 1
-    );
+      round = Math.max(
+        round,
+        (previousOrder?.planSnapshot?.round || 0) + 1
+      );
+    }
   }
 
   const previousPlans = await collectPreviousPlans(
@@ -507,13 +525,20 @@ async function attachPlanSnapshot(
     toSafeCounter(
       await client.command([
         "INCR",
-        getContentVariationKey(contentClusterKey),
+        getContentVariationKey(diversityPoolKey),
       ]),
       1
     ) - 1
   );
+  const orderSeed =
+    Number.parseInt(
+      hashIdentity(order.orderId).slice(0, 8),
+      16
+    ) % 1009;
+  const globalVariationIndex =
+    variationCounter * 17 + orderSeed;
   const variationBase = Math.max(
-    variationCounter,
+    globalVariationIndex,
     Math.max(
       0,
       Math.floor(options.variationStart || 0)
@@ -612,7 +637,10 @@ async function attachPlanSnapshot(
     planSnapshot: selectedSnapshot,
   };
 
-  if (customerKey) {
+  if (
+    customerKey &&
+    options.trackCustomerHistory !== false
+  ) {
     await client.command([
       "SET",
       getCustomerLastOrderKey(
@@ -754,7 +782,10 @@ export async function submitPaymentProof(
       throw new Error("INVALID_ORDER_ACCESS");
     }
 
-    if (order.status === "approved") {
+    if (
+      order.status === "review-ready" ||
+      order.status === "approved"
+    ) {
       return order;
     }
 
@@ -767,6 +798,432 @@ export async function submitPaymentProof(
         transferName: proof.transferName,
         submittedAt: new Date().toISOString(),
       },
+    };
+
+    await client.command([
+      "SET",
+      key,
+      JSON.stringify(updated),
+    ]);
+
+    return updated;
+  });
+}
+
+
+function appendRevisionText(
+  current: string,
+  addition: string
+) {
+  const next = addition.trim();
+  if (!next) return current;
+  if (!current.trim()) return next;
+  return `${current.trim()}\n${next}`;
+}
+
+function getEasierDailyTime(
+  current: PlanRequest["dailyTime"]
+): PlanRequest["dailyTime"] {
+  if (current === "90-plus") return "60-90";
+  if (current === "60-90") return "30-45";
+  return "10-20";
+}
+
+function buildRevisionRequest(
+  request: PlanRequest,
+  kind: CreatorRevisionKind,
+  note: string
+): PlanRequest {
+  const revisionNote = note.trim();
+  const next: PlanRequest = {
+    ...request,
+    supportNeeds: [...request.supportNeeds],
+    capabilities: [...request.capabilities],
+  };
+
+  if (kind === "easier") {
+    next.dailyTime = getEasierDailyTime(request.dailyTime);
+    next.creatorChallenge = appendRevisionText(
+      request.creatorChallenge,
+      `Revision: ทำให้งานง่ายขึ้น ใช้ทรัพยากรน้อยลง และทำได้จริงภายในเวลาที่มี${
+        revisionNote ? ` — ${revisionNote}` : ""
+      }`
+    );
+  } else if (kind === "sales") {
+    next.tone = "direct";
+    next.creatorChallenge = appendRevisionText(
+      request.creatorChallenge,
+      `Revision: ทำให้ CTA และลำดับเนื้อหาพาคนดูไปสู่การกระทำหลักเดิมให้ชัดขึ้น โดยไม่เปลี่ยนเป้าหมายหลักของออเดอร์${
+        revisionNote ? ` — ${revisionNote}` : ""
+      }`
+    );
+  } else if (kind === "natural") {
+    next.tone = "friendly";
+    next.creatorChallenge = appendRevisionText(
+      request.creatorChallenge,
+      `Revision: ทำภาษาและจังหวะให้เป็นธรรมชาติ ลดความเป็นข้อความสำเร็จรูป${
+        revisionNote ? ` — ${revisionNote}` : ""
+      }`
+    );
+  } else if (kind === "constraints") {
+    next.prohibitedClaims = appendRevisionText(
+      request.prohibitedClaims,
+      revisionNote ||
+        "Revision: ต้องเคารพข้อจำกัดเดิมอย่างเคร่งครัด และตัดส่วนที่ทำจริงไม่ได้"
+    );
+  }
+
+  // new-angle deliberately keeps factual inputs unchanged. The global
+  // variation pool + fresh variation index produces a genuinely different
+  // execution while preserving the customer's original facts.
+  return next;
+}
+
+export async function verifyPaymentAndPrepareOrder(
+  orderId: string
+): Promise<CreatorOrder | null> {
+  return withRedis(async (client) => {
+    const key = getOrderKey(orderId);
+    const order = parseOrder(
+      await client.command(["GET", key])
+    );
+
+    if (!order) return null;
+
+    if (
+      order.status === "review-ready" ||
+      order.status === "approved"
+    ) {
+      return order;
+    }
+
+    if (
+      order.status !== "payment-submitted" ||
+      !order.paymentProof?.imageDataUrl
+    ) {
+      throw new Error("PAYMENT_PROOF_REQUIRED");
+    }
+
+    const verifiedAt = new Date().toISOString();
+    const prepared = await attachPlanSnapshot(
+      client,
+      {
+        ...order,
+        status: "review-ready",
+        reviewReadyAt: verifiedAt,
+        paymentProof: {
+          originalFileName:
+            order.paymentProof.originalFileName,
+          transferName: order.paymentProof.transferName,
+          submittedAt: order.paymentProof.submittedAt,
+          verifiedAt,
+        },
+      },
+      { trackCustomerHistory: false }
+    );
+
+    await client.command([
+      "SET",
+      key,
+      JSON.stringify(prepared),
+    ]);
+    await registerPlanFingerprints(client, prepared);
+
+    return prepared;
+  });
+}
+
+export async function regenerateReviewReadyOrder(
+  orderId: string
+): Promise<CreatorOrder | null> {
+  return withRedis(async (client) => {
+    const key = getOrderKey(orderId);
+    const order = parseOrder(
+      await client.command(["GET", key])
+    );
+
+    if (!order) return null;
+    if (order.status !== "review-ready") {
+      throw new Error("ORDER_NOT_REVIEW_READY");
+    }
+
+    const currentVariation =
+      order.planSnapshot?.variationIndex || 0;
+    const regenerated = await attachPlanSnapshot(
+      client,
+      order,
+      {
+        forceRegenerate: true,
+        preserveRound: order.planSnapshot?.round || 1,
+        variationStart: currentVariation + 7,
+        trackCustomerHistory: false,
+      }
+    );
+
+    if (!regenerated.planSnapshot?.qualityReport?.passed) {
+      throw new Error("PLAN_QUALITY_GATE_FAILED");
+    }
+
+    await client.command([
+      "SET",
+      key,
+      JSON.stringify(regenerated),
+    ]);
+    await registerPlanFingerprints(client, regenerated);
+
+    return regenerated;
+  });
+}
+
+export async function deliverReviewedOrder(
+  orderId: string
+): Promise<CreatorOrder | null> {
+  return withRedis(async (client) => {
+    const key = getOrderKey(orderId);
+    const order = parseOrder(
+      await client.command(["GET", key])
+    );
+
+    if (!order) return null;
+    if (order.status === "approved") return order;
+
+    if (order.status !== "review-ready") {
+      throw new Error("ORDER_NOT_REVIEW_READY");
+    }
+
+    if (!order.planSnapshot?.qualityReport?.passed) {
+      throw new Error("PLAN_QUALITY_GATE_FAILED");
+    }
+
+    const deliveredAt = new Date().toISOString();
+    const delivered: CreatorOrder = {
+      ...order,
+      status: "approved",
+      approvedAt: order.approvedAt || deliveredAt,
+      deliveredAt,
+    };
+
+    await client.command([
+      "SET",
+      key,
+      JSON.stringify(delivered),
+    ]);
+
+    const customerKey = delivered.customerKey?.trim() || "";
+    const snapshot = delivered.planSnapshot;
+
+    if (customerKey && snapshot) {
+      const contentClusterKey =
+        snapshot.contentClusterKey ||
+        createContentClusterKey(delivered.request);
+
+      await client.command([
+        "SET",
+        getCustomerLastOrderKey(
+          customerKey,
+          contentClusterKey
+        ),
+        delivered.orderId,
+      ]);
+      await client.command([
+        "SET",
+        getCustomerRoundKey(
+          customerKey,
+          contentClusterKey
+        ),
+        String(snapshot.round),
+      ]);
+    }
+
+    return delivered;
+  });
+}
+
+export async function submitRevisionRequest(
+  orderId: string,
+  accessKey: string,
+  kind: CreatorRevisionKind,
+  note: string
+): Promise<CreatorOrder | null> {
+  return withRedis(async (client) => {
+    const key = getOrderKey(orderId);
+    const order = parseOrder(
+      await client.command(["GET", key])
+    );
+
+    if (!order) return null;
+    if (order.accessKey !== accessKey) {
+      throw new Error("INVALID_ORDER_ACCESS");
+    }
+    if (order.status !== "approved") {
+      throw new Error("ORDER_NOT_DELIVERED");
+    }
+    if (order.revisionUsedAt) {
+      throw new Error("REVISION_ALREADY_USED");
+    }
+    if (
+      order.revisionRequest &&
+      order.revisionRequest.status !== "delivered"
+    ) {
+      throw new Error("REVISION_ALREADY_PENDING");
+    }
+
+    const requestedAt = new Date().toISOString();
+    const updated: CreatorOrder = {
+      ...order,
+      revisionRequest: {
+        kind,
+        note: note.trim(),
+        status: "requested",
+        requestedAt,
+      },
+      pendingRevisionSnapshot: undefined,
+      pendingRevisionRequest: undefined,
+    };
+
+    await client.command([
+      "SET",
+      key,
+      JSON.stringify(updated),
+    ]);
+
+    return updated;
+  });
+}
+
+export async function generateOrderRevision(
+  orderId: string
+): Promise<CreatorOrder | null> {
+  return withRedis(async (client) => {
+    const key = getOrderKey(orderId);
+    const order = parseOrder(
+      await client.command(["GET", key])
+    );
+
+    if (!order) return null;
+    if (order.status !== "approved") {
+      throw new Error("ORDER_NOT_DELIVERED");
+    }
+    if (order.revisionUsedAt) {
+      throw new Error("REVISION_ALREADY_USED");
+    }
+    if (!order.revisionRequest) {
+      throw new Error("REVISION_NOT_REQUESTED");
+    }
+
+    const adjustedRequest = buildRevisionRequest(
+      order.request,
+      order.revisionRequest.kind,
+      order.revisionRequest.note
+    );
+    const currentVariation = Math.max(
+      order.planSnapshot?.variationIndex || 0,
+      order.pendingRevisionSnapshot?.variationIndex || 0
+    );
+    const currentPlan = order.planSnapshot?.plan;
+    let selectedRevision: CreatorPlanSnapshot | undefined;
+
+    for (let attempt = 0; attempt < 8; attempt += 1) {
+      const generated = await attachPlanSnapshot(
+        client,
+        {
+          ...order,
+          request: adjustedRequest,
+        },
+        {
+          forceRegenerate: true,
+          preserveRound: order.planSnapshot?.round || 1,
+          variationStart:
+            currentVariation + 7 + attempt * 5,
+        }
+      );
+
+      const snapshot = generated.planSnapshot;
+      if (!snapshot?.qualityReport?.passed) continue;
+
+      const revisionNovelty = currentPlan
+        ? auditRepeatNovelty(snapshot.plan, [currentPlan])
+        : snapshot.repeatNoveltyReport;
+
+      if (revisionNovelty && !revisionNovelty.passed) {
+        continue;
+      }
+
+      selectedRevision = {
+        ...snapshot,
+        repeatNoveltyReport:
+          revisionNovelty || snapshot.repeatNoveltyReport,
+      };
+      break;
+    }
+
+    if (!selectedRevision?.qualityReport?.passed) {
+      throw new Error("PLAN_QUALITY_GATE_FAILED");
+    }
+
+    const generatedAt = new Date().toISOString();
+    const updated: CreatorOrder = {
+      ...order,
+      revisionRequest: {
+        ...order.revisionRequest,
+        status: "generated",
+        generatedAt,
+      },
+      pendingRevisionSnapshot: selectedRevision,
+      pendingRevisionRequest: adjustedRequest,
+    };
+
+    await client.command([
+      "SET",
+      key,
+      JSON.stringify(updated),
+    ]);
+    await registerPlanFingerprints(client, {
+      ...updated,
+      planSnapshot: selectedRevision,
+    });
+
+    return updated;
+  });
+}
+
+export async function deliverOrderRevision(
+  orderId: string
+): Promise<CreatorOrder | null> {
+  return withRedis(async (client) => {
+    const key = getOrderKey(orderId);
+    const order = parseOrder(
+      await client.command(["GET", key])
+    );
+
+    if (!order) return null;
+    if (order.status !== "approved") {
+      throw new Error("ORDER_NOT_DELIVERED");
+    }
+    if (order.revisionUsedAt) {
+      throw new Error("REVISION_ALREADY_USED");
+    }
+    if (
+      order.revisionRequest?.status !== "generated" ||
+      !order.pendingRevisionSnapshot ||
+      !order.pendingRevisionRequest
+    ) {
+      throw new Error("REVISION_NOT_READY");
+    }
+
+    const deliveredAt = new Date().toISOString();
+    const updated: CreatorOrder = {
+      ...order,
+      request: order.pendingRevisionRequest,
+      planSnapshot: order.pendingRevisionSnapshot,
+      revisionUsedAt: deliveredAt,
+      revisionRequest: {
+        ...order.revisionRequest,
+        status: "delivered",
+        deliveredAt,
+      },
+      pendingRevisionSnapshot: undefined,
+      pendingRevisionRequest: undefined,
     };
 
     await client.command([

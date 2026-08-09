@@ -1,8 +1,14 @@
 import QRCode from "qrcode";
 import generatePayload from "promptpay-qr";
 import CheckoutClient from "./CheckoutClient";
+import {
+  CREATOR_PRODUCT_CATALOG,
+  DEFAULT_CREATOR_PRODUCT_ID,
+} from "../../data/product-catalog";
 
-const PACKAGE_PRICE = 149;
+const PRODUCT =
+  CREATOR_PRODUCT_CATALOG[DEFAULT_CREATOR_PRODUCT_ID];
+const PACKAGE_PRICE = PRODUCT.amount;
 const ACCOUNT_NAME = "SAI YAR LEIN";
 const BANK_NAME = "ธนาคารกสิกรไทย";
 
@@ -30,6 +36,7 @@ export default async function CheckoutPage() {
 
   return (
     <CheckoutClient
+      productId={PRODUCT.id}
       packagePrice={PACKAGE_PRICE}
       qrDataUrl={qrDataUrl}
       accountName={ACCOUNT_NAME}

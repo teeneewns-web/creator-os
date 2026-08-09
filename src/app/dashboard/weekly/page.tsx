@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import CopyButton from "../../../components/dashboard/CopyButton";
+import RevisionRequestCard from "../../../components/dashboard/RevisionRequestCard";
 import { facebookBagSamplePlan } from "../../../data/weekly-plans/facebook-bag-sample";
 import {
   AUDIENCE_STAGE_LABELS,
@@ -25,7 +26,11 @@ import type {
 
 import { generateWeeklyContentPlan } from "../../../lib/generate-weekly-content-plan";
 import type { ContentDirection, PlanRequest, PlanType } from "../../../types/plan-request";
-import type { CreatorPlanQualityReport, RepeatNoveltyReport } from "../../../types/creator-order";
+import type {
+  CreatorPlanQualityReport,
+  CreatorRevisionRequest,
+  RepeatNoveltyReport,
+} from "../../../types/creator-order";
 
 type FacebookMission = {
   id: string;
@@ -57,12 +62,18 @@ type PlanAccessState =
 
 type OrderStatusResponse = {
   ok: boolean;
-  status?: "pending" | "approved";
+  status?:
+    | "pending"
+    | "payment-submitted"
+    | "review-ready"
+    | "approved";
   request?: PlanRequest | null;
   plan?: WeeklyContentPlan | null;
   planRound?: number | null;
   qualityReport?: CreatorPlanQualityReport | null;
   repeatNoveltyReport?: RepeatNoveltyReport | null;
+  revisionRequest?: CreatorRevisionRequest | null;
+  revisionUsedAt?: string | null;
   message?: string;
 };
 
@@ -515,6 +526,10 @@ export default function WeeklyDashboardPage() {
     useState<RepeatNoveltyReport | null>(null);
   const [currentOrderId, setCurrentOrderId] = useState("");
   const [currentAccessKey, setCurrentAccessKey] = useState("");
+  const [revisionRequest, setRevisionRequest] =
+    useState<CreatorRevisionRequest | null>(null);
+  const [revisionUsedAt, setRevisionUsedAt] =
+    useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -569,7 +584,9 @@ export default function WeeklyDashboardPage() {
           if (!cancelled) {
             setAccessState("pending");
             setAccessMessage(
-              "คำสั่งซื้อนี้ยังรอตรวจสอบการชำระเงิน กรุณากลับไปที่หน้าตรวจสอบสถานะ"
+              data.status === "review-ready"
+                ? "ตรวจยอดแล้วและแผนกำลังผ่าน Human Review ก่อนส่งมอบ กรุณากลับไปที่หน้าตรวจสอบสถานะ"
+                : "คำสั่งซื้อนี้ยังรอตรวจสอบการชำระเงิน กรุณากลับไปที่หน้าตรวจสอบสถานะ"
             );
           }
           return;
@@ -599,6 +616,8 @@ export default function WeeklyDashboardPage() {
           setRepeatNoveltyReport(
             data.repeatNoveltyReport || null
           );
+          setRevisionRequest(data.revisionRequest || null);
+          setRevisionUsedAt(data.revisionUsedAt || null);
           setState(readState(nextPlan.id));
           setHydrated(true);
           setAccessState("approved");
@@ -913,6 +932,15 @@ export default function WeeklyDashboardPage() {
   <CopyButton text={getWeeklyCopyText(plan)} />
 </div>
       </section>
+
+      {currentOrderId && currentAccessKey ? (
+        <RevisionRequestCard
+          orderId={currentOrderId}
+          accessKey={currentAccessKey}
+          initialRevision={revisionRequest}
+          revisionUsedAt={revisionUsedAt}
+        />
+      ) : null}
 
       {planRound > 1 && repeatNoveltyReport ? (
         <section style={repeatWeekNoticeStyle}>

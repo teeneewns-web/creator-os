@@ -40,8 +40,9 @@ export async function GET(
         {
           ok: false,
           message:
-            order.status === "approved"
-              ? "สลิปถูกลบหลังตรวจและอนุมัติแล้ว"
+            order.status === "approved" ||
+            order.status === "review-ready"
+              ? "สลิปถูกลบหลังตรวจยอดแล้ว"
               : "คำสั่งซื้อนี้ยังไม่มีหลักฐานการชำระเงิน",
         },
         { status: 404 }

@@ -1,9 +1,11 @@
+import type { CreatorProductId } from "../data/product-catalog";
 import type { PlanRequest } from "./plan-request";
 import type { WeeklyContentPlan } from "./weekly-content-plan";
 
 export type CreatorOrderStatus =
   | "pending"
   | "payment-submitted"
+  | "review-ready"
   | "approved";
 
 export type CreatorPaymentProof = {
@@ -14,6 +16,26 @@ export type CreatorPaymentProof = {
   verifiedAt?: string;
 };
 
+export type CreatorRevisionKind =
+  | "new-angle"
+  | "easier"
+  | "sales"
+  | "natural"
+  | "constraints";
+
+export type CreatorRevisionStatus =
+  | "requested"
+  | "generated"
+  | "delivered";
+
+export type CreatorRevisionRequest = {
+  kind: CreatorRevisionKind;
+  note: string;
+  status: CreatorRevisionStatus;
+  requestedAt: string;
+  generatedAt?: string;
+  deliveredAt?: string;
+};
 
 export type RepeatNoveltyReport = {
   version: number;
@@ -59,6 +81,7 @@ export type CreatorPlanSnapshot = {
   productStandard: CreatorPlanProductStandard;
   customerProfileKey: string;
   contentClusterKey?: string;
+  diversityPoolKey?: string;
   variationKey: string;
   variationIndex?: number;
   uniquenessAttempt?: number;
@@ -74,15 +97,23 @@ export type CreatorPlanSnapshot = {
 export type CreatorOrder = {
   orderId: string;
   accessKey: string;
+  productId?: CreatorProductId;
   status: CreatorOrderStatus;
   amount: number;
   request: PlanRequest;
   customerKey?: string;
   createdAt: string;
+  reviewReadyAt?: string;
   approvedAt?: string;
+  deliveredAt?: string;
   paymentProof?: CreatorPaymentProof;
 
   previousOrderId?: string;
   rootOrderId?: string;
   planSnapshot?: CreatorPlanSnapshot;
+
+  revisionRequest?: CreatorRevisionRequest;
+  pendingRevisionSnapshot?: CreatorPlanSnapshot;
+  pendingRevisionRequest?: PlanRequest;
+  revisionUsedAt?: string;
 };

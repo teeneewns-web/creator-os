@@ -75,7 +75,9 @@ export async function GET(
         orderId: order.orderId,
         status: order.status,
         createdAt: order.createdAt,
+        reviewReadyAt: order.reviewReadyAt || null,
         approvedAt: order.approvedAt || null,
+        deliveredAt: order.deliveredAt || null,
         paymentSubmittedAt:
           order.paymentProof?.submittedAt || null,
         request:
@@ -109,6 +111,14 @@ export async function GET(
         repeatNoveltyReport:
           order.status === "approved"
             ? order.planSnapshot?.repeatNoveltyReport || null
+            : null,
+        revisionRequest:
+          order.status === "approved"
+            ? order.revisionRequest || null
+            : null,
+        revisionUsedAt:
+          order.status === "approved"
+            ? order.revisionUsedAt || null
             : null,
       },
       {

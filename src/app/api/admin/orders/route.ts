@@ -3,6 +3,10 @@ import { NextResponse } from "next/server";
 import { isValidAdminCode } from "../../../../lib/admin-code";
 import { listOrders } from "../../../../lib/order-store";
 import { auditPlanQuality } from "../../../../lib/plan-quality";
+import {
+  DEFAULT_CREATOR_PRODUCT_ID,
+  getCreatorProduct,
+} from "../../../../data/product-catalog";
 
 export async function GET(request: Request) {
   const code = request.headers.get("x-admin-code") || "";
@@ -29,13 +33,22 @@ export async function GET(request: Request) {
             )
           : null;
 
+        const product = getCreatorProduct(
+          order.productId || DEFAULT_CREATOR_PRODUCT_ID
+        );
+
         return {
           orderId: order.orderId,
           accessKey: order.accessKey,
+          productId:
+            order.productId || DEFAULT_CREATOR_PRODUCT_ID,
+          productName: product?.shortName || "แผน 7 วัน",
           status: order.status,
           amount: order.amount,
           createdAt: order.createdAt,
+          reviewReadyAt: order.reviewReadyAt || null,
           approvedAt: order.approvedAt || null,
+          deliveredAt: order.deliveredAt || null,
           paymentSubmittedAt:
             order.paymentProof?.submittedAt || null,
           paymentTransferName:
@@ -64,6 +77,8 @@ export async function GET(request: Request) {
           repeatPreviousPlansCompared:
             storedSnapshot?.repeatNoveltyReport
               ?.previousPlansCompared || 0,
+          diversityPoolKey:
+            storedSnapshot?.diversityPoolKey || null,
           previousOrderId: order.previousOrderId || null,
           rootOrderId: order.rootOrderId || order.orderId,
           qualityRejectedPlans:
@@ -84,6 +99,13 @@ export async function GET(request: Request) {
           qualityRegenerationAttempts:
             qualityReport?.regenerationAttempts || 0,
           request: order.request,
+          plan: storedSnapshot?.plan || null,
+          revisionRequest: order.revisionRequest || null,
+          revisionUsedAt: order.revisionUsedAt || null,
+          pendingRevisionPlan:
+            order.pendingRevisionSnapshot?.plan || null,
+          pendingRevisionQualityScore:
+            order.pendingRevisionSnapshot?.qualityReport?.score ?? null,
         };
       }),
     });

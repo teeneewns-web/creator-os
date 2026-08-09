@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 
 import { createOrder, getOrder } from "../../../lib/order-store";
 import type { CreatorOrder } from "../../../types/creator-order";
+import {
+  DEFAULT_CREATOR_PRODUCT_ID,
+  getCreatorProduct,
+} from "../../../data/product-catalog";
 import type { PlanRequest } from "../../../types/plan-request";
 
 const ORDER_ID_PATTERN = /^COS-\d{6}-[A-Z0-9]{5}$/;
@@ -57,7 +61,11 @@ export async function POST(request: Request) {
     let customerKey = String(
       body.customerKey || ""
     ).trim();
-    const amount = Number(body.amount);
+    const product = getCreatorProduct(
+      String(
+        body.productId || DEFAULT_CREATOR_PRODUCT_ID
+      ).trim()
+    );
     const previousOrderId = String(
       body.previousOrderId || ""
     )
@@ -71,8 +79,8 @@ export async function POST(request: Request) {
       !ORDER_ID_PATTERN.test(orderId) ||
       accessKey.length < 20 ||
       (customerKey && customerKey.length < 20) ||
-      !Number.isFinite(amount) ||
-      amount <= 0 ||
+      !product ||
+      !product.active ||
       !isPlanRequest(body.request)
     ) {
       return NextResponse.json(
@@ -120,7 +128,8 @@ export async function POST(request: Request) {
     const order: CreatorOrder = {
       orderId,
       accessKey,
-      amount,
+      productId: product.id,
+      amount: product.amount,
       request: body.request,
       customerKey: customerKey || undefined,
       status: "pending",

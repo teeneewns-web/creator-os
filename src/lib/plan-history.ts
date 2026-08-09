@@ -13,7 +13,7 @@ import type {
   WeeklyContentPlan,
 } from "../types/weekly-content-plan";
 
-export const CURRENT_PLAN_VERSION = 8;
+export const CURRENT_PLAN_VERSION = 9;
 export const CURRENT_PRODUCT_STANDARD =
   "ready-to-execute-v2" as const;
 
@@ -53,6 +53,7 @@ function hashValue(value: string) {
 function stableRequestPayload(request: PlanRequest) {
   return JSON.stringify({
     planType: request.planType,
+    contentDirection: request.contentDirection,
     productOrService: normalizeText(
       request.productOrService
     ),
@@ -69,6 +70,14 @@ function stableRequestPayload(request: PlanRequest) {
     prohibitedClaims: normalizeText(
       request.prohibitedClaims
     ),
+    creatorChallenge: normalizeText(
+      request.creatorChallenge
+    ),
+    audienceStage: request.audienceStage,
+    audienceValue: request.audienceValue,
+    desiredAction: request.desiredAction,
+    supportNeeds: [...request.supportNeeds].sort(),
+    tone: request.tone,
     goal: request.goal,
     platform: request.platform,
     dailyTime: request.dailyTime,
@@ -88,6 +97,7 @@ export function createContentClusterKey(
   return hashValue(
     JSON.stringify({
       planType: request.planType,
+      contentDirection: request.contentDirection,
       subject: normalizeClusterText(
         request.productOrService
       ),
@@ -96,6 +106,25 @@ export function createContentClusterKey(
       ).slice(0, 80),
       goal: request.goal,
       platform: request.platform,
+      audienceStage: request.audienceStage,
+      audienceValue: request.audienceValue,
+      desiredAction: request.desiredAction,
+    })
+  );
+}
+
+
+export function createDirectionDiversityPoolKey(
+  request: PlanRequest
+) {
+  return hashValue(
+    JSON.stringify({
+      planType: request.planType,
+      contentDirection: request.contentDirection,
+      platform: request.platform,
+      goal: request.goal,
+      audienceValue: request.audienceValue,
+      desiredAction: request.desiredAction,
     })
   );
 }
@@ -198,6 +227,8 @@ export function createPlanSnapshot(
     createCustomerProfileKey(request);
   const contentClusterKey =
     createContentClusterKey(request);
+  const diversityPoolKey =
+    createDirectionDiversityPoolKey(request);
   const variationKey = createPlanVariationKey(
     orderId,
     safeRound,
@@ -224,6 +255,7 @@ export function createPlanSnapshot(
     productStandard: CURRENT_PRODUCT_STANDARD,
     customerProfileKey,
     contentClusterKey,
+    diversityPoolKey,
     variationKey,
     variationIndex,
     uniquenessAttempt,

@@ -172,6 +172,7 @@ type SavedOrder = {
 };
 
 type CheckoutClientProps = {
+  productId: "weekly-plan";
   packagePrice: number;
   qrDataUrl: string | null;
   accountName: string;
@@ -237,6 +238,7 @@ function copyText(text: string) {
 }
 
 export default function CheckoutClient({
+  productId,
   packagePrice,
   qrDataUrl,
   accountName,
@@ -357,6 +359,7 @@ export default function CheckoutClient({
             !cancelled &&
             data.ok &&
             (data.status === "payment-submitted" ||
+              data.status === "review-ready" ||
               data.status === "approved")
           ) {
             setPaymentSubmitted(true);
@@ -503,6 +506,7 @@ export default function CheckoutClient({
         body: JSON.stringify({
           orderId: newOrderId,
           accessKey: newAccessKey,
+          productId,
           amount: packagePrice,
           customerKey,
           request,

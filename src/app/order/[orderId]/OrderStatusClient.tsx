@@ -10,7 +10,11 @@ const REQUEST_STORAGE_KEY = "creator-os-plan-request-v1";
 type OrderStatusResponse = {
   ok: boolean;
   orderId?: string;
-  status?: "pending" | "payment-submitted" | "approved";
+  status?:
+    | "pending"
+    | "payment-submitted"
+    | "review-ready"
+    | "approved";
   request?: PlanRequest | null;
   message?: string;
 };
@@ -24,6 +28,7 @@ type VisibleStatus =
   | "checking"
   | "pending"
   | "payment-submitted"
+  | "review-ready"
   | "approved"
   | "error";
 
@@ -84,7 +89,7 @@ export default function OrderStatusClient({
         setPlanHref(nextHref);
         setStatus("approved");
         setMessage(
-          "อนุมัติการชำระเงินแล้ว กำลังเปิดแผนคอนเทนต์ 7 วัน..."
+          "ทีมตรวจแผนและส่งมอบแล้ว กำลังเปิดแผนคอนเทนต์ 7 วัน..."
         );
 
         if (!redirectStartedRef.current) {
@@ -98,10 +103,18 @@ export default function OrderStatusClient({
         return;
       }
 
+      if (data.status === "review-ready") {
+        setStatus("review-ready");
+        setMessage(
+          "ตรวจยอดชำระแล้ว และแผนผ่านระบบตรวจอัตโนมัติ ตอนนี้ทีมกำลังเปิดอ่านแผนจริงก่อนส่งมอบให้คุณ"
+        );
+        return;
+      }
+
       if (data.status === "payment-submitted") {
         setStatus("payment-submitted");
         setMessage(
-          "ได้รับหลักฐานการชำระเงินแล้ว กำลังรอผู้ดูแลตรวจสอบ เมื่ออนุมัติแล้วระบบจะเปิดแผน 7 วันให้อัตโนมัติ"
+          "ได้รับหลักฐานการชำระเงินแล้ว กำลังรอผู้ดูแลตรวจยอดเงินจริง"
         );
         return;
       }
@@ -133,6 +146,7 @@ export default function OrderStatusClient({
   const isApproved = status === "approved";
   const isPaymentSubmitted =
     status === "payment-submitted";
+  const isReviewReady = status === "review-ready";
   const isChecking = status === "checking";
 
   return (
@@ -159,26 +173,32 @@ export default function OrderStatusClient({
           className={`mt-5 rounded-2xl border p-5 ${
             isApproved
               ? "border-emerald-300/20 bg-emerald-300/10"
-              : isPaymentSubmitted
-                ? "border-sky-300/20 bg-sky-300/10"
-                : "border-amber-300/20 bg-amber-300/10"
+              : isReviewReady
+                ? "border-violet-300/20 bg-violet-300/10"
+                : isPaymentSubmitted
+                  ? "border-sky-300/20 bg-sky-300/10"
+                  : "border-amber-300/20 bg-amber-300/10"
           }`}
         >
           <p
             className={`font-bold ${
               isApproved
                 ? "text-emerald-100"
-                : isPaymentSubmitted
-                  ? "text-sky-100"
-                  : "text-amber-100"
+                : isReviewReady
+                  ? "text-violet-100"
+                  : isPaymentSubmitted
+                    ? "text-sky-100"
+                    : "text-amber-100"
             }`}
           >
             {isChecking
               ? "กำลังตรวจสอบ..."
               : isApproved
-                ? "สถานะ: อนุมัติแล้ว"
-                : isPaymentSubmitted
-                  ? "สถานะ: ส่งหลักฐานแล้ว"
+                ? "สถานะ: ส่งมอบแล้ว"
+                : isReviewReady
+                  ? "สถานะ: กำลังตรวจแผนก่อนส่งมอบ"
+                  : isPaymentSubmitted
+                    ? "สถานะ: ส่งหลักฐานแล้ว"
                   : status === "error"
                     ? "สถานะ: ตรวจสอบไม่สำเร็จ"
                     : "สถานะ: รอส่งหลักฐานการชำระเงิน"}
@@ -188,9 +208,11 @@ export default function OrderStatusClient({
             className={`mt-2 text-sm leading-7 ${
               isApproved
                 ? "text-emerald-50/80"
-                : isPaymentSubmitted
-                  ? "text-sky-50/80"
-                  : "text-amber-50/80"
+                : isReviewReady
+                  ? "text-violet-50/80"
+                  : isPaymentSubmitted
+                    ? "text-sky-50/80"
+                    : "text-amber-50/80"
             }`}
           >
             {message}
@@ -220,7 +242,7 @@ export default function OrderStatusClient({
           </button>
         )}
 
-        {!isApproved && !isPaymentSubmitted && (
+        {!isApproved && !isPaymentSubmitted && !isReviewReady && (
           <Link
             href="/checkout"
             className="mt-3 flex w-full items-center justify-center rounded-2xl border border-white/15 px-5 py-3 font-bold text-slate-200"
