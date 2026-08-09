@@ -44,14 +44,6 @@ const contactTypes: Array<{
   placeholder: string;
 }> = [
   {
-    value: "paid-beta",
-    label: "สมัคร Paid Beta 149 บาท",
-    description:
-      "สำหรับผู้ที่ต้องการแผนคอนเทนต์ 7 วันที่มีคนตรวจและแก้ไขได้ 1 รอบ",
-    placeholder:
-      "บอกข้อมูลเพิ่มเติมที่อยากให้ทีมงานรู้ก่อนตรวจแผน",
-  },
-  {
     value: "custom-pack",
     label: "สอบถามงานหรือแพ็กเฉพาะ",
     description:
@@ -129,9 +121,10 @@ function normalizeContactType(
 ): ContactType {
   if (
     value === "interest-pro" ||
-    value === "interest-premium"
+    value === "interest-premium" ||
+    value === "paid-beta"
   ) {
-    return "paid-beta";
+    return "feedback";
   }
 
   const matched = contactTypes.find(
@@ -485,11 +478,11 @@ export default function ContactPage() {
             href="/start"
             style={darkOutlineLinkStyle}
           >
-            ทดลองสร้างแผนก่อน
+            เริ่มสร้างแผน
           </Link>
 
           <Link
-            href="/dashboard/weekly"
+            href="/samples"
             style={darkOutlineLinkStyle}
           >
             ดูตัวอย่างแผน
@@ -980,21 +973,20 @@ export default function ContactPage() {
 
       <section style={bottomCtaStyle}>
         <p style={bottomLabelStyle}>
-          ยังไม่พร้อมซื้อ?
+          ต้องการดูก่อนตัดสินใจ?
         </p>
 
         <h2 style={bottomTitleStyle}>
-          ทดลองสร้างแผนอัตโนมัติก่อนได้ฟรี
+          ดูตัวอย่างแผนก่อนตัดสินใจ
         </h2>
 
         <p style={bottomTextStyle}>
-          กรอกข้อมูลสินค้าและดูตัวอย่างแผน 7 วัน
-          ก่อนตัดสินใจให้ทีมงานตรวจและปรับเนื้อหา
+          เปิดหน้าตัวอย่างเพื่อดูโครงสร้างแผน 7 วัน แล้วค่อยเริ่มสร้างแผนจากข้อมูลจริงของคุณ
         </p>
 
         <div style={buttonRowCenterStyle}>
-          <Link href="/start" style={whiteLinkStyle}>
-            ทดลองสร้างแผน
+          <Link href="/samples" style={whiteLinkStyle}>
+            ดูตัวอย่างแผน
           </Link>
 
           <Link

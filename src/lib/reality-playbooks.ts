@@ -370,6 +370,10 @@ function includesAny(text: string, patterns: string[]) {
 export function inferProductionConstraints(
   context: Pick<
     RealityPlaybookContext,
+    | "productOrService"
+    | "productHighlights"
+    | "audience"
+    | "customerConcerns"
     | "creatorChallenge"
     | "promotionDetails"
     | "prohibitedClaims"
@@ -378,6 +382,10 @@ export function inferProductionConstraints(
 ): ProductionConstraints {
   const text = normalize(
     [
+      context.productOrService,
+      ...context.productHighlights,
+      context.audience,
+      ...context.customerConcerns,
       context.creatorChallenge,
       context.promotionDetails,
       ...context.prohibitedClaims,
@@ -399,6 +407,8 @@ export function inferProductionConstraints(
     "ไม่ใส่ข้อความบนจอ",
     "ห้ามข้อความบนจอ",
     "ไม่ใช้ตัวหนังสือบนจอ",
+    "ไร้ภาษา",
+    "ไม่ใช้ภาษา",
   ]);
   const solo = includesAny(text, [
     "ถ่ายคนเดียว",

@@ -3,10 +3,21 @@ import "server-only";
 import type { WeeklyContentDay, WeeklyContentPlan } from "../types/weekly-content-plan";
 import type { RepeatNoveltyReport } from "../types/creator-order";
 
-export const CURRENT_REPEAT_NOVELTY_VERSION = 1;
+export const CURRENT_REPEAT_NOVELTY_VERSION = 4;
 
 const MAX_DAY_SIMILARITY = 0.84;
-const MAX_AVERAGE_BEST_SIMILARITY = 0.66;
+const BASE_AVERAGE_BEST_SIMILARITY = 0.66;
+const MAX_AVERAGE_BEST_SIMILARITY = 0.74;
+
+function getAverageThreshold(previousPlansCompared: number) {
+  // เมื่อมีประวัติหลายสัปดาห์ โอกาสเจอคำ/โครงสร้างร่วมใน niche เดิมจะสูงขึ้นเอง
+  // จึงเพิ่มเพดานเฉพาะค่าเฉลี่ยทีละน้อย แต่ยังคง max รายวันแบบเข้มเพื่อกันการนำวันเดิมกลับมาใช้
+  return Math.min(
+    MAX_AVERAGE_BEST_SIMILARITY,
+    BASE_AVERAGE_BEST_SIMILARITY +
+      Math.max(0, previousPlansCompared - 3) * 0.02
+  );
+}
 
 function normalize(value: string) {
   return value
@@ -86,8 +97,8 @@ function daySimilarity(left: WeeklyContentDay, right: WeeklyContentDay) {
         : 0;
 
   return (
-    conceptSimilarity * 0.35 +
-    executionSimilarity * 0.4 +
+    conceptSimilarity * 0.55 +
+    executionSimilarity * 0.2 +
     publishingSimilarity * 0.15 +
     sameStructure * 0.1
   );
@@ -108,12 +119,12 @@ export function auditRepeatNovelty(
       maxDaySimilarity: 0,
       averageBestSimilarity: 0,
       maxDayThreshold: MAX_DAY_SIMILARITY,
-      averageThreshold: MAX_AVERAGE_BEST_SIMILARITY,
+      averageThreshold: BASE_AVERAGE_BEST_SIMILARITY,
       message: "สัปดาห์แรก ไม่มีประวัติเดิมให้เปรียบเทียบ",
     };
   }
 
-  const bestMatches = candidate.days.map((day) => {
+  const allHistoryBestMatches = candidate.days.map((day) => {
     let best = 0;
 
     for (const historicalDay of historicalDays) {
@@ -123,13 +134,34 @@ export function auditRepeatNovelty(
     return best;
   });
 
-  const maxDaySimilarity = Math.max(...bestMatches, 0);
-  const averageBestSimilarity =
-    bestMatches.reduce((sum, value) => sum + value, 0) /
-    Math.max(1, bestMatches.length);
+  // เก็บ max รายวันเทียบกับประวัติทั้งหมด เพื่อกันการนำวันเดิมกลับมาใช้ซ้ำตรง ๆ
+  const maxDaySimilarity = Math.max(...allHistoryBestMatches, 0);
+
+  // ค่าเฉลี่ยต้องเทียบเป็น “สัปดาห์ต่อสัปดาห์” ไม่ใช่รวมทุกวันย้อนหลังเป็นกองเดียว
+  // เพราะเมื่อประวัติเพิ่มขึ้น การเลือก best match จากหลายสัปดาห์พร้อมกันจะทำให้
+  // คะแนนความคล้ายสูงขึ้นเอง แม้สัปดาห์ใหม่จะไม่ได้ซ้ำกับสัปดาห์ใดสัปดาห์หนึ่งจริง ๆ
+  const weeklyAverageSimilarities = previousPlans.map((previousPlan) => {
+    const bestMatchesWithinWeek = candidate.days.map((day) => {
+      let best = 0;
+
+      for (const historicalDay of previousPlan.days) {
+        best = Math.max(best, daySimilarity(day, historicalDay));
+      }
+
+      return best;
+    });
+
+    return (
+      bestMatchesWithinWeek.reduce((sum, value) => sum + value, 0) /
+      Math.max(1, bestMatchesWithinWeek.length)
+    );
+  });
+
+  const averageBestSimilarity = Math.max(...weeklyAverageSimilarities, 0);
+  const averageThreshold = getAverageThreshold(previousPlans.length);
   const passed =
     maxDaySimilarity <= MAX_DAY_SIMILARITY &&
-    averageBestSimilarity <= MAX_AVERAGE_BEST_SIMILARITY;
+    averageBestSimilarity <= averageThreshold;
 
   return {
     version: CURRENT_REPEAT_NOVELTY_VERSION,
@@ -139,7 +171,7 @@ export function auditRepeatNovelty(
     maxDaySimilarity: Number(maxDaySimilarity.toFixed(3)),
     averageBestSimilarity: Number(averageBestSimilarity.toFixed(3)),
     maxDayThreshold: MAX_DAY_SIMILARITY,
-    averageThreshold: MAX_AVERAGE_BEST_SIMILARITY,
+    averageThreshold: Number(averageThreshold.toFixed(3)),
     message: passed
       ? "ผ่าน Repeat Novelty Gate: สัปดาห์ใหม่มีมุมและวิธีทำต่างจากประวัติเดิมในระดับที่กำหนด"
       : "ไม่ผ่าน Repeat Novelty Gate: พบแผนรายวันที่คล้ายสัปดาห์เดิมมากเกินไป ระบบต้องสร้างใหม่",

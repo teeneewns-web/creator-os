@@ -17,7 +17,7 @@ import {
   inferProductionConstraints,
 } from "./reality-playbooks";
 
-export const CURRENT_PLAN_QUALITY_VERSION = 4;
+export const CURRENT_PLAN_QUALITY_VERSION = 5;
 export const PLAN_QUALITY_THRESHOLD = 85;
 
 export type AuditPlanQualityOptions = {
@@ -92,6 +92,16 @@ function hasList(values: string[] | undefined) {
 
 function getConstraintSource(request: PlanRequest) {
   return {
+    productOrService: request.productOrService || "",
+    productHighlights: (request.productHighlights || "")
+      .split(/\r?\n|,|;|•|\|/gu)
+      .map((item) => item.trim())
+      .filter(Boolean),
+    audience: request.audience || "",
+    customerConcerns: (request.customerConcerns || "")
+      .split(/\r?\n|,|;|•|\|/gu)
+      .map((item) => item.trim())
+      .filter(Boolean),
     creatorChallenge: request.creatorChallenge || "",
     promotionDetails: request.promotionDetails || "",
     prohibitedClaims: request.prohibitedClaims

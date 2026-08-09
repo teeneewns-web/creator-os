@@ -3,29 +3,38 @@ import Link from "next/link";
 
 const sections = [
   {
-    title: "ข้อมูลที่ระบบอาจเก็บ",
+    title: "ข้อมูลที่ใช้สร้างแผน",
     items: [
-      "ข้อความหรือไอเดียที่ผู้ใช้กรอกในระบบ",
-      "รายการที่ผู้ใช้กดบันทึกไว้ในเครื่องของผู้ใช้",
-      "ข้อมูลการใช้งานพื้นฐาน เช่น หน้าที่เปิดใช้งาน หรือฟีเจอร์ที่ใช้งาน",
-      "ข้อมูลติดต่อที่ผู้ใช้กรอกเองในหน้า ติดต่อ / ข้อเสนอแนะ",
+      "ข้อมูลสินค้า บริการ หรือหัวข้อคอนเทนต์ รวมถึงกลุ่มเป้าหมาย เป้าหมาย เวลา ความสามารถ ข้อจำกัด และข้อมูลจริงที่ผู้ใช้กรอก",
+      "ข้อมูลคำสั่งซื้อ เช่น รหัสคำสั่งซื้อ สถานะการชำระ รอบแผน และลิงก์/คีย์ส่วนตัวสำหรับเปิดแผน",
+      "แผนที่ระบบสร้าง รายงาน Quality Gate และข้อมูลที่จำเป็นสำหรับลดความซ้ำเมื่อสร้างสัปดาห์ถัดไป",
+      "ข้อมูลติดต่อที่ผู้ใช้ส่งให้ทีมงานเองเมื่อขอความช่วยเหลือ แจ้งปัญหา หรือขอแก้ไขงาน",
     ],
   },
   {
-    title: "การนำข้อมูลไปใช้",
+    title: "หลักฐานการชำระเงิน",
     items: [
-      "ใช้เพื่อช่วยให้ผู้ใช้ทำคอนเทนต์ได้สะดวกขึ้น",
-      "ใช้เพื่อปรับปรุงคุณภาพของระบบและฟีเจอร์",
-      "ใช้เพื่อดูว่าผู้ใช้สนใจหมวดหรือเครื่องมือแบบไหน",
-      "ใช้เพื่อติดต่อกลับในกรณีที่ผู้ใช้ให้ช่องทางติดต่อไว้",
+      "ลูกค้าอัปโหลดรูปสลิปบนเว็บไซต์เพื่อให้ผู้ดูแลตรวจสอบกับยอดเงินจริง",
+      "ระบบลดขนาดรูปก่อนส่งและใช้รูปเพื่อการตรวจสอบการชำระเงินเท่านั้น",
+      "เมื่อผู้ดูแลอนุมัติคำสั่งซื้อแล้ว ระบบนำรูปสลิปออกจากข้อมูลคำสั่งซื้อ แต่ข้อมูลสถานะและเวลาที่ส่งหลักฐานอาจถูกเก็บไว้เพื่ออ้างอิงคำสั่งซื้อ",
+      "Creator OS ไม่ขอและไม่เก็บเลขบัตรเครดิตหรือรหัสผ่านธนาคารผ่านแบบฟอร์มนี้",
     ],
   },
   {
-    title: "สิ่งที่ระบบไม่ควรทำ",
+    title: "การใช้และการปกป้องข้อมูล",
     items: [
-      "ไม่ควรนำข้อมูลส่วนตัวไปขายต่อ",
-      "ไม่ควรเปิดเผยข้อมูลผู้ใช้โดยไม่ได้รับอนุญาต",
-      "ไม่ควรนำข้อความส่วนตัวไปเผยแพร่เป็นตัวอย่างสาธารณะโดยไม่ขออนุญาต",
+      "ใช้ข้อมูลเพื่อสร้างแผน ตรวจคุณภาพ ให้สิทธิ์เข้าถึงแผน เชื่อมสัปดาห์ถัดไป และช่วยแก้ปัญหาการใช้งาน",
+      "ไม่ขายข้อมูลส่วนตัวหรือข้อความของลูกค้าให้ผู้โฆษณา",
+      "ไม่เผยแพร่แผน ข้อมูลธุรกิจ หรือข้อความส่วนตัวเป็นตัวอย่างสาธารณะโดยไม่ได้รับอนุญาต",
+      "บริการโฮสต์และระบบจัดเก็บที่ Creator OS ใช้อาจประมวลผลข้อมูลเท่าที่จำเป็นต่อการให้บริการเว็บไซต์",
+    ],
+  },
+  {
+    title: "สิ่งที่ผู้ใช้ควรทำ",
+    items: [
+      "เก็บลิงก์และคีย์เข้าถึงคำสั่งซื้อเป็นส่วนตัว เพราะผู้ที่มีลิงก์อาจเข้าถึงข้อมูลของแผนนั้นได้",
+      "อย่าใส่รหัสผ่าน เลขบัตร ข้อมูลบัญชีธนาคาร หรือข้อมูลลับที่ไม่จำเป็นลงในช่องรายละเอียดคอนเทนต์",
+      "หากต้องการแจ้งปัญหาเกี่ยวกับข้อมูลหรือคำสั่งซื้อ ให้ติดต่อทีมงานพร้อมรหัสคำสั่งซื้อโดยไม่ส่งข้อมูลลับเกินจำเป็น",
     ],
   },
 ];
@@ -34,40 +43,28 @@ export default function PrivacyPage() {
   return (
     <main style={mainStyle}>
       <section style={heroStyle}>
-        <p style={labelStyle}>นโยบายความเป็นส่วนตัว</p>
-
-        <h1 style={titleStyle}>เราให้ความสำคัญกับข้อมูลของผู้ใช้</h1>
-
+        <p style={labelStyle}>นโยบายความเป็นส่วนตัว · Paid Beta</p>
+        <h1 style={titleStyle}>ข้อมูลของคุณใช้เพื่อสร้างและส่งมอบแผน ไม่ใช่เพื่อขายต่อ</h1>
         <p style={subtitleStyle}>
-          หน้านี้อธิบายโดยสรุปว่า Creator OS อาจเกี่ยวข้องกับข้อมูลอะไรบ้าง
-          และข้อมูลเหล่านั้นควรถูกใช้เพื่อปรับปรุงการใช้งาน ไม่ใช่เพื่อทำให้ผู้ใช้เสียประโยชน์
+          หน้านี้สรุปข้อมูลที่ Creator OS ใช้ในระบบแผนคอนเทนต์ 7 วัน รวมถึงคำสั่งซื้อ หลักฐานการชำระ และประวัติที่ช่วยสร้างสัปดาห์ถัดไปให้ไม่วนกลับไปเป็นแผนเดิม
         </p>
-
         <div style={buttonRowStyle}>
-          <Link href="/terms">
-            <button style={secondaryButtonStyle}>ดูเงื่อนไขการใช้งาน</button>
-          </Link>
-
-          <Link href="/contact">
-            <button style={primaryButtonStyle}>ติดต่อ / ข้อเสนอแนะ</button>
-          </Link>
+          <Link href="/terms" style={secondaryLinkStyle}>ดูเงื่อนไขการใช้งาน</Link>
+          <Link href="/contact" style={primaryLinkStyle}>ติดต่อ / แจ้งปัญหา</Link>
         </div>
       </section>
 
       <section style={noticeStyle}>
-        <h2 style={{ marginTop: 0 }}>หมายเหตุสำคัญ</h2>
-        <p style={mutedTextStyle}>
-          หน้านี้เป็นข้อความเบื้องต้นสำหรับเว็บไซต์ Creator OS
-          หากต่อระบบสมาชิก ระบบจ่ายเงิน หรือเก็บข้อมูลผู้ใช้จริงในอนาคต
-          ควรปรับนโยบายให้ละเอียดขึ้นตามระบบที่ใช้งานจริง
+        <strong>ขอบเขตปัจจุบัน</strong>
+        <p style={noticeTextStyle}>
+          Creator OS รุ่น Paid Beta รับชำระผ่าน PromptPay และให้ลูกค้าอัปโหลดสลิปบนเว็บไซต์ จากนั้นผู้ดูแลตรวจยอดก่อนเปิดแผน ระบบยังไม่ใช่ระบบบัตรเครดิตหรือสมาชิกแบบรายเดือน
         </p>
       </section>
 
       <section style={sectionListStyle}>
         {sections.map((section) => (
           <article key={section.title} style={sectionStyle}>
-            <h2 style={{ marginTop: 0 }}>{section.title}</h2>
-
+            <h2 style={sectionTitleStyle}>{section.title}</h2>
             <div style={itemListStyle}>
               {section.items.map((item) => (
                 <div key={item} style={itemStyle}>
@@ -79,156 +76,24 @@ export default function PrivacyPage() {
           </article>
         ))}
       </section>
-
-      <section style={bottomCtaStyle}>
-        <h2 style={{ marginTop: 0 }}>มีข้อสงสัยเกี่ยวกับข้อมูลส่วนตัว?</h2>
-
-        <p style={bottomTextStyle}>
-          สามารถส่งข้อเสนอแนะหรือแจ้งสิ่งที่อยากให้ระบบปรับปรุงได้ที่หน้าติดต่อ
-        </p>
-
-        <Link href="/contact">
-          <button style={darkButtonStyle}>ไปหน้าติดต่อ</button>
-        </Link>
-      </section>
     </main>
   );
 }
 
-const mainStyle: CSSProperties = {
-  maxWidth: "1000px",
-  margin: "0 auto",
-  padding: "24px",
-};
-
-const heroStyle: CSSProperties = {
-  padding: "46px 24px",
-  borderRadius: "28px",
-  background: "#111827",
-  color: "white",
-};
-
-const labelStyle: CSSProperties = {
-  color: "#4f46e5",
-  fontWeight: "bold",
-  marginTop: 0,
-};
-
-const titleStyle: CSSProperties = {
-  fontSize: "44px",
-  lineHeight: "1.12",
-  margin: "12px 0",
-};
-
-const subtitleStyle: CSSProperties = {
-  color: "#d1d5db",
-  fontSize: "18px",
-  lineHeight: "1.8",
-  maxWidth: "820px",
-};
-
-const buttonRowStyle: CSSProperties = {
-  display: "flex",
-  gap: "10px",
-  flexWrap: "wrap",
-  marginTop: "18px",
-};
-
-const primaryButtonStyle: CSSProperties = {
-  padding: "12px 18px",
-  borderRadius: "14px",
-  border: "1px solid #4f46e5",
-  background: "#4f46e5",
-  color: "white",
-  cursor: "pointer",
-  fontWeight: "bold",
-};
-
-const secondaryButtonStyle: CSSProperties = {
-  padding: "12px 18px",
-  borderRadius: "14px",
-  border: "1px solid #c7d2fe",
-  background: "white",
-  color: "#111827",
-  cursor: "pointer",
-  fontWeight: "bold",
-};
-
-const noticeStyle: CSSProperties = {
-  marginTop: "24px",
-  padding: "22px",
-  borderRadius: "22px",
-  background: "#eef2ff",
-  border: "1px solid #c7d2fe",
-};
-
-const mutedTextStyle: CSSProperties = {
-  color: "#374151",
-  lineHeight: "1.8",
-  margin: 0,
-};
-
-const sectionListStyle: CSSProperties = {
-  display: "grid",
-  gap: "20px",
-  marginTop: "24px",
-};
-
-const sectionStyle: CSSProperties = {
-  padding: "24px",
-  borderRadius: "24px",
-  background: "white",
-  border: "1px solid #e5e7eb",
-};
-
-const itemListStyle: CSSProperties = {
-  display: "grid",
-  gap: "12px",
-  marginTop: "16px",
-};
-
-const itemStyle: CSSProperties = {
-  display: "flex",
-  gap: "10px",
-  alignItems: "flex-start",
-  padding: "14px",
-  borderRadius: "16px",
-  background: "#f8fafc",
-};
-
-const dotStyle: CSSProperties = {
-  color: "#4f46e5",
-  fontWeight: "bold",
-};
-
-const itemTextStyle: CSSProperties = {
-  margin: 0,
-  color: "#374151",
-  lineHeight: "1.7",
-};
-
-const bottomCtaStyle: CSSProperties = {
-  marginTop: "30px",
-  padding: "30px 24px",
-  borderRadius: "28px",
-  background: "#111827",
-  color: "white",
-  textAlign: "center",
-};
-
-const bottomTextStyle: CSSProperties = {
-  color: "#d1d5db",
-  lineHeight: "1.8",
-  maxWidth: "700px",
-  margin: "0 auto 18px",
-};
-
-const darkButtonStyle: CSSProperties = {
-  padding: "12px 18px",
-  borderRadius: "14px",
-  border: "1px solid white",
-  background: "white",
-  color: "#111827",
-  cursor: "pointer",
-  fontWeight: "bold",
-};
+const mainStyle: CSSProperties = { maxWidth: "1000px", margin: "0 auto", padding: "24px" };
+const heroStyle: CSSProperties = { padding: "42px 24px", borderRadius: "28px", background: "#111827", color: "white" };
+const labelStyle: CSSProperties = { color: "#a5b4fc", fontWeight: 800, margin: 0 };
+const titleStyle: CSSProperties = { fontSize: "clamp(32px, 6vw, 46px)", lineHeight: 1.12, margin: "12px 0" };
+const subtitleStyle: CSSProperties = { color: "#d1d5db", fontSize: "18px", lineHeight: 1.8, maxWidth: "820px" };
+const buttonRowStyle: CSSProperties = { display: "flex", gap: "10px", flexWrap: "wrap", marginTop: "20px" };
+const primaryLinkStyle: CSSProperties = { padding: "12px 18px", borderRadius: "14px", background: "#4f46e5", color: "white", textDecoration: "none", fontWeight: 800 };
+const secondaryLinkStyle: CSSProperties = { padding: "12px 18px", borderRadius: "14px", background: "white", color: "#111827", textDecoration: "none", fontWeight: 800 };
+const noticeStyle: CSSProperties = { marginTop: "22px", padding: "20px", borderRadius: "20px", background: "#eef2ff", border: "1px solid #c7d2fe" };
+const noticeTextStyle: CSSProperties = { margin: "8px 0 0", color: "#374151", lineHeight: 1.75 };
+const sectionListStyle: CSSProperties = { display: "grid", gap: "18px", marginTop: "22px" };
+const sectionStyle: CSSProperties = { padding: "24px", borderRadius: "22px", background: "white", border: "1px solid #e5e7eb" };
+const sectionTitleStyle: CSSProperties = { margin: 0, fontSize: "22px" };
+const itemListStyle: CSSProperties = { display: "grid", gap: "10px", marginTop: "14px" };
+const itemStyle: CSSProperties = { display: "flex", gap: "10px", alignItems: "flex-start", padding: "13px", borderRadius: "14px", background: "#f8fafc" };
+const dotStyle: CSSProperties = { color: "#4f46e5", fontWeight: 900 };
+const itemTextStyle: CSSProperties = { margin: 0, color: "#374151", lineHeight: 1.7 };
