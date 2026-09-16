@@ -1,230 +1,597 @@
-import type { CSSProperties } from "react";
-import Link from "next/link";
+import Link from 'next/link'
 
-const deliverables = [
-  "หัวข้อและเป้าหมายของคอนเทนต์แต่ละวัน",
-  "Hook บทพูด หรือบทเต็มพร้อมใช้",
-  "ลำดับการถ่าย มุมกล้อง และข้อความบนหน้าจอ",
-  "Caption, CTA และ Hashtags",
-  "สิ่งที่ต้องเตรียมและเวลาที่ควรใช้",
-  "แผนสำรองเมื่อทำตามแผนหลักไม่ได้",
-  "งานหลังโพสต์และตัวอย่างตอบความคิดเห็น",
-  "ตัวเลขที่ควรบันทึกเพื่อวางแผนสัปดาห์ถัดไป",
-];
-
-const audiences = [
-  {
-    title: "ผู้ขายสินค้า",
-    text: "ได้คอนเทนต์ที่อิงสินค้า จุดเด่น กลุ่มลูกค้า เป้าหมาย และข้อจำกัดจริง",
-  },
-  {
-    title: "ผู้ให้บริการ",
-    text: "ได้แผนสร้างความเชื่อใจ อธิบายบริการ แสดงผลงาน และเพิ่มการจองหรือการทักแชต",
-  },
-  {
-    title: "ครีเอเตอร์",
-    text: "เลือกทิศทางได้ชัด เช่น หนังสั้น ตลก รีวิว ให้ความรู้ เล่าเรื่อง เกม เพลง หรือไลฟ์สไตล์",
-  },
-];
-
-const steps = [
-  {
-    no: "1",
-    title: "ตอบคำถาม 3 ขั้นตอน",
-    text: "เลือกประเภท ทิศทาง เป้าหมาย ผู้ชม เวลา และสิ่งที่ต้องการให้ระบบช่วย",
-  },
-  {
-    no: "2",
-    title: "สร้างคำสั่งซื้อและแจ้งชำระ",
-    text: "ตรวจข้อมูลก่อนยืนยัน สแกน PromptPay แล้วอัปโหลดสลิปบนเว็บไซต์เพื่อให้ผู้ดูแลตรวจยอด",
-  },
-  {
-    no: "3",
-    title: "สร้าง ตรวจ และ Human Review",
-    text: "ระบบตรวจความตรง ความซ้ำ ความเป็นไปได้ และ Quality Gate จากนั้นทีมเปิดอ่านแผนจริงก่อนส่งมอบ",
-  },
-  {
-    no: "4",
-    title: "รับแผนพร้อมทำ 7 วัน",
-    text: "เปิดดูทีละวัน ทำตามลำดับ และบันทึกผลเพื่อใช้ต่อยอดสัปดาห์ถัดไป",
-  },
-];
-
-export default function HomePage() {
+export default function Home() {
   return (
-    <main style={mainStyle}>
-      <section style={heroStyle}>
-        <div style={heroContentStyle}>
-          <p style={eyebrowStyle}>Creator OS · Paid Beta</p>
-          <h1 style={heroTitleStyle}>
-            กรอกข้อมูลครั้งเดียว<br />
-            ได้แผนคอนเทนต์ 7 วันพร้อมทำจริง
+    <div className="min-h-screen bg-[#FAF7F2]">
+      {/* ============ HEADER ============ */}
+      <header className="border-b border-[#E8E1D6] bg-[#FAF7F2]/85 backdrop-blur-md sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-md bg-[#1A1614] flex items-center justify-center text-[#FAF7F2] text-xs font-semibold">
+              C
+            </div>
+            <span className="font-medium tracking-tight text-[15px] text-[#1A1614]">
+              Creator OS
+            </span>
+          </Link>
+          <nav className="hidden md:flex items-center gap-1">
+            <a
+              href="#preview"
+              className="px-4 py-2 rounded-full text-sm text-[#6B6259] border border-transparent hover:text-[#1A1614] hover:bg-white hover:border-[#E8E1D6] transition-all"
+            >
+              Preview
+            </a>
+            <a
+              href="#how"
+              className="px-4 py-2 rounded-full text-sm text-[#6B6259] border border-transparent hover:text-[#1A1614] hover:bg-white hover:border-[#E8E1D6] transition-all"
+            >
+              How it works
+            </a>
+            <a
+              href="#pricing"
+              className="px-4 py-2 rounded-full text-sm text-[#6B6259] border border-transparent hover:text-[#1A1614] hover:bg-white hover:border-[#E8E1D6] transition-all"
+            >
+              Pricing
+            </a>
+            <Link
+              href="/start"
+              className="ml-2 inline-flex items-center gap-1.5 bg-[#1A1614] text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-[#2A2521] transition-colors"
+            >
+              Get started
+              <span aria-hidden>→</span>
+            </Link>
+          </nav>
+        </div>
+      </header>
+
+      {/* ============ HERO ============ */}
+      <section className="max-w-6xl mx-auto px-6 pt-20 md:pt-28 pb-16 md:pb-24">
+        <div className="max-w-3xl">
+          {/* Bigger, clearer badge */}
+          <div className="inline-flex items-center gap-2.5 border border-[#E8E1D6] bg-white rounded-full pl-2 pr-4 py-2 text-[13px] text-[#6B6259] mb-10 shadow-[0_1px_2px_rgba(26,22,20,0.03)]">
+            <span className="inline-flex items-center gap-1.5 bg-[#FBF0E9] text-[#D97757] px-2.5 py-0.5 rounded-full text-[11px] font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
+              New
+            </span>
+            Built for TikTok, Reels, and Shorts
+          </div>
+
+          {/* Headline with marker highlight on italic line */}
+          <h1 className="font-serif text-[clamp(2.5rem,6.5vw,4.75rem)] leading-[1.05] tracking-[-0.02em] mb-7 text-[#1A1614]">
+            Know exactly what to post
+            <br />
+            <span className="relative inline-block">
+              <span className="relative z-10 italic">for the next 7 days.</span>
+              <span
+                aria-hidden
+                className="absolute left-0 right-0 bottom-[0.08em] h-[0.32em] bg-[#FBF0E9] -z-0"
+              />
+            </span>
           </h1>
-          <p style={heroTextStyle}>
-            ไม่ต้องคิดหัวข้อ เขียน Prompt ประกอบบท หรือเดาว่าวันนี้ควรโพสต์อะไร
-            ระบบจะวางแผนจากเป้าหมาย ผู้ชม เวลา ความสามารถ และข้อจำกัดของคุณ
+
+          <p className="text-lg md:text-xl text-[#6B6259] max-w-xl mb-10 leading-relaxed">
+            Turn your business, audience, and goals into a personalized
+            weekly content plan — hooks, scripts, captions, and
+            next steps included.
           </p>
 
-          <div style={pillRowStyle}>
-            <span style={pillStyle}>สินค้า · บริการ · ครีเอเตอร์</span>
-            <span style={pillStyle}>ตรวจคุณภาพก่อนเปิดแผน</span>
-            <span style={pillStyle}>ขอแก้ไขได้ 1 รอบ</span>
+          <div className="flex flex-wrap items-center gap-3 mb-8">
+            <Link
+              href="/start"
+              className="inline-flex items-center gap-2 bg-[#1A1614] text-white px-7 py-4 rounded-xl font-medium hover:bg-[#2A2521] transition-colors shadow-[0_2px_8px_rgba(26,22,20,0.12)]"
+            >
+              Create my 7-day plan
+              <span aria-hidden>→</span>
+            </Link>
+            <Link
+              href="#preview"
+              className="inline-flex items-center gap-2 bg-white text-[#1A1614] border border-[#E8E1D6] px-7 py-4 rounded-xl font-medium hover:border-[#D4CBB9] hover:bg-[#FFFDFA] transition-colors"
+            >
+              See a sample plan
+            </Link>
           </div>
 
-          <div style={buttonRowStyle}>
-            <Link href="/start" style={primaryLinkStyle}>
-              เริ่มสร้างแผน 149 บาท
-            </Link>
-            <Link href="/samples" style={secondaryLinkStyle}>
-              ดูตัวอย่างแผน
-            </Link>
+          {/* Trust line as pills */}
+          <div className="flex flex-wrap items-center gap-2 text-sm">
+            <span className="inline-flex items-center gap-1.5 bg-white border border-[#E8E1D6] text-[#6B6259] px-3 py-1.5 rounded-full">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
+              $19 one-time
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-white border border-[#E8E1D6] text-[#6B6259] px-3 py-1.5 rounded-full">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2C3E50]" />
+              Delivered in minutes
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-white border border-[#E8E1D6] text-[#6B6259] px-3 py-1.5 rounded-full">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#A39B8F]" />
+              No subscription
+            </span>
           </div>
-
-          <p style={smallNoteStyle}>
-            ราคาเปิดตัว 149 บาทต่อ 1 แผน · ไม่มีค่าสมาชิกรายเดือน
-          </p>
         </div>
       </section>
 
-      <section style={sectionStyle}>
-        <div style={sectionHeadingStyle}>
-          <p style={labelStyle}>สิ่งที่ลูกค้าได้รับ</p>
-          <h2 style={sectionTitleStyle}>
-            ไม่ใช่รายการไอเดีย แต่เป็นงานที่หยิบไปทำได้ทันที
-          </h2>
-          <p style={sectionTextStyle}>
-            Creator OS ทำส่วนที่ลูกค้าไม่รู้ว่าจะเริ่มอย่างไร ไม่มีเวลาทำ
-            หรือไม่อยากเสียเวลาประกอบเอง ให้กลายเป็นแผนที่มีลำดับและเหตุผล
-          </p>
+      {/* ============ PRODUCT PREVIEW ============ */}
+      <section id="preview" className="max-w-6xl mx-auto px-6 pb-24 md:pb-32">
+        <div className="bg-white border border-[#E8E1D6] rounded-3xl shadow-[0_8px_32px_rgba(26,22,20,0.06)] overflow-hidden">
+          {/* Accent top bar */}
+          <div className="h-1 bg-gradient-to-r from-[#D97757] via-[#D97757]/60 to-transparent" />
+
+          {/* Window bar */}
+          <div className="flex items-center gap-3 px-5 py-4 border-b border-[#E8E1D6] bg-[#FAF7F2]/60">
+            <div className="flex gap-1.5">
+              <div className="w-2.5 h-2.5 rounded-full bg-[#E8E1D6]" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#E8E1D6]" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#E8E1D6]" />
+            </div>
+            <div className="flex-1 text-center">
+              <span className="text-xs font-mono text-[#A39B8F]">
+                creator-os / week-01
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5 text-xs text-[#D97757] font-medium bg-[#FBF0E9] px-2.5 py-1 rounded-full">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
+              Ready
+            </div>
+          </div>
+
+          <div className="p-6 md:p-10">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+              <div>
+                <div className="text-xs uppercase tracking-widest text-[#A39B8F] mb-2">
+                  Your plan
+                </div>
+                <div className="font-serif text-2xl md:text-3xl tracking-[-0.01em]">
+                  Fitness for busy moms
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Chip>Week 1</Chip>
+                <Chip>TikTok</Chip>
+                <Chip>Grow followers</Chip>
+              </div>
+            </div>
+
+            {/* Day 1 */}
+            <div className="border-t border-[#E8E1D6] pt-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="inline-flex items-center gap-1.5 bg-[#FBF0E9] text-[#D97757] px-2.5 py-1 rounded-full text-xs font-medium uppercase tracking-widest">
+                  Day 01
+                </div>
+                <div className="flex-1 h-px bg-[#E8E1D6]" />
+                <div className="text-xs text-[#A39B8F]">Personal story</div>
+              </div>
+
+              <div className="mb-6">
+                <div className="text-xs uppercase tracking-widest text-[#A39B8F] mb-2">
+                  Hook
+                </div>
+                <div className="font-serif text-xl md:text-2xl leading-snug text-[#1A1614]">
+                  &ldquo;I trained 20 busy moms. Only 3 stuck with it.&rdquo;
+                </div>
+              </div>
+
+              <div className="mb-6">
+                <div className="text-xs uppercase tracking-widest text-[#A39B8F] mb-2">
+                  Script
+                </div>
+                <p className="text-[#3F3A35] leading-relaxed max-w-2xl">
+                  Most moms quit because they try to fit 5 workouts a week
+                  into a schedule that&rsquo;s already full. The three who
+                  stuck with it? They started with 10 minutes. Here&rsquo;s
+                  what changed for them&hellip;
+                </p>
+              </div>
+
+              <div className="grid sm:grid-cols-3 gap-4">
+                <MetaBox label="Visual">
+                  Talking head + b-roll of morning routine
+                </MetaBox>
+                <MetaBox label="Caption">
+                  10 minutes is enough. Here&rsquo;s proof.
+                </MetaBox>
+                <MetaBox label="Post at">
+                  6:30 – 8:00 AM local
+                </MetaBox>
+              </div>
+            </div>
+
+            {/* Days 2-7 */}
+            <div className="mt-8 border-t border-[#E8E1D6]">
+              {[
+                ['02', 'Tutorial', 'The 10-minute workout that actually works'],
+                ['03', 'Hot take', 'Why &ldquo;no time&rdquo; isn&rsquo;t the real problem'],
+                ['04', 'Before / after', 'From 0 to 4 workouts a week — in 6 weeks'],
+                ['05', 'List', '3 things I&rsquo;d tell every mom starting today'],
+                ['06', 'Behind the scenes', 'What my client&rsquo;s first week actually looked like'],
+                ['07', 'Question', 'What&rsquo;s stopping you from starting?'],
+              ].map(([day, type, title]) => (
+                <div
+                  key={day}
+                  className="flex items-center gap-4 py-4 border-b border-[#E8E1D6] last:border-b-0 hover:bg-[#FAF7F2]/60 -mx-3 px-3 rounded-lg transition-colors cursor-pointer"
+                >
+                  <div className="text-xs font-mono text-[#A39B8F] w-8">
+                    {day}
+                  </div>
+                  <div className="inline-flex items-center text-[11px] font-medium text-[#D97757] bg-[#FBF0E9] px-2 py-0.5 rounded-full w-32 justify-center hidden sm:inline-flex">
+                    {type}
+                  </div>
+                  <div
+                    className="flex-1 text-sm text-[#3F3A35] truncate"
+                    dangerouslySetInnerHTML={{ __html: title }}
+                  />
+                  <div className="text-[#A39B8F] text-sm">→</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div style={deliverableGridStyle}>
-          {deliverables.map((item) => (
-            <div key={item} style={deliverableCardStyle}>
-              <span style={checkStyle}>✓</span>
-              <p style={cardTextStyle}>{item}</p>
+        <p className="text-center text-sm text-[#A39B8F] mt-6">
+          A real example. Yours is built from your information.
+        </p>
+      </section>
+
+      {/* ============ PROBLEM → SOLUTION ============ */}
+      <section className="bg-white border-y border-[#E8E1D6]">
+        <div className="max-w-6xl mx-auto px-6 py-24 md:py-28 grid md:grid-cols-2 gap-16 md:gap-20">
+          <div>
+            <div className="inline-flex items-center gap-2 bg-[#FAF7F2] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#6B6259] font-medium mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#A39B8F]" />
+              Sound familiar?
+            </div>
+            <ul className="space-y-6">
+              {[
+                'I open the app, stare at the screen, and close it.',
+                'I have a business — but I don&rsquo;t know what to turn into content.',
+                'I post for a week, then disappear for two.',
+                'I&rsquo;m too busy to plan. So I don&rsquo;t post.',
+              ].map((line, i) => (
+                <li
+                  key={i}
+                  className="font-serif text-xl md:text-2xl leading-snug text-[#3F3A35]"
+                  dangerouslySetInnerHTML={{
+                    __html: `&ldquo;${line}&rdquo;`,
+                  }}
+                />
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
+              What changes with Creator OS
+            </div>
+            <ul className="space-y-6">
+              {[
+                'You open the app and see exactly what to post today.',
+                'Every piece of content ties back to your business.',
+                'You show up 7 days in a row — without deciding anything.',
+                'Your plan takes 60 seconds. Not 3 hours.',
+              ].map((line, i) => (
+                <li key={i} className="flex gap-4">
+                  <div className="w-7 h-7 rounded-full bg-[#FBF0E9] flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg
+                      viewBox="0 0 16 16"
+                      className="w-3.5 h-3.5 text-[#D97757]"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polyline points="3 8 7 12 13 4" />
+                    </svg>
+                  </div>
+                  <div className="text-[#1A1614] text-lg leading-relaxed">
+                    {line}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ WHAT YOU GET ============ */}
+      <section className="max-w-6xl mx-auto px-6 py-24 md:py-32">
+        <div className="max-w-2xl mb-14">
+          <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
+            What you get
+          </div>
+          <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] tracking-[-0.02em] mb-5">
+            Everything you need.
+            <br />
+            <span className="relative inline-block">
+              <span className="relative z-10 italic text-[#6B6259]">
+                Nothing you don&rsquo;t.
+              </span>
+              <span
+                aria-hidden
+                className="absolute left-0 right-0 bottom-[0.08em] h-[0.3em] bg-[#FBF0E9] -z-0"
+              />
+            </span>
+          </h2>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {[
+            ['7 hooks', 'Written to stop the scroll in the first 3 seconds.'],
+            ['7 scripts', 'Word-for-word. 30–60 seconds. Ready to read aloud.'],
+            ['Captions + hashtags', 'Tuned to your platform. Not copy-pasted.'],
+            ['Visual direction', 'B-roll and on-screen text for each day.'],
+            ['Posting time slots', 'So you show up when your audience does.'],
+            ['Backup option', 'A second angle if you can&rsquo;t film the first.'],
+          ].map(([title, desc]) => (
+            <div
+              key={title}
+              className="bg-white border border-[#E8E1D6] rounded-2xl p-6 shadow-[0_1px_3px_rgba(26,22,20,0.03)] hover:border-[#D4CBB9] hover:shadow-[0_4px_16px_rgba(26,22,20,0.06)] transition-all"
+            >
+              <div className="w-9 h-9 rounded-lg bg-[#FBF0E9] flex items-center justify-center mb-4">
+                <div className="w-2 h-2 rounded-full bg-[#D97757]" />
+              </div>
+              <div className="font-medium text-[#1A1614] mb-1.5">
+                {title}
+              </div>
+              <div
+                className="text-sm text-[#6B6259] leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: desc }}
+              />
             </div>
           ))}
         </div>
       </section>
 
-      <section style={softSectionStyle}>
-        <div style={sectionHeadingStyle}>
-          <p style={labelStyle}>รองรับใครบ้าง</p>
-          <h2 style={sectionTitleStyle}>เลือกทิศทางก่อน ระบบจึงไม่ตีความผิด</h2>
-          <p style={sectionTextStyle}>
-            คำถามในแบบฟอร์มจะเปลี่ยนตามประเภทที่เลือก
-            และแยกความต้องการของผู้สร้างออกจากสิ่งที่ผู้ชมต้องการดู
+      {/* ============ HOW IT WORKS ============ */}
+      <section
+        id="how"
+        className="bg-white border-y border-[#E8E1D6]"
+      >
+        <div className="max-w-6xl mx-auto px-6 py-24 md:py-32">
+          <div className="max-w-2xl mb-14">
+            <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
+              How it works
+            </div>
+            <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] tracking-[-0.02em]">
+              Three steps. About a minute.
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 md:gap-10">
+            {[
+              [
+                '01',
+                'Tell us about your content',
+                'Five quick questions. Your niche, tone, platform, and goal.',
+              ],
+              [
+                '02',
+                'Checkout in seconds',
+                'One-time payment. Card or PromptPay. No subscription.',
+              ],
+              [
+                '03',
+                'Get your 7-day plan',
+                'Ready in about 60 seconds. Emailed and on-screen.',
+              ],
+            ].map(([n, title, desc]) => (
+              <div
+                key={n}
+                className="bg-[#FAF7F2] border border-[#E8E1D6] rounded-2xl p-8"
+              >
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white border border-[#E8E1D6] font-serif text-xl text-[#D97757] mb-6">
+                  {n}
+                </div>
+                <div className="text-xl font-medium text-[#1A1614] mb-2 tracking-tight">
+                  {title}
+                </div>
+                <div className="text-[#6B6259] leading-relaxed text-[15px]">
+                  {desc}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ WHO IT IS FOR ============ */}
+      <section className="max-w-6xl mx-auto px-6 py-24 md:py-32">
+        <div className="max-w-2xl mb-14">
+          <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
+            Who it&rsquo;s for
+          </div>
+          <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] tracking-[-0.02em]">
+            Built for people who post — or want to.
+          </h2>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="bg-white border border-[#E8E1D6] rounded-2xl p-8 md:p-10 shadow-[0_1px_3px_rgba(26,22,20,0.03)]">
+            <div className="inline-flex items-center gap-2 bg-[#FAF7F2] border border-[#E8E1D6] rounded-full px-3 py-1 text-xs uppercase tracking-widest text-[#6B6259] font-medium mb-5">
+              Just starting
+            </div>
+            <div className="font-serif text-2xl md:text-3xl leading-tight mb-5">
+              You want to post consistently.
+              <br />
+              <span className="italic text-[#6B6259]">
+                You just don&rsquo;t know where to start.
+              </span>
+            </div>
+            <ul className="space-y-3 text-[#6B6259] text-[15px] leading-relaxed">
+              <li>· No expensive equipment required</li>
+              <li>· No prompt writing</li>
+              <li>· No content strategy background</li>
+            </ul>
+          </div>
+
+          <div className="bg-white border border-[#E8E1D6] rounded-2xl p-8 md:p-10 shadow-[0_1px_3px_rgba(26,22,20,0.03)]">
+            <div className="inline-flex items-center gap-2 bg-[#FAF7F2] border border-[#E8E1D6] rounded-full px-3 py-1 text-xs uppercase tracking-widest text-[#6B6259] font-medium mb-5">
+              Already creating
+            </div>
+            <div className="font-serif text-2xl md:text-3xl leading-tight mb-5">
+              You have a business.
+              <br />
+              <span className="italic text-[#6B6259]">
+                You need content that sells it.
+              </span>
+            </div>
+            <ul className="space-y-3 text-[#6B6259] text-[15px] leading-relaxed">
+              <li>· Every piece ties to an offer or goal</li>
+              <li>· Weekly variety — no repeating the same angle</li>
+              <li>· Fits inside a busy schedule</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ PRICING ============ */}
+      <section
+        id="pricing"
+        className="bg-white border-y border-[#E8E1D6]"
+      >
+        <div className="max-w-3xl mx-auto px-6 py-24 md:py-32 text-center">
+          <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
+            Pricing
+          </div>
+          <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] tracking-[-0.02em] mb-6">
+            One plan. One price.
+          </h2>
+          <p className="text-[#6B6259] text-lg max-w-lg mx-auto mb-12">
+            No subscription. No hidden fees. Yours to keep and reuse.
           </p>
-        </div>
 
-        <div style={threeGridStyle}>
-          {audiences.map((item) => (
-            <article key={item.title} style={audienceCardStyle}>
-              <h3 style={cardTitleStyle}>{item.title}</h3>
-              <p style={cardTextStyle}>{item.text}</p>
-            </article>
-          ))}
+          <div className="inline-block text-left bg-[#FAF7F2] border border-[#E8E1D6] rounded-3xl p-10 md:p-12 min-w-[320px] shadow-[0_8px_32px_rgba(26,22,20,0.06)]">
+            <div className="inline-flex items-center gap-2 bg-white border border-[#E8E1D6] rounded-full px-3 py-1 text-xs uppercase tracking-widest text-[#6B6259] font-medium mb-5">
+              7-Day Content Plan
+            </div>
+            <div className="flex items-baseline gap-2 mb-8">
+              <span className="font-serif text-6xl tracking-[-0.02em]">
+                $19
+              </span>
+              <span className="text-[#6B6259] text-lg">USD</span>
+            </div>
+            <ul className="space-y-3 mb-10 text-[15px] text-[#3F3A35]">
+              {[
+                '7 days of hooks, scripts, captions',
+                'Visual direction for every day',
+                'Posting time recommendations',
+                'Delivered in minutes',
+                'One-time payment',
+              ].map((line) => (
+                <li key={line} className="flex gap-3 items-start">
+                  <svg
+                    viewBox="0 0 16 16"
+                    className="w-4 h-4 text-[#D97757] flex-shrink-0 mt-1"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="3 8 7 12 13 4" />
+                  </svg>
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ul>
+            <Link
+              href="/start"
+              className="inline-flex items-center justify-center gap-2 w-full bg-[#1A1614] text-white px-6 py-4 rounded-xl font-medium hover:bg-[#2A2521] transition-colors"
+            >
+              Create my 7-day plan
+              <span aria-hidden>→</span>
+            </Link>
+          </div>
         </div>
       </section>
 
-      <section style={sectionStyle}>
-        <div style={sectionHeadingStyle}>
-          <p style={labelStyle}>ขั้นตอนใช้งาน</p>
-          <h2 style={sectionTitleStyle}>จากข้อมูลของคุณไปสู่แผนที่ตรวจแล้ว</h2>
-        </div>
-
-        <div style={stepGridStyle}>
-          {steps.map((step) => (
-            <article key={step.no} style={stepCardStyle}>
-              <span style={stepNumberStyle}>{step.no}</span>
-              <h3 style={cardTitleStyle}>{step.title}</h3>
-              <p style={cardTextStyle}>{step.text}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section style={qualitySectionStyle}>
-        <div>
-          <p style={qualityLabelStyle}>มาตรฐานก่อนส่งมอบ</p>
-          <h2 style={qualityTitleStyle}>แผนต้องผ่าน Quality Gate อย่างน้อย 85/100</h2>
-          <p style={qualityTextStyle}>
-            ระบบตรวจความครบ 7 วัน ความตรงกับเจตนา ความซ้ำ เวลา ความสามารถ
-            CTA ข้อห้าม และข้อความกล่าวอ้างเกินจริง ถ้ามีข้อผิดพลาดสำคัญจะยังไม่เปิดแผน
-          </p>
-        </div>
-        <Link href="/quality" style={qualityLinkStyle}>
-          ดูมาตรฐานคุณภาพ
-        </Link>
-      </section>
-
-      <section style={ctaSectionStyle}>
-        <p style={labelStyle}>เริ่มจากหนึ่งแผน</p>
-        <h2 style={ctaTitleStyle}>ให้ระบบทำส่วนที่คุณคิดไม่ออกให้เสร็จก่อน</h2>
-        <p style={ctaTextStyle}>
-          ใช้สินค้า บริการ หรือหัวข้อหลัก 1 รายการ เป้าหมายหลัก 1 เป้าหมาย
-          และแพลตฟอร์มหลักตามที่เลือก
-        </p>
-        <div style={buttonRowCenterStyle}>
-          <Link href="/start" style={primaryLinkStyle}>
-            เริ่มกรอกข้อมูล
-          </Link>
-          <Link href="/pricing" style={secondaryLinkStyle}>
-            ดูรายละเอียดราคา
-          </Link>
+      {/* ============ FINAL CTA ============ */}
+      <section className="bg-[#1A1614] text-[#FAF7F2]">
+        <div className="max-w-6xl mx-auto px-6 py-24 md:py-32">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
+              $19 · One-time
+            </div>
+            <h2 className="font-serif text-4xl md:text-6xl leading-[1.05] tracking-[-0.02em] mb-6">
+              Stop deciding.
+              <br />
+              <span className="italic text-[#D97757]">Start posting.</span>
+            </h2>
+            <p className="text-[#A39B8F] text-lg mb-10 max-w-md leading-relaxed">
+              Your first 7-day plan is 60 seconds away.
+            </p>
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                href="/start"
+                className="inline-flex items-center gap-2 bg-[#FAF7F2] text-[#1A1614] px-7 py-4 rounded-xl font-medium hover:bg-white transition-colors"
+              >
+                Create my 7-day plan
+                <span aria-hidden>→</span>
+              </Link>
+              <Link
+                href="#preview"
+                className="inline-flex items-center gap-2 border border-white/15 text-[#FAF7F2] px-7 py-4 rounded-xl font-medium hover:bg-white/5 transition-colors"
+              >
+                See a sample
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
-    </main>
-  );
+
+      {/* ============ FOOTER ============ */}
+      <footer className="border-t border-[#E8E1D6] bg-[#FAF7F2]">
+        <div className="max-w-6xl mx-auto px-6 py-12 flex flex-wrap items-center justify-between gap-6 text-sm text-[#A39B8F]">
+          <div className="flex items-center gap-2.5">
+            <div className="w-6 h-6 rounded-md bg-[#1A1614] flex items-center justify-center text-[#FAF7F2] text-[10px] font-semibold">
+              C
+            </div>
+            <span>© {new Date().getFullYear()} Creator OS</span>
+          </div>
+          <div className="flex gap-8">
+            <Link href="/terms" className="hover:text-[#1A1614] transition-colors">
+              Terms
+            </Link>
+            <Link href="/privacy" className="hover:text-[#1A1614] transition-colors">
+              Privacy
+            </Link>
+            <Link href="/contact" className="hover:text-[#1A1614] transition-colors">
+              Contact
+            </Link>
+          </div>
+        </div>
+      </footer>
+    </div>
+  )
 }
 
-const mainStyle: CSSProperties = {
-  maxWidth: "1180px",
-  margin: "0 auto",
-  padding: "clamp(16px, 4vw, 28px)",
-  overflowX: "hidden",
-};
+/* ============ Small helpers ============ */
 
-const heroStyle: CSSProperties = {
-  borderRadius: "30px",
-  background: "linear-gradient(135deg, #111827 0%, #312e81 55%, #4f46e5 100%)",
-  color: "white",
-  padding: "clamp(34px, 8vw, 74px) clamp(20px, 6vw, 64px)",
-};
+function Chip({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="text-xs bg-[#FAF7F2] border border-[#E8E1D6] text-[#6B6259] px-3 py-1.5 rounded-full">
+      {children}
+    </span>
+  )
+}
 
-const heroContentStyle: CSSProperties = { maxWidth: "850px" };
-const eyebrowStyle: CSSProperties = { margin: 0, color: "#c7d2fe", fontWeight: 800, letterSpacing: "0.04em" };
-const heroTitleStyle: CSSProperties = { fontSize: "clamp(36px, 8vw, 64px)", lineHeight: 1.08, margin: "16px 0", letterSpacing: "-0.03em" };
-const heroTextStyle: CSSProperties = { fontSize: "clamp(17px, 3vw, 21px)", lineHeight: 1.8, color: "#e5e7eb", margin: 0, maxWidth: "760px" };
-const pillRowStyle: CSSProperties = { display: "flex", flexWrap: "wrap", gap: "9px", marginTop: "24px" };
-const pillStyle: CSSProperties = { border: "1px solid rgba(255,255,255,0.3)", background: "rgba(255,255,255,0.1)", borderRadius: "999px", padding: "8px 12px", fontSize: "14px", fontWeight: 700 };
-const buttonRowStyle: CSSProperties = { display: "flex", flexWrap: "wrap", gap: "12px", marginTop: "30px" };
-const buttonRowCenterStyle: CSSProperties = { ...buttonRowStyle, justifyContent: "center" };
-const primaryLinkStyle: CSSProperties = { display: "inline-flex", alignItems: "center", justifyContent: "center", minHeight: "50px", padding: "0 20px", borderRadius: "14px", background: "#4f46e5", color: "white", textDecoration: "none", fontWeight: 800, textAlign: "center" };
-const secondaryLinkStyle: CSSProperties = { ...primaryLinkStyle, background: "white", color: "#312e81", border: "1px solid #c7d2fe" };
-const smallNoteStyle: CSSProperties = { margin: "14px 0 0", color: "#cbd5e1", fontSize: "14px" };
-const sectionStyle: CSSProperties = { padding: "clamp(54px, 8vw, 82px) 0" };
-const softSectionStyle: CSSProperties = { ...sectionStyle, background: "#f8fafc", borderRadius: "28px", paddingLeft: "clamp(18px, 4vw, 36px)", paddingRight: "clamp(18px, 4vw, 36px)" };
-const sectionHeadingStyle: CSSProperties = { maxWidth: "820px", marginBottom: "28px" };
-const labelStyle: CSSProperties = { color: "#4f46e5", fontWeight: 800, margin: "0 0 8px" };
-const sectionTitleStyle: CSSProperties = { fontSize: "clamp(28px, 5vw, 42px)", lineHeight: 1.2, margin: "0 0 14px", color: "#111827" };
-const sectionTextStyle: CSSProperties = { color: "#4b5563", lineHeight: 1.8, margin: 0, fontSize: "17px" };
-const deliverableGridStyle: CSSProperties = { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 250px), 1fr))", gap: "12px" };
-const deliverableCardStyle: CSSProperties = { display: "flex", gap: "10px", alignItems: "flex-start", border: "1px solid #e5e7eb", borderRadius: "16px", padding: "16px", background: "white" };
-const checkStyle: CSSProperties = { color: "#16a34a", fontWeight: 900, flex: "0 0 auto" };
-const cardTextStyle: CSSProperties = { color: "#4b5563", lineHeight: 1.7, margin: 0 };
-const threeGridStyle: CSSProperties = { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))", gap: "16px" };
-const audienceCardStyle: CSSProperties = { background: "white", border: "1px solid #e5e7eb", borderRadius: "20px", padding: "22px" };
-const cardTitleStyle: CSSProperties = { margin: "0 0 10px", color: "#111827", fontSize: "20px" };
-const stepGridStyle: CSSProperties = { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 230px), 1fr))", gap: "16px" };
-const stepCardStyle: CSSProperties = { border: "1px solid #e5e7eb", borderRadius: "20px", padding: "22px", background: "white" };
-const stepNumberStyle: CSSProperties = { display: "inline-flex", width: "36px", height: "36px", borderRadius: "12px", alignItems: "center", justifyContent: "center", background: "#eef2ff", color: "#4338ca", fontWeight: 900, marginBottom: "14px" };
-const qualitySectionStyle: CSSProperties = { display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "24px", padding: "clamp(28px, 6vw, 48px)", borderRadius: "28px", background: "#111827", color: "white" };
-const qualityLabelStyle: CSSProperties = { margin: 0, color: "#a5b4fc", fontWeight: 800 };
-const qualityTitleStyle: CSSProperties = { fontSize: "clamp(27px, 5vw, 40px)", lineHeight: 1.2, margin: "10px 0" };
-const qualityTextStyle: CSSProperties = { color: "#d1d5db", lineHeight: 1.8, margin: 0, maxWidth: "780px" };
-const qualityLinkStyle: CSSProperties = { ...primaryLinkStyle, background: "white", color: "#111827" };
-const ctaSectionStyle: CSSProperties = { ...sectionStyle, textAlign: "center", maxWidth: "850px", margin: "0 auto" };
-const ctaTitleStyle: CSSProperties = { ...sectionTitleStyle, marginLeft: "auto", marginRight: "auto" };
-const ctaTextStyle: CSSProperties = { ...sectionTextStyle, maxWidth: "720px", margin: "0 auto" };
+function MetaBox({
+  label,
+  children,
+}: {
+  label: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="bg-[#FAF7F2]/60 border border-[#E8E1D6] rounded-xl p-4">
+      <div className="text-[10px] uppercase tracking-widest text-[#A39B8F] mb-1.5">
+        {label}
+      </div>
+      <div className="text-sm text-[#3F3A35] leading-relaxed">{children}</div>
+    </div>
+  )
+}
