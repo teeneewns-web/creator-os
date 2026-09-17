@@ -8,7 +8,6 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
-    "ignoreDeprecations": "6.0",
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -37,7 +36,14 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
+    "exclude": [
+    "node_modules",
+    "project-export",
+    ".next",
+    ".creator-os-backup-*",
+    "structure.txt"
   ]
+
+  
+
 }
