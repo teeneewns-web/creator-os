@@ -1,16 +1,12 @@
 import type { Order, Quiz } from '@/types/order'
 import type { Plan } from '@/types/plan'
-import { promises as fs } from 'fs'
-import path from 'path'
-import { supabase, isSupabaseConfigured } from './supabase'
+import Redis from 'ioredis'
 
-// ============================================================
-// Dual mode: mock (local) + Supabase (production)
-// ============================================================
-
-const USE_MOCK = process.env.USE_MOCK === 'true'
-const DATA_DIR = path.join(process.cwd(), 'data')
-const ORDERS_FILE = path.join(DATA_DIR, 'orders.json')
+const redis = new Redis(process.env.REDIS_URL!, {
+  maxRetriesPerRequest: 3,
+  enableReadyCheck: false,
+  lazyConnect: true,
+})
 
 function generateOrderId(): string {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
@@ -21,23 +17,8 @@ function generateOrderId(): string {
   return id
 }
 
-// ---------- MOCK helpers ----------
-
-async function readMockOrders(): Promise<Order[]> {
-  try {
-    const raw = await fs.readFile(ORDERS_FILE, 'utf-8')
-    return JSON.parse(raw) as Order[]
-  } catch {
-    return []
-  }
-}
-
-async function writeMockOrders(orders: Order[]): Promise<void> {
-  await fs.mkdir(DATA_DIR, { recursive: true })
-  await fs.writeFile(ORDERS_FILE, JSON.stringify(orders, null, 2))
-}
-
-// ---------- Public API ----------
+const ORDER_KEY = (id: string) => `creator-os:order:${id}`
+const ORDER_INDEX = 'creator-os:orders'
 
 export async function createOrder(quiz: Quiz): Promise<Order> {
   const id = generateOrderId()
@@ -60,82 +41,34 @@ export async function createOrder(quiz: Quiz): Promise<Order> {
     updated_at: now,
   }
 
-  if (USE_MOCK) {
-    const orders = await readMockOrders()
-    orders.push(order)
-    await writeMockOrders(orders)
-    return order
-  }
+  await redis.set(ORDER_KEY(id), JSON.stringify(order))
+  await redis.lpush(ORDER_INDEX, id)
+  await redis.ltrim(ORDER_INDEX, 0, 499)
 
-  if (!isSupabaseConfigured()) {
-    throw new Error('Supabase not configured')
-  }
-
-  const { data, error } = await supabase
-    .from('orders')
-    .insert({
-      id: order.id,
-      email: order.email,
-      quiz: order.quiz,
-      status: order.status,
-    })
-    .select()
-    .single()
-
-  if (error) throw new Error(`createOrder: ${error.message}`)
-  return data as Order
+  return order
 }
 
 export async function getOrder(id: string): Promise<Order | null> {
-  if (USE_MOCK) {
-    const orders = await readMockOrders()
-    return orders.find((o) => o.id === id) ?? null
-  }
-
-  if (!isSupabaseConfigured()) {
-    throw new Error('Supabase not configured')
-  }
-
-  const { data, error } = await supabase
-    .from('orders')
-    .select('*')
-    .eq('id', id)
-    .maybeSingle()
-
-  if (error) throw new Error(`getOrder: ${error.message}`)
-  return (data as Order) ?? null
+  const raw = await redis.get(ORDER_KEY(id))
+  if (!raw) return null
+  return JSON.parse(raw) as Order
 }
 
 export async function updateOrder(
   id: string,
   updates: Partial<Order>
 ): Promise<Order | null> {
-  if (USE_MOCK) {
-    const orders = await readMockOrders()
-    const idx = orders.findIndex((o) => o.id === id)
-    if (idx === -1) return null
-    orders[idx] = {
-      ...orders[idx],
-      ...updates,
-      updated_at: new Date().toISOString(),
-    }
-    await writeMockOrders(orders)
-    return orders[idx]
+  const existing = await getOrder(id)
+  if (!existing) return null
+
+  const updated = {
+    ...existing,
+    ...updates,
+    updated_at: new Date().toISOString(),
   }
 
-  if (!isSupabaseConfigured()) {
-    throw new Error('Supabase not configured')
-  }
-
-  const { data, error } = await supabase
-    .from('orders')
-    .update({ ...updates, updated_at: new Date().toISOString() })
-    .eq('id', id)
-    .select()
-    .maybeSingle()
-
-  if (error) throw new Error(`updateOrder: ${error.message}`)
-  return (data as Order) ?? null
+  await redis.set(ORDER_KEY(id), JSON.stringify(updated))
+  return updated
 }
 
 export async function markPaid(

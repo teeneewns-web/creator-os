@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import Groq from 'groq-sdk'
 import type { Quiz } from '@/types/order'
 import type { Plan } from '@/types/plan'
 
@@ -14,21 +14,32 @@ BRAND VOICE RULES:
 `.trim()
 
 export async function generatePlan(quiz: Quiz): Promise<Plan> {
-  const apiKey = process.env.GEMINI_API_KEY
-  if (!apiKey) throw new Error('GEMINI_API_KEY missing')
+  const apiKey = process.env.GROQ_API_KEY
+  if (!apiKey) throw new Error('GROQ_API_KEY missing')
 
-  const genAI = new GoogleGenerativeAI(apiKey)
-  const model = genAI.getGenerativeModel({
-    model: 'gemini-3.6-flash',
-    generationConfig: {
-      responseMimeType: 'application/json',
-      temperature: 0.9,
-    },
+  const groq = new Groq({ apiKey })
+  const prompt = buildPrompt(quiz)
+
+  const completion = await groq.chat.completions.create({
+    model: 'openai/gpt-oss-120b',
+    messages: [
+      {
+        role: 'system',
+        content:
+          'You are a short-form content strategist. You always respond with valid JSON only. No markdown, no explanation, no code fences.',
+      },
+      {
+        role: 'user',
+        content: prompt,
+      },
+    ],
+    response_format: { type: 'json_object' },
+    temperature: 0.9,
+    max_tokens: 8000,
   })
 
-  const prompt = buildPrompt(quiz)
-  const result = await model.generateContent(prompt)
-  const text = result.response.text()
+  const text = completion.choices[0]?.message?.content
+  if (!text) throw new Error('AI returned empty response')
 
   let parsed: Plan
   try {
@@ -47,7 +58,7 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
 
 function buildPrompt(quiz: Quiz): string {
   return `
-You are a short-form content strategist. Create a 7-day content plan.
+Create a 7-day content plan for this creator.
 
 CREATOR PROFILE:
 - Platform: ${quiz.platform}
@@ -79,6 +90,6 @@ RULES:
 - Hooks must be specific to ${quiz.niche}. No generic openers.
 - Scripts must match ${quiz.tone} tone.
 - Each day uses a different content format: tutorial, personal story, list, hot take, before/after, question, behind-the-scenes.
-- Return valid JSON only. No markdown. No explanation. No code fences.
+- Return valid JSON only.
 `.trim()
 }
