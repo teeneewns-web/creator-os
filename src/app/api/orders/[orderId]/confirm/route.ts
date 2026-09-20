@@ -7,6 +7,7 @@ import {
   savePlan,
 } from '@/lib/orders'
 import { generatePlan } from '@/lib/gemini'
+import { sendPlanEmail } from '@/lib/emails'
 
 export async function POST(
   request: Request,
@@ -39,7 +40,14 @@ export async function POST(
 
     try {
       const plan = await generatePlan(order.quiz)
-      await savePlan(orderId, plan)
+      const saved = await savePlan(orderId, plan)
+
+      if (saved) {
+        sendPlanEmail(saved, plan).catch((err: unknown) =>
+          console.error('Email send failed:', err)
+        )
+      }
+
       return NextResponse.json({ ok: true, status: 'ready' })
     } catch (genError) {
       const msg =
