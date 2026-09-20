@@ -125,7 +125,6 @@ export default function CheckoutPage({
           </p>
         </div>
 
-        {/* Summary */}
         <div className="bg-white border border-[#E8E1D6] rounded-2xl p-6 mb-6 shadow-[0_1px_3px_rgba(26,22,20,0.03)]">
           <div className="text-xs uppercase tracking-widest text-[#A39B8F] mb-4">
             Order summary
@@ -149,7 +148,6 @@ export default function CheckoutPage({
           </div>
         </div>
 
-        {/* Card payment (disabled) */}
         <div className="bg-white border border-[#E8E1D6] rounded-2xl p-6 mb-4 opacity-60">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-lg bg-[#FAF7F2] border border-[#E8E1D6] flex items-center justify-center">
@@ -182,7 +180,6 @@ export default function CheckoutPage({
           </button>
         </div>
 
-        {/* PromptPay */}
         <div className="bg-white border border-[#E8E1D6] rounded-2xl p-6 shadow-[0_1px_3px_rgba(26,22,20,0.03)]">
           <div className="flex items-center gap-3 mb-5">
             <div className="w-10 h-10 rounded-lg bg-[#FBF0E9] border border-[#E8E1D6] flex items-center justify-center">
@@ -212,7 +209,7 @@ export default function CheckoutPage({
               PromptPay Number
             </div>
             <div className="font-mono text-xl tracking-wider text-[#1A1614] font-medium">
-              08X-XXX-XXXX
+              064-917-0554
             </div>
           </div>
 
