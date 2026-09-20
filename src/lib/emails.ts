@@ -2,19 +2,19 @@ import { Resend } from 'resend'
 import type { Order } from '@/types/order'
 import type { Plan } from '@/types/plan'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 const FROM = 'Creator OS <onboarding@resend.dev>'
 
 export async function sendPlanEmail(
   order: Order,
   plan: Plan
 ): Promise<void> {
-  if (!process.env.RESEND_API_KEY) {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) {
     console.warn('RESEND_API_KEY missing, skipping email')
     return
   }
 
+  const resend = new Resend(apiKey)
   const html = buildEmailHtml(order, plan)
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 
@@ -28,7 +28,6 @@ export async function sendPlanEmail(
     })
   } catch (error) {
     console.error('Email send failed:', error)
-    // ไม่ throw — เพราะ email failure ไม่ควรทำให้ order failed
   }
 }
 
