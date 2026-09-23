@@ -84,7 +84,7 @@ export default function Home() {
               <span aria-hidden>→</span>
             </Link>
             <Link
-              href="#preview"
+              href="/samples"
               className="inline-flex items-center gap-2 bg-white text-[#1A1614] border border-[#E8E1D6] px-7 py-4 rounded-xl font-medium hover:border-[#D4CBB9] hover:bg-[#FFFDFA] transition-colors"
             >
               See a sample plan
@@ -559,6 +559,7 @@ export default function Home() {
             <Link href="/privacy" className="hover:text-[#1A1614] transition-colors">
               Privacy
             </Link>
+
             <Link href="/contact" className="hover:text-[#1A1614] transition-colors">
               Contact
             </Link>
