@@ -13,6 +13,29 @@ BRAND VOICE RULES:
 - Verbs over adjectives.
 `.trim()
 
+const FACT_SAFETY = `
+FACT SAFETY RULES (CRITICAL):
+- Never invent testimonials, client stories, personal experiences, statistics, numbers, dates, names, or case studies.
+- Never claim results the user did not provide (e.g. "I trained 20 moms", "My client lost 5kg", "98% of people...").
+- Only reference facts the user explicitly provided in their profile.
+- For educational content, use general best practices — not fabricated specifics.
+- If a hook needs a specific number or story the user did not provide, use a generic educational angle instead.
+`.trim()
+
+function describeConstraints(constraints: string[]): string {
+  if (!constraints || constraints.length === 0) {
+    return 'No specific constraints.'
+  }
+  const map: Record<string, string> = {
+    no_face: 'No face on camera — do not suggest talking-head shots.',
+    no_voice: 'No voiceover — use text-on-screen, music, or B-roll only.',
+    phone_only: 'Phone camera only — no professional equipment.',
+    under_30s: 'Keep all videos under 30 seconds.',
+    no_editing: 'Minimal editing — simple cuts and text overlays only.',
+  }
+  return constraints.map((c) => `- ${map[c] || c}`).join('\n')
+}
+
 export async function generatePlan(quiz: Quiz): Promise<Plan> {
   const apiKey = process.env.GROQ_API_KEY
   if (!apiKey) throw new Error('GROQ_API_KEY missing')
@@ -63,10 +86,16 @@ Create a 7-day content plan for this creator.
 CREATOR PROFILE:
 - Platform: ${quiz.platform}
 - Niche: ${quiz.niche}
+- What they sell or offer: ${quiz.product}
+- Target audience: ${quiz.audience}
 - Tone: ${quiz.tone}
 - Primary goal: ${quiz.goal}
+- Production constraints:
+${describeConstraints(quiz.constraints)}
 
 ${BRAND_VOICE}
+
+${FACT_SAFETY}
 
 OUTPUT FORMAT (strict JSON):
 {
@@ -87,8 +116,10 @@ OUTPUT FORMAT (strict JSON):
 
 RULES:
 - All 7 days must have unique hooks and angles. No repetition.
-- Hooks must be specific to ${quiz.niche}. No generic openers.
-- Scripts must match ${quiz.tone} tone.
+- Hooks must be specific to the niche and audience. No generic openers.
+- Scripts must match the tone.
+- Visual direction MUST respect the production constraints above.
+- If goal is "sales", at least 4 of 7 days should include a soft CTA tied to the product.
 - Each day uses a different content format: tutorial, personal story, list, hot take, before/after, question, behind-the-scenes.
 - Return valid JSON only.
 `.trim()

@@ -7,11 +7,24 @@ export type OrderStatus =
   | 'ready'
   | 'failed'
 
+export type Platform = 'tiktok' | 'reels' | 'shorts'
+export type Tone = 'energetic' | 'calm' | 'funny' | 'serious'
+export type Goal = 'followers' | 'sales' | 'engagement'
+export type Constraint =
+  | 'no_face'
+  | 'no_voice'
+  | 'phone_only'
+  | 'under_30s'
+  | 'no_editing'
+
 export type Quiz = {
-  platform: 'tiktok' | 'reels' | 'shorts'
+  platform: Platform
   niche: string
-  tone: 'energetic' | 'calm' | 'funny' | 'serious'
-  goal: 'followers' | 'sales' | 'engagement'
+  product: string
+  audience: string
+  tone: Tone
+  goal: Goal
+  constraints: Constraint[]
   email: string
 }
 

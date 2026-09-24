@@ -14,9 +14,11 @@ export default function OrderPage({
   const [order, setOrder] = useState<Order | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [elapsed, setElapsed] = useState(0)
 
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | null = null
+    let ticker: ReturnType<typeof setInterval> | null = null
 
     async function load() {
       try {
@@ -30,18 +32,22 @@ export default function OrderPage({
         if (data.order.status === 'ready' && interval) {
           clearInterval(interval)
           interval = null
+          if (ticker) clearInterval(ticker)
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed')
         setLoading(false)
         if (interval) clearInterval(interval)
+        if (ticker) clearInterval(ticker)
       }
     }
 
     load()
     interval = setInterval(load, 3000)
+    ticker = setInterval(() => setElapsed((e) => e + 1), 1000)
     return () => {
       if (interval) clearInterval(interval)
+      if (ticker) clearInterval(ticker)
     }
   }, [orderId])
 
@@ -66,7 +72,13 @@ export default function OrderPage({
 
   if (!order) return null
 
-  if (['pending', 'paid', 'generating'].includes(order.status)) {
+  const isGenerating =
+    order.status === 'pending' ||
+    order.status === 'paid' ||
+    order.status === 'generating'
+
+  if (isGenerating) {
+    const remaining = Math.max(0, 45 - elapsed)
     return (
       <div className="min-h-screen bg-[#FAF7F2] flex items-center justify-center px-6">
         <div className="text-center max-w-md">
@@ -88,9 +100,30 @@ export default function OrderPage({
             <br />
             <span className="italic text-[#6B6259]">your plan.</span>
           </h1>
-          <p className="text-[#6B6259] leading-relaxed">
-            Takes about 30 seconds. This page updates automatically.
+
+          <p className="text-[#6B6259] leading-relaxed mb-6">
+            This takes 30 to 60 seconds.
+            <br />
+            <span className="text-[#1A1614] font-medium">
+              Please don&apos;t close this tab.
+            </span>
           </p>
+
+          {remaining > 0 && (
+            <p className="text-sm text-[#A39B8F]">
+              About {remaining} seconds remaining
+            </p>
+          )}
+
+          <div className="mt-10 pt-6 border-t border-[#E8E1D6]">
+            <p className="text-xs text-[#A39B8F] mb-2">
+              Your order ID
+            </p>
+            <p className="font-mono text-sm text-[#1A1614]">{order.id}</p>
+            <p className="text-xs text-[#A39B8F] mt-3">
+              Save this in case you need support.
+            </p>
+          </div>
         </div>
       </div>
     )
@@ -107,9 +140,34 @@ export default function OrderPage({
           <h1 className="font-serif text-3xl tracking-[-0.02em] mb-3">
             Generation failed
           </h1>
-          <p className="text-[#6B6259]">
+          <p className="text-[#6B6259] mb-6">
             {order.error_message || 'Please try again.'}
           </p>
+
+          <div className="bg-white border border-[#E8E1D6] rounded-2xl p-6 mb-6 text-left">
+            <div className="text-xs uppercase tracking-widest text-[#A39B8F] mb-2">
+              Your order ID
+            </div>
+            <div className="font-mono text-sm text-[#1A1614] mb-4">
+              {order.id}
+            </div>
+            <div className="text-xs uppercase tracking-widest text-[#A39B8F] mb-2">
+              Contact support
+            </div>
+            <a
+              href={`mailto:teeneewns@gmail.com?subject=Order issue ${order.id}`}
+              className="text-sm text-[#D97757] hover:underline"
+            >
+              teeneewns@gmail.com
+            </a>
+          </div>
+
+          <Link
+            href="/start"
+            className="inline-block bg-[#1A1614] text-white px-6 py-3.5 rounded-xl font-medium hover:bg-[#2A2521] transition-colors"
+          >
+            Try a new plan →
+          </Link>
         </div>
       </div>
     )
@@ -135,7 +193,6 @@ export default function OrderPage({
       </header>
 
       <main className="max-w-3xl mx-auto px-6 py-12 md:py-16">
-        {/* Header block */}
         <div className="mb-12">
           <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
@@ -149,16 +206,14 @@ export default function OrderPage({
           </p>
         </div>
 
-        {/* Days */}
         <div className="space-y-4">
           {plan.days.map((day) => (
             <DayCard key={day.day} day={day} />
           ))}
         </div>
 
-        {/* Footer meta */}
         <div className="mt-12 pt-8 border-t border-[#E8E1D6] text-center">
-          <p className="text-sm text-[#A39B8F]">
+          <p className="text-sm text-[#A39B8F] mb-1">
             Generated{' '}
             {new Date(plan.generated_at).toLocaleDateString('en-US', {
               month: 'long',
@@ -166,9 +221,12 @@ export default function OrderPage({
               year: 'numeric',
             })}
           </p>
+          <p className="text-xs text-[#A39B8F] mb-6">
+            Order {order.id}
+          </p>
           <Link
             href="/start"
-            className="inline-block mt-4 text-sm font-medium text-[#D97757] hover:underline"
+            className="inline-block text-sm font-medium text-[#D97757] hover:underline"
           >
             Plan next week →
           </Link>
@@ -177,8 +235,6 @@ export default function OrderPage({
     </div>
   )
 }
-
-/* ============ Day Card ============ */
 
 function DayCard({ day }: { day: DayPlan }) {
   const [copied, setCopied] = useState(false)
@@ -207,8 +263,7 @@ function DayCard({ day }: { day: DayPlan }) {
   }
 
   return (
-    <article className="bg-white border border-[#E8E1D6] rounded-2xl overflow-hidden shadow-[0_1px_3px_rgba(26,22,20,0.03)] hover:shadow-[0_4px_16px_rgba(26,22,20,0.06)] transition-shadow">
-      {/* Header */}
+    <article className="bg-white border border-[#E8E1D6] rounded-2xl overflow-hidden shadow-[0_1px_3px_rgba(26,22,20,0.03)]">
       <div className="px-6 py-4 border-b border-[#E8E1D6] flex items-center justify-between bg-[#FAF7F2]/60">
         <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3 py-1 text-xs uppercase tracking-widest text-[#D97757] font-medium">
           <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
@@ -226,9 +281,7 @@ function DayCard({ day }: { day: DayPlan }) {
         </button>
       </div>
 
-      {/* Body */}
       <div className="p-6">
-        {/* Hook */}
         <div className="mb-6">
           <div className="text-xs uppercase tracking-widest text-[#A39B8F] mb-2.5">
             Hook
@@ -238,7 +291,6 @@ function DayCard({ day }: { day: DayPlan }) {
           </div>
         </div>
 
-        {/* Script */}
         <div className="mb-6">
           <div className="text-xs uppercase tracking-widest text-[#A39B8F] mb-2.5">
             Script
@@ -248,7 +300,6 @@ function DayCard({ day }: { day: DayPlan }) {
           </p>
         </div>
 
-        {/* Meta grid */}
         <div className="grid sm:grid-cols-2 gap-4 pt-6 border-t border-[#E8E1D6]">
           <MetaBox label="Caption">{day.caption}</MetaBox>
           <MetaBox label="Post at">{day.posting_time}</MetaBox>

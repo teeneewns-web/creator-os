@@ -7,6 +7,7 @@ import Link from 'next/link'
 type Platform = 'tiktok' | 'reels' | 'shorts'
 type Tone = 'energetic' | 'calm' | 'funny' | 'serious'
 type Goal = 'followers' | 'sales' | 'engagement'
+type Constraint = 'no_face' | 'no_voice' | 'phone_only' | 'under_30s' | 'no_editing'
 
 const platforms: { value: Platform; label: string }[] = [
   { value: 'tiktok', label: 'TikTok' },
@@ -27,6 +28,14 @@ const goals: { value: Goal; label: string }[] = [
   { value: 'engagement', label: 'Boost engagement' },
 ]
 
+const constraintOptions: { value: Constraint; label: string }[] = [
+  { value: 'no_face', label: 'No face on camera' },
+  { value: 'no_voice', label: 'No voiceover' },
+  { value: 'phone_only', label: 'Phone camera only' },
+  { value: 'under_30s', label: 'Videos under 30 seconds' },
+  { value: 'no_editing', label: 'Minimal editing' },
+]
+
 export default function StartPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
@@ -34,10 +43,22 @@ export default function StartPage() {
   const [form, setForm] = useState({
     platform: 'tiktok' as Platform,
     niche: '',
+    product: '',
+    audience: '',
     tone: 'energetic' as Tone,
     goal: 'followers' as Goal,
+    constraints: [] as Constraint[],
     email: '',
   })
+
+  function toggleConstraint(c: Constraint) {
+    setForm((prev) => ({
+      ...prev,
+      constraints: prev.constraints.includes(c)
+        ? prev.constraints.filter((x) => x !== c)
+        : [...prev.constraints, c],
+    }))
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -61,7 +82,6 @@ export default function StartPage() {
 
   return (
     <div className="min-h-screen bg-[#FAF7F2]">
-      {/* Header */}
       <header className="border-b border-[#E8E1D6] bg-[#FAF7F2]/85 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-2xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
@@ -82,13 +102,11 @@ export default function StartPage() {
       </header>
 
       <main className="max-w-2xl mx-auto px-6 py-12 md:py-16">
-        {/* Step indicator */}
         <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-6">
           <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
           Step 1 of 2
         </div>
 
-        {/* Headline */}
         <div className="mb-12">
           <h1 className="font-serif text-4xl md:text-5xl leading-[1.05] tracking-[-0.02em] mb-4">
             Tell us about
@@ -104,7 +122,7 @@ export default function StartPage() {
             </span>
           </h1>
           <p className="text-[#6B6259] text-lg">
-            5 quick questions. Takes about 30 seconds.
+            8 quick questions. Takes about 45 seconds.
           </p>
         </div>
 
@@ -137,6 +155,34 @@ export default function StartPage() {
             />
           </Field>
 
+          <Field
+            label="What do you sell or offer?"
+            hint="Product, service, or expertise you want to promote."
+          >
+            <input
+              type="text"
+              value={form.product}
+              onChange={(e) => setForm({ ...form, product: e.target.value })}
+              placeholder="e.g. 10-minute home workout program"
+              required
+              className="w-full bg-white border border-[#E8E1D6] rounded-xl px-4 py-3.5 text-sm text-[#1A1614] placeholder:text-[#A39B8F] transition-all focus:border-[#1A1614] focus:ring-4 focus:ring-[#1A1614]/5"
+            />
+          </Field>
+
+          <Field
+            label="Who is this content for?"
+            hint="Describe your ideal viewer or customer."
+          >
+            <input
+              type="text"
+              value={form.audience}
+              onChange={(e) => setForm({ ...form, audience: e.target.value })}
+              placeholder="e.g. busy moms aged 28-40 who want to get fit at home"
+              required
+              className="w-full bg-white border border-[#E8E1D6] rounded-xl px-4 py-3.5 text-sm text-[#1A1614] placeholder:text-[#A39B8F] transition-all focus:border-[#1A1614] focus:ring-4 focus:ring-[#1A1614]/5"
+            />
+          </Field>
+
           <Field label="Tone">
             <div className="grid grid-cols-4 gap-2">
               {tones.map((t) => (
@@ -162,6 +208,52 @@ export default function StartPage() {
                   {g.label}
                 </ChoiceButton>
               ))}
+            </div>
+          </Field>
+
+          <Field
+            label="Any constraints?"
+            hint="Optional. Select all that apply. We'll design content around them."
+          >
+            <div className="grid sm:grid-cols-2 gap-2">
+              {constraintOptions.map((c) => {
+                const selected = form.constraints.includes(c.value)
+                return (
+                  <button
+                    key={c.value}
+                    type="button"
+                    onClick={() => toggleConstraint(c.value)}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl border text-sm font-medium text-left transition-all ${
+                      selected
+                        ? 'border-[#D97757] bg-[#FBF0E9] text-[#D97757]'
+                        : 'border-[#E8E1D6] bg-white text-[#6B6259] hover:border-[#D4CBB9] hover:text-[#1A1614]'
+                    }`}
+                  >
+                    <span
+                      className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
+                        selected
+                          ? 'border-[#D97757] bg-[#D97757]'
+                          : 'border-[#D4CBB9] bg-white'
+                      }`}
+                    >
+                      {selected && (
+                        <svg
+                          viewBox="0 0 16 16"
+                          className="w-2.5 h-2.5 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <polyline points="3 8 7 12 13 4" />
+                        </svg>
+                      )}
+                    </span>
+                    {c.label}
+                  </button>
+                )
+              })}
             </div>
           </Field>
 
@@ -202,8 +294,6 @@ export default function StartPage() {
     </div>
   )
 }
-
-/* ============ Helpers ============ */
 
 function Field({
   label,
