@@ -311,9 +311,9 @@ function DayCard({ day }: { day: DayPlan }) {
               Hashtags
             </div>
             <div className="flex flex-wrap gap-1.5">
-              {day.hashtags.map((h) => (
+              {day.hashtags.map((h, i) => (
                 <span
-                  key={h}
+                  key={`${h}-${i}`}
                   className="bg-[#FAF7F2] border border-[#E8E1D6] text-[#6B6259] px-2.5 py-1 rounded-full text-xs font-mono"
                 >
                   #{h}
