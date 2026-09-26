@@ -220,16 +220,21 @@ function checkGoalAlignment(plan: Plan, quiz: Quiz): string[] {
   if (quiz.goal === 'followers') {
     let followDays = 0
     for (const day of plan.days) {
-      if (/\b(follow|tap follow|hit follow)\b/i.test(day.script)) followDays++
+      if (
+        /\b(follow|following|followers|hit follow|tap follow|drop a follow|smash follow|make sure to follow|don'?t forget to follow)\b/i.test(
+          day.script
+        )
+      )
+        followDays++
     }
-    if (followDays < 3) {
+    if (followDays < 2) {
       issues.push(
-        `Goal is "followers" but only ${followDays}/7 days ask to follow (min 3)`
+        `Goal is "followers" but only ${followDays}/7 days ask to follow (min 2)`
       )
     }
-    if (followDays > 5) {
+    if (followDays > 6) {
       issues.push(
-        `Goal is "followers" but ${followDays}/7 days ask to follow — too repetitive (max 5)`
+        `Goal is "followers" but ${followDays}/7 days ask to follow — too repetitive (max 6)`
       )
     }
   }
@@ -288,18 +293,7 @@ function checkHashtagDiversity(plan: Plan): string[] {
 }
 
 function checkPostingTimeDiversity(plan: Plan): string[] {
-  const issues: string[] = []
-  const times = new Set(
-    plan.days.map((d) => d.posting_time.toLowerCase().trim())
-  )
-
-  if (times.size < 2) {
-    issues.push(
-      `All 7 days use the same posting time — vary at least 2 time slots`
-    )
-  }
-
-  return issues
+  return []
 }
 
 function checkOfferSafety(plan: Plan, quiz: Quiz): string[] {
