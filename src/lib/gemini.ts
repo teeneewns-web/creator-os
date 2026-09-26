@@ -27,7 +27,9 @@ CTA RULES:
 - Each day uses a DIFFERENT call-to-action phrasing.
 - NEVER repeat exact CTA text on 3+ days.
 - Vary CTAs: ask a question, soft ask, save/share, product mention, comment prompt.
-- If goal is "sales", at least 4 of 7 days must include a soft product CTA (get, try, shop, link in bio, dm us, learn more, book).
+- If goal is "sales", at least 4 of 7 days must include a soft product CTA (get, try, shop, link in bio, learn more, book, message me).
+- NEVER say "DM us", "our team", "we offer", "we provide". This creator works ALONE.
+- Use first-person singular: "I", "me", "my". Never "we" or "us".
 - If goal is "followers", 3-5 days may ask to follow — no more than 5.
 `.trim()
 

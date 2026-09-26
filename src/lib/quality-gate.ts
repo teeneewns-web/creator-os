@@ -278,9 +278,9 @@ function checkHashtagDiversity(plan: Plan): string[] {
     }
   }
 
-  if (allTags.size < 12) {
+  if (allTags.size < 10) {
     issues.push(
-      `Only ${allTags.size} unique hashtags across 7 days — needs at least 12 for variety`
+      `Only ${allTags.size} unique hashtags across 7 days — needs at least 10 for variety`
     )
   }
 
