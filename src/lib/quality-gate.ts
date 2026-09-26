@@ -270,30 +270,17 @@ function checkRepetition(plan: Plan): string[] {
 
 function checkHashtagDiversity(plan: Plan): string[] {
   const issues: string[] = []
-  const tagCount = new Map<string, number>()
+  const allTags = new Set<string>()
 
   for (const day of plan.days) {
     for (const tag of day.hashtags) {
-      const key = tag.toLowerCase()
-      tagCount.set(key, (tagCount.get(key) || 0) + 1)
+      allTags.add(tag.toLowerCase())
     }
   }
 
-  for (const [tag, count] of tagCount.entries()) {
-    if (count >= 6) {
-      issues.push(
-        `Hashtag #${tag} repeated in ${count}/7 days — needs variety`
-      )
-    }
-  }
-
-  // ถ้ามี tag เหมือนกันเกิน 5 ตัวที่ซ้ำในทุกวัน → fail
-  const repeatedInAll = [...tagCount.entries()].filter(
-    ([, c]) => c === 7
-  ).length
-  if (repeatedInAll >= 5) {
+  if (allTags.size < 12) {
     issues.push(
-      `${repeatedInAll} hashtags are identical across all 7 days — looks like spam`
+      `Only ${allTags.size} unique hashtags across 7 days — needs at least 12 for variety`
     )
   }
 
@@ -302,19 +289,14 @@ function checkHashtagDiversity(plan: Plan): string[] {
 
 function checkPostingTimeDiversity(plan: Plan): string[] {
   const issues: string[] = []
-  const timeCount = new Map<string, number>()
+  const times = new Set(
+    plan.days.map((d) => d.posting_time.toLowerCase().trim())
+  )
 
-  for (const day of plan.days) {
-    const key = day.posting_time.toLowerCase().trim()
-    timeCount.set(key, (timeCount.get(key) || 0) + 1)
-  }
-
-  for (const [time, count] of timeCount.entries()) {
-    if (count >= 5) {
-      issues.push(
-        `Posting time "${time}" repeated in ${count}/7 days — needs variety`
-      )
-    }
+  if (times.size < 2) {
+    issues.push(
+      `All 7 days use the same posting time — vary at least 2 time slots`
+    )
   }
 
   return issues
