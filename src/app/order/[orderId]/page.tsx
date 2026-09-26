@@ -250,7 +250,7 @@ function DayCard({ day }: { day: DayPlan }) {
       ``,
       `CAPTION: ${day.caption}`,
       ``,
-      `HASHTAGS: ${day.hashtags.map((h) => `#${h}`).join(' ')}`,
+      `HASHTAGS: ${day.hashtags.map((h) => `#${h.replace(/^#+/, '')}`).join(' ')}`,
       ``,
       `VISUAL: ${day.visual}`,
       ``,
@@ -311,14 +311,17 @@ function DayCard({ day }: { day: DayPlan }) {
               Hashtags
             </div>
             <div className="flex flex-wrap gap-1.5">
-              {day.hashtags.map((h, i) => (
-                <span
-                  key={`${h}-${i}`}
-                  className="bg-[#FAF7F2] border border-[#E8E1D6] text-[#6B6259] px-2.5 py-1 rounded-full text-xs font-mono"
-                >
-                  #{h}
-                </span>
-              ))}
+              {day.hashtags.map((h, i) => {
+                const clean = h.replace(/^#+/, '').trim()
+                return (
+                  <span
+                    key={`${clean}-${i}`}
+                    className="bg-[#FAF7F2] border border-[#E8E1D6] text-[#6B6259] px-2.5 py-1 rounded-full text-xs font-mono"
+                  >
+                    #{clean}
+                  </span>
+                )
+              })}
             </div>
           </div>
         </div>
