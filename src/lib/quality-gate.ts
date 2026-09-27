@@ -279,17 +279,23 @@ function checkTemporalClaims(plan: Plan, quiz: Quiz): string[] {
   const source = `${quiz.niche} ${quiz.product} ${quiz.audience}`.toLowerCase()
 
   const timePatterns = [
-    /\bafter (a|an|\d+) (day|week|month|year)s?\b/i,
-    /\b(\d+) (day|week|month|year)s? (of|using|with|on)\b/i,
+    /\bafter\s+(just\s+)?(a|an|one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+(day|week|month|year)s?\b/i,
+    /\b(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+(day|week|month|year)s?\s+(of|using|with|on|in)\b/i,
+    /\bfor\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+(day|week|month|year)s?\b/i,
     /\bi'?ve been (using|doing|trying)\b/i,
     /\bsince (i|using|starting)\b/i,
+    /\bbefore\s+and\s+after\s+(using|with|of)\b/i,
   ]
 
   const resultPatterns = [
-    // Only catch STRONG first-person claims like "my skin feels less red"
+    // First-person claims about own body results
     /\bmy (skin|hair|body|face|nails|sleep|energy|mood)\s+(feels?|looks?|is|got|became|has become)\s+(less|more|smoother|clearer|brighter|softer|healthier|calmer|better|worse)\b/i,
-    // "after N days/weeks of using, my X is better"
-    /\bafter\s+\d+\s+(day|week|month)s?\b[^.]{0,60}\bmy (skin|hair|body|face)\b/i,
+    // "notice the change/difference/improvement"
+    /\b(notice|see|look at|check out)\s+the\s+(subtle\s+)?(change|difference|improvement|result|progress)\b/i,
+    // "before and after" (implies result demonstrated)
+    /\bbefore\s+and\s+after\b/i,
+    // "smoother/less red/better X appearance"
+    /\b(smoother|clearer|brighter|less red|less irritated|less inflamed|more even|more radiant)\s+(skin|appearance|look|complexion|texture)\b/i,
   ]
 
   for (const day of plan.days) {
