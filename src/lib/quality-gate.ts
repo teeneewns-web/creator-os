@@ -31,7 +31,7 @@ const NAMED_PERSON_PATTERN =
   /\b(Sarah|John|Emily|Mike|Jessica|David|Amanda|Chris|Rachel|Tom|Alex|Emma)\b/
 
 const OFFER_PATTERNS: { pattern: RegExp; label: string }[] = [
-  { pattern: /\bfree (trial|week|access|month|session)\b/i, label: 'free offer' },
+  { pattern: /\bfree (trial|week|access|month|session|checklist|guide|template|ebook|pdf|tool|resource)\b/i, label: 'free offer' },
   { pattern: /\b(limited|only) \d+ spots?\b/i, label: 'limited spots claim' },
   { pattern: /\bspots? (are )?limited\b/i, label: 'limited spots claim' },
   { pattern: /\b\d+% off\b/i, label: 'discount claim' },
@@ -200,20 +200,26 @@ function checkGoalAlignment(plan: Plan, quiz: Quiz): string[] {
   const issues: string[] = []
 
   if (quiz.goal === 'sales') {
-    const productWords = extractKeywords(quiz.product, 5)
     let salesDays = 0
     for (const day of plan.days) {
-      const text = `${day.caption} ${day.script}`.toLowerCase()
-      const mentionsProduct = productWords.some((w) => text.includes(w))
+      const text = `${day.caption} ${day.script}`
       const hasSalesCta =
-        /\b(get|try|shop|buy|order|download|sign up|learn more|check out|link in bio|dm us|dm me|click|book|claim|grab|start)\b/i.test(
-          day.script
+        /\b(get (a )?(quote|started|the)|try (it|the|my)|shop (now|the)|buy (now|it|the)|order (now|the)|download|sign up|book (a|your)|learn more about (my|the)|check out (my|the)|link in bio|message me|dm me|visit (my|the)|see my|grab (the|your)|claim (your|yours)|start (your|with)|work with me|hire me|enquir|inquire)\b/i.test(
+          text
         )
-      if (mentionsProduct || hasSalesCta) salesDays++
+      const hasFollowerCta = /\b(follow|hit follow|tap follow)\b/i.test(text)
+      const hasEngagementCta =
+        /\b(comment|save this|share this|drop .{0,20} below|tag a friend)\b/i.test(
+          text
+        )
+
+      if (hasFollowerCta && !hasSalesCta) continue
+      if (hasEngagementCta && !hasSalesCta) continue
+      if (hasSalesCta) salesDays++
     }
     if (salesDays < 4) {
       issues.push(
-        `Goal is "sales" but only ${salesDays}/7 days include a product CTA (min 4)`
+        `Goal is "sales" but only ${salesDays}/7 days include a real product CTA (min 4)`
       )
     }
   }
@@ -274,6 +280,66 @@ function checkRepetition(plan: Plan): string[] {
   return issues
 }
 
+function checkClientFabrication(plan: Plan, quiz: Quiz): string[] {
+  const issues: string[] = []
+  const source = `${quiz.niche} ${quiz.product} ${quiz.audience}`.toLowerCase()
+
+  const clientPatterns = [
+    /\b(redesign|rebuild|rework|transform) of (a|an|the) [a-z]+\b/i,
+    /\b(my|one of my|this) (client|client's|customer|customer's) [a-z]+\b/i,
+    /\ba (bakery|restaurant|cafe|shop|store|salon|gym|clinic)'?s? (site|website|homepage|page|brand)\b/i,
+    /\b(client|client's|customer|customer's) (site|website|homepage|project|brand|result)\b/i,
+  ]
+
+  for (const day of plan.days) {
+    const text = `${day.hook} ${day.script} ${day.caption} ${day.visual}`
+    for (const pat of clientPatterns) {
+      const match = text.match(pat)
+      if (match && !source.includes(match[0].toLowerCase().slice(0, 10))) {
+        issues.push(
+          `Day ${day.day}: fabricated client/case study — "${match[0].trim()}"`
+        )
+        break
+      }
+    }
+  }
+
+  return issues
+}
+
+function checkEquipmentAssumptions(plan: Plan, quiz: Quiz): string[] {
+  const issues: string[] = []
+  const source = `${quiz.niche} ${quiz.product} ${quiz.audience}`.toLowerCase()
+
+  const equipmentPatterns = [
+    /\bdual monitors?\b/i,
+    /\bstudio lights?\b/i,
+    /\bprofessional camera\b/i,
+    /\bpop-?up studio\b/i,
+    /\bmy desk setup\b/i,
+    /\bmy studio\b/i,
+    /\bmy workspace\b/i,
+    /\bmy sketchbook\b/i,
+    /\bmy notebook\b/i,
+    /\bbackdrop\b/i,
+  ]
+
+  for (const day of plan.days) {
+    const text = `${day.visual} ${day.script}`
+    for (const pat of equipmentPatterns) {
+      const match = text.match(pat)
+      if (match && !source.includes(match[0].toLowerCase())) {
+        issues.push(
+          `Day ${day.day}: assumes equipment/lifestyle — "${match[0].trim()}"`
+        )
+        break
+      }
+    }
+  }
+
+  return issues
+}
+
 function checkTemporalClaims(plan: Plan, quiz: Quiz): string[] {
   const issues: string[] = []
   const source = `${quiz.niche} ${quiz.product} ${quiz.audience}`.toLowerCase()
@@ -292,8 +358,8 @@ function checkTemporalClaims(plan: Plan, quiz: Quiz): string[] {
     /\bmy (skin|hair|body|face|nails|sleep|energy|mood)\s+(feels?|looks?|is|got|became|has become)\s+(less|more|smoother|clearer|brighter|softer|healthier|calmer|better|worse)\b/i,
     // "notice the change/difference/improvement"
     /\b(notice|see|look at|check out)\s+the\s+(subtle\s+)?(change|difference|improvement|result|progress)\b/i,
-    // "before and after" (implies result demonstrated)
-    /\bbefore\s+and\s+after\b/i,
+    // "before and after" — handle various separators (-, ‑, &, and)
+    /\bbefore[\s\-‑–—&]+(and[\s\-‑–—]+)?after\b/i,
     // "smoother/less red/better X appearance"
     /\b(smoother|clearer|brighter|less red|less irritated|less inflamed|more even|more radiant)\s+(skin|appearance|look|complexion|texture)\b/i,
   ]
@@ -428,6 +494,8 @@ export function runQualityGate(plan: Plan, quiz: Quiz): QualityReport {
     ...checkGoalAlignment(plan, quiz),
     ...checkOfferSafety(plan, quiz),
     ...checkTemporalClaims(plan, quiz),
+    ...checkClientFabrication(plan, quiz),
+    ...checkEquipmentAssumptions(plan, quiz),
     ...checkDayConsistency(plan),
     ...checkHashtagDiversity(plan),
     ...checkPostingTimeDiversity(plan),
