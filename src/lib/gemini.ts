@@ -50,7 +50,7 @@ function describeConstraints(constraints: string[]): string {
   return constraints.map((c) => `- ${map[c] || c}`).join('\n')
 }
 
-const MAX_ATTEMPTS = 3
+const MAX_ATTEMPTS = 4
 
 export async function generatePlan(quiz: Quiz): Promise<Plan> {
   const apiKey = process.env.GROQ_API_KEY

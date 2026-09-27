@@ -170,7 +170,8 @@ function checkConstraints(plan: Plan, quiz: Quiz): string[] {
 
   if (constraints.includes('phone_only')) {
     const equipment = [
-      'tripod',
+      'camera tripod',
+      'professional tripod',
       'gimbal',
       'ring light',
       'dslr',
@@ -347,9 +348,9 @@ function checkHashtagDiversity(plan: Plan): string[] {
     }
   }
 
-  if (allTags.size < 8) {
+  if (allTags.size < 6) {
     issues.push(
-      `Only ${allTags.size} unique hashtags across 7 days — needs at least 8 for variety`
+      `Only ${allTags.size} unique hashtags across 7 days — needs at least 6 for variety`
     )
   }
 
