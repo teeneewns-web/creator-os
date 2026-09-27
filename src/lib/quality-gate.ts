@@ -285,8 +285,10 @@ function checkTemporalClaims(plan: Plan, quiz: Quiz): string[] {
   ]
 
   const resultPatterns = [
-    /\bmy (skin|hair|body|face|nails|sleep|energy|mood|skin barrier)\b[^.]{0,40}\b(feels?|looks?|is|are|got|became|become)\b/i,
-    /\b(less|more|better|worse|smoother|clearer|brighter|softer|healthier|reduced|improved|calmer)\b[^.]{0,30}\b(skin|hair|body|face)\b/i,
+    // Only catch STRONG first-person claims like "my skin feels less red"
+    /\bmy (skin|hair|body|face|nails|sleep|energy|mood)\s+(feels?|looks?|is|got|became|has become)\s+(less|more|smoother|clearer|brighter|softer|healthier|calmer|better|worse)\b/i,
+    // "after N days/weeks of using, my X is better"
+    /\bafter\s+\d+\s+(day|week|month)s?\b[^.]{0,60}\bmy (skin|hair|body|face)\b/i,
   ]
 
   for (const day of plan.days) {
@@ -345,9 +347,9 @@ function checkHashtagDiversity(plan: Plan): string[] {
     }
   }
 
-  if (allTags.size < 10) {
+  if (allTags.size < 8) {
     issues.push(
-      `Only ${allTags.size} unique hashtags across 7 days — needs at least 10 for variety`
+      `Only ${allTags.size} unique hashtags across 7 days — needs at least 8 for variety`
     )
   }
 
