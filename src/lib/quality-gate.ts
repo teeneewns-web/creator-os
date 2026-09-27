@@ -273,6 +273,68 @@ function checkRepetition(plan: Plan): string[] {
   return issues
 }
 
+function checkTemporalClaims(plan: Plan, quiz: Quiz): string[] {
+  const issues: string[] = []
+  const source = `${quiz.niche} ${quiz.product} ${quiz.audience}`.toLowerCase()
+
+  const timePatterns = [
+    /\bafter (a|an|\d+) (day|week|month|year)s?\b/i,
+    /\b(\d+) (day|week|month|year)s? (of|using|with|on)\b/i,
+    /\bi'?ve been (using|doing|trying)\b/i,
+    /\bsince (i|using|starting)\b/i,
+  ]
+
+  const resultPatterns = [
+    /\bmy (skin|hair|body|face|nails|sleep|energy|mood|skin barrier)\b[^.]{0,40}\b(feels?|looks?|is|are|got|became|become)\b/i,
+    /\b(less|more|better|worse|smoother|clearer|brighter|softer|healthier|reduced|improved|calmer)\b[^.]{0,30}\b(skin|hair|body|face)\b/i,
+  ]
+
+  for (const day of plan.days) {
+    const text = `${day.hook} ${day.script} ${day.caption}`
+
+    for (const pat of timePatterns) {
+      const match = text.match(pat)
+      if (match && !source.includes(match[0].toLowerCase())) {
+        issues.push(
+          `Day ${day.day}: fabricated timeline — "${match[0].trim()}"`
+        )
+      }
+    }
+
+    for (const pat of resultPatterns) {
+      const match = text.match(pat)
+      if (match) {
+        issues.push(
+          `Day ${day.day}: fabricated personal result — "${match[0].trim()}"`
+        )
+        break
+      }
+    }
+  }
+
+  return issues
+}
+
+function checkDayConsistency(plan: Plan): string[] {
+  const issues: string[] = []
+  const dayPattern = /\bday\s+(\d+)\s+of\b/i
+
+  for (const day of plan.days) {
+    const text = `${day.hook} ${day.script}`
+    const match = text.match(dayPattern)
+    if (match) {
+      const claimed = parseInt(match[1], 10)
+      if (claimed !== day.day) {
+        issues.push(
+          `Day ${day.day}: script says "Day ${claimed} of..." — number mismatch`
+        )
+      }
+    }
+  }
+
+  return issues
+}
+
 function checkHashtagDiversity(plan: Plan): string[] {
   const issues: string[] = []
   const allTags = new Set<string>()
@@ -356,6 +418,8 @@ export function runQualityGate(plan: Plan, quiz: Quiz): QualityReport {
     ...checkConstraints(plan, quiz),
     ...checkGoalAlignment(plan, quiz),
     ...checkOfferSafety(plan, quiz),
+    ...checkTemporalClaims(plan, quiz),
+    ...checkDayConsistency(plan),
     ...checkHashtagDiversity(plan),
     ...checkPostingTimeDiversity(plan),
     ...checkRepetition(plan),
