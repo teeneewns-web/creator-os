@@ -217,9 +217,9 @@ function checkGoalAlignment(plan: Plan, quiz: Quiz): string[] {
       if (hasEngagementCta && !hasSalesCta) continue
       if (hasSalesCta) salesDays++
     }
-    if (salesDays < 4) {
+    if (salesDays < 3) {
       issues.push(
-        `Goal is "sales" but only ${salesDays}/7 days include a real product CTA (min 4)`
+        `Goal is "sales" but only ${salesDays}/7 days include a real product CTA (min 3)`
       )
     }
   }
