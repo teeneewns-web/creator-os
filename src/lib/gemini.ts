@@ -2,6 +2,7 @@ import Groq from 'groq-sdk'
 import type { Quiz } from '@/types/order'
 import type { Plan } from '@/types/plan'
 import { runQualityGate } from './quality-gate'
+import { sanitizePlan } from './sanitize'
 
 const FACT_SAFETY = `
 FACT SAFETY — HIGHEST PRIORITY:
@@ -31,6 +32,38 @@ CTA RULES:
 - NEVER say "DM us", "our team", "we offer", "we provide". This creator works ALONE.
 - Use first-person singular: "I", "me", "my". Never "we" or "us".
 - If goal is "followers", 3-5 days may ask to follow — no more than 5.
+`.trim()
+
+const BANNED_PHRASES = `
+BANNED PHRASES — DO NOT USE:
+
+Personal result claims (about the creator's own body/life):
+- "my skin feels..." / "my skin looks..." / "my skin is..." + (less/more/smoother/clearer)
+- "smoother skin" / "calmer skin" / "clearer skin" / "less red" / "less irritated"
+- "notice the change" / "see the difference" / "notice the improvement"
+- "before and after" (implies proven result)
+- "after X days/weeks/months of using" (implies personal test)
+- "I've been using..." / "since I started..."
+- "Day X of using..." (implies ongoing personal journey)
+
+Timeline claims:
+- "after a week" / "after just one week" / "after 7 days" / "one week later"
+- "7 days in" / "one week in" / "X days later"
+
+Fake offers:
+- "free trial" / "free week" / "limited spots" / "X% off"
+- "claim yours" / "book a call" / "money-back guarantee"
+
+Fake team:
+- "DM us" / "our team" / "we offer" / "we're offering"
+
+INSTEAD, use these patterns:
+- "Try this routine and see how it feels" (invitation, not claim)
+- "Here's how the cleanser works" (educational)
+- "Watch the texture" (demo, no result)
+- "If your skin is sensitive, this might help" (conditional)
+- "The formula is designed to..." (product facts, not personal results)
+- "When you use it regularly..." (general advice)
 `.trim()
 
 function describeConstraints(constraints: string[]): string {
@@ -96,12 +129,13 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
       continue
     }
 
-    const report = runQualityGate(parsed, quiz)
+    const sanitized = sanitizePlan(parsed)
+    const report = runQualityGate(sanitized, quiz)
 
     if (report.passed) {
       console.log(`Quality gate passed on attempt ${attempt}`)
-      parsed.generated_at = new Date().toISOString()
-      return parsed
+      sanitized.generated_at = new Date().toISOString()
+      return sanitized
     }
 
     console.warn(
@@ -152,6 +186,8 @@ ${describeConstraints(quiz.constraints)}
 ═══ ${NICHE_LOCK} ═══
 
 ═══ ${FACT_SAFETY} ═══
+
+═══ ${BANNED_PHRASES} ═══
 
 ═══ ${CTA_RULES} ═══
 
