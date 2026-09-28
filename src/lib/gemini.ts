@@ -1,4 +1,4 @@
-import Groq from 'groq-sdk'
+import { GoogleGenAI } from '@google/genai'
 import type { Quiz } from '@/types/order'
 import type { Plan } from '@/types/plan'
 import { runQualityGate } from './quality-gate'
@@ -18,7 +18,6 @@ const NICHE_LOCK = `
 NICHE LOCK — MANDATORY:
 - EVERY day (hook, script, caption, visual) MUST reference the niche, product, or audience.
 - The content must be USELESS to someone outside this niche.
-- If it could apply to any creator (pranks, cats, random comedy), it is WRONG.
 - Test: would a stranger reading this know exactly what business this creator runs?
 - If NO — rewrite until it passes.
 `.trim()
@@ -27,13 +26,11 @@ const CTA_RULES = `
 CTA RULES:
 - Each day uses a DIFFERENT call-to-action phrasing.
 - NEVER repeat exact CTA text on 3+ days.
-- Vary CTAs: ask a question, soft ask, save/share, product mention, comment prompt.
-- If goal is "sales", at least 4 of 7 days MUST end with a product-related CTA. Examples:
+- If goal is "sales", at least 4 of 7 days MUST end with a product-related CTA:
   * "Book a call to start your project"
   * "Get a free quote — link in bio"
   * "Message me to see samples"
   * "Visit my profile to book"
-  * "Learn more about my services — link in bio"
   AVOID ending with "Follow" or "Comment" alone on sales-focused days.
 - NEVER say "DM us", "our team", "we offer", "we provide". This creator works ALONE.
 - Use first-person singular: "I", "me", "my". Never "we" or "us".
@@ -43,33 +40,29 @@ CTA RULES:
 const BANNED_PHRASES = `
 BANNED PHRASES — DO NOT USE:
 
-Personal result claims (about the creator's own body/life):
-- "my skin feels..." / "my skin looks..." / "my skin is..." + (less/more/smoother/clearer)
-- "smoother skin" / "calmer skin" / "clearer skin" / "less red" / "less irritated"
-- "notice the change" / "see the difference" / "notice the improvement"
-- "before and after" (implies proven result)
-- "after X days/weeks/months of using" (implies personal test)
+Personal result claims:
+- "my skin feels..." / "my skin looks..." + (less/more/smoother)
+- "smoother skin" / "calmer skin" / "clearer skin" / "less red"
+- "notice the change" / "see the difference"
+- "before and after"
+- "after X days/weeks/months of using"
 - "I've been using..." / "since I started..."
-- "Day X of using..." (implies ongoing personal journey)
+- "Day X of using..."
 
 Timeline claims:
-- "after a week" / "after just one week" / "after 7 days" / "one week later"
-- "7 days in" / "one week in" / "X days later"
+- "after a week" / "after just one week" / "after 7 days"
 
 Fake offers:
-- "free trial" / "free week" / "limited spots" / "X% off"
-- "claim yours" / "book a call" / "money-back guarantee"
+- "free trial" / "free week" / "free checklist" / "limited spots" / "X% off"
 
 Fake team:
-- "DM us" / "our team" / "we offer" / "we're offering"
+- "DM us" / "our team" / "we offer"
 
 INSTEAD, use these patterns:
-- "Try this routine and see how it feels" (invitation, not claim)
-- "Here's how the cleanser works" (educational)
-- "Watch the texture" (demo, no result)
-- "If your skin is sensitive, this might help" (conditional)
-- "The formula is designed to..." (product facts, not personal results)
-- "When you use it regularly..." (general advice)
+- "Try this routine and see how it feels"
+- "Here's how the product works"
+- "Watch the texture"
+- "The formula is designed to..."
 `.trim()
 
 function describeConstraints(constraints: string[]): string {
@@ -78,11 +71,11 @@ function describeConstraints(constraints: string[]): string {
   }
   const map: Record<string, string> = {
     no_face:
-      'NO FACE ON CAMERA. Never suggest: talking head, face-to-camera, direct eye contact, on-camera appearance. Use: hands, product close-ups, B-roll, text-on-screen, screen recording, animation.',
+      'NO FACE ON CAMERA. Never suggest: talking head, face-to-camera, direct eye contact. Use: hands, product close-ups, B-roll, text-on-screen.',
     no_voice:
       'NO VOICEOVER. Text-on-screen with music or ambient audio only.',
     phone_only:
-      'PHONE CAMERA ONLY. Do NOT mention tripod, gimbal, ring light, DSLR, microphone, or professional equipment. If stability is needed, say "prop phone on a book" or "hold phone steady".',
+      'PHONE CAMERA ONLY. Do NOT mention tripod, gimbal, ring light, DSLR, microphone, or professional equipment.',
     under_30s: 'Every video must be under 30 seconds.',
     no_editing: 'Minimal editing. Simple cuts and text overlays only.',
   }
@@ -91,34 +84,43 @@ function describeConstraints(constraints: string[]): string {
 
 const MAX_ATTEMPTS = 4
 
-export async function generatePlan(quiz: Quiz): Promise<Plan> {
-  const apiKey = process.env.GROQ_API_KEY
-  if (!apiKey) throw new Error('GROQ_API_KEY missing')
+type Attempt = {
+  plan: Plan
+  issues: string[]
+}
 
-  const groq = new Groq({ apiKey })
-  let lastIssues: string[] = []
+export async function generatePlan(quiz: Quiz): Promise<Plan> {
+  const apiKey = process.env.GEMINI_API_KEY
+  if (!apiKey) throw new Error('GEMINI_API_KEY missing')
+
+  const ai = new GoogleGenAI({ apiKey })
+  const attempts: Attempt[] = []
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-    const prompt = buildPrompt(quiz, attempt, lastIssues)
+    const prompt = buildPrompt(
+      quiz,
+      attempt,
+      attempts.length > 0 ? attempts[attempts.length - 1].issues : []
+    )
 
-    const completion = await groq.chat.completions.create({
-      model: 'openai/gpt-oss-120b',
-      messages: [
-        {
-          role: 'system',
-          content:
-            'You are a short-form content strategist specialized in converting business goals into niche-specific content plans. You always respond with valid JSON only. No markdown, no explanation, no code fences.',
+    let text: string | undefined
+    try {
+      const response = await ai.models.generateContent({
+        model: 'gemini-3.6-flash',
+        contents: prompt,
+        config: {
+          responseMimeType: 'application/json',
+          temperature: attempt === 1 ? 0.85 : 0.6,
         },
-        { role: 'user', content: prompt },
-      ],
-      response_format: { type: 'json_object' },
-      temperature: attempt === 1 ? 0.85 : 0.6,
-      max_tokens: 8000,
-    })
+      })
+      text = response.text
+    } catch (err) {
+      console.warn(`Gemini API error on attempt ${attempt}:`, err)
+      continue
+    }
 
-    const text = completion.choices[0]?.message?.content
     if (!text) {
-      lastIssues = ['AI returned empty response']
+      console.warn(`Empty response on attempt ${attempt}`)
       continue
     }
 
@@ -126,17 +128,19 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
     try {
       parsed = JSON.parse(text) as Plan
     } catch {
-      lastIssues = ['AI returned invalid JSON']
+      console.warn(`Invalid JSON on attempt ${attempt}`)
       continue
     }
 
     if (!parsed.days || parsed.days.length !== 7) {
-      lastIssues = [`AI returned ${parsed.days?.length ?? 0} days instead of 7`]
+      console.warn(`Wrong day count on attempt ${attempt}`)
       continue
     }
 
     const sanitized = sanitizePlan(parsed)
     const report = runQualityGate(sanitized, quiz)
+
+    attempts.push({ plan: sanitized, issues: report.issues })
 
     if (report.passed) {
       console.log(`Quality gate passed on attempt ${attempt}`)
@@ -148,14 +152,28 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
       `Quality gate failed (attempt ${attempt}/${MAX_ATTEMPTS}):`,
       report.issues
     )
-    lastIssues = report.issues
   }
 
-  throw new Error(
-    `PLAN_QUALITY_FAILED after ${MAX_ATTEMPTS} attempts: ${lastIssues
-      .slice(0, 3)
-      .join('; ')}`
+  // ============================================================
+  // BEST EFFORT FALLBACK
+  // ถ้าทุก attempt fail → คืน attempt ที่มี issues น้อยสุด
+  // ลูกค้าได้ของเสมอ (sanitized แล้ว)
+  // ============================================================
+  if (attempts.length === 0) {
+    throw new Error('PLAN_GENERATION_FAILED: no attempts produced a valid plan')
+  }
+
+  const best = attempts.reduce((prev, curr) =>
+    curr.issues.length < prev.issues.length ? curr : prev
   )
+
+  console.warn(
+    `All ${MAX_ATTEMPTS} attempts failed. Returning best effort with ${best.issues.length} issues:`,
+    best.issues
+  )
+
+  best.plan.generated_at = new Date().toISOString()
+  return best.plan
 }
 
 function buildPrompt(
@@ -167,16 +185,13 @@ function buildPrompt(
     attempt > 1 && previousIssues.length > 0
       ? `
 ⚠ PREVIOUS ATTEMPT FAILED ⚠
-
-Specific problems to fix:
+Fix these exact issues:
 ${previousIssues.map((i) => `- ${i}`).join('\n')}
-
-You MUST fix these exact issues. Do not repeat them.
 `
       : ''
 
   return `
-You are creating a 7-day content plan for a SPECIFIC creator.
+Create a 7-day content plan for this SPECIFIC creator.
 
 ═══ CREATOR PROFILE ═══
 Niche: ${quiz.niche}
@@ -186,7 +201,7 @@ Platform: ${quiz.platform}
 Tone: ${quiz.tone}
 Goal: ${quiz.goal}
 
-Production constraints:
+Constraints:
 ${describeConstraints(quiz.constraints)}
 
 ═══ ${NICHE_LOCK} ═══
@@ -200,51 +215,27 @@ ${describeConstraints(quiz.constraints)}
 ${retryWarning}
 
 ═══ CONTENT JOURNEY BY GOAL ═══
-
-If goal = "sales", structure the week like this:
-- Day 1: Pain point / problem the audience faces
-- Day 2: Product demonstration / how it works
-- Day 3: Common objection or FAQ
-- Day 4: Use case / real-world scenario
-- Day 5: Educational value tied to the product
-- Day 6: Framework, tip, or "how to start"
-- Day 7: Soft offer / invitation to try
-
-If goal = "followers":
-- Day 1: Introduce the format / what viewers will get
-- Day 2: High-value or entertaining post
-- Day 3: Repeatable series idea
-- Day 4: Pattern interruption / unexpected angle
-- Day 5: Transformation, experiment, or journey
-- Day 6: Audience participation / question
-- Day 7: Behind-the-scenes or community moment
-
-If goal = "engagement":
-- Mix: question, poll, hot take, challenge, community ask, contrast, list
+If goal = "sales": pain → demo → objection → use case → education → framework → offer
+If goal = "followers": intro → value → series → interrupt → journey → participation → BTS
+If goal = "engagement": question, poll, hot take, challenge, community, contrast, list
 
 ═══ OUTPUT FORMAT (strict JSON) ═══
 {
-  "title": "string — plan name, max 8 words",
-  "summary": "string — one sentence, max 20 words",
+  "title": "string, max 8 words",
+  "summary": "string, max 20 words",
   "days": [
     {
       "day": 1,
-      "hook": "string — first 3 seconds, niche-specific",
-      "script": "string — full 30-60 second script, word-for-word",
-      "caption": "string — platform caption, max 15 words",
-      "hashtags": ["5-7 tags WITHOUT # symbol, no spaces inside tag"],
-      "visual": "string — B-roll or on-screen direction, respects constraints",
-      "posting_time": "string — e.g. '7-9 PM local'"
+      "hook": "string, first 3 seconds, niche-specific",
+      "script": "string, 30-60 second script",
+      "caption": "string, max 15 words",
+      "hashtags": ["5-7 tags WITHOUT # symbol"],
+      "visual": "string, respects constraints",
+      "posting_time": "string, e.g. '7-9 PM local'"
     }
   ]
 }
 
-═══ FINAL RULES ═══
-- Each day must be UNIQUE in hook, angle, and format.
-- Every day must connect to the niche, product, or audience.
-- Hashtags: 5-7 tags, each tag must be one word or hyphenated, no # symbol.
-- Visual direction must respect all constraints.
-- Follow the content journey for the goal above.
-- Return valid JSON only. No markdown.
+Return valid JSON only. No markdown.
 `.trim()
 }
