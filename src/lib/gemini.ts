@@ -105,7 +105,7 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
 
     let text: string | undefined
     // Fallback models — ลองทีละตัวถ้าตัวแรกเจอ 503
-    const models = ['gemini-3.8-flash', 'gemini-3.6-flash']
+    const models = ['gemini-flash-latest', 'gemini-3.8-flash', 'gemini-3.5-flash']
 
     for (const model of models) {
       try {
