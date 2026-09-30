@@ -104,18 +104,36 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
     )
 
     let text: string | undefined
-    try {
-      const response = await ai.models.generateContent({
-        model: 'gemini-3.6-flash',
-        contents: prompt,
-        config: {
-          responseMimeType: 'application/json',
-          temperature: attempt === 1 ? 0.85 : 0.6,
-        },
-      })
-      text = response.text
-    } catch (err) {
-      console.warn(`Gemini API error on attempt ${attempt}:`, err)
+    // Fallback models — ลองทีละตัวถ้าตัวแรกเจอ 503
+    const models = ['gemini-2.5-flash', 'gemini-2.0-flash']
+
+    for (const model of models) {
+      try {
+        const response = await ai.models.generateContent({
+          model,
+          contents: prompt,
+          config: {
+            responseMimeType: 'application/json',
+            temperature: attempt === 1 ? 0.85 : 0.6,
+          },
+        })
+        text = response.text
+        if (text) break
+      } catch (err) {
+        const is503 =
+          err instanceof Error && err.message.includes('503')
+        if (is503) {
+          console.warn(`Model ${model} unavailable (503), trying next...`)
+          await new Promise((r) => setTimeout(r, 2000))
+          continue
+        }
+        console.warn(`Gemini error on attempt ${attempt} with ${model}:`, err)
+      }
+    }
+
+    if (!text) {
+      console.warn(`All models failed on attempt ${attempt}`)
+      await new Promise((r) => setTimeout(r, 3000))
       continue
     }
 
@@ -160,7 +178,11 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
   // ลูกค้าได้ของเสมอ (sanitized แล้ว)
   // ============================================================
   if (attempts.length === 0) {
-    throw new Error('PLAN_GENERATION_FAILED: no attempts produced a valid plan')
+    // ถ้า AI ทุกตัวล่ม — throw เพื่อให้ลูกค้าเห็น error
+    // แต่ส่งข้อความที่เข้าใจได้
+    throw new Error(
+      'AI_SERVICE_UNAVAILABLE: Please try again in a moment. This is temporary.'
+    )
   }
 
   const best = attempts.reduce((prev, curr) =>
