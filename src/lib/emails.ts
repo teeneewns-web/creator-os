@@ -96,7 +96,7 @@ function buildEmailHtml(
           (h) =>
             `<span style="display:inline-block; background:#FAF7F2; border:1px solid #E8E1D6; color:#6B6259; padding:4px 10px; border-radius:12px; font-family:monospace; font-size:12px; margin:0 4px 4px 0;">#${cleanTag(
               h
-            )}</span>`
+            )}</span> `
         )
         .join('')
 

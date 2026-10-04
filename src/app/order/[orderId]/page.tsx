@@ -15,6 +15,24 @@ export default function OrderPage({
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [elapsed, setElapsed] = useState(0)
+  const [doneDays, setDoneDays] = useState<number[]>([])
+
+  useEffect(() => {
+    const stored = localStorage.getItem(`done-${orderId}`)
+    if (stored) {
+      try {
+        setDoneDays(JSON.parse(stored))
+      } catch {}
+    }
+  }, [orderId])
+
+  function toggleDone(day: number) {
+    const next = doneDays.includes(day)
+      ? doneDays.filter((d) => d !== day)
+      : [...doneDays, day]
+    setDoneDays(next)
+    localStorage.setItem(`done-${orderId}`, JSON.stringify(next))
+  }
 
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | null = null
@@ -116,9 +134,7 @@ export default function OrderPage({
           )}
 
           <div className="mt-10 pt-6 border-t border-[#E8E1D6]">
-            <p className="text-xs text-[#A39B8F] mb-2">
-              Your order ID
-            </p>
+            <p className="text-xs text-[#A39B8F] mb-2">Your order ID</p>
             <p className="font-mono text-sm text-[#1A1614]">{order.id}</p>
             <p className="text-xs text-[#A39B8F] mt-3">
               Save this in case you need support.
@@ -176,6 +192,8 @@ export default function OrderPage({
   const plan = order.plan
   if (!plan) return null
 
+  const progress = `${doneDays.length}/${plan.days.length}`
+
   return (
     <div className="min-h-screen bg-[#FAF7F2]">
       <header className="border-b border-[#E8E1D6] bg-[#FAF7F2]/85 backdrop-blur-md sticky top-0 z-50">
@@ -193,22 +211,36 @@ export default function OrderPage({
       </header>
 
       <main className="max-w-3xl mx-auto px-6 py-12 md:py-16">
-        <div className="mb-12">
+        <div className="mb-10">
           <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
             Plan ready
           </div>
-          <h1 className="font-serif text-4xl md:text-5xl leading-[1.05] tracking-[-0.02em] mb-4">
+          <h1 className="font-serif text-3xl md:text-5xl leading-[1.05] tracking-[-0.02em] mb-4">
             {plan.title}
           </h1>
-          <p className="text-lg text-[#6B6259] leading-relaxed">
+          <p className="text-base md:text-lg text-[#6B6259] leading-relaxed mb-6">
             {plan.summary}
           </p>
+
+          <div className="inline-flex items-center gap-3 bg-white border border-[#E8E1D6] rounded-full px-4 py-2">
+            <span className="text-xs uppercase tracking-widest text-[#A39B8F]">
+              Progress
+            </span>
+            <span className="text-sm font-medium text-[#1A1614]">
+              {progress} days done
+            </span>
+          </div>
         </div>
 
         <div className="space-y-4">
           {plan.days.map((day) => (
-            <DayCard key={day.day} day={day} />
+            <DayCard
+              key={day.day}
+              day={day}
+              done={doneDays.includes(day.day)}
+              onToggleDone={() => toggleDone(day.day)}
+            />
           ))}
         </div>
 
@@ -221,9 +253,7 @@ export default function OrderPage({
               year: 'numeric',
             })}
           </p>
-          <p className="text-xs text-[#A39B8F] mb-6">
-            Order {order.id}
-          </p>
+          <p className="text-xs text-[#A39B8F] mb-6">Order {order.id}</p>
           <Link
             href="/start"
             className="inline-block text-sm font-medium text-[#D97757] hover:underline"
@@ -236,55 +266,95 @@ export default function OrderPage({
   )
 }
 
-function DayCard({ day }: { day: DayPlan }) {
-  const [copied, setCopied] = useState(false)
+function DayCard({
+  day,
+  done,
+  onToggleDone,
+}: {
+  day: DayPlan
+  done: boolean
+  onToggleDone: () => void
+}) {
+  const [copied, setCopied] = useState<string | null>(null)
 
-  function copyAll() {
-    const text = [
-      `DAY ${day.day}`,
-      ``,
-      `HOOK: ${day.hook}`,
-      ``,
-      `SCRIPT:`,
-      day.script,
-      ``,
-      `CAPTION: ${day.caption}`,
-      ``,
-      `HASHTAGS: ${day.hashtags.map((h) => `#${h.replace(/^#+/, '')}`).join(' ')}`,
-      ``,
-      `VISUAL: ${day.visual}`,
-      ``,
-      `POST AT: ${day.posting_time}`,
-    ].join('\n')
-
+  function copy(label: string, text: string) {
     navigator.clipboard.writeText(text)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+    setCopied(label)
+    setTimeout(() => setCopied(null), 1500)
   }
 
+  const cleanTags = day.hashtags
+    .map((h) => `#${h.replace(/^#+/, '').trim()}`)
+    .join(' ')
+
+  const hookText = day.hook
+  const scriptText = day.script
+  const captionAndTags = `${day.caption}\n\n${cleanTags}`
+
+  const allText = [
+    `DAY ${String(day.day).padStart(2, '0')}`,
+    ``,
+    `HOOK:`,
+    hookText,
+    ``,
+    `SCRIPT:`,
+    scriptText,
+    ``,
+    `CAPTION:`,
+    day.caption,
+    ``,
+    `HASHTAGS:`,
+    cleanTags,
+    ``,
+    `VISUAL:`,
+    day.visual,
+    ``,
+    `POST AT: ${day.posting_time}`,
+  ].join('\n')
+
   return (
-    <article className="bg-white border border-[#E8E1D6] rounded-2xl overflow-hidden shadow-[0_1px_3px_rgba(26,22,20,0.03)]">
+    <article
+      className={`bg-white border rounded-2xl overflow-hidden transition-all ${
+        done
+          ? 'border-[#D97757]/40 bg-[#FBF0E9]/30 opacity-75'
+          : 'border-[#E8E1D6] shadow-[0_1px_3px_rgba(26,22,20,0.03)]'
+      }`}
+    >
       <div className="px-6 py-4 border-b border-[#E8E1D6] flex items-center justify-between bg-[#FAF7F2]/60">
-        <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3 py-1 text-xs uppercase tracking-widest text-[#D97757] font-medium">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
-          Day {String(day.day).padStart(2, '0')}
+        <div className="flex items-center gap-3">
+          <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3 py-1 text-xs uppercase tracking-widest text-[#D97757] font-medium">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
+            Day {String(day.day).padStart(2, '0')}
+          </div>
+          {done && (
+            <span className="text-xs text-[#D97757] font-medium">
+              ✓ Done
+            </span>
+          )}
         </div>
         <button
-          onClick={copyAll}
-          className={`text-xs font-medium transition-colors ${
-            copied
-              ? 'text-[#D97757]'
-              : 'text-[#6B6259] hover:text-[#1A1614]'
+          onClick={onToggleDone}
+          className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-all ${
+            done
+              ? 'bg-[#D97757] border-[#D97757] text-white'
+              : 'bg-white border-[#E8E1D6] text-[#6B6259] hover:border-[#D4CBB9] hover:text-[#1A1614]'
           }`}
         >
-          {copied ? '✓ Copied' : 'Copy day'}
+          {done ? 'Undo' : 'Mark done'}
         </button>
       </div>
 
       <div className="p-6">
         <div className="mb-6">
-          <div className="text-xs uppercase tracking-widest text-[#A39B8F] mb-2.5">
-            Hook
+          <div className="flex items-center justify-between mb-2.5">
+            <div className="text-xs uppercase tracking-widest text-[#A39B8F]">
+              Hook
+            </div>
+            <CopyButton
+              label="Copy Hook"
+              copied={copied === 'hook'}
+              onClick={() => copy('hook', hookText)}
+            />
           </div>
           <div className="font-serif text-xl md:text-2xl leading-snug text-[#1A1614]">
             {day.hook}
@@ -292,41 +362,85 @@ function DayCard({ day }: { day: DayPlan }) {
         </div>
 
         <div className="mb-6">
-          <div className="text-xs uppercase tracking-widest text-[#A39B8F] mb-2.5">
-            Script
+          <div className="flex items-center justify-between mb-2.5">
+            <div className="text-xs uppercase tracking-widest text-[#A39B8F]">
+              Script
+            </div>
+            <CopyButton
+              label="Copy Script"
+              copied={copied === 'script'}
+              onClick={() => copy('script', scriptText)}
+            />
           </div>
           <p className="text-[#3F3A35] whitespace-pre-wrap leading-relaxed">
             {day.script}
           </p>
         </div>
 
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-2.5">
+            <div className="text-xs uppercase tracking-widest text-[#A39B8F]">
+              Caption + Hashtags
+            </div>
+            <CopyButton
+              label="Copy for TikTok"
+              copied={copied === 'caption'}
+              onClick={() => copy('caption', captionAndTags)}
+            />
+          </div>
+          <p className="text-[#3F3A35] mb-3">{day.caption}</p>
+          <div className="flex flex-wrap gap-1.5">
+            {day.hashtags.map((h, i) => {
+              const clean = h.replace(/^#+/, '').trim()
+              return (
+                <span
+                  key={`${clean}-${i}`}
+                  className="bg-[#FAF7F2] border border-[#E8E1D6] text-[#6B6259] px-2.5 py-1 rounded-full text-xs font-mono"
+                >
+                  #{clean}
+                </span>
+              )
+            })}
+          </div>
+        </div>
+
         <div className="grid sm:grid-cols-2 gap-4 pt-6 border-t border-[#E8E1D6]">
-          <MetaBox label="Caption">{day.caption}</MetaBox>
           <MetaBox label="Post at">{day.posting_time}</MetaBox>
-          <div className="sm:col-span-2">
-            <MetaBox label="Visual direction">{day.visual}</MetaBox>
-          </div>
-          <div className="sm:col-span-2">
-            <div className="text-xs uppercase tracking-widest text-[#A39B8F] mb-2.5">
-              Hashtags
-            </div>
-            <div className="flex flex-wrap gap-1.5">
-              {day.hashtags.map((h, i) => {
-                const clean = h.replace(/^#+/, '').trim()
-                return (
-                  <span
-                    key={`${clean}-${i}`}
-                    className="bg-[#FAF7F2] border border-[#E8E1D6] text-[#6B6259] px-2.5 py-1 rounded-full text-xs font-mono"
-                  >
-                    #{clean}
-                  </span>
-                )
-              })}
-            </div>
-          </div>
+          <MetaBox label="Visual direction">{day.visual}</MetaBox>
+        </div>
+
+        <div className="mt-5 pt-5 border-t border-[#E8E1D6] flex justify-end">
+          <CopyButton
+            label="Copy Full Day"
+            copied={copied === 'all'}
+            onClick={() => copy('all', allText)}
+          />
         </div>
       </div>
     </article>
+  )
+}
+
+function CopyButton({
+  label,
+  copied,
+  onClick,
+}: {
+  label: string
+  copied: boolean
+  onClick: () => void
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`text-xs font-medium px-2.5 py-1 rounded-md border transition-all ${
+        copied
+          ? 'bg-[#D97757] border-[#D97757] text-white'
+          : 'bg-white border-[#E8E1D6] text-[#6B6259] hover:border-[#D4CBB9] hover:text-[#1A1614]'
+      }`}
+    >
+      {copied ? '✓ Copied' : label}
+    </button>
   )
 }
 
