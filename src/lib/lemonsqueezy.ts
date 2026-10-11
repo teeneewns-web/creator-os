@@ -1,0 +1,36 @@
+import { createHmac, timingSafeEqual } from 'crypto'
+
+const LEMONSQUEEZY_CHECKOUT_URL =
+  'https://creator-os-o.lemonsqueezy.com/checkout/buy/8c8bd32d-9684-4576-b1af-42a981f27826'
+
+const APP_URL =
+  process.env.NEXT_PUBLIC_APP_URL || 'https://creator-os-beta-navy.vercel.app'
+
+export function buildCheckoutUrl(orderId: string): string {
+  const params = new URLSearchParams()
+  params.set('checkout[custom][order_id]', orderId)
+  params.set(
+    'checkout[redirect_url]',
+    `${APP_URL}/order-success?order_id=${encodeURIComponent(orderId)}`
+  )
+  params.set('embed', '1')
+  return `${LEMONSQUEEZY_CHECKOUT_URL}?${params.toString()}`
+}
+
+export function verifyWebhookSignature(
+  rawBody: string,
+  signature: string,
+  secret: string
+): boolean {
+  try {
+    const hmac = createHmac('sha256', secret)
+    hmac.update(rawBody, 'utf8')
+    const digest = hmac.digest('hex')
+    const digestBuffer = Buffer.from(digest, 'hex')
+    const signatureBuffer = Buffer.from(signature, 'hex')
+    if (digestBuffer.length !== signatureBuffer.length) return false
+    return timingSafeEqual(digestBuffer, signatureBuffer)
+  } catch {
+    return false
+  }
+}

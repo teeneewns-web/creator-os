@@ -3,6 +3,8 @@
 import { useEffect, useState, use } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Script from 'next/script'
+import { buildCheckoutUrl } from '@/lib/lemonsqueezy'
 
 type Order = {
   id: string
@@ -10,6 +12,16 @@ type Order = {
   status: string
   amount_usd: number
   quiz: { niche: string }
+}
+
+declare global {
+  interface Window {
+    LemonSqueezy?: {
+      Url: {
+        Open: (url: string) => void
+      }
+    }
+  }
 }
 
 export default function CheckoutPage({
@@ -22,6 +34,8 @@ export default function CheckoutPage({
   const [order, setOrder] = useState<Order | null>(null)
   const [loading, setLoading] = useState(true)
   const [confirming, setConfirming] = useState(false)
+  const [openingLemon, setOpeningLemon] = useState(false)
+  const [lemonReady, setLemonReady] = useState(false)
   const [error, setError] = useState('')
 
   useEffect(() => {
@@ -54,6 +68,27 @@ export default function CheckoutPage({
     }
   }
 
+  function handleCardCheckout() {
+    if (!order) return
+    setError('')
+
+    if (!lemonReady || !window.LemonSqueezy) {
+      setError('Payment window is still loading. Please wait a moment.')
+      return
+    }
+
+    setOpeningLemon(true)
+    try {
+      const url = buildCheckoutUrl(order.id)
+      window.LemonSqueezy.Url.Open(url)
+      // redirect order page หลัง overlay เปิด — user จะได้ดูสถานะ
+      setTimeout(() => router.push(`/order/${orderId}`), 1500)
+    } catch {
+      setError('Could not open checkout. Please try again.')
+      setOpeningLemon(false)
+    }
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-[#FAF7F2] flex items-center justify-center">
@@ -69,7 +104,7 @@ export default function CheckoutPage({
     return (
       <div className="min-h-screen bg-[#FAF7F2] flex items-center justify-center px-6">
         <div className="text-center max-w-md">
-          <div className="text-4xl mb-4">⚠</div>
+          <div className="text-4xl mb-4">⚠️</div>
           <h1 className="font-serif text-2xl mb-2">Order not found</h1>
           <p className="text-[#6B6259]">{error || 'Please start over.'}</p>
           <Link
@@ -85,6 +120,12 @@ export default function CheckoutPage({
 
   return (
     <div className="min-h-screen bg-[#FAF7F2]">
+      <Script
+        src="https://assets.lemonsqueezy.com/lemon.js"
+        strategy="afterInteractive"
+        onLoad={() => setLemonReady(true)}
+      />
+
       <header className="border-b border-[#E8E1D6] bg-[#FAF7F2]/85 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-2xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
@@ -148,12 +189,13 @@ export default function CheckoutPage({
           </div>
         </div>
 
-        <div className="bg-white border border-[#E8E1D6] rounded-2xl p-6 mb-4 opacity-60">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-lg bg-[#FAF7F2] border border-[#E8E1D6] flex items-center justify-center">
+        {/* Card (Lemon Squeezy) */}
+        <div className="bg-white border border-[#E8E1D6] rounded-2xl p-6 mb-4 shadow-[0_1px_3px_rgba(26,22,20,0.03)]">
+          <div className="flex items-center gap-3 mb-5">
+            <div className="w-10 h-10 rounded-lg bg-[#FBF0E9] border border-[#E8E1D6] flex items-center justify-center">
               <svg
                 viewBox="0 0 24 24"
-                className="w-5 h-5 text-[#A39B8F]"
+                className="w-5 h-5 text-[#D97757]"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.5"
@@ -165,21 +207,29 @@ export default function CheckoutPage({
             <div className="flex-1">
               <div className="font-medium text-[#1A1614]">Pay with card</div>
               <div className="text-sm text-[#6B6259]">
-                Visa, Mastercard, Amex
+                Visa, Mastercard, Amex — instant
               </div>
             </div>
-            <span className="text-xs bg-[#FAF7F2] border border-[#E8E1D6] text-[#6B6259] px-2.5 py-1 rounded-full">
-              Soon
-            </span>
           </div>
+
           <button
-            disabled
-            className="w-full bg-[#FAF7F2] text-[#A39B8F] px-6 py-3 rounded-xl font-medium cursor-not-allowed border border-[#E8E1D6]"
+            onClick={handleCardCheckout}
+            disabled={openingLemon || !lemonReady}
+            className="w-full bg-[#1A1614] text-[#FAF7F2] px-6 py-4 rounded-xl font-medium hover:bg-[#2B2521] disabled:opacity-50 transition-colors"
           >
-            Coming soon
+            {!lemonReady
+              ? 'Loading payment...'
+              : openingLemon
+              ? 'Opening checkout...'
+              : `Pay $${order.amount_usd} with card`}
           </button>
+
+          <p className="text-xs text-[#A39B8F] text-center mt-3">
+            Secure checkout by Lemon Squeezy. Instant access.
+          </p>
         </div>
 
+        {/* PromptPay */}
         <div className="bg-white border border-[#E8E1D6] rounded-2xl p-6 shadow-[0_1px_3px_rgba(26,22,20,0.03)]">
           <div className="flex items-center gap-3 mb-5">
             <div className="w-10 h-10 rounded-lg bg-[#FBF0E9] border border-[#E8E1D6] flex items-center justify-center">
