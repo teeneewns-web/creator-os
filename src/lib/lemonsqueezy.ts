@@ -13,7 +13,6 @@ export function buildCheckoutUrl(orderId: string): string {
     'checkout[redirect_url]',
     `${APP_URL}/order-success?order_id=${encodeURIComponent(orderId)}`
   )
-  params.set('embed', '1')
   return `${LEMONSQUEEZY_CHECKOUT_URL}?${params.toString()}`
 }
 
