@@ -103,3 +103,27 @@ export async function markFailed(
     error_message: message,
   })
 }
+
+// ─── Lemon order ID → COS order ID mapping ───
+const LEMON_MAP_KEY = (lemonId: string) => `creator-os:lemon-map:${lemonId}`
+const LEMON_MAP_TTL = 60 * 60 * 24 * 30 // 30 days
+
+export async function saveLemonMapping(
+  lemonOrderId: string,
+  cosOrderId: string
+): Promise<void> {
+  await redis.set(
+    LEMON_MAP_KEY(lemonOrderId),
+    cosOrderId,
+    'EX',
+    LEMON_MAP_TTL
+  )
+}
+
+export async function getOrderByLemonId(
+  lemonOrderId: string
+): Promise<Order | null> {
+  const cosId = await redis.get(LEMON_MAP_KEY(lemonOrderId))
+  if (!cosId) return null
+  return getOrder(cosId)
+}

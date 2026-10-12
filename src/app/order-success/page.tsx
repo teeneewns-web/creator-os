@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, Suspense } from 'react'
+import { useEffect, useState, useRef, Suspense } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
@@ -12,12 +12,14 @@ type OrderLite = {
 
 function OrderSuccessInner() {
   const searchParams = useSearchParams()
-  const orderId = searchParams.get('order_id')
+  const lemonOrderId = searchParams.get('order_id')
   const [order, setOrder] = useState<OrderLite | null>(null)
   const [notFound, setNotFound] = useState(false)
+  const [timedOut, setTimedOut] = useState(false)
+  const attemptRef = useRef(0)
 
   useEffect(() => {
-    if (!orderId) {
+    if (!lemonOrderId) {
       setNotFound(true)
       return
     }
@@ -25,8 +27,20 @@ function OrderSuccessInner() {
     let cancelled = false
 
     async function poll() {
+      attemptRef.current += 1
       try {
-        const res = await fetch(`/api/orders/${orderId}`)
+        const res = await fetch(`/api/orders/by-lemon/${lemonOrderId}`)
+
+        if (res.status === 404) {
+          // Webhook may not have fired yet — keep trying ~60s
+          if (attemptRef.current >= 20) {
+            setTimedOut(true)
+            return
+          }
+          if (!cancelled) window.setTimeout(poll, 3000)
+          return
+        }
+
         const data = await res.json()
         if (cancelled) return
 
@@ -43,16 +57,16 @@ function OrderSuccessInner() {
           return
         }
       } catch {
-        // ignore — retry
+        // network — retry
       }
-      if (!cancelled) setTimeout(poll, 3000)
+      if (!cancelled) window.setTimeout(poll, 3000)
     }
 
     poll()
     return () => {
       cancelled = true
     }
-  }, [orderId])
+  }, [lemonOrderId])
 
   if (notFound) {
     return (
@@ -82,10 +96,33 @@ function OrderSuccessInner() {
     )
   }
 
+  if (timedOut) {
+    return (
+      <div className="min-h-screen bg-[#FAF7F2] flex items-center justify-center px-6">
+        <div className="text-center max-w-md">
+          <div className="text-4xl mb-4">📬</div>
+          <h1 className="font-serif text-3xl mb-3 text-[#1A1614]">
+            Payment received
+          </h1>
+          <p className="text-[#6B6259] mb-2">
+            We're generating your 7-day plan.
+          </p>
+          <p className="text-[#6B6259] mb-6">
+            It will arrive at your email shortly. You can safely close this tab.
+          </p>
+          <Link
+            href="/"
+            className="text-[#D97757] font-medium hover:underline"
+          >
+            Back to home →
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
   const isReady = order?.status === 'ready'
   const isFailed = order?.status === 'failed'
-  const isGenerating =
-    order?.status === 'generating' || order?.status === 'paid'
 
   return (
     <div className="min-h-screen bg-[#FAF7F2]">
@@ -131,7 +168,7 @@ function OrderSuccessInner() {
                 </span>
               </p>
               <Link
-                href={`/order/${orderId}`}
+                href={`/order/${order?.id}`}
                 className="inline-block w-full bg-[#D97757] text-white px-6 py-4 rounded-xl font-medium hover:bg-[#C66846] transition-colors shadow-[0_2px_8px_rgba(217,119,87,0.25)]"
               >
                 View your plan →
@@ -166,12 +203,14 @@ function OrderSuccessInner() {
                 </a>{' '}
                 and we'll fix it right away.
               </p>
-              <Link
-                href={`/order/${orderId}`}
-                className="text-[#D97757] font-medium hover:underline"
-              >
-                Check order status →
-              </Link>
+              {order?.id && (
+                <Link
+                  href={`/order/${order.id}`}
+                  className="text-[#D97757] font-medium hover:underline"
+                >
+                  Check order status →
+                </Link>
+              )}
             </>
           ) : (
             <>

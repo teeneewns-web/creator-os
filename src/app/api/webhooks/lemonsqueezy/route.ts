@@ -6,7 +6,9 @@ import {
   markGenerating,
   savePlan,
   markFailed,
+  saveLemonMapping,
 } from '@/lib/orders'
+
 import { generatePlan } from '@/lib/gemini'
 import { sendPlanEmail } from '@/lib/emails'
 import type { Quiz } from '@/types/order'
@@ -64,9 +66,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true, status: order.status })
     }
 
-    const lemonOrderId = payload?.data?.id ? String(payload.data.id) : undefined
-    await markPaid(orderId, 'lemonsqueezy', lemonOrderId)
+       const lemonOrderId = payload?.data?.id ? String(payload.data.id) : undefined
 
+    // Save mapping BEFORE responding — /order-success จะ lookup
+    if (lemonOrderId) {
+      await saveLemonMapping(lemonOrderId, orderId)
+    }
+
+    await markPaid(orderId, 'lemonsqueezy', lemonOrderId)
     // Keep function alive after response on Vercel
     after(
       processOrder(orderId, order.quiz).catch((err) => {
