@@ -79,6 +79,8 @@ function buildEmailText(
     daysText,
     `—`,
     `Creator OS`,
+    ``,
+    `Need help? Reply to this email — we answer within 24 hours.`,
   ].join('\n')
 }
 
@@ -196,8 +198,11 @@ function buildEmailHtml(
 
           <tr>
             <td style="padding: 32px 40px 40px;">
-              <p style="font-size:12px; color:#A39B8F; margin:0;">
+              <p style="font-size:12px; color:#A39B8F; margin:0 0 8px;">
                 Order ${order.id}
+              </p>
+              <p style="font-size:12px; color:#A39B8F; margin:0; line-height:1.6;">
+                Need help? Reply to this email — we answer within 24 hours (Mon–Fri).
               </p>
             </td>
           </tr>

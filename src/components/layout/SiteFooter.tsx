@@ -36,6 +36,7 @@ export default function SiteFooter() {
             <span style={badgeStyle}>แผนเฉพาะบุคคล</span>
             <span style={badgeStyle}>พร้อมทำ 7 วัน</span>
             <span style={badgeStyle}>Quality Gate</span>
+<span style={badgeStyle}>Replies within 24h</span>
           </div>
         </section>
 
