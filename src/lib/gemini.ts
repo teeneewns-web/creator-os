@@ -5,7 +5,7 @@ import { runQualityGate } from './quality-gate'
 import { sanitizePlan } from './sanitize'
 
 const FACT_SAFETY = `
-FACT SAFETY — HIGHEST PRIORITY:
+FACT SAFETY - HIGHEST PRIORITY:
 - NEVER invent personal stories, experiences, or events.
 - NEVER say "I once...", "I tried...", "My client...", "My friend...", "Last week I..."
 - NEVER invent testimonials, customer names, or case studies.
@@ -15,11 +15,11 @@ FACT SAFETY — HIGHEST PRIORITY:
 `.trim()
 
 const NICHE_LOCK = `
-NICHE LOCK — MANDATORY:
+NICHE LOCK - MANDATORY:
 - EVERY day (hook, script, caption, visual) MUST reference the niche, product, or audience.
 - The content must be USELESS to someone outside this niche.
 - Test: would a stranger reading this know exactly what business this creator runs?
-- If NO — rewrite until it passes.
+- If NO - rewrite until it passes.
 `.trim()
 
 const CTA_RULES = `
@@ -28,17 +28,17 @@ CTA RULES:
 - NEVER repeat exact CTA text on 3+ days.
 - If goal is "sales", at least 4 of 7 days MUST end with a product-related CTA:
   * "Book a call to start your project"
-  * "Get a free quote — link in bio"
+  * "Get a free quote - link in bio"
   * "Message me to see samples"
   * "Visit my profile to book"
   AVOID ending with "Follow" or "Comment" alone on sales-focused days.
 - NEVER say "DM us", "our team", "we offer", "we provide". This creator works ALONE.
 - Use first-person singular: "I", "me", "my". Never "we" or "us".
-- If goal is "followers", 3-5 days may ask to follow — no more than 5.
+- If goal is "followers", 3-5 days may ask to follow - no more than 5.
 `.trim()
 
 const BANNED_PHRASES = `
-BANNED PHRASES — DO NOT USE:
+BANNED PHRASES - DO NOT USE:
 
 Personal result claims:
 - "my skin feels..." / "my skin looks..." + (less/more/smoother)
@@ -83,6 +83,11 @@ function describeConstraints(constraints: string[]): string {
 }
 
 const MAX_ATTEMPTS = 4
+const MODELS = [
+  'gemini-flash-latest',
+  'gemini-3.8-flash',
+  'gemini-3.5-flash',
+]
 
 type Attempt = {
   plan: Plan
@@ -104,10 +109,8 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
     )
 
     let text: string | undefined
-    // Fallback models — ลองทีละตัวถ้าตัวแรกเจอ 503
-    const models = ['gemini-flash-latest', 'gemini-3.8-flash', 'gemini-3.5-flash']
 
-    for (const model of models) {
+    for (const model of MODELS) {
       try {
         const response = await ai.models.generateContent({
           model,
@@ -120,14 +123,20 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
         text = response.text
         if (text) break
       } catch (err) {
-        const is503 =
-          err instanceof Error && err.message.includes('503')
+        const msg = err instanceof Error ? err.message : String(err)
+        const is503 = msg.includes('503')
+        const is429 = msg.includes('429')
         if (is503) {
           console.warn(`Model ${model} unavailable (503), trying next...`)
           await new Promise((r) => setTimeout(r, 2000))
           continue
         }
-        console.warn(`Gemini error on attempt ${attempt} with ${model}:`, err)
+        if (is429) {
+          console.warn(`Model ${model} rate-limited (429), trying next...`)
+          await new Promise((r) => setTimeout(r, 2000))
+          continue
+        }
+        console.warn(`Gemini error on attempt ${attempt} with ${model}:`, msg.slice(0, 200))
       }
     }
 
@@ -137,14 +146,14 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
       continue
     }
 
-    if (!text) {
-      console.warn(`Empty response on attempt ${attempt}`)
-      continue
-    }
-
     let parsed: Plan
     try {
-      parsed = JSON.parse(text) as Plan
+      const cleaned = text
+        .replace(/^```json\s*/i, '')
+        .replace(/^```\s*/i, '')
+        .replace(/\s*```$/i, '')
+        .trim()
+      parsed = JSON.parse(cleaned) as Plan
     } catch {
       console.warn(`Invalid JSON on attempt ${attempt}`)
       continue
@@ -172,14 +181,8 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
     )
   }
 
-  // ============================================================
-  // BEST EFFORT FALLBACK
-  // ถ้าทุก attempt fail → คืน attempt ที่มี issues น้อยสุด
-  // ลูกค้าได้ของเสมอ (sanitized แล้ว)
-  // ============================================================
+  // Best effort fallback
   if (attempts.length === 0) {
-    // ถ้า AI ทุกตัวล่ม — throw เพื่อให้ลูกค้าเห็น error
-    // แต่ส่งข้อความที่เข้าใจได้
     throw new Error(
       'AI_SERVICE_UNAVAILABLE: Please try again in a moment. This is temporary.'
     )
@@ -206,7 +209,7 @@ function buildPrompt(
   const retryWarning =
     attempt > 1 && previousIssues.length > 0
       ? `
-⚠ PREVIOUS ATTEMPT FAILED ⚠
+!! PREVIOUS ATTEMPT FAILED !!
 Fix these exact issues:
 ${previousIssues.map((i) => `- ${i}`).join('\n')}
 `
@@ -215,49 +218,50 @@ ${previousIssues.map((i) => `- ${i}`).join('\n')}
   return `
 Create a 7-day content plan for this SPECIFIC creator.
 
-═══ CREATOR PROFILE ═══
-Niche: ${quiz.niche}
-What they sell: ${quiz.product}
-Target audience: ${quiz.audience}
-Platform: ${quiz.platform}
-Tone: ${quiz.tone}
-Goal: ${quiz.goal}
-
-Constraints:
-${describeConstraints(quiz.constraints)}
-
-═══ ${NICHE_LOCK} ═══
-
-═══ ${FACT_SAFETY} ═══
-
-═══ ${BANNED_PHRASES} ═══
-
-═══ ${CTA_RULES} ═══
-
 ${retryWarning}
 
-═══ CONTENT JOURNEY BY GOAL ═══
-If goal = "sales": pain → demo → objection → use case → education → framework → offer
-If goal = "followers": intro → value → series → interrupt → journey → participation → BTS
-If goal = "engagement": question, poll, hot take, challenge, community, contrast, list
+${FACT_SAFETY}
 
-═══ OUTPUT FORMAT (strict JSON) ═══
+${NICHE_LOCK}
+
+${CTA_RULES}
+
+${BANNED_PHRASES}
+
+CREATOR PROFILE:
+- Platform: ${quiz.platform}
+- Niche: ${quiz.niche}
+- Product/Service: ${quiz.product}
+- Target Audience: ${quiz.audience}
+- Tone: ${quiz.tone}
+- Goal: ${quiz.goal}
+- Constraints:
+${describeConstraints(quiz.constraints)}
+
+STRUCTURE REQUIREMENTS:
+- 7 days, each with: day (1-7), hook, script, caption, hashtags (array), visual, posting_time
+- Each day must have a UNIQUE angle - no repetition of hook openings
+- If goal = "sales": follow: demo -> objection -> use case -> education -> framework -> offer
+- If goal = "followers": intro -> value -> series -> interrupt -> journey -> participation -> BTS
+- If goal = "engagement": question, poll, hot take, challenge, community, contrast, list
+
+OUTPUT FORMAT - return ONLY valid JSON matching this exact shape:
 {
-  "title": "string, max 8 words",
-  "summary": "string, max 20 words",
+  "title": "string",
+  "summary": "string",
   "days": [
     {
       "day": 1,
-      "hook": "string, first 3 seconds, niche-specific",
-      "script": "string, 30-60 second script",
-      "caption": "string, max 15 words",
-      "hashtags": ["5-7 tags WITHOUT # symbol"],
-      "visual": "string, respects constraints",
-      "posting_time": "string, e.g. '7-9 PM local'"
+      "hook": "string",
+      "script": "string",
+      "caption": "string",
+      "hashtags": ["string", ...],
+      "visual": "string",
+      "posting_time": "string"
     }
   ]
 }
 
-Return valid JSON only. No markdown.
+Return only the JSON object. No markdown, no explanation.
 `.trim()
 }
