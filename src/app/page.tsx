@@ -89,7 +89,7 @@ export default function Home() {
             </Link>
           </div>
 
-                    {/* Guarantee Badge */}
+          {/* Guarantee Badge */}
           <div className="flex items-center gap-2 text-sm text-[#6B6259] mb-6">
             <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#2C3E50]" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -154,7 +154,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Day 1 Preview (Updated to match new sample) */}
+            {/* Day 1 Preview */}
             <div className="border-t border-[#E8E1D6] pt-6">
               <div className="flex items-center gap-3 mb-6">
                 <div className="inline-flex items-center gap-1.5 bg-[#FBF0E9] text-[#D97757] px-2.5 py-1 rounded-full text-xs font-medium uppercase tracking-widest">
@@ -197,7 +197,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Days 2-7 Preview (Updated) */}
+            {/* Days 2-7 Preview */}
             <div className="mt-8 border-t border-[#E8E1D6]">
               {[
                 ['02', 'Tutorial', 'The 10-minute workout that actually works'],
@@ -392,6 +392,23 @@ export default function Home() {
               </div>
             ))}
           </div>
+
+          {/* 👇 วิดีโอ Embed ที่ฝังไว้ให้แล้ว */}
+          <div className="mt-16 max-w-4xl mx-auto">
+            <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-[#E8E1D6] shadow-[0_8px_32px_rgba(26,22,20,0.06)] bg-[#FAF7F2]">
+              <iframe
+                src="https://www.youtube.com/embed/XTF-VZYrbhY"
+                title="Creator OS Demo"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full"
+              />
+            </div>
+            <p className="text-center text-sm text-[#A39B8F] mt-4">
+              Watch a 30-second preview of the plan generation.
+            </p>
+          </div>
+
         </div>
       </section>
 
@@ -464,19 +481,14 @@ export default function Home() {
             <div className="inline-flex items-center gap-2 bg-white border border-[#E8E1D6] rounded-full px-3 py-1 text-xs uppercase tracking-widest text-[#6B6259] font-medium mb-5">
               7-Day Content Plan
             </div>
-            <div className="flex items-baseline gap-2 mb-8">
+            <div className="flex items-baseline gap-2 mb-2">
               <span className="font-serif text-6xl tracking-[-0.02em]">
                 $19
               </span>
               <span className="text-[#6B6259] text-lg">USD</span>
             </div>
-                        <div className="mt-5 flex items-center justify-center gap-2 text-xs text-[#6B6259]">
-              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-[#2C3E50]" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                <polyline points="9 12 11 14 15 10" />
-              </svg>
-              <span>Secure checkout · 7-day guarantee</span>
-            </div>
+            <p className="text-sm text-[#A39B8F] mb-8">One-time payment</p>
+
             <ul className="space-y-3 mb-10 text-[15px] text-[#3F3A35]">
               {[
                 '7 days of hooks, scripts, captions',
@@ -508,6 +520,13 @@ export default function Home() {
               Create my 7-day plan
               <span aria-hidden>→</span>
             </Link>
+            <div className="mt-5 flex items-center justify-center gap-2 text-xs text-[#6B6259]">
+              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-[#2C3E50]" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <polyline points="9 12 11 14 15 10" />
+              </svg>
+              <span>Secure checkout · 7-day guarantee</span>
+            </div>
           </div>
         </div>
       </section>
@@ -543,7 +562,7 @@ export default function Home() {
                 See a sample
               </Link>
             </div>
-                        <div className="mt-8 flex items-center gap-2 text-sm text-[#A39B8F]">
+            <div className="mt-8 flex items-center gap-2 text-sm text-[#A39B8F]">
               <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#FAF7F2]" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 <polyline points="9 12 11 14 15 10" />
