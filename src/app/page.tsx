@@ -37,7 +37,7 @@ export default function Home() {
               href="/start"
               className="ml-2 inline-flex items-center gap-1.5 bg-[#1A1614] text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-[#2A2521] transition-colors"
             >
-              Get started
+              Create my plan
               <span aria-hidden>→</span>
             </Link>
           </nav>
@@ -47,7 +47,6 @@ export default function Home() {
       {/* ============ HERO ============ */}
       <section className="max-w-6xl mx-auto px-6 pt-20 md:pt-28 pb-16 md:pb-24">
         <div className="max-w-3xl">
-          {/* Bigger, clearer badge */}
           <div className="inline-flex items-center gap-2.5 border border-[#E8E1D6] bg-white rounded-full pl-2 pr-4 py-2 text-[13px] text-[#6B6259] mb-10 shadow-[0_1px_2px_rgba(26,22,20,0.03)]">
             <span className="inline-flex items-center gap-1.5 bg-[#FBF0E9] text-[#D97757] px-2.5 py-0.5 rounded-full text-[11px] font-medium">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
@@ -56,7 +55,6 @@ export default function Home() {
             Built for TikTok, Reels, and Shorts
           </div>
 
-          {/* Headline with marker highlight on italic line */}
           <h1 className="font-serif text-[clamp(2.5rem,6.5vw,4.75rem)] leading-[1.05] tracking-[-0.02em] mb-7 text-[#1A1614]">
             Know exactly what to post
             <br />
@@ -91,7 +89,6 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Trust line as pills */}
           <div className="flex flex-wrap items-center gap-2 text-sm">
             <span className="inline-flex items-center gap-1.5 bg-white border border-[#E8E1D6] text-[#6B6259] px-3 py-1.5 rounded-full">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
@@ -112,10 +109,8 @@ export default function Home() {
       {/* ============ PRODUCT PREVIEW ============ */}
       <section id="preview" className="max-w-6xl mx-auto px-6 pb-24 md:pb-32">
         <div className="bg-white border border-[#E8E1D6] rounded-3xl shadow-[0_8px_32px_rgba(26,22,20,0.06)] overflow-hidden">
-          {/* Accent top bar */}
           <div className="h-1 bg-gradient-to-r from-[#D97757] via-[#D97757]/60 to-transparent" />
 
-          {/* Window bar */}
           <div className="flex items-center gap-3 px-5 py-4 border-b border-[#E8E1D6] bg-[#FAF7F2]/60">
             <div className="flex gap-1.5">
               <div className="w-2.5 h-2.5 rounded-full bg-[#E8E1D6]" />
@@ -150,14 +145,14 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Day 1 */}
+            {/* Day 1 Preview (Updated to match new sample) */}
             <div className="border-t border-[#E8E1D6] pt-6">
               <div className="flex items-center gap-3 mb-6">
                 <div className="inline-flex items-center gap-1.5 bg-[#FBF0E9] text-[#D97757] px-2.5 py-1 rounded-full text-xs font-medium uppercase tracking-widest">
                   Day 01
                 </div>
                 <div className="flex-1 h-px bg-[#E8E1D6]" />
-                <div className="text-xs text-[#A39B8F]">Personal story</div>
+                <div className="text-xs text-[#A39B8F]">Hot take</div>
               </div>
 
               <div className="mb-6">
@@ -165,7 +160,7 @@ export default function Home() {
                   Hook
                 </div>
                 <div className="font-serif text-xl md:text-2xl leading-snug text-[#1A1614]">
-                  &ldquo;I trained 20 busy moms. Only 3 stuck with it.&rdquo;
+                  &ldquo;Most moms quit fitness in week two. Here is why.&rdquo;
                 </div>
               </div>
 
@@ -174,35 +169,34 @@ export default function Home() {
                   Script
                 </div>
                 <p className="text-[#3F3A35] leading-relaxed max-w-2xl">
-                  Most moms quit because they try to fit 5 workouts a week
-                  into a schedule that&rsquo;s already full. The three who
-                  stuck with it? They started with 10 minutes. Here&rsquo;s
-                  what changed for them&hellip;
+                  Most moms quit fitness in week two. Not because they are lazy.
+                  Because they picked the wrong starting point. The fix is boring,
+                  and it works: start with 10 minutes&hellip;
                 </p>
               </div>
 
               <div className="grid sm:grid-cols-3 gap-4">
                 <MetaBox label="Visual">
-                  Talking head + b-roll of morning routine
+                  Talking head in home setting + b-roll of morning routine
                 </MetaBox>
                 <MetaBox label="Caption">
-                  10 minutes is enough. Here&rsquo;s proof.
+                  10 minutes beats 45 you&rsquo;ll quit. Every time.
                 </MetaBox>
                 <MetaBox label="Post at">
-                  6:30 – 8:00 AM local
+                  6:30 &ndash; 8:00 AM local
                 </MetaBox>
               </div>
             </div>
 
-            {/* Days 2-7 */}
+            {/* Days 2-7 Preview (Updated) */}
             <div className="mt-8 border-t border-[#E8E1D6]">
               {[
                 ['02', 'Tutorial', 'The 10-minute workout that actually works'],
                 ['03', 'Hot take', 'Why &ldquo;no time&rdquo; isn&rsquo;t the real problem'],
-                ['04', 'Before / after', 'From 0 to 4 workouts a week — in 6 weeks'],
+                ['04', 'Framework', 'The six-week rule nobody tells busy moms'],
                 ['05', 'List', '3 things I&rsquo;d tell every mom starting today'],
-                ['06', 'Behind the scenes', 'What my client&rsquo;s first week actually looked like'],
-                ['07', 'Question', 'What&rsquo;s stopping you from starting?'],
+                ['06', 'Behind the scenes', 'What a realistic week one actually looks like'],
+                ['07', 'Question', 'What&rsquo;s stopping you from starting today?'],
               ].map(([day, type, title]) => (
                 <div
                   key={day}
@@ -317,7 +311,7 @@ export default function Home() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
             ['7 hooks', 'Written to stop the scroll in the first 3 seconds.'],
-            ['7 scripts', 'Word-for-word. 30–60 seconds. Ready to read aloud.'],
+            ['7 scripts', 'Word-for-word. 30&ndash;60 seconds. Ready to read aloud.'],
             ['Captions + hashtags', 'Tuned to your platform. Not copy-pasted.'],
             ['Visual direction', 'B-roll and on-screen text for each day.'],
             ['Posting time slots', 'So you show up when your audience does.'],
@@ -343,10 +337,7 @@ export default function Home() {
       </section>
 
       {/* ============ HOW IT WORKS ============ */}
-      <section
-        id="how"
-        className="bg-white border-y border-[#E8E1D6]"
-      >
+      <section id="how" className="bg-white border-y border-[#E8E1D6]">
         <div className="max-w-6xl mx-auto px-6 py-24 md:py-32">
           <div className="max-w-2xl mb-14">
             <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
@@ -447,10 +438,7 @@ export default function Home() {
       </section>
 
       {/* ============ PRICING ============ */}
-      <section
-        id="pricing"
-        className="bg-white border-y border-[#E8E1D6]"
-      >
+      <section id="pricing" className="bg-white border-y border-[#E8E1D6]">
         <div className="max-w-3xl mx-auto px-6 py-24 md:py-32 text-center">
           <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
@@ -559,7 +547,6 @@ export default function Home() {
             <Link href="/privacy" className="hover:text-[#1A1614] transition-colors">
               Privacy
             </Link>
-
             <Link href="/contact" className="hover:text-[#1A1614] transition-colors">
               Contact
             </Link>
