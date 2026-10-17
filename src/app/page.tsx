@@ -89,6 +89,15 @@ export default function Home() {
             </Link>
           </div>
 
+                    {/* Guarantee Badge */}
+          <div className="flex items-center gap-2 text-sm text-[#6B6259] mb-6">
+            <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#2C3E50]" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <polyline points="9 12 11 14 15 10" />
+            </svg>
+            <span>7-day money-back guarantee. No questions asked.</span>
+          </div>
+
           <div className="flex flex-wrap items-center gap-2 text-sm">
             <span className="inline-flex items-center gap-1.5 bg-white border border-[#E8E1D6] text-[#6B6259] px-3 py-1.5 rounded-full">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
@@ -461,6 +470,13 @@ export default function Home() {
               </span>
               <span className="text-[#6B6259] text-lg">USD</span>
             </div>
+                        <div className="mt-5 flex items-center justify-center gap-2 text-xs text-[#6B6259]">
+              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-[#2C3E50]" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <polyline points="9 12 11 14 15 10" />
+              </svg>
+              <span>Secure checkout · 7-day guarantee</span>
+            </div>
             <ul className="space-y-3 mb-10 text-[15px] text-[#3F3A35]">
               {[
                 '7 days of hooks, scripts, captions',
@@ -526,6 +542,13 @@ export default function Home() {
               >
                 See a sample
               </Link>
+            </div>
+                        <div className="mt-8 flex items-center gap-2 text-sm text-[#A39B8F]">
+              <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#FAF7F2]" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <polyline points="9 12 11 14 15 10" />
+              </svg>
+              <span>7-day money-back guarantee.</span>
             </div>
           </div>
         </div>
