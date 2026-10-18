@@ -19,7 +19,8 @@ export async function sendPlanEmail(
   }
 
   const resend = new Resend(apiKey)
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+  const appUrl =
+    process.env.NEXT_PUBLIC_APP_URL || 'https://creator-os-beta-navy.vercel.app'
   const html = buildEmailHtml(order, plan, appUrl)
   const text = buildEmailText(order, plan, appUrl)
 
@@ -27,7 +28,7 @@ export async function sendPlanEmail(
     await resend.emails.send({
       from: FROM,
       to: order.email,
-      subject: 'Your 7-day plan is ready',
+      subject: `Your 7-day plan is ready: ${plan.title}`,
       html,
       text,
     })
@@ -36,31 +37,32 @@ export async function sendPlanEmail(
   }
 }
 
-function buildEmailText(
-  order: Order,
-  plan: Plan,
-  appUrl: string
-): string {
+function buildEmailText(order: Order, plan: Plan, appUrl: string): string {
   const daysText = plan.days
     .map((d) => {
       const tags = d.hashtags.map((h) => `#${cleanTag(h)}`).join(' ')
       return [
-        `DAY ${String(d.day).padStart(2, '0')}`,
+        `====================================`,
+        `DAY ${String(d.day).padStart(2, '0')} - ${d.type || ''}`,
+        `====================================`,
+        `HOOK:`,
+        d.hook,
         ``,
-        `Hook: ${d.hook}`,
-        ``,
-        `Script:`,
+        `SCRIPT:`,
         d.script,
         ``,
-        `Caption: ${d.caption}`,
+        `CAPTION:`,
+        d.caption,
         ``,
-        `Hashtags: ${tags}`,
+        `HASHTAGS: ${tags}`,
         ``,
-        `Visual: ${d.visual}`,
+        `VISUAL:`,
+        d.visual,
         ``,
-        `Post at: ${d.posting_time}`,
-        ``,
-        `---`,
+        `POST AT: ${d.posting_time}`,
+        d.posting_tip ? `\nFILMING TIP:\n${d.posting_tip}` : '',
+        d.sound_suggestion ? `\nSOUND:\n${d.sound_suggestion}` : '',
+        d.text_overlay ? `\nTEXT OVERLAY: "${d.text_overlay}"` : '',
         ``,
       ].join('\n')
     })
@@ -72,23 +74,16 @@ function buildEmailText(
     plan.title,
     plan.summary,
     ``,
-    `View the full plan: ${appUrl}/order/${order.id}`,
-    ``,
-    `====================================`,
+    `View the full plan and track progress on the web: ${appUrl}/order/${order.id}`,
     ``,
     daysText,
-    `—`,
+    `------------------------------------`,
+    `Need help? Reply to this email - we answer within 24 hours.`,
     `Creator OS`,
-    ``,
-    `Need help? Reply to this email — we answer within 24 hours.`,
   ].join('\n')
 }
 
-function buildEmailHtml(
-  order: Order,
-  plan: Plan,
-  appUrl: string
-): string {
+function buildEmailHtml(order: Order, plan: Plan, appUrl: string): string {
   const orderUrl = `${appUrl}/order/${order.id}`
 
   const daysHtml = plan.days
@@ -96,62 +91,85 @@ function buildEmailHtml(
       const tagsHtml = d.hashtags
         .map(
           (h) =>
-            `<span style="display:inline-block; background:#FAF7F2; border:1px solid #E8E1D6; color:#6B6259; padding:4px 10px; border-radius:12px; font-family:monospace; font-size:12px; margin:0 4px 4px 0;">#${cleanTag(
-              h
-            )}</span> `
+            `<span style="display:inline-block; background:#FAF7F2; border:1px solid #E8E1D6; color:#6B6259; padding:4px 10px; border-radius:12px; font-family:monospace; font-size:12px; margin:0 4px 4px 0;">#${cleanTag(h)}</span>`
         )
         .join('')
 
-      return `
-    <tr>
-      <td style="padding: 32px 0; border-bottom: 1px solid #E8E1D6;">
-        <div style="display:inline-block; padding: 4px 10px; background:#FBF0E9; border:1px solid #E8E1D6; border-radius:20px; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#D97757; font-weight:500; margin-bottom:16px;">
-          Day ${String(d.day).padStart(2, '0')}
-        </div>
-
-        <div style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#A39B8F; margin-bottom:8px;">
-          Hook
-        </div>
-        <div style="font-family: Georgia, serif; font-size: 22px; line-height: 1.3; color: #1A1614; margin-bottom: 20px;">
-          ${escapeHtml(d.hook)}
-        </div>
-
-        <div style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#A39B8F; margin-bottom:8px;">
-          Script
-        </div>
-        <div style="font-size: 14px; line-height: 1.7; color: #3F3A35; white-space: pre-wrap; margin-bottom: 20px;">
-          ${escapeHtml(d.script)}
-        </div>
-
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:16px;">
+      const tipsHtml = `
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top:20px; background:#FBF0E9/40; border-radius:10px; padding:16px;">
           <tr>
-            <td width="50%" style="padding-right:8px; vertical-align:top;">
-              <div style="background:#FAF7F2; border:1px solid #E8E1D6; border-radius:10px; padding:12px;">
-                <div style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#A39B8F; margin-bottom:4px;">Caption</div>
-                <div style="font-size:13px; color:#3F3A35; line-height:1.5;">${escapeHtml(d.caption)}</div>
+            <td style="padding: 10px;">
+              <div style="font-size:11px; text-transform:uppercase; color:#D97757; font-weight:600; margin-bottom:12px; letter-spacing:0.05em;">Execution Tips</div>
+              <div style="margin-bottom:10px;">
+                <strong style="font-size:12px; color:#1A1614;">Filming:</strong>
+                <span style="font-size:13px; color:#3F3A35;">${escapeHtml(d.posting_tip || 'N/A')}</span>
               </div>
-            </td>
-            <td width="50%" style="padding-left:8px; vertical-align:top;">
-              <div style="background:#FAF7F2; border:1px solid #E8E1D6; border-radius:10px; padding:12px;">
-                <div style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#A39B8F; margin-bottom:4px;">Post at</div>
-                <div style="font-size:13px; color:#3F3A35; line-height:1.5;">${escapeHtml(d.posting_time)}</div>
+              <div style="margin-bottom:10px;">
+                <strong style="font-size:12px; color:#1A1614;">Sound:</strong>
+                <span style="font-size:13px; color:#3F3A35;">${escapeHtml(d.sound_suggestion || 'N/A')}</span>
+              </div>
+              <div>
+                <strong style="font-size:12px; color:#1A1614;">Text Overlay:</strong>
+                <span style="font-size:13px; color:#3F3A35;">&ldquo;${escapeHtml(d.text_overlay || 'N/A')}&rdquo;</span>
               </div>
             </td>
           </tr>
         </table>
+      `
 
-        <div style="background:#FAF7F2; border:1px solid #E8E1D6; border-radius:10px; padding:12px; margin-bottom:16px;">
-          <div style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#A39B8F; margin-bottom:4px;">Visual Direction</div>
-          <div style="font-size:13px; color:#3F3A35; line-height:1.5;">${escapeHtml(d.visual)}</div>
-        </div>
+      return `
+        <tr>
+          <td style="padding: 40px 0; border-bottom: 1px solid #E8E1D6;">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:20px;">
+              <div style="display:inline-block; padding: 4px 10px; background:#FBF0E9; border:1px solid #E8E1D6; border-radius:20px; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#D97757; font-weight:600;">
+                Day ${String(d.day).padStart(2, '0')}
+              </div>
+              <div style="display:inline-block; font-size:13px; color:#A39B8F;">
+                ${escapeHtml(d.type || '')}
+              </div>
+            </div>
 
-        <div>
-          <div style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#A39B8F; margin-bottom:8px;">Hashtags</div>
-          <div>${tagsHtml}</div>
-        </div>
-      </td>
-    </tr>
-  `
+            <div style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#A39B8F; margin-bottom:8px;">Hook</div>
+            <div style="font-family: Georgia, serif; font-size: 20px; line-height: 1.4; color: #1A1614; margin-bottom: 24px;">
+              ${escapeHtml(d.hook)}
+            </div>
+
+            <div style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#A39B8F; margin-bottom:8px;">Script</div>
+            <div style="font-size: 14px; line-height: 1.7; color: #3F3A35; white-space: pre-wrap; margin-bottom: 24px;">
+              ${escapeHtml(d.script)}
+            </div>
+
+            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:16px;">
+              <tr>
+                <td width="50%" style="padding-right:8px; vertical-align:top;">
+                  <div style="background:#FAF7F2; border:1px solid #E8E1D6; border-radius:10px; padding:12px;">
+                    <div style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#A39B8F; margin-bottom:4px;">Caption</div>
+                    <div style="font-size:13px; color:#3F3A35; line-height:1.5;">${escapeHtml(d.caption)}</div>
+                  </div>
+                </td>
+                <td width="50%" style="padding-left:8px; vertical-align:top;">
+                  <div style="background:#FAF7F2; border:1px solid #E8E1D6; border-radius:10px; padding:12px;">
+                    <div style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#A39B8F; margin-bottom:4px;">Post at</div>
+                    <div style="font-size:13px; color:#3F3A35; line-height:1.5;">${escapeHtml(d.posting_time)}</div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+
+            <div style="background:#FAF7F2; border:1px solid #E8E1D6; border-radius:10px; padding:12px; margin-bottom:16px;">
+              <div style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#A39B8F; margin-bottom:4px;">Visual Direction</div>
+              <div style="font-size:13px; color:#3F3A35; line-height:1.5;">${escapeHtml(d.visual)}</div>
+            </div>
+
+            <div>
+              <div style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#A39B8F; margin-bottom:8px;">Hashtags</div>
+              <div>${tagsHtml}</div>
+            </div>
+
+            ${tipsHtml}
+          </td>
+        </tr>
+      `
     })
     .join('')
 
@@ -170,11 +188,11 @@ function buildEmailHtml(
         <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width: 600px; background:#FFFFFF; border:1px solid #E8E1D6; border-radius:16px;">
           <tr>
             <td style="padding: 40px 40px 32px;">
-              <div style="display:inline-block; padding:4px 10px; border:1px solid #E8E1D6; border-radius:20px; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#D97757; margin-bottom:20px;">
+              <div style="display:inline-block; padding:4px 10px; border:1px solid #E8E1D6; border-radius:20px; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#D97757; margin-bottom:20px; font-weight:600;">
                 Plan ready
               </div>
 
-              <h1 style="font-family: Georgia, serif; font-size: 30px; line-height: 1.2; color: #1A1614; margin: 0 0 12px; font-weight: 400;">
+              <h1 style="font-family: Georgia, serif; font-size: 28px; line-height: 1.3; color: #1A1614; margin: 0 0 12px; font-weight: 400;">
                 ${escapeHtml(plan.title)}
               </h1>
 
@@ -182,8 +200,8 @@ function buildEmailHtml(
                 ${escapeHtml(plan.summary)}
               </p>
 
-              <a href="${orderUrl}" style="display:inline-block; background:#1A1614; color:#FFFFFF; text-decoration:none; padding:14px 24px; border-radius:10px; font-size:14px; font-weight:500;">
-                Open my plan →
+              <a href="${orderUrl}" style="display:inline-block; background:#1A1614; color:#FFFFFF; text-decoration:none; padding:14px 24px; border-radius:10px; font-size:14px; font-weight:600;">
+                View plan & track progress &rarr;
               </a>
             </td>
           </tr>
@@ -202,15 +220,11 @@ function buildEmailHtml(
                 Order ${order.id}
               </p>
               <p style="font-size:12px; color:#A39B8F; margin:0; line-height:1.6;">
-                Need help? Reply to this email — we answer within 24 hours (Mon–Fri).
+                Need help? Reply to this email &mdash; we answer within 24 hours (Mon&ndash;Fri).
               </p>
             </td>
           </tr>
         </table>
-
-        <p style="font-size:11px; color:#A39B8F; margin: 24px 0 0;">
-          © ${new Date().getFullYear()} Creator OS
-        </p>
       </td>
     </tr>
   </table>
