@@ -39,30 +39,14 @@ CTA RULES:
 
 const BANNED_PHRASES = `
 BANNED PHRASES - DO NOT USE:
-
-Personal result claims:
 - "my skin feels..." / "my skin looks..." + (less/more/smoother)
 - "smoother skin" / "calmer skin" / "clearer skin" / "less red"
-- "notice the change" / "see the difference"
-- "before and after"
+- "notice the change" / "see the difference" / "before and after"
 - "after X days/weeks/months of using"
-- "I've been using..." / "since I started..."
-- "Day X of using..."
-
-Timeline claims:
+- "I've been using..." / "since I started..." / "Day X of using..."
 - "after a week" / "after just one week" / "after 7 days"
-
-Fake offers:
 - "free trial" / "free week" / "free checklist" / "limited spots" / "X% off"
-
-Fake team:
 - "DM us" / "our team" / "we offer"
-
-INSTEAD, use these patterns:
-- "Try this routine and see how it feels"
-- "Here's how the product works"
-- "Watch the texture"
-- "The formula is designed to..."
 `.trim()
 
 function describeConstraints(constraints: string[]): string {
@@ -126,13 +110,8 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
         const msg = err instanceof Error ? err.message : String(err)
         const is503 = msg.includes('503')
         const is429 = msg.includes('429')
-        if (is503) {
-          console.warn(`Model ${model} unavailable (503), trying next...`)
-          await new Promise((r) => setTimeout(r, 2000))
-          continue
-        }
-        if (is429) {
-          console.warn(`Model ${model} rate-limited (429), trying next...`)
+        if (is503 || is429) {
+          console.warn(`Model ${model} unavailable (${is503 ? '503' : '429'}), trying next...`)
           await new Promise((r) => setTimeout(r, 2000))
           continue
         }
@@ -181,7 +160,6 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
     )
   }
 
-  // Best effort fallback
   if (attempts.length === 0) {
     throw new Error(
       'AI_SERVICE_UNAVAILABLE: Please try again in a moment. This is temporary.'
@@ -239,8 +217,7 @@ CREATOR PROFILE:
 ${describeConstraints(quiz.constraints)}
 
 STRUCTURE REQUIREMENTS:
-- 7 days, each with: day (1-7), hook, script, caption, hashtags (array), visual, posting_time
-- Each day must have a UNIQUE angle - no repetition of hook openings
+- 7 days, each with unique angle - no repetition of hook openings
 - If goal = "sales": follow: demo -> objection -> use case -> education -> framework -> offer
 - If goal = "followers": intro -> value -> series -> interrupt -> journey -> participation -> BTS
 - If goal = "engagement": question, poll, hot take, challenge, community, contrast, list
@@ -252,12 +229,16 @@ OUTPUT FORMAT - return ONLY valid JSON matching this exact shape:
   "days": [
     {
       "day": 1,
+      "type": "string (e.g., Hot take, Tutorial, Personal story)",
       "hook": "string",
       "script": "string",
       "caption": "string",
-      "hashtags": ["string", ...],
+      "hashtags": ["string"],
       "visual": "string",
-      "posting_time": "string"
+      "posting_time": "string",
+      "posting_tip": "string (1 actionable tip on HOW to film or edit this specific video to maximize retention)",
+      "sound_suggestion": "string (audio idea: e.g., 'Trending audio', 'Voiceover only', 'Lo-fi beat')",
+      "text_overlay": "string (key 2-4 word phrase to put on screen to stop the scroll)"
     }
   ]
 }

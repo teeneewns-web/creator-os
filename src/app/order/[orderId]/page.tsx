@@ -323,7 +323,7 @@ function DayCard({
   const captionAndTags = `${day.caption}\n\n${cleanTags}`
 
   const allText = [
-    `DAY ${String(day.day).padStart(2, '0')}`,
+    `DAY ${String(day.day).padStart(2, '0')} - ${day.type || ''}`,
     ``,
     `HOOK:`,
     hookText,
@@ -341,6 +341,9 @@ function DayCard({
     day.visual,
     ``,
     `POST AT: ${day.posting_time}`,
+    day.posting_tip ? `\nPOSTING TIP: ${day.posting_tip}` : '',
+    day.sound_suggestion ? `\nSOUND: ${day.sound_suggestion}` : '',
+    day.text_overlay ? `\nTEXT OVERLAY: ${day.text_overlay}` : '',
   ].join('\n')
 
   return (
@@ -357,6 +360,11 @@ function DayCard({
             <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
             Day {String(day.day).padStart(2, '0')}
           </div>
+          {day.type && (
+            <span className="text-xs text-[#A39B8F] hidden sm:inline-block">
+              {day.type}
+            </span>
+          )}
           {done && (
             <span className="text-xs text-[#D97757] font-medium">
               ✓ Done
@@ -439,6 +447,58 @@ function DayCard({
           <MetaBox label="Post at">{day.posting_time}</MetaBox>
           <MetaBox label="Visual direction">{day.visual}</MetaBox>
         </div>
+
+        {/* 🆕 Execution Tips (Posting Tip + Sound + Text Overlay) */}
+        {(day.posting_tip || day.sound_suggestion || day.text_overlay) && (
+          <div className="mt-6 pt-6 border-t border-[#E8E1D6]">
+            <div className="text-xs uppercase tracking-widest text-[#A39B8F] mb-4">
+              Execution Tips
+            </div>
+            <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-3">
+              {day.posting_tip && (
+                <div className="bg-[#FBF0E9]/40 border border-[#E8E1D6] rounded-xl p-4">
+                  <div className="text-[10px] uppercase tracking-widest text-[#D97757] font-medium mb-1.5 flex items-center gap-1.5">
+                    <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                    Filming Tip
+                  </div>
+                  <div className="text-sm text-[#3F3A35] leading-relaxed">
+                    {day.posting_tip}
+                  </div>
+                </div>
+              )}
+              {day.sound_suggestion && (
+                <div className="bg-[#FAF7F2] border border-[#E8E1D6] rounded-xl p-4">
+                  <div className="text-[10px] uppercase tracking-widest text-[#6B6259] font-medium mb-1.5 flex items-center gap-1.5">
+                    <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M9 18V5l12-2v13"/>
+                      <circle cx="6" cy="18" r="3"/>
+                      <circle cx="18" cy="16" r="3"/>
+                    </svg>
+                    Sound
+                  </div>
+                  <div className="text-sm text-[#3F3A35] leading-relaxed">
+                    {day.sound_suggestion}
+                  </div>
+                </div>
+              )}
+              {day.text_overlay && (
+                <div className="bg-[#FAF7F2] border border-[#E8E1D6] rounded-xl p-4">
+                  <div className="text-[10px] uppercase tracking-widest text-[#6B6259] font-medium mb-1.5 flex items-center gap-1.5">
+                    <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M4 7V4h16v3M9 20h6M12 4v16"/>
+                    </svg>
+                    Text Overlay
+                  </div>
+                  <div className="text-sm text-[#3F3A35] leading-relaxed font-medium">
+                    &ldquo;{day.text_overlay}&rdquo;
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         <div className="mt-5 pt-5 border-t border-[#E8E1D6] flex justify-end">
           <CopyButton
