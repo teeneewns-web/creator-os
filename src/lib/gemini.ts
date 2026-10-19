@@ -66,10 +66,11 @@ function describeConstraints(constraints: string[]): string {
   return constraints.map((c) => `- ${map[c] || c}`).join('\n')
 }
 
-const MAX_ATTEMPTS = 4
+// ─── ปรับให้ Retry น้อยลง แต่เว้นจังหวะนานขึ้น ───
+const MAX_ATTEMPTS = 2 
+// เรียงลำดับ Model ใหม่: เริ่มจากตัวที่เสถียรที่สุด
 const MODELS = [
-  'gemini-flash-latest',
-  'gemini-3.8-flash',
+  'gemini-3.6-flash',
   'gemini-3.5-flash',
 ]
 
@@ -101,7 +102,8 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
           contents: prompt,
           config: {
             responseMimeType: 'application/json',
-            temperature: attempt === 1 ? 0.85 : 0.6,
+            // ลด Temperature ลงนิดนึงให้ AI ตอบตรงกรอบขึ้น
+            temperature: attempt === 1 ? 0.8 : 0.6, 
           },
         })
         text = response.text
@@ -110,18 +112,21 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
         const msg = err instanceof Error ? err.message : String(err)
         const is503 = msg.includes('503')
         const is429 = msg.includes('429')
+        
         if (is503 || is429) {
-          console.warn(`Model ${model} unavailable (${is503 ? '503' : '429'}), trying next...`)
-          await new Promise((r) => setTimeout(r, 2000))
+          console.warn(`[gen] Model ${model} busy (${is503 ? '503' : '429'}) - waiting 5s...`)
+          // ⚠️ สำคัญ: รอนานขึ้นเพื่อลดโอกาศชน Rate Limit
+          await new Promise((r) => setTimeout(r, 5000))
           continue
         }
-        console.warn(`Gemini error on attempt ${attempt} with ${model}:`, msg.slice(0, 200))
+        console.warn(`[gen] Error on ${model}:`, msg.slice(0, 200))
       }
     }
 
     if (!text) {
-      console.warn(`All models failed on attempt ${attempt}`)
-      await new Promise((r) => setTimeout(r, 3000))
+      console.warn(`[gen] All models failed on attempt ${attempt}`)
+      // เว้นจังหวะก่อน Attempt ถัดไป (ยิ่งรอบหลัง ยิ่งรอนาน)
+      await new Promise((r) => setTimeout(r, 5000 * attempt))
       continue
     }
 
@@ -134,12 +139,12 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
         .trim()
       parsed = JSON.parse(cleaned) as Plan
     } catch {
-      console.warn(`Invalid JSON on attempt ${attempt}`)
+      console.warn(`[gen] Invalid JSON on attempt ${attempt}`)
       continue
     }
 
     if (!parsed.days || parsed.days.length !== 7) {
-      console.warn(`Wrong day count on attempt ${attempt}`)
+      console.warn(`[gen] Wrong day count on attempt ${attempt}`)
       continue
     }
 
@@ -149,17 +154,18 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
     attempts.push({ plan: sanitized, issues: report.issues })
 
     if (report.passed) {
-      console.log(`Quality gate passed on attempt ${attempt}`)
+      console.log(`[gen] Quality gate passed on attempt ${attempt}`)
       sanitized.generated_at = new Date().toISOString()
       return sanitized
     }
 
     console.warn(
-      `Quality gate failed (attempt ${attempt}/${MAX_ATTEMPTS}):`,
+      `[gen] Quality gate failed (attempt ${attempt}/${MAX_ATTEMPTS}):`,
       report.issues
     )
   }
 
+  // Best effort fallback
   if (attempts.length === 0) {
     throw new Error(
       'AI_SERVICE_UNAVAILABLE: Please try again in a moment. This is temporary.'
@@ -171,7 +177,7 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
   )
 
   console.warn(
-    `All ${MAX_ATTEMPTS} attempts failed. Returning best effort with ${best.issues.length} issues:`,
+    `[gen] All ${MAX_ATTEMPTS} attempts failed. Returning best effort with ${best.issues.length} issues:`,
     best.issues
   )
 
