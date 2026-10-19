@@ -2,17 +2,13 @@ import { createHmac, timingSafeEqual } from 'crypto'
 
 const LEMONSQUEEZY_CHECKOUT_URL =
   'https://creator-os-o.lemonsqueezy.com/checkout/buy/8712615a-134d-43e1-9af5-9572c671c865'
-  
+
 const APP_URL =
   process.env.NEXT_PUBLIC_APP_URL || 'https://creator-os-beta-navy.vercel.app'
 
 export function buildCheckoutUrl(orderId: string): string {
   const params = new URLSearchParams()
   params.set('checkout[custom][order_id]', orderId)
-  params.set(
-    'checkout[redirect_url]',
-    `${APP_URL}/order-success?order_id=${encodeURIComponent(orderId)}`
-  )
   return `${LEMONSQUEEZY_CHECKOUT_URL}?${params.toString()}`
 }
 
