@@ -200,7 +200,7 @@ function buildEmailHtml(order: Order, plan: Plan, appUrl: string): string {
                 ${escapeHtml(plan.summary)}
               </p>
 
-              <a href="${orderUrl}" style="display:inline-block; background:#1A1614; color:#FFFFFF; text-decoration:none; padding:14px 24px; border-radius:10px; font-size:14px; font-weight:600;">
+              <a href="${orderUrl}" style="display:inline-block; background:#D97757; color:#FFFFFF; text-decoration:none; padding:14px 24px; border-radius:10px; font-size:14px; font-weight:600;">
                 View plan & track progress &rarr;
               </a>
             </td>

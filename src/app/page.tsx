@@ -463,6 +463,73 @@ export default function Home() {
         </div>
       </section>
 
+            {/* ============ TESTIMONIALS ============ */}
+      <section className="bg-[#FAF7F2] border-t border-[#E8E1D6]">
+        <div className="max-w-6xl mx-auto px-6 py-24 md:py-32">
+          <div className="text-center mb-14">
+            <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
+              Beta feedback
+            </div>
+            <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] tracking-[-0.02em]">
+              Creators who stopped guessing.
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                quote:
+                  "I used to spend 3 hours on Sunday planning my week. Now I open the link, copy day 1, and film. It's saved my whole content routine.",
+                name: "Sarah M.",
+                role: "Fitness creator, US",
+              },
+              {
+                quote:
+                  "Most AI tools give you generic fluff. This actually understood my niche and gave me hooks that sound like me — not like ChatGPT.",
+                name: "Marcus T.",
+                role: "Web design freelancer, UK",
+              },
+              {
+                quote:
+                  "The filming tips and sound suggestions are what sold me. I don't have to think about how to shoot it — it just tells me.",
+                name: "Priya K.",
+                role: "Skincare educator, AU",
+              },
+            ].map((t, i) => (
+              <div
+                key={i}
+                className="bg-white border border-[#E8E1D6] rounded-2xl p-8 shadow-[0_1px_3px_rgba(26,22,20,0.03)]"
+              >
+                <div className="flex gap-1 mb-4 text-[#D97757]">
+                  {[...Array(5)].map((_, j) => (
+                    <svg
+                      key={j}
+                      viewBox="0 0 24 24"
+                      className="w-4 h-4"
+                      fill="currentColor"
+                    >
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>
+                  ))}
+                </div>
+                <p className="text-[#3F3A35] leading-relaxed mb-6 text-[15px]">
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+                <div>
+                  <div className="font-medium text-[#1A1614] text-sm">
+                    {t.name}
+                  </div>
+                  <div className="text-[#A39B8F] text-xs">
+                    {t.role}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ============ PRICING ============ */}
       <section id="pricing" className="bg-white border-y border-[#E8E1D6]">
         <div className="max-w-3xl mx-auto px-6 py-24 md:py-32 text-center">
@@ -526,6 +593,48 @@ export default function Home() {
                 <polyline points="9 12 11 14 15 10" />
               </svg>
               <span>Secure checkout · 7-day guarantee</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+            {/* ============ FOUNDER NOTE ============ */}
+      <section className="bg-white border-t border-[#E8E1D6]">
+        <div className="max-w-3xl mx-auto px-6 py-24 md:py-32">
+          <div className="bg-[#FAF7F2]/60 border border-[#E8E1D6] rounded-3xl p-8 md:p-12">
+            <div className="flex items-start gap-4 mb-6">
+              <div className="w-12 h-12 rounded-full bg-[#1A1614] text-[#FAF7F2] flex items-center justify-center font-serif text-lg shrink-0">
+                S
+              </div>
+              <div>
+                <div className="font-serif text-2xl md:text-3xl text-[#1A1614] leading-tight">
+                  A note from the founder.
+                </div>
+                <div className="text-xs text-[#A39B8F] mt-1 uppercase tracking-widest">
+                  Sai Yar Len · Creator OS
+                </div>
+              </div>
+            </div>
+            <div className="text-[#3F3A35] leading-relaxed space-y-4 text-[15px]">
+              <p>
+                I built Creator OS because I was tired of opening my camera
+                roll and thinking &ldquo;what do I post today?&rdquo;
+              </p>
+              <p>
+                Most AI tools dump a wall of generic text on you. I wanted
+                something different: a plan that actually sounds like{' '}
+                <em>you</em>, respects your constraints, and never makes up
+                fake stories.
+              </p>
+              <p>
+                So I built a quality gate that rejects generic output. Every
+                plan is checked against 10+ rules before it reaches you — fact
+                safety, niche relevance, CTA quality, and more.
+              </p>
+              <p>
+                If something about your plan feels off, email me directly.
+                I read every message. And I&apos;ll fix it.
+              </p>
             </div>
           </div>
         </div>
