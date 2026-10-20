@@ -127,3 +127,24 @@ export async function getOrderByLemonId(
   if (!cosId) return null
   return getOrder(cosId)
 }
+
+// ─── ค้นหา Order เก่าจาก Email (สำหรับ Pre-fill) ───
+export async function getOrdersByEmail(email: string): Promise<Order[]> {
+  const normalizedEmail = email.trim().toLowerCase()
+  // ดึง ID ทั้งหมดจาก Index
+  const ids = await redis.lrange(ORDER_INDEX, 0, 99) // เอาแค่ 100 รายการล่าสุดพอ
+  const orders: Order[] = []
+
+  for (const id of ids) {
+    const raw = await redis.get(ORDER_KEY(id))
+    if (raw) {
+      const order = JSON.parse(raw) as Order
+      if (order.email.toLowerCase() === normalizedEmail) {
+        orders.push(order)
+      }
+    }
+  }
+  
+  // เรียงจากใหม่ไปเก่า
+  return orders.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+}

@@ -26,6 +26,9 @@ export type Quiz = {
   goal: Goal
   constraints: Constraint[]
   email: string
+  // 🆕 เพิ่ม 2 ฟิลด์นี้สำหรับการซื้อซ้ำ
+  previousOrderId?: string
+  userFeedback?: string
 }
 
 export type Order = {

@@ -66,9 +66,7 @@ function describeConstraints(constraints: string[]): string {
   return constraints.map((c) => `- ${map[c] || c}`).join('\n')
 }
 
-// ─── ปรับให้ Retry น้อยลง แต่เว้นจังหวะนานขึ้น ───
 const MAX_ATTEMPTS = 2 
-// เรียงลำดับ Model ใหม่: เริ่มจากตัวที่เสถียรที่สุด
 const MODELS = [
   'gemini-3.6-flash',
   'gemini-3.5-flash',
@@ -79,7 +77,16 @@ type Attempt = {
   issues: string[]
 }
 
-export async function generatePlan(quiz: Quiz): Promise<Plan> {
+// 🆕 เพิ่ม options เข้ามารับค่าเก่าและ Feedback
+type GenerateOptions = {
+  previousHooks?: string[]
+  userFeedback?: string
+}
+
+export async function generatePlan(
+  quiz: Quiz,
+  options: GenerateOptions = {}
+): Promise<Plan> {
   const apiKey = process.env.GEMINI_API_KEY
   if (!apiKey) throw new Error('GEMINI_API_KEY missing')
 
@@ -90,7 +97,8 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
     const prompt = buildPrompt(
       quiz,
       attempt,
-      attempts.length > 0 ? attempts[attempts.length - 1].issues : []
+      attempts.length > 0 ? attempts[attempts.length - 1].issues : [],
+      options // 🆕 ส่ง options ไปด้วย
     )
 
     let text: string | undefined
@@ -102,7 +110,6 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
           contents: prompt,
           config: {
             responseMimeType: 'application/json',
-            // ลด Temperature ลงนิดนึงให้ AI ตอบตรงกรอบขึ้น
             temperature: attempt === 1 ? 0.8 : 0.6, 
           },
         })
@@ -115,7 +122,6 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
         
         if (is503 || is429) {
           console.warn(`[gen] Model ${model} busy (${is503 ? '503' : '429'}) - waiting 5s...`)
-          // ⚠️ สำคัญ: รอนานขึ้นเพื่อลดโอกาศชน Rate Limit
           await new Promise((r) => setTimeout(r, 5000))
           continue
         }
@@ -125,7 +131,6 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
 
     if (!text) {
       console.warn(`[gen] All models failed on attempt ${attempt}`)
-      // เว้นจังหวะก่อน Attempt ถัดไป (ยิ่งรอบหลัง ยิ่งรอนาน)
       await new Promise((r) => setTimeout(r, 5000 * attempt))
       continue
     }
@@ -165,7 +170,6 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
     )
   }
 
-  // Best effort fallback
   if (attempts.length === 0) {
     throw new Error(
       'AI_SERVICE_UNAVAILABLE: Please try again in a moment. This is temporary.'
@@ -188,7 +192,8 @@ export async function generatePlan(quiz: Quiz): Promise<Plan> {
 function buildPrompt(
   quiz: Quiz,
   attempt: number,
-  previousIssues: string[]
+  previousIssues: string[],
+  options: GenerateOptions
 ): string {
   const retryWarning =
     attempt > 1 && previousIssues.length > 0
@@ -199,17 +204,38 @@ ${previousIssues.map((i) => `- ${i}`).join('\n')}
 `
       : ''
 
+  // 🆕 สร้าง Prompt สำหรับ Hook เก่า
+  const historyWarning = options.previousHooks && options.previousHooks.length > 0
+    ? `
+!! CONTINUITY MODE - DO NOT REPEAT !!
+The creator has purchased a plan before. Here are the hooks you already gave them:
+${options.previousHooks.map((h) => `- "${h}"`).join('\n')}
+
+You MUST create completely NEW hooks and angles. Do not rephrase or slightly tweak the old ones. Approach the topic from a totally different perspective.
+`
+    : ''
+
+  // 🆕 สร้าง Prompt สำหรับ Feedback
+  const feedbackWarning = options.userFeedback
+    ? `
+!! CREATOR FEEDBACK FROM LAST WEEK !!
+The creator said this about the previous plan:
+"${options.userFeedback}"
+
+Adjust the style, length, tone, and angle of these new videos based on their feedback. If they said it was too long, make it shorter. If they said it was boring, make it punchier.
+`
+    : ''
+
   return `
 Create a 7-day content plan for this SPECIFIC creator.
 
 ${retryWarning}
+${historyWarning}
+${feedbackWarning}
 
 ${FACT_SAFETY}
-
 ${NICHE_LOCK}
-
 ${CTA_RULES}
-
 ${BANNED_PHRASES}
 
 CREATOR PROFILE:

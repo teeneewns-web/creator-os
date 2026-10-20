@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 
 type Platform = 'tiktok' | 'reels' | 'shorts'
@@ -36,10 +36,19 @@ const constraintOptions: { value: Constraint; label: string }[] = [
   { value: 'no_editing', label: 'Minimal editing' },
 ]
 
-export default function StartPage() {
+function StartPageContent() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const fromOrderId = searchParams.get('from')
+
   const [loading, setLoading] = useState(false)
+  const [loadingPrefill, setLoadingPrefill] = useState(!!fromOrderId)
   const [error, setError] = useState('')
+  
+  // State ใหม่สำหรับ Feedback
+  const [isReturningUser, setIsReturningUser] = useState(false)
+  const [userFeedback, setUserFeedback] = useState('')
+
   const [form, setForm] = useState({
     platform: 'tiktok' as Platform,
     niche: '',
@@ -50,6 +59,36 @@ export default function StartPage() {
     constraints: [] as Constraint[],
     email: '',
   })
+
+  // 🆕 Pre-fill จาก Order เก่า
+  useEffect(() => {
+    if (!fromOrderId) return
+
+    async function fetchPrevOrder() {
+      try {
+        const res = await fetch(`/api/orders/${fromOrderId}`)
+        const data = await res.json()
+        if (res.ok && data.ok && data.order) {
+          setForm({
+            platform: data.order.quiz.platform,
+            niche: data.order.quiz.niche,
+            product: data.order.quiz.product,
+            audience: data.order.quiz.audience,
+            tone: data.order.quiz.tone,
+            goal: data.order.quiz.goal,
+            constraints: data.order.quiz.constraints,
+            email: data.order.email,
+          })
+          setIsReturningUser(true)
+        }
+      } catch {
+        // ถ้า Error ก็ปล่อยให้กรอกเอง
+      } finally {
+        setLoadingPrefill(false)
+      }
+    }
+    fetchPrevOrder()
+  }, [fromOrderId])
 
   function toggleConstraint(c: Constraint) {
     setForm((prev) => ({
@@ -66,10 +105,16 @@ export default function StartPage() {
     setError('')
 
     try {
+      const payload = {
+        ...form,
+        previousOrderId: fromOrderId || undefined,
+        userFeedback: isReturningUser ? userFeedback : undefined,
+      }
+
       const res = await fetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       })
       const data = await res.json()
       if (!res.ok || !data.ok) throw new Error(data.message || 'Failed')
@@ -78,6 +123,14 @@ export default function StartPage() {
       setError(err instanceof Error ? err.message : 'Something went wrong')
       setLoading(false)
     }
+  }
+
+  if (loadingPrefill) {
+    return (
+      <div className="min-h-screen bg-[#FAF7F2] flex items-center justify-center">
+        <div className="w-10 h-10 rounded-full border-2 border-[#E8E1D6] border-t-[#D97757] spinner" />
+      </div>
+    )
   }
 
   return (
@@ -109,24 +162,38 @@ export default function StartPage() {
 
         <div className="mb-12">
           <h1 className="font-serif text-4xl md:text-5xl leading-[1.05] tracking-[-0.02em] mb-4">
-            Tell us about
-            <br />
-            <span className="relative inline-block">
-              <span className="relative z-10 italic text-[#6B6259]">
-                your content.
-              </span>
-              <span
-                aria-hidden
-                className="absolute left-0 right-0 bottom-[0.08em] h-[0.3em] bg-[#FBF0E9] -z-0"
-              />
-            </span>
+            {isReturningUser ? (
+              <>Plan next<br /><span className="relative inline-block"><span className="relative z-10 italic text-[#6B6259]">week.</span><span aria-hidden className="absolute left-0 right-0 bottom-[0.08em] h-[0.3em] bg-[#FBF0E9] -z-0" /></span></>
+            ) : (
+              <>Tell us about<br /><span className="relative inline-block"><span className="relative z-10 italic text-[#6B6259]">your content.</span><span aria-hidden className="absolute left-0 right-0 bottom-[0.08em] h-[0.3em] bg-[#FBF0E9] -z-0" /></span></>
+            )}
           </h1>
           <p className="text-[#6B6259] text-lg">
-            8 quick questions. Takes about 45 seconds.
+            {isReturningUser ? 'Your details are pre-filled below. You can adjust anything if needed.' : '8 quick questions. Takes about 45 seconds.'}
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-10">
+          
+          {/* 🆕 Feedback Box (แสดงเฉพาะลูกค้าเก่า) */}
+          {isReturningUser && (
+            <div className="bg-white border border-[#D97757]/30 rounded-2xl p-6 shadow-[0_2px_8px_rgba(217,119,87,0.08)]">
+              <div className="text-sm font-medium text-[#D97757] mb-3 flex items-center gap-2">
+                <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+                How did last week go? (Optional)
+              </div>
+              <textarea
+                value={userFeedback}
+                onChange={(e) => setUserFeedback(e.target.value)}
+                placeholder="What worked? What flopped? Want more of a certain angle? Tell us here so we can improve your next plan."
+                className="w-full bg-[#FAF7F2] border border-[#E8E1D6] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#D97757] resize-none"
+                rows={3}
+              />
+            </div>
+          )}
+
           <Field label="Which platform?">
             <div className="grid grid-cols-3 gap-2">
               {platforms.map((p) => (
@@ -283,7 +350,7 @@ export default function StartPage() {
               disabled={loading}
               className="w-full bg-[#1A1614] text-white px-6 py-4 rounded-xl font-medium hover:bg-[#2A2521] disabled:opacity-50 transition-colors shadow-[0_2px_8px_rgba(26,22,20,0.12)]"
             >
-              {loading ? 'Creating your order...' : 'Continue to payment →'}
+              {loading ? 'Creating your order...' : isReturningUser ? 'Continue to payment →' : 'Continue to payment →'}
             </button>
             <p className="text-xs text-[#A39B8F] text-center mt-4">
               Next: secure checkout. Takes about a minute.
@@ -336,5 +403,13 @@ function ChoiceButton({
     >
       {children}
     </button>
+  )
+}
+
+export default function StartPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#FAF7F2]" />}>
+      <StartPageContent />
+    </Suspense>
   )
 }

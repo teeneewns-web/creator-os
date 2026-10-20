@@ -256,13 +256,12 @@ export default function OrderPage({
             })}
           </p>
           <p className="text-xs text-[#A39B8F] mb-6">Order {order.id}</p>
-          <Link
-            href="/start"
+                    <Link
+            href={`/start?from=${order.id}`}
             className="inline-block text-sm font-medium text-[#D97757] hover:underline"
           >
             Plan next week →
           </Link>
-
           <div className="mt-8 pt-6 border-t border-[#E8E1D6]">
             <p className="text-xs text-[#A39B8F] mb-3">
               Something not right with this plan?
