@@ -256,12 +256,23 @@ export default function OrderPage({
             })}
           </p>
           <p className="text-xs text-[#A39B8F] mb-6">Order {order.id}</p>
-                    <Link
+          
+          <Link
             href={`/start?from=${order.id}`}
-            className="inline-block text-sm font-medium text-[#D97757] hover:underline"
+            className="inline-flex items-center justify-center gap-2 bg-[#D97757] text-white px-6 py-3.5 rounded-xl font-medium hover:bg-[#C66846] transition-colors shadow-[0_2px_8px_rgba(217,119,87,0.25)] mt-2"
           >
             Plan next week →
           </Link>
+
+          <div className="mt-3">
+            <Link
+              href="/start"
+              className="text-xs text-[#A39B8F] hover:text-[#6B6259] transition-colors underline decoration-[#E8E1D6] underline-offset-4"
+            >
+              Or start a completely new plan
+            </Link>
+          </div>
+          
           <div className="mt-8 pt-6 border-t border-[#E8E1D6]">
             <p className="text-xs text-[#A39B8F] mb-3">
               Something not right with this plan?
@@ -447,7 +458,7 @@ function DayCard({
           <MetaBox label="Visual direction">{day.visual}</MetaBox>
         </div>
 
-        {/* 🆕 Execution Tips (Posting Tip + Sound + Text Overlay) */}
+        {/* Execution Tips (Posting Tip + Sound + Text Overlay) */}
         {(day.posting_tip || day.sound_suggestion || day.text_overlay) && (
           <div className="mt-6 pt-6 border-t border-[#E8E1D6]">
             <div className="text-xs uppercase tracking-widest text-[#A39B8F] mb-4">

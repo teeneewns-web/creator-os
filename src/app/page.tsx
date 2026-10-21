@@ -35,7 +35,7 @@ export default function Home() {
             </a>
             <Link
               href="/start"
-              className="ml-2 inline-flex items-center gap-1.5 bg-[#1A1614] text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-[#2A2521] transition-colors"
+              className="ml-2 inline-flex items-center gap-1.5 bg-[#D97757] text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-[#C66846] transition-colors shadow-[0_2px_8px_rgba(217,119,87,0.25)]"
             >
               Create my plan
               <span aria-hidden>→</span>
@@ -76,7 +76,7 @@ export default function Home() {
           <div className="flex flex-wrap items-center gap-3 mb-8">
             <Link
               href="/start"
-              className="inline-flex items-center gap-2 bg-[#1A1614] text-white px-7 py-4 rounded-xl font-medium hover:bg-[#2A2521] transition-colors shadow-[0_2px_8px_rgba(26,22,20,0.12)]"
+              className="inline-flex items-center gap-2 bg-[#D97757] text-white px-7 py-4 rounded-xl font-medium hover:bg-[#C66846] transition-colors shadow-[0_4px_12px_rgba(217,119,87,0.25)]"
             >
               Create my 7-day plan
               <span aria-hidden>→</span>
@@ -89,7 +89,6 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Guarantee Badge */}
           <div className="flex items-center gap-2 text-sm text-[#6B6259] mb-6">
             <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#2C3E50]" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -393,7 +392,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* 👇 วิดีโอ Embed ที่ฝังไว้ให้แล้ว */}
           <div className="mt-16 max-w-4xl mx-auto">
             <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-[#E8E1D6] shadow-[0_8px_32px_rgba(26,22,20,0.06)] bg-[#FAF7F2]">
               <iframe
@@ -463,7 +461,7 @@ export default function Home() {
         </div>
       </section>
 
-            {/* ============ TESTIMONIALS ============ */}
+      {/* ============ TESTIMONIALS ============ */}
       <section className="bg-[#FAF7F2] border-t border-[#E8E1D6]">
         <div className="max-w-6xl mx-auto px-6 py-24 md:py-32">
           <div className="text-center mb-14">
@@ -548,14 +546,12 @@ export default function Home() {
             <div className="inline-flex items-center gap-2 bg-white border border-[#E8E1D6] rounded-full px-3 py-1 text-xs uppercase tracking-widest text-[#6B6259] font-medium mb-5">
               7-Day Content Plan
             </div>
-            <div className="flex items-baseline gap-2 mb-2">
+            <div className="flex items-baseline gap-2 mb-8">
               <span className="font-serif text-6xl tracking-[-0.02em]">
                 $19
               </span>
               <span className="text-[#6B6259] text-lg">USD</span>
             </div>
-            <p className="text-sm text-[#A39B8F] mb-8">One-time payment</p>
-
             <ul className="space-y-3 mb-10 text-[15px] text-[#3F3A35]">
               {[
                 '7 days of hooks, scripts, captions',
@@ -582,7 +578,7 @@ export default function Home() {
             </ul>
             <Link
               href="/start"
-              className="inline-flex items-center justify-center gap-2 w-full bg-[#1A1614] text-white px-6 py-4 rounded-xl font-medium hover:bg-[#2A2521] transition-colors"
+              className="inline-flex items-center justify-center gap-2 w-full bg-[#D97757] text-white px-6 py-4 rounded-xl font-medium hover:bg-[#C66846] transition-colors shadow-[0_4px_12px_rgba(217,119,87,0.25)]"
             >
               Create my 7-day plan
               <span aria-hidden>→</span>
@@ -598,7 +594,7 @@ export default function Home() {
         </div>
       </section>
 
-            {/* ============ FOUNDER NOTE ============ */}
+      {/* ============ FOUNDER NOTE ============ */}
       <section className="bg-white border-t border-[#E8E1D6]">
         <div className="max-w-3xl mx-auto px-6 py-24 md:py-32">
           <div className="bg-[#FAF7F2]/60 border border-[#E8E1D6] rounded-3xl p-8 md:p-12">
@@ -659,7 +655,7 @@ export default function Home() {
             <div className="flex flex-wrap items-center gap-3">
               <Link
                 href="/start"
-                className="inline-flex items-center gap-2 bg-[#FAF7F2] text-[#1A1614] px-7 py-4 rounded-xl font-medium hover:bg-white transition-colors"
+                className="inline-flex items-center gap-2 bg-[#D97757] text-white px-7 py-4 rounded-xl font-medium hover:bg-[#C66846] transition-colors shadow-[0_4px_12px_rgba(217,119,87,0.25)]"
               >
                 Create my 7-day plan
                 <span aria-hidden>→</span>

@@ -45,8 +45,8 @@ function StartPageContent() {
   const [loadingPrefill, setLoadingPrefill] = useState(!!fromOrderId)
   const [error, setError] = useState('')
   
-  // State ใหม่สำหรับ Feedback
   const [isReturningUser, setIsReturningUser] = useState(false)
+  const [showEditForm, setShowEditForm] = useState(false) // 🆕 ควบคุมการเปิด/ปิดฟอร์ม
   const [userFeedback, setUserFeedback] = useState('')
 
   const [form, setForm] = useState({
@@ -60,7 +60,6 @@ function StartPageContent() {
     email: '',
   })
 
-  // 🆕 Pre-fill จาก Order เก่า
   useEffect(() => {
     if (!fromOrderId) return
 
@@ -82,7 +81,7 @@ function StartPageContent() {
           setIsReturningUser(true)
         }
       } catch {
-        // ถ้า Error ก็ปล่อยให้กรอกเอง
+        // Ignore
       } finally {
         setLoadingPrefill(false)
       }
@@ -138,17 +137,10 @@ function StartPageContent() {
       <header className="border-b border-[#E8E1D6] bg-[#FAF7F2]/85 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-2xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-md bg-[#1A1614] flex items-center justify-center text-[#FAF7F2] text-xs font-semibold">
-              C
-            </div>
-            <span className="font-medium tracking-tight text-[15px] text-[#1A1614]">
-              Creator OS
-            </span>
+            <div className="w-7 h-7 rounded-md bg-[#1A1614] flex items-center justify-center text-[#FAF7F2] text-xs font-semibold">C</div>
+            <span className="font-medium tracking-tight text-[15px] text-[#1A1614]">Creator OS</span>
           </Link>
-          <Link
-            href="/"
-            className="text-xs text-[#A39B8F] hover:text-[#1A1614] transition-colors"
-          >
+          <Link href="/" className="text-xs text-[#A39B8F] hover:text-[#1A1614] transition-colors">
             ← Back
           </Link>
         </div>
@@ -162,22 +154,51 @@ function StartPageContent() {
 
         <div className="mb-12">
           <h1 className="font-serif text-4xl md:text-5xl leading-[1.05] tracking-[-0.02em] mb-4">
-            {isReturningUser ? (
-              <>Plan next<br /><span className="relative inline-block"><span className="relative z-10 italic text-[#6B6259]">week.</span><span aria-hidden className="absolute left-0 right-0 bottom-[0.08em] h-[0.3em] bg-[#FBF0E9] -z-0" /></span></>
+            {isReturningUser && !showEditForm ? (
+              <>Ready for<br /><span className="relative inline-block"><span className="relative z-10 italic text-[#6B6259]">week two?</span><span aria-hidden className="absolute left-0 right-0 bottom-[0.08em] h-[0.3em] bg-[#FBF0E9] -z-0" /></span></>
             ) : (
               <>Tell us about<br /><span className="relative inline-block"><span className="relative z-10 italic text-[#6B6259]">your content.</span><span aria-hidden className="absolute left-0 right-0 bottom-[0.08em] h-[0.3em] bg-[#FBF0E9] -z-0" /></span></>
             )}
           </h1>
           <p className="text-[#6B6259] text-lg">
-            {isReturningUser ? 'Your details are pre-filled below. You can adjust anything if needed.' : '8 quick questions. Takes about 45 seconds.'}
+            {isReturningUser && !showEditForm 
+              ? 'Your details are saved. Just tell us how last week went.' 
+              : '8 quick questions. Takes about 45 seconds.'}
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-10">
           
-          {/* 🆕 Feedback Box (แสดงเฉพาะลูกค้าเก่า) */}
-          {isReturningUser && (
-            <div className="bg-white border border-[#D97757]/30 rounded-2xl p-6 shadow-[0_2px_8px_rgba(217,119,87,0.08)]">
+          {/* 🆕 Summary View (แสดงเมื่อเป็นลูกค้าเก่าและไม่ได้กดแก้ไข) */}
+          {isReturningUser && !showEditForm && (
+            <div className="bg-white border border-[#E8E1D6] rounded-2xl p-6 shadow-[0_1px_3px_rgba(26,22,20,0.03)]">
+              <div className="flex items-center justify-between mb-4">
+                <div className="text-sm font-medium text-[#1A1614]">Your previous details</div>
+                <button 
+                  type="button" 
+                  onClick={() => setShowEditForm(true)}
+                  className="text-xs font-medium text-[#D97757] hover:underline"
+                >
+                  Edit details
+                </button>
+              </div>
+              <div className="flex flex-wrap gap-2 text-sm">
+                <span className="bg-[#FAF7F2] border border-[#E8E1D6] px-3 py-1.5 rounded-lg text-[#3F3A35]">
+                  {form.niche}
+                </span>
+                <span className="bg-[#FAF7F2] border border-[#E8E1D6] px-3 py-1.5 rounded-lg text-[#3F3A35]">
+                  {platforms.find(p => p.value === form.platform)?.label}
+                </span>
+                <span className="bg-[#FAF7F2] border border-[#E8E1D6] px-3 py-1.5 rounded-lg text-[#3F3A35]">
+                  {goals.find(g => g.value === form.goal)?.label}
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* 🆕 Feedback Box (โชว์เฉพาะลูกค้าเก่า) */}
+          {isReturningUser && !showEditForm && (
+            <div className="bg-[#FBF0E9]/50 border border-[#D97757]/30 rounded-2xl p-6 shadow-[0_4px_12px_rgba(217,119,87,0.05)]">
               <div className="text-sm font-medium text-[#D97757] mb-3 flex items-center gap-2">
                 <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
@@ -188,155 +209,129 @@ function StartPageContent() {
                 value={userFeedback}
                 onChange={(e) => setUserFeedback(e.target.value)}
                 placeholder="What worked? What flopped? Want more of a certain angle? Tell us here so we can improve your next plan."
-                className="w-full bg-[#FAF7F2] border border-[#E8E1D6] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#D97757] resize-none"
+                className="w-full bg-white border border-[#E8E1D6] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#D97757] resize-none"
                 rows={3}
               />
             </div>
           )}
 
-          <Field label="Which platform?">
-            <div className="grid grid-cols-3 gap-2">
-              {platforms.map((p) => (
-                <ChoiceButton
-                  key={p.value}
-                  selected={form.platform === p.value}
-                  onClick={() => setForm({ ...form, platform: p.value })}
+          {/* 🆕 แสดงฟอร์มเต็ม (ถ้าเป็นลูกค้าใหม่ หรือ กด Edit details) */}
+          {(!isReturningUser || showEditForm) && (
+            <>
+              <Field label="Which platform?">
+                <div className="grid grid-cols-3 gap-2">
+                  {platforms.map((p) => (
+                    <ChoiceButton key={p.value} selected={form.platform === p.value} onClick={() => setForm({ ...form, platform: p.value })}>
+                      {p.label}
+                    </ChoiceButton>
+                  ))}
+                </div>
+              </Field>
+
+              <Field label="Your niche" hint="Be specific. Specific niches make better hooks.">
+                <input
+                  type="text"
+                  value={form.niche}
+                  onChange={(e) => setForm({ ...form, niche: e.target.value })}
+                  placeholder="e.g. fitness for busy moms"
+                  required
+                  className={`w-full border border-[#E8E1D6] rounded-xl px-4 py-3.5 text-sm text-[#1A1614] placeholder:text-[#A39B8F] transition-all focus:border-[#1A1614] focus:ring-4 focus:ring-[#1A1614]/5 ${isReturningUser ? 'bg-[#FAF7F2]' : 'bg-white'}`}
+                />
+              </Field>
+
+              <Field label="What do you sell or offer?" hint="Product, service, or expertise you want to promote.">
+                <input
+                  type="text"
+                  value={form.product}
+                  onChange={(e) => setForm({ ...form, product: e.target.value })}
+                  placeholder="e.g. 10-minute home workout program"
+                  required
+                  className={`w-full border border-[#E8E1D6] rounded-xl px-4 py-3.5 text-sm text-[#1A1614] placeholder:text-[#A39B8F] transition-all focus:border-[#1A1614] focus:ring-4 focus:ring-[#1A1614]/5 ${isReturningUser ? 'bg-[#FAF7F2]' : 'bg-white'}`}
+                />
+              </Field>
+
+              <Field label="Who is this content for?" hint="Describe your ideal viewer or customer.">
+                <input
+                  type="text"
+                  value={form.audience}
+                  onChange={(e) => setForm({ ...form, audience: e.target.value })}
+                  placeholder="e.g. busy moms aged 28-40 who want to get fit at home"
+                  required
+                  className={`w-full border border-[#E8E1D6] rounded-xl px-4 py-3.5 text-sm text-[#1A1614] placeholder:text-[#A39B8F] transition-all focus:border-[#1A1614] focus:ring-4 focus:ring-[#1A1614]/5 ${isReturningUser ? 'bg-[#FAF7F2]' : 'bg-white'}`}
+                />
+              </Field>
+
+              <Field label="Tone">
+                <div className="grid grid-cols-4 gap-2">
+                  {tones.map((t) => (
+                    <ChoiceButton key={t.value} selected={form.tone === t.value} onClick={() => setForm({ ...form, tone: t.value })}>
+                      {t.label}
+                    </ChoiceButton>
+                  ))}
+                </div>
+              </Field>
+
+              <Field label="Main goal">
+                <div className="grid grid-cols-3 gap-2">
+                  {goals.map((g) => (
+                    <ChoiceButton key={g.value} selected={form.goal === g.value} onClick={() => setForm({ ...form, goal: g.value })}>
+                      {g.label}
+                    </ChoiceButton>
+                  ))}
+                </div>
+              </Field>
+
+              <Field label="Any constraints?" hint="Optional. Select all that apply. We'll design content around them.">
+                <div className="grid sm:grid-cols-2 gap-2">
+                  {constraintOptions.map((c) => {
+                    const selected = form.constraints.includes(c.value)
+                    return (
+                      <button
+                        key={c.value}
+                        type="button"
+                        onClick={() => toggleConstraint(c.value)}
+                        className={`flex items-center gap-3 px-4 py-3 rounded-xl border text-sm font-medium text-left transition-all ${
+                          selected
+                            ? 'border-[#D97757] bg-[#FBF0E9] text-[#D97757]'
+                            : 'border-[#E8E1D6] bg-white text-[#6B6259] hover:border-[#D4CBB9] hover:text-[#1A1614]'
+                        }`}
+                      >
+                        <span className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors ${selected ? 'border-[#D97757] bg-[#D97757]' : 'border-[#D4CBB9] bg-white'}`}>
+                          {selected && (
+                            <svg viewBox="0 0 16 16" className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                              <polyline points="3 8 7 12 13 4" />
+                            </svg>
+                          )}
+                        </span>
+                        {c.label}
+                      </button>
+                    )
+                  })}
+                </div>
+              </Field>
+
+              <Field label="Your email" hint="We send your plan here. No spam, ever.">
+                <input
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  placeholder="you@example.com"
+                  required
+                  className={`w-full border border-[#E8E1D6] rounded-xl px-4 py-3.5 text-sm text-[#1A1614] placeholder:text-[#A39B8F] transition-all focus:border-[#1A1614] focus:ring-4 focus:ring-[#1A1614]/5 ${isReturningUser ? 'bg-[#FAF7F2]' : 'bg-white'}`}
+                />
+              </Field>
+
+              {isReturningUser && showEditForm && (
+                <button
+                  type="button"
+                  onClick={() => setShowEditForm(false)}
+                  className="text-sm text-[#A39B8F] hover:text-[#1A1614] underline"
                 >
-                  {p.label}
-                </ChoiceButton>
-              ))}
-            </div>
-          </Field>
-
-          <Field
-            label="Your niche"
-            hint="Be specific. Specific niches make better hooks."
-          >
-            <input
-              type="text"
-              value={form.niche}
-              onChange={(e) => setForm({ ...form, niche: e.target.value })}
-              placeholder="e.g. fitness for busy moms"
-              required
-              className="w-full bg-white border border-[#E8E1D6] rounded-xl px-4 py-3.5 text-sm text-[#1A1614] placeholder:text-[#A39B8F] transition-all focus:border-[#1A1614] focus:ring-4 focus:ring-[#1A1614]/5"
-            />
-          </Field>
-
-          <Field
-            label="What do you sell or offer?"
-            hint="Product, service, or expertise you want to promote."
-          >
-            <input
-              type="text"
-              value={form.product}
-              onChange={(e) => setForm({ ...form, product: e.target.value })}
-              placeholder="e.g. 10-minute home workout program"
-              required
-              className="w-full bg-white border border-[#E8E1D6] rounded-xl px-4 py-3.5 text-sm text-[#1A1614] placeholder:text-[#A39B8F] transition-all focus:border-[#1A1614] focus:ring-4 focus:ring-[#1A1614]/5"
-            />
-          </Field>
-
-          <Field
-            label="Who is this content for?"
-            hint="Describe your ideal viewer or customer."
-          >
-            <input
-              type="text"
-              value={form.audience}
-              onChange={(e) => setForm({ ...form, audience: e.target.value })}
-              placeholder="e.g. busy moms aged 28-40 who want to get fit at home"
-              required
-              className="w-full bg-white border border-[#E8E1D6] rounded-xl px-4 py-3.5 text-sm text-[#1A1614] placeholder:text-[#A39B8F] transition-all focus:border-[#1A1614] focus:ring-4 focus:ring-[#1A1614]/5"
-            />
-          </Field>
-
-          <Field label="Tone">
-            <div className="grid grid-cols-4 gap-2">
-              {tones.map((t) => (
-                <ChoiceButton
-                  key={t.value}
-                  selected={form.tone === t.value}
-                  onClick={() => setForm({ ...form, tone: t.value })}
-                >
-                  {t.label}
-                </ChoiceButton>
-              ))}
-            </div>
-          </Field>
-
-          <Field label="Main goal">
-            <div className="grid grid-cols-3 gap-2">
-              {goals.map((g) => (
-                <ChoiceButton
-                  key={g.value}
-                  selected={form.goal === g.value}
-                  onClick={() => setForm({ ...form, goal: g.value })}
-                >
-                  {g.label}
-                </ChoiceButton>
-              ))}
-            </div>
-          </Field>
-
-          <Field
-            label="Any constraints?"
-            hint="Optional. Select all that apply. We'll design content around them."
-          >
-            <div className="grid sm:grid-cols-2 gap-2">
-              {constraintOptions.map((c) => {
-                const selected = form.constraints.includes(c.value)
-                return (
-                  <button
-                    key={c.value}
-                    type="button"
-                    onClick={() => toggleConstraint(c.value)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl border text-sm font-medium text-left transition-all ${
-                      selected
-                        ? 'border-[#D97757] bg-[#FBF0E9] text-[#D97757]'
-                        : 'border-[#E8E1D6] bg-white text-[#6B6259] hover:border-[#D4CBB9] hover:text-[#1A1614]'
-                    }`}
-                  >
-                    <span
-                      className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
-                        selected
-                          ? 'border-[#D97757] bg-[#D97757]'
-                          : 'border-[#D4CBB9] bg-white'
-                      }`}
-                    >
-                      {selected && (
-                        <svg
-                          viewBox="0 0 16 16"
-                          className="w-2.5 h-2.5 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="3"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <polyline points="3 8 7 12 13 4" />
-                        </svg>
-                      )}
-                    </span>
-                    {c.label}
-                  </button>
-                )
-              })}
-            </div>
-          </Field>
-
-          <Field
-            label="Your email"
-            hint="We send your plan here. No spam, ever."
-          >
-            <input
-              type="email"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              placeholder="you@example.com"
-              required
-              className="w-full bg-white border border-[#E8E1D6] rounded-xl px-4 py-3.5 text-sm text-[#1A1614] placeholder:text-[#A39B8F] transition-all focus:border-[#1A1614] focus:ring-4 focus:ring-[#1A1614]/5"
-            />
-          </Field>
+                  Cancel editing
+                </button>
+              )}
+            </>
+          )}
 
           {error && (
             <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-700">
@@ -348,9 +343,9 @@ function StartPageContent() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#1A1614] text-white px-6 py-4 rounded-xl font-medium hover:bg-[#2A2521] disabled:opacity-50 transition-colors shadow-[0_2px_8px_rgba(26,22,20,0.12)]"
+              className="w-full bg-[#D97757] text-white px-6 py-4 rounded-xl font-medium hover:bg-[#C66846] disabled:opacity-50 transition-colors shadow-[0_4px_12px_rgba(217,119,87,0.25)]"
             >
-              {loading ? 'Creating your order...' : isReturningUser ? 'Continue to payment →' : 'Continue to payment →'}
+              {loading ? 'Creating your order...' : 'Continue to payment →'}
             </button>
             <p className="text-xs text-[#A39B8F] text-center mt-4">
               Next: secure checkout. Takes about a minute.
@@ -362,35 +357,17 @@ function StartPageContent() {
   )
 }
 
-function Field({
-  label,
-  hint,
-  children,
-}: {
-  label: string
-  hint?: string
-  children: React.ReactNode
-}) {
+function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-[#1A1614] mb-2.5">
-        {label}
-      </label>
+      <label className="block text-sm font-medium text-[#1A1614] mb-2.5">{label}</label>
       {children}
       {hint && <p className="text-xs text-[#A39B8F] mt-2.5">{hint}</p>}
     </div>
   )
 }
 
-function ChoiceButton({
-  selected,
-  onClick,
-  children,
-}: {
-  selected: boolean
-  onClick: () => void
-  children: React.ReactNode
-}) {
+function ChoiceButton({ selected, onClick, children }: { selected: boolean; onClick: () => void; children: React.ReactNode }) {
   return (
     <button
       type="button"
