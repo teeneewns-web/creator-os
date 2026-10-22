@@ -63,10 +63,10 @@ function describeConstraints(constraints: string[]): string {
   return constraints.map((c) => `- ${map[c] || c}`).join('\n')
 }
 
-// ─── ตั้งค่า Fallback ───
+// ─── ตั้งค่า Fallback (อัปเดตโมเดลล่าสุด 2026) ───
 const MAX_ATTEMPTS = 2 
-const GEMINI_MODELS = ['gemini-2.0-flash', 'gemini-1.5-flash'] // เปลี่ยนเป็นโมเดลที่เสถียร
-const GROQ_MODEL = 'llama-3.3-70b-versatile'
+const GEMINI_MODELS = ['gemini-3.8-flash', 'gemini-3.6-flash']
+const GROQ_MODEL = 'openai/gpt-oss-120b'
 
 type Attempt = { plan: Plan; issues: string[] }
 type GenerateOptions = { previousHooks?: string[]; userFeedback?: string }
