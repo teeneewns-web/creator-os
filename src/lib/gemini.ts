@@ -54,43 +54,88 @@ function describeConstraints(constraints: string[]): string {
     return 'No specific constraints.'
   }
   const map: Record<string, string> = {
-    no_face:
-      'NO FACE ON CAMERA. Never suggest: talking head, face-to-camera, direct eye contact. Use: hands, product close-ups, B-roll, text-on-screen.',
-    no_voice:
-      'NO VOICEOVER. Text-on-screen with music or ambient audio only.',
-    phone_only:
-      'PHONE CAMERA ONLY. Do NOT mention tripod, gimbal, ring light, DSLR, microphone, or professional equipment.',
+    no_face: 'NO FACE ON CAMERA. Never suggest: talking head, face-to-camera, direct eye contact. Use: hands, product close-ups, B-roll, text-on-screen.',
+    no_voice: 'NO VOICEOVER. Text-on-screen with music or ambient audio only.',
+    phone_only: 'PHONE CAMERA ONLY. Do NOT mention tripod, gimbal, ring light, DSLR, microphone, or professional equipment.',
     under_30s: 'Every video must be under 30 seconds.',
     no_editing: 'Minimal editing. Simple cuts and text overlays only.',
   }
   return constraints.map((c) => `- ${map[c] || c}`).join('\n')
 }
 
+// ─── ตั้งค่า Fallback ───
 const MAX_ATTEMPTS = 2 
-const MODELS = [
-  'gemini-3.6-flash',
-  'gemini-3.5-flash',
-]
+const GEMINI_MODELS = ['gemini-2.0-flash', 'gemini-1.5-flash'] // เปลี่ยนเป็นโมเดลที่เสถียร
+const GROQ_MODEL = 'llama-3.3-70b-versatile'
 
-type Attempt = {
-  plan: Plan
-  issues: string[]
+type Attempt = { plan: Plan; issues: string[] }
+type GenerateOptions = { previousHooks?: string[]; userFeedback?: string }
+
+// ─── ฟังก์ชันเรียก Groq (Fallback) ───
+async function callGroq(prompt: string, attempt: number): Promise<string | null> {
+  const apiKey = process.env.GROQ_API_KEY
+  if (!apiKey) {
+    console.warn('[groq] GROQ_API_KEY missing')
+    return null
+  }
+
+  try {
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: GROQ_MODEL,
+        messages: [
+          { role: 'system', content: 'You output only valid JSON. No markdown fences, no commentary.' },
+          { role: 'user', content: prompt },
+        ],
+        response_format: { type: 'json_object' },
+        temperature: attempt === 1 ? 0.8 : 0.6,
+      }),
+    })
+
+    if (!res.ok) {
+      console.warn(`[groq] Error ${res.status}`)
+      return null
+    }
+    const data = await res.json()
+    return data?.choices?.[0]?.message?.content || null
+  } catch (err) {
+    console.warn('[groq] Fetch failed', err)
+    return null
+  }
 }
 
-// 🆕 เพิ่ม options เข้ามารับค่าเก่าและ Feedback
-type GenerateOptions = {
-  previousHooks?: string[]
-  userFeedback?: string
+// ─── ฟังก์ชันเรียก Gemini ───
+async function callGemini(ai: GoogleGenAI, prompt: string, attempt: number): Promise<string | null> {
+  for (const model of GEMINI_MODELS) {
+    try {
+      const response = await ai.models.generateContent({
+        model,
+        contents: prompt,
+        config: { responseMimeType: 'application/json', temperature: attempt === 1 ? 0.8 : 0.6 },
+      })
+      if (response.text) return response.text
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err)
+      console.warn(`[gemini] ${model} failed (${msg.slice(0, 50)}...)`)
+      // ไม่ต้องรอนาน ให้สลับไป Groq เลย
+    }
+  }
+  return null
 }
 
 export async function generatePlan(
   quiz: Quiz,
   options: GenerateOptions = {}
 ): Promise<Plan> {
-  const apiKey = process.env.GEMINI_API_KEY
-  if (!apiKey) throw new Error('GEMINI_API_KEY missing')
+  const geminiKey = process.env.GEMINI_API_KEY
+  if (!geminiKey) throw new Error('GEMINI_API_KEY missing')
 
-  const ai = new GoogleGenAI({ apiKey })
+  const ai = new GoogleGenAI({ apiKey: geminiKey })
   const attempts: Attempt[] = []
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
@@ -98,50 +143,30 @@ export async function generatePlan(
       quiz,
       attempt,
       attempts.length > 0 ? attempts[attempts.length - 1].issues : [],
-      options // 🆕 ส่ง options ไปด้วย
+      options
     )
 
-    let text: string | undefined
+    // 1. ลอง Gemini ก่อน
+    let text = await callGemini(ai, prompt, attempt)
+    let provider = 'gemini'
 
-    for (const model of MODELS) {
-      try {
-        const response = await ai.models.generateContent({
-          model,
-          contents: prompt,
-          config: {
-            responseMimeType: 'application/json',
-            temperature: attempt === 1 ? 0.8 : 0.6, 
-          },
-        })
-        text = response.text
-        if (text) break
-      } catch (err) {
-        const msg = err instanceof Error ? err.message : String(err)
-        const is503 = msg.includes('503')
-        const is429 = msg.includes('429')
-        
-        if (is503 || is429) {
-          console.warn(`[gen] Model ${model} busy (${is503 ? '503' : '429'}) - waiting 5s...`)
-          await new Promise((r) => setTimeout(r, 5000))
-          continue
-        }
-        console.warn(`[gen] Error on ${model}:`, msg.slice(0, 200))
-      }
+    // 2. ถ้า Gemini ล่ม ให้สลับไป Groq ทันที
+    if (!text) {
+      console.warn(`[gen] Gemini failed. Switching to Groq...`)
+      text = await callGroq(prompt, attempt)
+      provider = 'groq'
     }
 
     if (!text) {
-      console.warn(`[gen] All models failed on attempt ${attempt}`)
-      await new Promise((r) => setTimeout(r, 5000 * attempt))
+      console.warn(`[gen] All providers failed on attempt ${attempt}`)
       continue
     }
 
+    console.log(`[gen] Attempt ${attempt} success via ${provider}`)
+
     let parsed: Plan
     try {
-      const cleaned = text
-        .replace(/^```json\s*/i, '')
-        .replace(/^```\s*/i, '')
-        .replace(/\s*```$/i, '')
-        .trim()
+      const cleaned = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/\s*```$/i, '').trim()
       parsed = JSON.parse(cleaned) as Plan
     } catch {
       console.warn(`[gen] Invalid JSON on attempt ${attempt}`)
@@ -163,68 +188,28 @@ export async function generatePlan(
       sanitized.generated_at = new Date().toISOString()
       return sanitized
     }
-
-    console.warn(
-      `[gen] Quality gate failed (attempt ${attempt}/${MAX_ATTEMPTS}):`,
-      report.issues
-    )
+    console.warn(`[gen] Quality gate failed (attempt ${attempt}):`, report.issues)
   }
 
   if (attempts.length === 0) {
-    throw new Error(
-      'AI_SERVICE_UNAVAILABLE: Please try again in a moment. This is temporary.'
-    )
+    throw new Error('AI_SERVICE_UNAVAILABLE: Please try again in a moment. This is temporary.')
   }
 
-  const best = attempts.reduce((prev, curr) =>
-    curr.issues.length < prev.issues.length ? curr : prev
-  )
-
-  console.warn(
-    `[gen] All ${MAX_ATTEMPTS} attempts failed. Returning best effort with ${best.issues.length} issues:`,
-    best.issues
-  )
-
+  const best = attempts.reduce((prev, curr) => curr.issues.length < prev.issues.length ? curr : prev)
+  console.warn(`[gen] Returning best effort with ${best.issues.length} issues`)
   best.plan.generated_at = new Date().toISOString()
   return best.plan
 }
 
-function buildPrompt(
-  quiz: Quiz,
-  attempt: number,
-  previousIssues: string[],
-  options: GenerateOptions
-): string {
-  const retryWarning =
-    attempt > 1 && previousIssues.length > 0
-      ? `
-!! PREVIOUS ATTEMPT FAILED !!
-Fix these exact issues:
-${previousIssues.map((i) => `- ${i}`).join('\n')}
-`
-      : ''
+function buildPrompt(quiz: Quiz, attempt: number, previousIssues: string[], options: GenerateOptions): string {
+  const retryWarning = attempt > 1 && previousIssues.length > 0
+    ? `\n!! PREVIOUS ATTEMPT FAILED !!\nFix these exact issues:\n${previousIssues.map((i) => `- ${i}`).join('\n')}\n` : ''
 
-  // 🆕 สร้าง Prompt สำหรับ Hook เก่า
   const historyWarning = options.previousHooks && options.previousHooks.length > 0
-    ? `
-!! CONTINUITY MODE - DO NOT REPEAT !!
-The creator has purchased a plan before. Here are the hooks you already gave them:
-${options.previousHooks.map((h) => `- "${h}"`).join('\n')}
+    ? `\n!! CONTINUITY MODE - DO NOT REPEAT !!\nThe creator purchased a plan before. Here are the hooks you already gave them:\n${options.previousHooks.map((h) => `- "${h}"`).join('\n')}\nYou MUST create completely NEW hooks and angles. Do not rephrase or slightly tweak the old ones.\n` : ''
 
-You MUST create completely NEW hooks and angles. Do not rephrase or slightly tweak the old ones. Approach the topic from a totally different perspective.
-`
-    : ''
-
-  // 🆕 สร้าง Prompt สำหรับ Feedback
   const feedbackWarning = options.userFeedback
-    ? `
-!! CREATOR FEEDBACK FROM LAST WEEK !!
-The creator said this about the previous plan:
-"${options.userFeedback}"
-
-Adjust the style, length, tone, and angle of these new videos based on their feedback. If they said it was too long, make it shorter. If they said it was boring, make it punchier.
-`
-    : ''
+    ? `\n!! CREATOR FEEDBACK FROM LAST WEEK !!\nThe creator said this about the previous plan:\n"${options.userFeedback}"\nAdjust the style, length, tone, and angle of these new videos based on their feedback.\n` : ''
 
   return `
 Create a 7-day content plan for this SPECIFIC creator.
@@ -249,7 +234,7 @@ CREATOR PROFILE:
 ${describeConstraints(quiz.constraints)}
 
 STRUCTURE REQUIREMENTS:
-- 7 days, each with unique angle - no repetition of hook openings
+- 7 days, each with unique angle
 - If goal = "sales": follow: demo -> objection -> use case -> education -> framework -> offer
 - If goal = "followers": intro -> value -> series -> interrupt -> journey -> participation -> BTS
 - If goal = "engagement": question, poll, hot take, challenge, community, contrast, list
@@ -261,16 +246,16 @@ OUTPUT FORMAT - return ONLY valid JSON matching this exact shape:
   "days": [
     {
       "day": 1,
-      "type": "string (e.g., Hot take, Tutorial, Personal story)",
+      "type": "string",
       "hook": "string",
       "script": "string",
       "caption": "string",
       "hashtags": ["string"],
       "visual": "string",
       "posting_time": "string",
-      "posting_tip": "string (1 actionable tip on HOW to film or edit this specific video to maximize retention)",
-      "sound_suggestion": "string (audio idea: e.g., 'Trending audio', 'Voiceover only', 'Lo-fi beat')",
-      "text_overlay": "string (key 2-4 word phrase to put on screen to stop the scroll)"
+      "posting_tip": "string",
+      "sound_suggestion": "string",
+      "text_overlay": "string"
     }
   ]
 }
