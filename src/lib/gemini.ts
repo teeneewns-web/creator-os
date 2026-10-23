@@ -25,12 +25,7 @@ const CTA_RULES = `
 CTA RULES:
 - Each day uses a DIFFERENT call-to-action phrasing.
 - NEVER repeat exact CTA text on 3+ days.
-- If goal is "sales", at least 4 of 7 days MUST end with a product-related CTA:
-  * "Book a call to start your project"
-  * "Get a free quote - link in bio"
-  * "Message me to see samples"
-  * "Visit my profile to book"
-  AVOID ending with "Follow" or "Comment" alone on sales-focused days.
+- If goal is "sales", at least 4 of 7 days MUST end with a product-related CTA.
 - NEVER say "DM us", "our team", "we offer", "we provide". This creator works ALONE.
 - Use first-person singular: "I", "me", "my". Never "we" or "us".
 - If goal is "followers", at least 3 of 7 days MUST explicitly say "Follow me" or "Follow for more" in the script or CTA.
@@ -38,98 +33,97 @@ CTA RULES:
 
 const BANNED_PHRASES = `
 BANNED PHRASES - DO NOT USE:
-- "my skin feels..." / "my skin looks..." + (less/more/smoother)
-- "smoother skin" / "calmer skin" / "clearer skin" / "less red"
+- "my skin feels..." / "my skin looks..."
 - "notice the change" / "see the difference" / "before and after"
 - "after X days/weeks/months of using"
 - "I've been using..." / "since I started..." / "Day X of using..."
 - "after a week" / "after just one week" / "after 7 days"
-- "free trial" / "free week" / "free checklist" / "limited spots" / "X% off"
+- "free trial" / "free week" / "limited spots" / "X% off"
 - "DM us" / "our team" / "we offer"
 `.trim()
 
 function describeConstraints(constraints: string[]): string {
-  if (!constraints || constraints.length === 0) {
-    return 'No specific constraints.'
-  }
+  if (!constraints || constraints.length === 0) return 'No specific constraints.'
   const map: Record<string, string> = {
-    no_face: 'NO FACE ON CAMERA. Never suggest: talking head, face-to-camera, direct eye contact. Use: hands, product close-ups, B-roll, text-on-screen.',
+    no_face: 'NO FACE ON CAMERA. Never suggest: talking head, face-to-camera. Use: hands, product close-ups, B-roll, text-on-screen.',
     no_voice: 'NO VOICEOVER. Text-on-screen with music or ambient audio only.',
-    phone_only: 'PHONE CAMERA ONLY. Do NOT mention tripod, gimbal, ring light, DSLR, microphone, or professional equipment.',
+    phone_only: 'PHONE CAMERA ONLY. Do NOT mention tripod, gimbal, ring light, DSLR, microphone.',
     under_30s: 'Every video must be under 30 seconds.',
     no_editing: 'Minimal editing. Simple cuts and text overlays only.',
   }
   return constraints.map((c) => `- ${map[c] || c}`).join('\n')
 }
 
-// ─── ตั้งค่า Fallback (อัปเดตล่าสุด) ───
-const MAX_ATTEMPTS = 3 // ใช้ 3 รอบ เพื่อคุณภาพสูงสุด (Fluid Compute รองรับ 300 วินาที)
+// ─── ตั้งค่า Fallback (1 รอบ + Timeout 45 วินาที) ───
+const MAX_ATTEMPTS = 1
 const GEMINI_MODELS = ['gemini-3.8-flash', 'gemini-3.6-flash']
 const GROQ_MODEL = 'llama-3.3-70b-versatile'
 
 type Attempt = { plan: Plan; issues: string[] }
 type GenerateOptions = { previousHooks?: string[]; userFeedback?: string }
 
-// ─── ฟังก์ชันเรียก Groq (Fallback) ───
+// ฟังก์ชันช่วยตัดเวลาถ้า AI ช้าเกิน 45 วิ
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) =>
+      setTimeout(() => reject(new Error('AI_TIMEOUT')), ms)
+    ),
+  ])
+}
+
 async function callGroq(prompt: string, attempt: number): Promise<string | null> {
   const apiKey = process.env.GROQ_API_KEY
-  if (!apiKey) {
-    console.warn('[groq] GROQ_API_KEY missing')
-    return null
-  }
+  if (!apiKey) return null
 
   try {
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: GROQ_MODEL,
-        messages: [
-          { role: 'system', content: 'You output only valid JSON. No markdown fences, no commentary.' },
-          { role: 'user', content: prompt },
-        ],
-        response_format: { type: 'json_object' },
-        temperature: attempt === 1 ? 0.8 : 0.6,
+    const res = await withTimeout(
+      fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: GROQ_MODEL,
+          messages: [
+            { role: 'system', content: 'You output only valid JSON. No markdown fences, no commentary.' },
+            { role: 'user', content: prompt },
+          ],
+          response_format: { type: 'json_object' },
+          temperature: attempt === 1 ? 0.8 : 0.6,
+        }),
       }),
-    })
+      45000 // ตัดที่ 45 วินาที
+    )
 
-    if (!res.ok) {
-      console.warn(`[groq] Error ${res.status}`)
-      return null
-    }
+    if (!res.ok) return null
     const data = await res.json()
     return data?.choices?.[0]?.message?.content || null
   } catch (err) {
-    console.warn('[groq] Fetch failed', err)
+    console.warn('[groq] Failed or Timeout:', err)
     return null
   }
 }
 
-// ─── ฟังก์ชันเรียก Gemini ───
 async function callGemini(ai: GoogleGenAI, prompt: string, attempt: number): Promise<string | null> {
   for (const model of GEMINI_MODELS) {
     try {
-      const response = await ai.models.generateContent({
-        model,
-        contents: prompt,
-        config: { responseMimeType: 'application/json', temperature: attempt === 1 ? 0.8 : 0.6 },
-      })
+      const response = await withTimeout(
+        ai.models.generateContent({
+          model,
+          contents: prompt,
+          config: { responseMimeType: 'application/json', temperature: attempt === 1 ? 0.8 : 0.6 },
+        }),
+        45000 // ตัดที่ 45 วินาที
+      )
       if (response.text) return response.text
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err)
-      console.warn(`[gemini] ${model} failed (${msg.slice(0, 50)}...)`)
+      console.warn(`[gemini] ${model} failed or timeout (${msg.slice(0, 30)}...)`)
     }
   }
   return null
 }
 
-export async function generatePlan(
-  quiz: Quiz,
-  options: GenerateOptions = {}
-): Promise<Plan> {
+export async function generatePlan(quiz: Quiz, options: GenerateOptions = {}): Promise<Plan> {
   const geminiKey = process.env.GEMINI_API_KEY
   if (!geminiKey) throw new Error('GEMINI_API_KEY missing')
 
@@ -137,20 +131,13 @@ export async function generatePlan(
   const attempts: Attempt[] = []
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-    const prompt = buildPrompt(
-      quiz,
-      attempt,
-      attempts.length > 0 ? attempts[attempts.length - 1].issues : [],
-      options
-    )
+    const prompt = buildPrompt(quiz, attempt, attempts.length > 0 ? attempts[attempts.length - 1].issues : [], options)
 
-    // 1. ลอง Gemini ก่อน
     let text = await callGemini(ai, prompt, attempt)
     let provider = 'gemini'
 
-    // 2. ถ้า Gemini ล่ม ให้สลับไป Groq ทันที
     if (!text) {
-      console.warn(`[gen] Gemini failed. Switching to Groq...`)
+      console.warn(`[gen] Gemini failed/timeout. Switching to Groq...`)
       text = await callGroq(prompt, attempt)
       provider = 'groq'
     }
