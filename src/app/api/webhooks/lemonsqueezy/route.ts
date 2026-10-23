@@ -13,7 +13,7 @@ import { generatePlan } from '@/lib/gemini'
 import { sendPlanEmail } from '@/lib/emails'
 import type { Quiz } from '@/types/order'
 
-export const maxDuration = 60
+export const maxDuration = 300
 
 export async function POST(request: Request) {
   try {
