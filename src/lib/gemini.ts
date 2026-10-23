@@ -63,7 +63,7 @@ function describeConstraints(constraints: string[]): string {
 }
 
 // ─── ตั้งค่า Fallback (อัปเดตล่าสุด) ───
-const MAX_ATTEMPTS = 1 // ⚠️ ลดเหลือ 1 เพื่อป้องกัน Vercel Timeout 60 วินาที
+const MAX_ATTEMPTS = 3 // ใช้ 3 รอบ เพื่อคุณภาพสูงสุด (Fluid Compute รองรับ 300 วินาที)
 const GEMINI_MODELS = ['gemini-3.8-flash', 'gemini-3.6-flash']
 const GROQ_MODEL = 'llama-3.3-70b-versatile'
 
