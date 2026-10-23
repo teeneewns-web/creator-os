@@ -15,11 +15,10 @@ FACT SAFETY - HIGHEST PRIORITY:
 `.trim()
 
 const NICHE_LOCK = `
-NICHE LOCK - MANDATORY:
-- EVERY day (hook, script, caption, visual) MUST reference the niche, product, or audience.
-- The content must be USELESS to someone outside this niche.
-- Test: would a stranger reading this know exactly what business this creator runs?
-- If NO - rewrite until it passes.
+NICHE LOCK - ABSOLUTELY MANDATORY:
+- EVERY single day (hook, script, caption, visual) MUST explicitly mention the niche, product, or audience.
+- If even one day is generic or off-topic, the entire plan is REJECTED.
+- Check yourself: Before returning the JSON, read Day 1 to Day 7 again. Does every single day scream this exact niche? If not, rewrite it.
 `.trim()
 
 const CTA_RULES = `
@@ -34,7 +33,7 @@ CTA RULES:
   AVOID ending with "Follow" or "Comment" alone on sales-focused days.
 - NEVER say "DM us", "our team", "we offer", "we provide". This creator works ALONE.
 - Use first-person singular: "I", "me", "my". Never "we" or "us".
-- If goal is "followers", 3-5 days may ask to follow - no more than 5.
+- If goal is "followers", at least 3 of 7 days MUST explicitly say "Follow me" or "Follow for more" in the script or CTA.
 `.trim()
 
 const BANNED_PHRASES = `
@@ -63,8 +62,8 @@ function describeConstraints(constraints: string[]): string {
   return constraints.map((c) => `- ${map[c] || c}`).join('\n')
 }
 
-// ─── ตั้งค่า Fallback (อัปเดตโมเดลล่าสุด 2026) ───
-const MAX_ATTEMPTS = 2 
+// ─── ตั้งค่า Fallback (อัปเดตล่าสุด) ───
+const MAX_ATTEMPTS = 1 // ⚠️ ลดเหลือ 1 เพื่อป้องกัน Vercel Timeout 60 วินาที
 const GEMINI_MODELS = ['gemini-3.8-flash', 'gemini-3.6-flash']
 const GROQ_MODEL = 'llama-3.3-70b-versatile'
 
@@ -122,7 +121,6 @@ async function callGemini(ai: GoogleGenAI, prompt: string, attempt: number): Pro
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err)
       console.warn(`[gemini] ${model} failed (${msg.slice(0, 50)}...)`)
-      // ไม่ต้องรอนาน ให้สลับไป Groq เลย
     }
   }
   return null
