@@ -66,7 +66,7 @@ function describeConstraints(constraints: string[]): string {
 // ─── ตั้งค่า Fallback (อัปเดตโมเดลล่าสุด 2026) ───
 const MAX_ATTEMPTS = 2 
 const GEMINI_MODELS = ['gemini-3.8-flash', 'gemini-3.6-flash']
-const GROQ_MODEL = 'openai/gpt-oss-120b'
+const GROQ_MODEL = 'llama-3.3-70b-versatile'
 
 type Attempt = { plan: Plan; issues: string[] }
 type GenerateOptions = { previousHooks?: string[]; userFeedback?: string }
