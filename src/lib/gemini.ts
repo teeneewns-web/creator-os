@@ -54,15 +54,16 @@ function describeConstraints(constraints: string[]): string {
   return constraints.map((c) => `- ${map[c] || c}`).join('\n')
 }
 
-// ─── ตั้งค่า ───
+// ─── ตั้งค่า (อัปเดตตามข้อมูลล่าสุด ต.ค. 2026) ───
 const MAX_ATTEMPTS = 1
-const GROQ_MODEL = 'llama-3.3-70b-versatile'
-const GEMINI_MODELS = ['gemini-3.8-flash', 'gemini-3.6-flash']
+// gpt-oss-120b เป็นตัวแทนที่ Groq แนะนำสำหรับ llama-3.3-70b-versatile ที่ถูกยกเลิก
+const GROQ_MODEL = 'openai/gpt-oss-120b'
+// 3.6-flash เสถียรกว่า 3.8-flash (3.8 มี 503 บ่อย)
+const GEMINI_MODELS = ['gemini-3.6-flash', 'gemini-3.5-flash', 'gemini-3.8-flash']
 
 type Attempt = { plan: Plan; issues: string[] }
 type GenerateOptions = { previousHooks?: string[]; userFeedback?: string }
 
-// ฟังก์ชันช่วยตัดเวลาถ้า AI ช้าเกิน 40 วิ
 function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
   return Promise.race([
     promise,
@@ -92,14 +93,15 @@ async function callGroq(prompt: string, attempt: number): Promise<string | null>
           ],
           response_format: { type: 'json_object' },
           temperature: attempt === 1 ? 0.8 : 0.6,
+          max_tokens: 4096, // gpt-oss-120b ต้องการ token มากกว่า Llama
         }),
       }),
-      40000 
+      40000
     )
 
     if (!res.ok) {
       const errorText = await res.text()
-      console.error(`[groq] Failed ${res.status}:`, errorText.slice(0, 200))
+      console.error(`[groq] Failed ${res.status}:`, errorText.slice(0, 300))
       return null
     }
     const data = await res.json()
@@ -124,7 +126,7 @@ async function callGemini(ai: GoogleGenAI, prompt: string, attempt: number): Pro
       if (response.text) return response.text
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err)
-      console.warn(`[gemini] ${model} failed or timeout (${msg.slice(0, 30)}...)`)
+      console.warn(`[gemini] ${model} failed or timeout (${msg.slice(0, 40)}...)`)
     }
   }
   return null
@@ -140,11 +142,10 @@ export async function generatePlan(quiz: Quiz, options: GenerateOptions = {}): P
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     const prompt = buildPrompt(quiz, attempt, attempts.length > 0 ? attempts[attempts.length - 1].issues : [], options)
 
-    // 🌟 เปลี่ยนลำดับ: ลอง Groq (เร็ว) ก่อน
+    // ลอง Groq ก่อน
     let text = await callGroq(prompt, attempt)
     let provider = 'groq'
 
-    // ถ้า Groq ล่ม ค่อยใช้ Gemini
     if (!text) {
       console.warn(`[gen] Groq failed. Switching to Gemini...`)
       text = await callGemini(ai, prompt, attempt)
