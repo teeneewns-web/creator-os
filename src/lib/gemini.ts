@@ -54,15 +54,15 @@ function describeConstraints(constraints: string[]): string {
   return constraints.map((c) => `- ${map[c] || c}`).join('\n')
 }
 
-// ─── ตั้งค่า Fallback (1 รอบ + Timeout 45 วินาที) ───
+// ─── ตั้งค่า ───
 const MAX_ATTEMPTS = 1
-const GEMINI_MODELS = ['gemini-3.8-flash', 'gemini-3.6-flash']
 const GROQ_MODEL = 'llama-3.3-70b-versatile'
+const GEMINI_MODELS = ['gemini-3.8-flash', 'gemini-3.6-flash']
 
 type Attempt = { plan: Plan; issues: string[] }
 type GenerateOptions = { previousHooks?: string[]; userFeedback?: string }
 
-// ฟังก์ชันช่วยตัดเวลาถ้า AI ช้าเกิน 45 วิ
+// ฟังก์ชันช่วยตัดเวลาถ้า AI ช้าเกิน 40 วิ
 function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
   return Promise.race([
     promise,
@@ -74,7 +74,10 @@ function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
 
 async function callGroq(prompt: string, attempt: number): Promise<string | null> {
   const apiKey = process.env.GROQ_API_KEY
-  if (!apiKey) return null
+  if (!apiKey) {
+    console.warn('[groq] GROQ_API_KEY missing')
+    return null
+  }
 
   try {
     const res = await withTimeout(
@@ -91,10 +94,14 @@ async function callGroq(prompt: string, attempt: number): Promise<string | null>
           temperature: attempt === 1 ? 0.8 : 0.6,
         }),
       }),
-      45000 // ตัดที่ 45 วินาที
+      40000 
     )
 
-    if (!res.ok) return null
+    if (!res.ok) {
+      const errorText = await res.text()
+      console.error(`[groq] Failed ${res.status}:`, errorText.slice(0, 200))
+      return null
+    }
     const data = await res.json()
     return data?.choices?.[0]?.message?.content || null
   } catch (err) {
@@ -112,7 +119,7 @@ async function callGemini(ai: GoogleGenAI, prompt: string, attempt: number): Pro
           contents: prompt,
           config: { responseMimeType: 'application/json', temperature: attempt === 1 ? 0.8 : 0.6 },
         }),
-        45000 // ตัดที่ 45 วินาที
+        40000
       )
       if (response.text) return response.text
     } catch (err) {
@@ -133,13 +140,15 @@ export async function generatePlan(quiz: Quiz, options: GenerateOptions = {}): P
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     const prompt = buildPrompt(quiz, attempt, attempts.length > 0 ? attempts[attempts.length - 1].issues : [], options)
 
-    let text = await callGemini(ai, prompt, attempt)
-    let provider = 'gemini'
+    // 🌟 เปลี่ยนลำดับ: ลอง Groq (เร็ว) ก่อน
+    let text = await callGroq(prompt, attempt)
+    let provider = 'groq'
 
+    // ถ้า Groq ล่ม ค่อยใช้ Gemini
     if (!text) {
-      console.warn(`[gen] Gemini failed/timeout. Switching to Groq...`)
-      text = await callGroq(prompt, attempt)
-      provider = 'groq'
+      console.warn(`[gen] Groq failed. Switching to Gemini...`)
+      text = await callGemini(ai, prompt, attempt)
+      provider = 'gemini'
     }
 
     if (!text) {
@@ -191,10 +200,10 @@ function buildPrompt(quiz: Quiz, attempt: number, previousIssues: string[], opti
     ? `\n!! PREVIOUS ATTEMPT FAILED !!\nFix these exact issues:\n${previousIssues.map((i) => `- ${i}`).join('\n')}\n` : ''
 
   const historyWarning = options.previousHooks && options.previousHooks.length > 0
-    ? `\n!! CONTINUITY MODE - DO NOT REPEAT !!\nThe creator purchased a plan before. Here are the hooks you already gave them:\n${options.previousHooks.map((h) => `- "${h}"`).join('\n')}\nYou MUST create completely NEW hooks and angles. Do not rephrase or slightly tweak the old ones.\n` : ''
+    ? `\n!! CONTINUITY MODE - DO NOT REPEAT !!\nThe creator purchased a plan before. Here are the hooks you already gave them:\n${options.previousHooks.map((h) => `- "${h}"`).join('\n')}\nYou MUST create completely NEW hooks and angles.\n` : ''
 
   const feedbackWarning = options.userFeedback
-    ? `\n!! CREATOR FEEDBACK FROM LAST WEEK !!\nThe creator said this about the previous plan:\n"${options.userFeedback}"\nAdjust the style, length, tone, and angle of these new videos based on their feedback.\n` : ''
+    ? `\n!! CREATOR FEEDBACK FROM LAST WEEK !!\nThe creator said this about the previous plan:\n"${options.userFeedback}"\nAdjust the style, length, tone, and angle based on their feedback.\n` : ''
 
   return `
 Create a 7-day content plan for this SPECIFIC creator.
@@ -220,7 +229,7 @@ ${describeConstraints(quiz.constraints)}
 
 STRUCTURE REQUIREMENTS:
 - 7 days, each with unique angle
-- If goal = "sales": follow: demo -> objection -> use case -> education -> framework -> offer
+- If goal = "sales": demo -> objection -> use case -> education -> framework -> offer
 - If goal = "followers": intro -> value -> series -> interrupt -> journey -> participation -> BTS
 - If goal = "engagement": question, poll, hot take, challenge, community, contrast, list
 
