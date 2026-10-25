@@ -218,6 +218,25 @@ export default function OrderPage({
             <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
             Plan ready
           </div>
+
+          {/* 🆕 แสดงอีเมลและปุ่มแก้ไข */}
+          <div className="flex items-center gap-3 text-sm text-[#6B6259] mb-4">
+            <span>
+              Emailed to: <strong className="text-[#1A1614]">{order.email}</strong>
+            </span>
+            <button
+              onClick={() => {
+                const newEmail = prompt("Enter the correct email address:", order.email);
+                if (newEmail && newEmail !== order.email) {
+                  alert("Email update feature coming soon. Please contact support.");
+                }
+              }}
+              className="text-xs text-[#D97757] underline hover:text-[#C66846] transition-colors"
+            >
+              Wrong email?
+            </button>
+          </div>
+
           <h1 className="font-serif text-3xl md:text-5xl leading-[1.05] tracking-[-0.02em] mb-4">
             {plan.title}
           </h1>

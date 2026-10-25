@@ -148,3 +148,9 @@ export async function getOrdersByEmail(email: string): Promise<Order[]> {
   // เรียงจากใหม่ไปเก่า
   return orders.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
 }
+export async function updateOrderEmail(
+  id: string,
+  newEmail: string
+): Promise<Order | null> {
+  return updateOrder(id, { email: newEmail })
+}
