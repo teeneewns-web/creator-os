@@ -29,10 +29,15 @@ CTA RULES:
 - NEVER say "DM us", "our team", "we offer", "we provide". This creator works ALONE.
 - Use first-person singular: "I", "me", "my". Never "we" or "us".
 - If goal is "followers", at least 3 of 7 days MUST explicitly say "Follow me" or "Follow for more" in the script or CTA.
+- DO NOT put hashtags inside the caption text. Put hashtags ONLY in the JSON array field.
+- Hashtags must be at least 50% different each day.
+- If tone is "funny", use Gen Z slang or relatable humor.
+- Only mention the product/ebook on Day 6 and Day 7. Do not mention it on Days 1-5.
 `.trim()
 
 const BANNED_PHRASES = `
 BANNED PHRASES - DO NOT USE:
+- "I tried..." / "I just tried..." / "I used..." / "I bought..."
 - "my skin feels..." / "my skin looks..."
 - "notice the change" / "see the difference" / "before and after"
 - "after X days/weeks/months of using"
