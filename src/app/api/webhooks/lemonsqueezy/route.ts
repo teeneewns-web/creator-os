@@ -8,12 +8,11 @@ import {
   markFailed,
   saveLemonMapping,
 } from '@/lib/orders'
-
 import { generatePlan } from '@/lib/gemini'
 import { sendPlanEmail } from '@/lib/emails'
 import type { Quiz } from '@/types/order'
 
-export const maxDuration = 300
+export const maxDuration = 300 // 5 นาที (Fluid Compute)
 
 export async function POST(request: Request) {
   try {
@@ -66,15 +65,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true, status: order.status })
     }
 
-       const lemonOrderId = payload?.data?.id ? String(payload.data.id) : undefined
+    const lemonOrderId = payload?.data?.id ? String(payload.data.id) : undefined
 
-    // Save mapping BEFORE responding — /order-success จะ lookup
     if (lemonOrderId) {
       await saveLemonMapping(lemonOrderId, orderId)
     }
 
     await markPaid(orderId, 'lemonsqueezy', lemonOrderId)
-    // Keep function alive after response on Vercel
+
+    // รันแบบ Background แต่ใช้ after()
     after(
       processOrder(orderId, order.quiz).catch((err) => {
         console.error(`Background generation failed for ${orderId}:`, err)
@@ -98,13 +97,16 @@ async function processOrder(orderId: string, quiz: Quiz) {
     const saved = await savePlan(orderId, plan)
 
     if (saved) {
-      sendPlanEmail(saved, plan).catch((err: unknown) =>
-        console.error('Email send failed:', err)
-      )
+      try {
+        // 🌟 สำคัญ: ใช้ await เพื่อรอให้ส่งอีเมลเสร็จก่อน ไม่ให้ Vercel ตัดการทำงาน
+        await sendPlanEmail(saved, plan)
+        console.log(`[email] Plan email sent for ${orderId}`)
+      } catch (err) {
+        console.error(`[email] Failed to send for ${orderId}:`, err)
+      }
     }
   } catch (error) {
-    const msg =
-      error instanceof Error ? error.message : 'Unknown error'
+    const msg = error instanceof Error ? error.message : 'Unknown error'
     console.error(`Generation failed for ${orderId}:`, msg)
     await markFailed(orderId, msg)
   }
