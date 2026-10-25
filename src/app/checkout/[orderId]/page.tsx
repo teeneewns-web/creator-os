@@ -184,7 +184,7 @@ export default function CheckoutPage({
           <button
             onClick={handleCardCheckout}
             disabled={redirecting}
-            className="w-full bg-[#1A1614] text-[#FAF7F2] px-6 py-4 rounded-xl font-medium hover:bg-[#2B2521] disabled:opacity-50 transition-colors"
+            className="w-full bg-[#D97757] text-[#FAF7F2] px-6 py-4 rounded-xl font-medium hover:hover:bg-[#C66846] disabled:opacity-50 transition-colors"
           >
             {redirecting
               ? 'Redirecting to secure checkout...'
