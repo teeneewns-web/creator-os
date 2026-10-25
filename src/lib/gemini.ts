@@ -32,6 +32,10 @@ CTA RULES:
 - DO NOT put hashtags inside the caption text. Put hashtags ONLY in the JSON array field.
 - Hashtags must be at least 50% different each day.
 - If tone is "funny", use Gen Z slang or relatable humor.
+- SCRIPT VS VISUAL RULES:
+  * The "visual" field is for CAMERA DIRECTIONS (e.g., "Close-up of hands", "B-roll of city").
+  * If there is no voiceover (constraint: no_voice), the "script" field MUST contain ONLY the exact text to be displayed on screen (line by line). DO NOT put camera directions inside the script field.
+  * If voiceover is allowed, the "script" field MUST be the spoken words.
 - Only mention the product/ebook on Day 6 and Day 7. Do not mention it on Days 1-5.
 `.trim()
 
