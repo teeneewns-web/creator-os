@@ -6,13 +6,6 @@ const LEMONSQUEEZY_CHECKOUT_URL =
 export function buildCheckoutUrl(orderId: string): string {
   const params = new URLSearchParams()
   params.set('checkout[custom][order_id]', orderId)
-  
-  // 🆕 บังคับสีพื้นหลังและปุ่มให้เป็น Light Mode ชัดเจน
-  params.set('checkout[background_color]', '#FAF7F2') // สีพื้นหลังครีม
-  params.set('checkout[button_color]', '#D97757')     // สีปุ่มส้ม
-  params.set('checkout[button_text_color]', '#FFFFFF')
-  params.set('checkout[text_color]', '#1A1614')
-  
   return `${LEMONSQUEEZY_CHECKOUT_URL}?${params.toString()}`
 }
 

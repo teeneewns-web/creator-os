@@ -234,7 +234,7 @@ export default function Home() {
 
       {/* ============ PROBLEM → SOLUTION ============ */}
       <section className="bg-white border-y border-[#E8E1D6]">
-        <div className="max-w-6xl mx-auto px-6 py-24 md:py-28 grid md:grid-cols-2 gap-16 md:gap-20">
+        <div className="max-w-6xl mx-auto px-6 py-16 md:py-20 grid md:grid-cols-2 gap-16 md:gap-20">
           <div>
             <div className="inline-flex items-center gap-2 bg-[#FAF7F2] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#6B6259] font-medium mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-[#A39B8F]" />
@@ -295,8 +295,8 @@ export default function Home() {
       </section>
 
       {/* ============ WHAT YOU GET ============ */}
-      <section className="max-w-6xl mx-auto px-6 py-24 md:py-32">
-        <div className="max-w-2xl mb-14">
+      <section className="max-w-6xl mx-auto px-6 py-16 md:py-24">
+        <div className="max-w-2xl mb-10">
           <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
             What you get
@@ -346,8 +346,8 @@ export default function Home() {
 
       {/* ============ HOW IT WORKS ============ */}
       <section id="how" className="bg-white border-y border-[#E8E1D6]">
-        <div className="max-w-6xl mx-auto px-6 py-24 md:py-32">
-          <div className="max-w-2xl mb-14">
+        <div className="max-w-6xl mx-auto px-6 py-16 md:py-24">
+          <div className="max-w-2xl mb-10">
             <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
               How it works
@@ -411,8 +411,8 @@ export default function Home() {
       </section>
 
       {/* ============ WHO IT IS FOR ============ */}
-      <section className="max-w-6xl mx-auto px-6 py-24 md:py-32">
-        <div className="max-w-2xl mb-14">
+      <section className="max-w-6xl mx-auto px-6 py-16 md:py-24">
+        <div className="max-w-2xl mb-10">
           <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
             Who it&rsquo;s for
@@ -463,8 +463,8 @@ export default function Home() {
 
       {/* ============ TESTIMONIALS ============ */}
       <section className="bg-[#FAF7F2] border-t border-[#E8E1D6]">
-        <div className="max-w-6xl mx-auto px-6 py-24 md:py-32">
-          <div className="text-center mb-14">
+        <div className="max-w-6xl mx-auto px-6 py-16 md:py-24">
+          <div className="text-center mb-10">
             <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
               Beta feedback
@@ -530,7 +530,7 @@ export default function Home() {
 
       {/* ============ PRICING ============ */}
       <section id="pricing" className="bg-white border-y border-[#E8E1D6]">
-        <div className="max-w-3xl mx-auto px-6 py-24 md:py-32 text-center">
+        <div className="max-w-3xl mx-auto px-6 py-16 md:py-24 text-center">
           <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
             Pricing
@@ -596,7 +596,7 @@ export default function Home() {
 
       {/* ============ FOUNDER NOTE ============ */}
       <section className="bg-white border-t border-[#E8E1D6]">
-        <div className="max-w-3xl mx-auto px-6 py-24 md:py-32">
+        <div className="max-w-3xl mx-auto px-6 py-16 md:py-24">
           <div className="bg-[#FAF7F2]/60 border border-[#E8E1D6] rounded-3xl p-8 md:p-12">
             <div className="flex items-start gap-4 mb-6">
               <div className="w-12 h-12 rounded-full bg-[#1A1614] text-[#FAF7F2] flex items-center justify-center font-serif text-lg shrink-0">
@@ -638,7 +638,7 @@ export default function Home() {
 
       {/* ============ FINAL CTA ============ */}
       <section className="bg-[#1A1614] text-[#FAF7F2]">
-        <div className="max-w-6xl mx-auto px-6 py-24 md:py-32">
+        <div className="max-w-6xl mx-auto px-6 py-16 md:py-24">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
