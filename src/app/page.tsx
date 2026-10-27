@@ -45,9 +45,9 @@ export default function Home() {
       </header>
 
       {/* ============ HERO ============ */}
-      <section className="max-w-6xl mx-auto px-6 pt-20 md:pt-28 pb-16 md:pb-24">
+      <section className="max-w-6xl mx-auto px-6 pt-12 md:pt-20 pb-12 md:pb-16">
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2.5 border border-[#E8E1D6] bg-white rounded-full pl-2 pr-4 py-2 text-[13px] text-[#6B6259] mb-10 shadow-[0_1px_2px_rgba(26,22,20,0.03)]">
+          <div className="inline-flex items-center gap-2.5 border border-[#E8E1D6] bg-white rounded-full pl-2 pr-4 py-2 text-[13px] text-[#6B6259] mb-6 shadow-[0_1px_2px_rgba(26,22,20,0.03)]">
             <span className="inline-flex items-center gap-1.5 bg-[#FBF0E9] text-[#D97757] px-2.5 py-0.5 rounded-full text-[11px] font-medium">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
               New
@@ -55,7 +55,7 @@ export default function Home() {
             Built for TikTok, Reels, and Shorts
           </div>
 
-          <h1 className="font-serif text-[clamp(2.5rem,6.5vw,4.75rem)] leading-[1.05] tracking-[-0.02em] mb-7 text-[#1A1614]">
+          <h1 className="font-serif text-[clamp(2.5rem,6.5vw,4.5rem)] leading-[1.05] tracking-[-0.02em] mb-4 text-[#1A1614]">
             Know exactly what to post
             <br />
             <span className="relative inline-block">
@@ -67,13 +67,13 @@ export default function Home() {
             </span>
           </h1>
 
-          <p className="text-lg md:text-xl text-[#6B6259] max-w-xl mb-10 leading-relaxed">
+          <p className="text-lg md:text-xl text-[#6B6259] max-w-xl mb-6 leading-relaxed">
             Turn your business, audience, and goals into a personalized
             weekly content plan — hooks, scripts, captions, and
             next steps included.
           </p>
 
-          <div className="flex flex-wrap items-center gap-3 mb-8">
+          <div className="flex flex-wrap items-center gap-3 mb-6">
             <Link
               href="/start"
               className="inline-flex items-center gap-2 bg-[#D97757] text-white px-7 py-4 rounded-xl font-medium hover:bg-[#C66846] transition-colors shadow-[0_4px_12px_rgba(217,119,87,0.25)]"
@@ -89,7 +89,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="flex items-center gap-2 text-sm text-[#6B6259] mb-6">
+          <div className="flex items-center gap-2 text-sm text-[#6B6259] mb-5">
             <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#2C3E50]" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               <polyline points="9 12 11 14 15 10" />
@@ -115,7 +115,7 @@ export default function Home() {
       </section>
 
       {/* ============ PRODUCT PREVIEW ============ */}
-      <section id="preview" className="max-w-6xl mx-auto px-6 pb-24 md:pb-32">
+      <section id="preview" className="max-w-6xl mx-auto px-6 pb-16 md:pb-24">
         <div className="bg-white border border-[#E8E1D6] rounded-3xl shadow-[0_8px_32px_rgba(26,22,20,0.06)] overflow-hidden">
           <div className="h-1 bg-gradient-to-r from-[#D97757] via-[#D97757]/60 to-transparent" />
 
@@ -234,7 +234,7 @@ export default function Home() {
 
       {/* ============ PROBLEM → SOLUTION ============ */}
       <section className="bg-white border-y border-[#E8E1D6]">
-        <div className="max-w-6xl mx-auto px-6 py-16 md:py-20 grid md:grid-cols-2 gap-16 md:gap-20">
+        <div className="max-w-6xl mx-auto px-6 py-16 md:py-20 grid md:grid-cols-2 gap-12 md:gap-16">
           <div>
             <div className="inline-flex items-center gap-2 bg-[#FAF7F2] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#6B6259] font-medium mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-[#A39B8F]" />
@@ -367,7 +367,7 @@ export default function Home() {
               [
                 '02',
                 'Checkout in seconds',
-                'One-time payment. Card or PromptPay. No subscription.',
+                'One-time payment. Card, Apple Pay, or PayPal. No subscription.',
               ],
               [
                 '03',
@@ -392,7 +392,7 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="mt-16 max-w-4xl mx-auto">
+          <div className="mt-12 max-w-4xl mx-auto">
             <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-[#E8E1D6] shadow-[0_8px_32px_rgba(26,22,20,0.06)] bg-[#FAF7F2]">
               <iframe
                 src="https://www.youtube.com/embed/XTF-VZYrbhY"

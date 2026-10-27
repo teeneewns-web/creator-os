@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState, use } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { buildCheckoutUrl } from '@/lib/lemonsqueezy'
 
@@ -19,10 +18,8 @@ export default function CheckoutPage({
   params: Promise<{ orderId: string }>
 }) {
   const { orderId } = use(params)
-  const router = useRouter()
   const [order, setOrder] = useState<Order | null>(null)
   const [loading, setLoading] = useState(true)
-  const [confirming, setConfirming] = useState(false)
   const [redirecting, setRedirecting] = useState(false)
   const [error, setError] = useState('')
 
@@ -39,22 +36,6 @@ export default function CheckoutPage({
         setLoading(false)
       })
   }, [orderId])
-
-  async function handlePaid() {
-    setConfirming(true)
-    setError('')
-    try {
-      const res = await fetch(`/api/orders/${orderId}/confirm`, {
-        method: 'POST',
-      })
-      const data = await res.json()
-      if (!res.ok || !data.ok) throw new Error(data.message || 'Failed')
-      router.push(`/order/${orderId}`)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed')
-      setConfirming(false)
-    }
-  }
 
   function handleCardCheckout() {
     if (!order) return
@@ -176,7 +157,7 @@ export default function CheckoutPage({
             <div className="flex-1">
               <div className="font-medium text-[#1A1614]">Pay with card</div>
               <div className="text-sm text-[#6B6259]">
-                Visa, Mastercard, Amex — instant
+                Card, Apple Pay, Google Pay, or PayPal
               </div>
             </div>
           </div>
@@ -188,65 +169,11 @@ export default function CheckoutPage({
           >
             {redirecting
               ? 'Redirecting to secure checkout...'
-              : `Pay $${order.amount_usd} with card`}
+              : `Pay $${order.amount_usd} securely`}
           </button>
 
           <p className="text-xs text-[#A39B8F] text-center mt-3">
             Secure checkout by Lemon Squeezy. Instant access.
-          </p>
-        </div>
-
-        {/* PromptPay */}
-        <div className="bg-white border border-[#E8E1D6] rounded-2xl p-6 shadow-[0_1px_3px_rgba(26,22,20,0.03)]">
-          <div className="flex items-center gap-3 mb-5">
-            <div className="w-10 h-10 rounded-lg bg-[#FBF0E9] border border-[#E8E1D6] flex items-center justify-center">
-              <svg
-                viewBox="0 0 24 24"
-                className="w-5 h-5 text-[#D97757]"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              >
-                <rect x="3" y="3" width="7" height="7" />
-                <rect x="14" y="3" width="7" height="7" />
-                <rect x="3" y="14" width="7" height="7" />
-                <rect x="14" y="14" width="7" height="7" />
-              </svg>
-            </div>
-            <div className="flex-1">
-              <div className="font-medium text-[#1A1614]">
-                Pay with PromptPay
-              </div>
-              <div className="text-sm text-[#6B6259]">Transfer 690 THB</div>
-            </div>
-          </div>
-
-          <div className="bg-[#FAF7F2] border border-[#E8E1D6] rounded-xl p-5 mb-5 text-center">
-            <div className="text-xs uppercase tracking-widest text-[#A39B8F] mb-2">
-              PromptPay Number
-            </div>
-            <div className="font-mono text-xl tracking-wider text-[#1A1614] font-medium">
-              064-917-0554
-            </div>
-          </div>
-
-          <button
-            onClick={handlePaid}
-            disabled={confirming}
-            className="w-full bg-[#1A1614] text-white px-6 py-4 rounded-xl font-medium hover:bg-[#2A2521] disabled:opacity-50 transition-colors shadow-[0_2px_8px_rgba(26,22,20,0.12)]"
-          >
-            {confirming ? (
-              <span className="inline-flex items-center gap-2 justify-center">
-                <span className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white spinner" />
-                Generating your plan...
-              </span>
-            ) : (
-              "I've paid"
-            )}
-          </button>
-
-          <p className="text-xs text-[#A39B8F] text-center mt-3">
-            Your plan generates the moment you tap.
           </p>
         </div>
 
