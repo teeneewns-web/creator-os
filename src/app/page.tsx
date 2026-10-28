@@ -45,7 +45,7 @@ export default function Home() {
       </header>
 
       {/* ============ HERO ============ */}
-      <section className="max-w-6xl mx-auto px-6 pt-12 md:pt-20 pb-12 md:pb-16">
+      <section className="max-w-6xl mx-auto px-6 pt-6 md:pt-12 pb-8 md:pb-12">
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2.5 border border-[#E8E1D6] bg-white rounded-full pl-2 pr-4 py-2 text-[13px] text-[#6B6259] mb-6 shadow-[0_1px_2px_rgba(26,22,20,0.03)]">
             <span className="inline-flex items-center gap-1.5 bg-[#FBF0E9] text-[#D97757] px-2.5 py-0.5 rounded-full text-[11px] font-medium">
@@ -295,8 +295,8 @@ export default function Home() {
       </section>
 
       {/* ============ WHAT YOU GET ============ */}
-      <section className="max-w-6xl mx-auto px-6 py-16 md:py-24">
-        <div className="max-w-2xl mb-10">
+      <section className="max-w-6xl mx-auto px-6 py-10 md:py-16">
+        <div className="max-w-2xl mb-6">
           <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
             What you get
@@ -346,8 +346,8 @@ export default function Home() {
 
       {/* ============ HOW IT WORKS ============ */}
       <section id="how" className="bg-white border-y border-[#E8E1D6]">
-        <div className="max-w-6xl mx-auto px-6 py-16 md:py-24">
-          <div className="max-w-2xl mb-10">
+        <div className="max-w-6xl mx-auto px-6 py-10 md:py-16">
+          <div className="max-w-2xl mb-6">
             <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
               How it works
@@ -411,8 +411,8 @@ export default function Home() {
       </section>
 
       {/* ============ WHO IT IS FOR ============ */}
-      <section className="max-w-6xl mx-auto px-6 py-16 md:py-24">
-        <div className="max-w-2xl mb-10">
+      <section className="max-w-6xl mx-auto px-6 py-10 md:py-16">
+        <div className="max-w-2xl mb-6">
           <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
             Who it&rsquo;s for
@@ -463,8 +463,8 @@ export default function Home() {
 
       {/* ============ TESTIMONIALS ============ */}
       <section className="bg-[#FAF7F2] border-t border-[#E8E1D6]">
-        <div className="max-w-6xl mx-auto px-6 py-16 md:py-24">
-          <div className="text-center mb-10">
+        <div className="max-w-6xl mx-auto px-6 py-10 md:py-16">
+          <div className="text-center mb-6">
             <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
               Beta feedback
@@ -530,7 +530,7 @@ export default function Home() {
 
       {/* ============ PRICING ============ */}
       <section id="pricing" className="bg-white border-y border-[#E8E1D6]">
-        <div className="max-w-3xl mx-auto px-6 py-16 md:py-24 text-center">
+        <div className="max-w-3xl mx-auto px-6 py-10 md:py-16 text-center">
           <div className="inline-flex items-center gap-2 bg-[#FBF0E9] border border-[#E8E1D6] rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
             Pricing
@@ -552,7 +552,7 @@ export default function Home() {
               </span>
               <span className="text-[#6B6259] text-lg">USD</span>
             </div>
-            <ul className="space-y-3 mb-10 text-[15px] text-[#3F3A35]">
+            <ul className="space-y-3 mb-6 text-[15px] text-[#3F3A35]">
               {[
                 '7 days of hooks, scripts, captions',
                 'Visual direction for every day',
@@ -596,7 +596,7 @@ export default function Home() {
 
       {/* ============ FOUNDER NOTE ============ */}
       <section className="bg-white border-t border-[#E8E1D6]">
-        <div className="max-w-3xl mx-auto px-6 py-16 md:py-24">
+        <div className="max-w-3xl mx-auto px-6 py-10 md:py-16">
           <div className="bg-[#FAF7F2]/60 border border-[#E8E1D6] rounded-3xl p-8 md:p-12">
             <div className="flex items-start gap-4 mb-6">
               <div className="w-12 h-12 rounded-full bg-[#1A1614] text-[#FAF7F2] flex items-center justify-center font-serif text-lg shrink-0">
@@ -638,7 +638,7 @@ export default function Home() {
 
       {/* ============ FINAL CTA ============ */}
       <section className="bg-[#1A1614] text-[#FAF7F2]">
-        <div className="max-w-6xl mx-auto px-6 py-16 md:py-24">
+        <div className="max-w-6xl mx-auto px-6 py-10 md:py-16">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-3.5 py-1.5 text-xs uppercase tracking-widest text-[#D97757] font-medium mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D97757]" />
@@ -649,7 +649,7 @@ export default function Home() {
               <br />
               <span className="italic text-[#D97757]">Start posting.</span>
             </h2>
-            <p className="text-[#A39B8F] text-lg mb-10 max-w-md leading-relaxed">
+            <p className="text-[#A39B8F] text-lg mb-6 max-w-md leading-relaxed">
               Your first 7-day plan is 60 seconds away.
             </p>
             <div className="flex flex-wrap items-center gap-3">
