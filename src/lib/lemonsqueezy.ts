@@ -1,8 +1,7 @@
 import { createHmac, timingSafeEqual } from 'crypto'
 
 const LEMONSQUEEZY_CHECKOUT_URL =
-  'https://creator-os-o.lemonsqueezy.com/checkout/buy/8712615a-134d-43e1-9af5-9572c671c865'
-
+  https://creator-os-o.lemonsqueezy.com/checkout/buy/8c8bd32d-9684-4576-b1af-42a981f27826
 export function buildCheckoutUrl(orderId: string): string {
   const params = new URLSearchParams()
   params.set('checkout[custom][order_id]', orderId)
