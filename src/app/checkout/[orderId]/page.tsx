@@ -2,7 +2,6 @@
 
 import { useEffect, useState, use } from 'react'
 import Link from 'next/link'
-import { buildCheckoutUrl } from '@/lib/lemonsqueezy'
 
 type Order = {
   id: string
@@ -37,13 +36,45 @@ export default function CheckoutPage({
       })
   }, [orderId])
 
-  function handleCardCheckout() {
-    if (!order) return
-    setError('')
-    setRedirecting(true)
-    const url = buildCheckoutUrl(order.id)
-    window.location.href = url
+  async function handleCardCheckout() {
+  if (!order) return
+  setError('')
+  setRedirecting(true)
+  
+  try {
+    const res = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        product_cart: [
+          {
+            product_id: process.env.DODO_PAYMENTS_PRODUCT_ID, // หรือส่งมาจาก server
+            quantity: 1,
+          },
+        ],
+        customer: {
+          email: order.email,
+          name: order.email.split('@')[0], // ใช้ชื่อจากอีเมลชั่วคราว
+        },
+        return_url: `${process.env.NEXT_PUBLIC_APP_URL}/order-success?order_id=${order.id}`,
+        metadata: {
+          order_id: order.id,
+        },
+      }),
+    })
+    
+    const data = await res.json()
+    
+    if (!res.ok || !data.checkout_url) {
+      throw new Error(data.error || 'Failed to create checkout session')
+    }
+    
+    window.location.href = data.checkout_url
+  } catch (err) {
+    setError(err instanceof Error ? err.message : 'Something went wrong')
+    setRedirecting(false)
   }
+}
 
   if (loading) {
     return (
@@ -139,7 +170,7 @@ export default function CheckoutPage({
           </div>
         </div>
 
-        {/* Card — Lemon hosted checkout */}
+        {/* Card — Dodo hosted checkout */}
         <div className="bg-white border border-[#E8E1D6] rounded-2xl p-6 mb-4 shadow-[0_1px_3px_rgba(26,22,20,0.03)]">
           <div className="flex items-center gap-3 mb-5">
             <div className="w-10 h-10 rounded-lg bg-[#FBF0E9] border border-[#E8E1D6] flex items-center justify-center">
@@ -173,7 +204,7 @@ export default function CheckoutPage({
           </button>
 
           <p className="text-xs text-[#A39B8F] text-center mt-3">
-            Secure checkout by Lemon Squeezy. Instant access.
+            Secure checkout by Dodo Payments. Instant access.
           </p>
         </div>
 
