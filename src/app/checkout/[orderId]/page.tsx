@@ -36,45 +36,38 @@ export default function CheckoutPage({
       })
   }, [orderId])
 
-  async function handleCardCheckout() {
-  if (!order) return
-  setError('')
-  setRedirecting(true)
-  
-  try {
-    const res = await fetch('/api/checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        product_cart: [
-          {
-            product_id: process.env.DODO_PAYMENTS_PRODUCT_ID, // หรือส่งมาจาก server
-            quantity: 1,
-          },
-        ],
-        customer: {
-          email: order.email,
-          name: order.email.split('@')[0], // ใช้ชื่อจากอีเมลชั่วคราว
-        },
-        return_url: `${process.env.NEXT_PUBLIC_APP_URL}/order-success?order_id=${order.id}`,
-        metadata: {
-          order_id: order.id,
-        },
-      }),
-    })
+   async function handleCardCheckout() {
+    if (!order) return
+    setError('')
+    setRedirecting(true)
     
-    const data = await res.json()
-    
-    if (!res.ok || !data.checkout_url) {
-      throw new Error(data.error || 'Failed to create checkout session')
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        // ส่งแค่ orderId ไปให้หลังบ้านจัดการ ที่เหลือหลังบ้านจะเติมให้เอง
+        body: JSON.stringify({ orderId: order.id }), 
+      })
+      
+      // ดัก Error ไว้ก่อนแปลงเป็น JSON
+      if (!res.ok) {
+        const errorText = await res.text()
+        throw new Error(errorText || 'Failed to create checkout session')
+      }
+
+      const data = await res.json()
+      
+      if (!data.checkout_url) {
+        throw new Error('No checkout URL returned from server')
+      }
+      
+      // เปลี่ยนหน้าไปที่ Dodo Checkout
+      window.location.href = data.checkout_url
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong')
+      setRedirecting(false)
     }
-    
-    window.location.href = data.checkout_url
-  } catch (err) {
-    setError(err instanceof Error ? err.message : 'Something went wrong')
-    setRedirecting(false)
   }
-}
 
   if (loading) {
     return (
