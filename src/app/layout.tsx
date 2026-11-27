@@ -18,9 +18,17 @@ const instrumentSerif = Instrument_Serif({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://getcreatoros.net'),
   title: 'Creator OS — 7 days of content, planned in 60 seconds',
   description:
     'Answer 5 questions. Get hooks, scripts, captions, and hashtags for an entire week of TikTok, Reels, and Shorts.',
+  openGraph: {
+    siteName: 'Creator OS',
+    type: 'website',
+  },
+  verification: {
+    google: 'SyuLa_8jCH5U83oZM9TYkb91Z_JgWsdVq44PjcJWt-U',
+  },
 }
 
 export default function RootLayout({
